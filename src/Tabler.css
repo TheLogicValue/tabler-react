@@ -24,7 +24,7 @@ Dashboard UI
   --gray-dark: #343a40;
   --azure: #45aaf2;
   --lime: #7bd235;
-  --primary: #467fcf;
+  --primary: #54d2e3;
   --secondary: #868e96;
   --success: #5eba00;
   --info: #45aaf2;
@@ -3197,6 +3197,7 @@ input[type="button"].btn-block {
 
 .fade.show {
   opacity: 1;
+  display: block;
 }
 
 .collapse {
@@ -5470,6 +5471,12 @@ button.close {
 
 .modal-open {
   overflow: hidden;
+}
+
+.modal-blur {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  background-color: #11111144;
 }
 
 .modal {
