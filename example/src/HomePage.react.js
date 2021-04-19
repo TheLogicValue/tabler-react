@@ -18,7 +18,7 @@ import {
   StampCard,
   StatsCard,
   ProgressCard,
-  Badge,
+  Badge
 } from "tabler-react";
 
 import C3Chart from "react-c3js";

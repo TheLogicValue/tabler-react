@@ -73,6 +73,7 @@ const navBarItems: Array<navItem> = [
       { value: "Icons", to: "/icons", LinkComponent: withRouter(NavLink) },
       { value: "Store", to: "/store", LinkComponent: withRouter(NavLink) },
       { value: "Blog", to: "/blog", LinkComponent: withRouter(NavLink) },
+      { value: "Modal", to: "/modal", LinkComponent: withRouter(NavLink) },
     ],
   },
   {

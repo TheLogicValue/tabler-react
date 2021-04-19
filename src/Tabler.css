@@ -2528,13 +2528,13 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #467fcf;
+  background-color: var(--primary);
   border-color: #467fcf;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #316cbe;
+  background-color: #467fcf;
   border-color: #2f66b3;
 }
 
@@ -2566,7 +2566,7 @@ fieldset:disabled a.btn {
 
 .btn-secondary {
   color: #fff;
-  background-color: #868e96;
+  background-color: var(--secondary);
   border-color: #868e96;
 }
 
@@ -3967,7 +3967,8 @@ tbody.collapse.show {
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #dee2e6;
+  border: 1px solid #dee2e6;
+  border-radius: 3px;
 }
 
 .nav-tabs .nav-item {

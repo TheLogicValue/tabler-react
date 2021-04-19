@@ -25,6 +25,7 @@ import ChartsPage from "./interface/ChartsPage.react";
 import GalleryPage from "./GalleryPage.react";
 import MapCardsPage from "./components/MapCardsPage.react";
 import BlogPage from "./components/BlogPage.react";
+import ModalPage from "./components/ModalPage.react";
 
 import "tabler-react/dist/Tabler.css";
 
@@ -53,6 +54,7 @@ function App(props: Props): React.Node {
           <Route exact path="/icons" component={IconPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/maps" component={MapCardsPage} />
+          <Route exact path="/modal" component={ModalPage} />
           <Route exact path="/pricing-cards" component={PricingCardsPage} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/register" component={RegisterPage} />
