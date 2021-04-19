@@ -1638,7 +1638,7 @@ pre code {
 .text-wrap table th,
 .table td,
 .text-wrap table td {
-  padding: 0.75rem;
+  padding: 0.5rem 1rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
 }
@@ -11806,13 +11806,13 @@ a.icon:hover {
 }
 
 .nav-tabs .nav-link:hover:not(.disabled) {
-  border-color: #6e7687;
-  color: #6e7687;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .nav-tabs .nav-link.active {
-  border-color: #467fcf;
-  color: #467fcf;
+  border-color: var(--primary);
+  color: #495057;
   background: transparent;
 }
 
@@ -13354,7 +13354,7 @@ a.icon:hover {
 
 .card-header {
   background: none;
-  padding: 0.5rem 1.5rem;
+  padding: 75rem 1rem;
   display: -ms-flexbox;
   display: flex;
   min-height: 3.5rem;
@@ -13391,8 +13391,8 @@ a.icon:hover {
 
 .card-title {
   font-size: 1.125rem;
-  line-height: 1.2;
-  font-weight: 400;
+  line-height: 1.5rem;
+  font-weight: 500;
   margin-bottom: 1.5rem;
 }
 
@@ -19042,4 +19042,10 @@ svg {
 
 .fe-zoom-out:before {
   content: "\ea06";
+}
+
+.Tab_header_tabs{
+  margin-left: 0px;
+  margin-right: 0px;
+  background-color: white;
 }

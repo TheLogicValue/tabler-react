@@ -45,3 +45,4 @@ export { default as Text } from "./Text";
 export { default as Timeline } from "./Timeline";
 export { default as Tooltip } from "./Tooltip";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
+export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
