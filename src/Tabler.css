@@ -13354,7 +13354,7 @@ a.icon:hover {
 
 .card-header {
   background: none;
-  padding: 75rem 1rem;
+  padding: .75rem 1rem;
   display: -ms-flexbox;
   display: flex;
   min-height: 3.5rem;
