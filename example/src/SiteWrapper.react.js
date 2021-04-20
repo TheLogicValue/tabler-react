@@ -232,7 +232,7 @@ class SiteWrapper extends React.Component<Props, State> {
           },
           accountDropdown: accountDropdownProps,
         }}
-        navProps={{ itemsObjects: navBarItems }}
+        navProps={{ itemsObjects: navBarItems, stickyTop: true }}
         routerContextComponentType={withRouter(RouterContextProvider)}
         footerProps={{
           links: [

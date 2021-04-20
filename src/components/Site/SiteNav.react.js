@@ -51,8 +51,10 @@ const SiteNav = ({
   rightColumnComponent,
   collapse = true,
   routerContextComponentType,
+  stickyTop = false
 }: Props): React.Node => {
-  const classes = cn("header d-lg-flex p-0", { collapse });
+  const sticky = stickyTop ? "sticky-top" : ""
+  const classes = cn("header d-lg-flex p-0 " + sticky, { collapse });
   return (
     <div className={classes}>
       <Container>
