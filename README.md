@@ -1,11 +1,4 @@
-# Update - June 2019: Version 2
-
-Alpha now available on NPM:
-
-`npm install tabler-react@alpha`
-`yarn add tabler-react@alpha`
-
-Check out the latest progress and get involved on [this branch](https://github.com/tabler/tabler-react/tree/version-2), or add your thoughts and requests to [this issue](https://github.com/tabler/tabler-react/issues/458).
+# Update - April 2021: Version 1.40.0
 
 # Tabler React
 
@@ -13,13 +6,10 @@ Check out the latest progress and get involved on [this branch](https://github.c
 
 [![NPM](https://img.shields.io/npm/v/tabler-react.svg)](https://www.npmjs.com/package/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-**[Demo](http://tabler-react.com)** | **[Documentation](http://tabler-react.com/documentation/)** | **[Issues](https://github.com/tabler/tabler-react/issues)** | **[Slack](https://tabler-ui.slack.com/messages/CA55LDVHU/)**.
-
 ## Install
 
-Make sure you have [Node.js](https://nodejs.org/) 8+ and [yarn](https://yarnpkg.com) installed.
-
-`yarn add tabler-react`
+There's no package of this Fork. If you want to try it type:
+```npm install santiagocasasrey/tabler-react```
 
 ## Example
 
@@ -48,9 +38,7 @@ class MyCard extends Component {
 
 For more examples and documentation see the [demo website](http://tabler-react.com)
 
-## Contributing
-
-[There are plenty of opportunities to get involved](https://github.com/tabler/tabler-react/issues). Pick an outstanding task, let us know what you are working on and fire away with any questions.
+## Setup
 
 The package is made up of 2 main folders:
 
@@ -59,15 +47,13 @@ The package is made up of 2 main folders:
 
 To setup and run a local copy:
 
-1.  Clone this repo with `git clone https://github.com/tabler/tabler-react`
+1.  Clone this repo with `git clone https://github.com/santiagocasasrey/tabler-react`
 2.  Run `yarn install` in the root folder
 3.  Run `yarn install` in the example folder
 4.  In seperate terminal windows, run `yarn start` in the root and example folders.
 
 You should now be up and running with live browser reloading of the example website while you work on Tabler React components in the /src folder.
 
-When you're done working on your changes, submit a PR with the details and include a screenshot if you've changed anything visually.
-
 ## License
 
-MIT © [jonthomp](https://github.com/jonthomp), [AaronCoplan](https://github.com/AaronCoplan) and [the contributors](https://github.com/tabler/tabler-react/graphs/contributors).
+MIT © [santiagocasasrey](https://github.com/santiagocasasrey), [jonthomp](https://github.com/jonthomp), [AaronCoplan](https://github.com/AaronCoplan) and [the contributors](https://github.com/tabler/tabler-react/graphs/contributors).
