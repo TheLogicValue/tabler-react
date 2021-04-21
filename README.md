@@ -36,7 +36,7 @@ class MyCard extends Component {
 }
 ```
 
-For more examples and documentation see the [demo website](http://tabler-react.com)
+For more examples and documentation see the [demo website](https://santiagocasasrey.github.io/tabler-react)
 
 ## Setup
 
