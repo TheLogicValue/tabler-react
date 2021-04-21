@@ -1,7 +1,7 @@
 {
   "short_name": "tabler-react",
   "name": "tabler-react",
-  "start_url": "/",
+  "start_url": "/tabler-react",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
