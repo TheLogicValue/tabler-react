@@ -60,11 +60,11 @@ const SiteNav = ({
       <Container>
         {children || (
           <Grid.Row className="align-items-center">
-            <Grid.Col lg={3} className="ml-auto" ignoreCol={true}>
+            {/* <Grid.Col lg={3} className="ml-auto" ignoreCol={true}> */}
               {/* @TODO: add InlineSearchForm  */}
               {/* {rightColumnComponent || (withSearchForm && <InlineSearchForm />)} */}
-              {rightColumnComponent}
-            </Grid.Col>
+              {/* {rightColumnComponent} */}
+            {/* </Grid.Col> */}
             <Grid.Col className="col-lg order-lg-first">
               <Nav
                 tabbed
