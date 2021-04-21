@@ -4,6 +4,7 @@ import * as React from "react";
 import { Container, Site, Notification, AccountDropdown } from "../";
 import type { Props as NotificationTrayProps } from "../Notification/NotificationTray.react";
 import type { Props as AccountDropdownProps } from "../AccountDropdown/AccountDropdown.react";
+import type { Props as SiteNavProps } from "./SiteNav.react";
 
 export type Props = {|
   +children?: React.Node,
@@ -28,11 +29,12 @@ export type Props = {|
    */
   +notificationsTray?: NotificationTrayProps,
   +accountDropdown?: AccountDropdownProps,
-  +navItems?: React.Node,
+  +navItems?: SiteNavProps,
   /**
    * Handle toggling/collapsing of the mobile menu when the collapse icon is clicked
    */
   +onMenuToggleClick?: () => void,
+  +condensed: boolean
 |};
 
 /**
@@ -49,6 +51,7 @@ const SiteHeader = ({
   accountDropdown: accountDropdownFromProps,
   navItems,
   onMenuToggleClick,
+  condensed
 }: Props): React.Node => {
   const notificationsTray =
     notificationsTrayFromProps &&
@@ -58,15 +61,22 @@ const SiteHeader = ({
     accountDropdownFromProps &&
     React.createElement(AccountDropdown, accountDropdownFromProps);
 
+    const nav = React.createElement(Site.Nav, navItems);
+
+  const headerClasses = condensed ? "header sticky-top condensed" : "header py-4"; 
   return (
-    <div className="header py-4">
+    <div className={headerClasses}>
       <Container className={align}>
         <div className="d-flex">
           {children || (
             <React.Fragment>
               <Site.Logo href={href} alt={alt} src={imageURL} />
+              { condensed ? (
+              <div className="d-flex order-lg-1">
+                {nav}
+              </div>
+              ) : ""}
               <div className="d-flex order-lg-2 ml-auto">
-                {navItems}
                 {notificationsTray}
                 {accountDropdown}
               </div>

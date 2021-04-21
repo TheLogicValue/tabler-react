@@ -1,4 +1,17 @@
-## [1.30.1](https://github.com/tabler/tabler-react/compare/v1.30.0...v1.30.1) (2019-06-01)
+# [1.40.1](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.0...v1.40.1) (2021-04-21)
+
+### Features
+- **StickyTop:** Add property stickyTop to fix nav header on top. 
+- **CondensedNav:** Add property condensed to SiteWrapper to show only one header bar with menu items inside. 
+
+# [1.40.0](https://github.com/santiagocasasrey/tabler-react/compare/v1.30.1...v1.40.0) (2021-04-20)
+First commit after fork repo.
+
+### Features
+- **Modal:** Add modal component with one or two buttons. 
+- **ContentLoader:** Add loader components for charts and table. 
+
+# [1.30.1](https://github.com/tabler/tabler-react/compare/v1.30.0...v1.30.1) (2019-06-01)
 
 ### Bug Fixes
 

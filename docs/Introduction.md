@@ -1,10 +1,10 @@
-**[Demo](https://tabler.github.io/tabler-react/)** | **[Issues](https://github.com/tabler/tabler-react/issues)** | **[Slack](https://tabler-ui.slack.com/messages/CA55LDVHU/)**.
+**[Demo](https://santiagocasasrey.github.io/tabler-react/)**
 
 ## Install
 
 Make sure you have [Node.js](https://nodejs.org/) 8+ and [yarn](https://yarnpkg.com) installed.
 
-`yarn add tabler-react`
+`npm install santiagocasasrey/tabler-react`
 
 ## Basic Usage Example
 

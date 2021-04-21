@@ -5,7 +5,6 @@ import { NavLink, withRouter } from "react-router-dom";
 
 import {
   Site,
-  Nav,
   Grid,
   List,
   Button,
@@ -58,6 +57,7 @@ const navBarItems: Array<navItem> = [
         LinkComponent: withRouter(NavLink),
       },
       { value: "Charts", to: "/charts", LinkComponent: withRouter(NavLink) },
+      { value: "CondensedNav", to: "/condensed", LinkComponent: withRouter(NavLink) },
       {
         value: "Pricing Cards",
         to: "/pricing-cards",
@@ -123,10 +123,7 @@ const navBarItems: Array<navItem> = [
   {
     icon: "file-text",
     value: "Documentation",
-    to:
-      process.env.NODE_ENV === "production"
-        ? "https://tabler.github.io/tabler-react/documentation"
-        : "/documentation",
+    to: "/documentation"
   },
 ];
 
@@ -147,6 +144,7 @@ const accountDropdownProps = {
 
 class SiteWrapper extends React.Component<Props, State> {
   state = {
+    condensed: false,
     notificationsObjects: [
       {
         unread: true,
@@ -188,26 +186,15 @@ class SiteWrapper extends React.Component<Props, State> {
       (a, v) => a || v.unread,
       false
     );
+    const condensed = this.props.condensed || this.state.condensed;
     return (
       <Site.Wrapper
+        condensed={condensed}
         headerProps={{
           href: "/",
           alt: "Tabler React",
           imageURL: "./demo/brand/tabler.svg",
-          navItems: (
-            <Nav.Item type="div" className="d-none d-md-flex">
-              <Button
-                href="https://github.com/tabler/tabler-react"
-                target="_blank"
-                outline
-                size="sm"
-                RootComponent="a"
-                color="primary"
-              >
-                Source code
-              </Button>
-            </Nav.Item>
-          ),
+          navItems: { itemsObjects: navBarItems},
           notificationsTray: {
             notificationsObjects,
             markAllAsRead: () =>
@@ -232,7 +219,7 @@ class SiteWrapper extends React.Component<Props, State> {
           },
           accountDropdown: accountDropdownProps,
         }}
-        navProps={{ itemsObjects: navBarItems }}
+        navProps={{ itemsObjects: navBarItems, stickyTop: true }}
         routerContextComponentType={withRouter(RouterContextProvider)}
         footerProps={{
           links: [

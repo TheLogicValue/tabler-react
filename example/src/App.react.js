@@ -22,6 +22,7 @@ import CardsDesignPage from "./interface/CardsDesignPage.react";
 import StoreCardsPage from "./components/StoreCardsPage.react.js";
 import IconPage from "./components/IconPage.react.js";
 import ChartsPage from "./interface/ChartsPage.react";
+import CondensedPage from "./interface/CondensedNavPage.react";
 import GalleryPage from "./GalleryPage.react";
 import MapCardsPage from "./components/MapCardsPage.react";
 import BlogPage from "./components/BlogPage.react";
@@ -35,7 +36,7 @@ type Props = {||};
 function App(props: Props): React.Node {
   return (
     <React.StrictMode>
-      <Router>
+      <Router basename={process.env.REACT_APP_BASENAME}>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/400" component={Error400} />
@@ -47,6 +48,7 @@ function App(props: Props): React.Node {
           <Route exact path="/blog" component={BlogPage} />
           <Route exact path="/cards" component={CardsDesignPage} />
           <Route exact path="/charts" component={ChartsPage} />
+          <Route exact path="/condensed" component={CondensedPage} />
           <Route exact path="/email" component={Email} />
           <Route exact path="/empty-page" component={Empty} />
           <Route exact path="/form-elements" component={FormElementsPage} />

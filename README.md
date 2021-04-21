@@ -1,10 +1,10 @@
-# Update - April 2021: Version 1.40.0
+# Update - April 2021: Version 1.40.1
 
 # Tabler React
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![NPM](https://img.shields.io/npm/v/tabler-react.svg)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![NPM](https://img.shields.io/badge/github-v.1.40.1-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Install
 
@@ -36,7 +36,7 @@ class MyCard extends Component {
 }
 ```
 
-For more examples and documentation see the [demo website](http://tabler-react.com)
+For more examples and documentation see the [demo website](https://santiagocasasrey.github.io/tabler-react)
 
 ## Setup
 

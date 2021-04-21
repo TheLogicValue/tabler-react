@@ -77,6 +77,10 @@ module.exports = {
           components: "src/components/ContactCard/**/*.react.{js,jsx}",
         },
         {
+          name: "ContentLoader",
+          components: "src/components/ContentLoader/**/*.react.{js,jsx}",
+        },
+        {
           name: "Container",
           components: "src/components/Container.react.{js,jsx}",
         },
