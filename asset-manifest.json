@@ -1,14 +1,14 @@
 {
-  "main.css": "/tabler-react/static/css/main.389eb337.chunk.css",
-  "main.js": "/tabler-react/static/js/main.9f9250c2.chunk.js",
-  "main.js.map": "/tabler-react/static/js/main.9f9250c2.chunk.js.map",
-  "static/js/1.0f584c99.chunk.js": "/tabler-react/static/js/1.0f584c99.chunk.js",
-  "static/js/1.0f584c99.chunk.js.map": "/tabler-react/static/js/1.0f584c99.chunk.js.map",
+  "main.css": "/tabler-react/static/css/main.ba86619c.chunk.css",
+  "main.js": "/tabler-react/static/js/main.9a39c071.chunk.js",
+  "main.js.map": "/tabler-react/static/js/main.9a39c071.chunk.js.map",
+  "static/js/1.f69b1de9.chunk.js": "/tabler-react/static/js/1.f69b1de9.chunk.js",
+  "static/js/1.f69b1de9.chunk.js.map": "/tabler-react/static/js/1.f69b1de9.chunk.js.map",
   "runtime~main.js": "/tabler-react/static/js/runtime~main.9c14f1f1.js",
   "runtime~main.js.map": "/tabler-react/static/js/runtime~main.9c14f1f1.js.map",
   "static/media/Tabler.css": "/tabler-react/static/media/gb-wls.2831a6dd.svg",
-  "static/css/main.389eb337.chunk.css.map": "/tabler-react/static/css/main.389eb337.chunk.css.map",
+  "static/css/main.ba86619c.chunk.css.map": "/tabler-react/static/css/main.ba86619c.chunk.css.map",
   "index.html": "/tabler-react/index.html",
-  "precache-manifest.50051d693c40ed37e03be20761fd176e.js": "/tabler-react/precache-manifest.50051d693c40ed37e03be20761fd176e.js",
+  "precache-manifest.3d0568c527c6afe37526ad0b0548c87b.js": "/tabler-react/precache-manifest.3d0568c527c6afe37526ad0b0548c87b.js",
   "service-worker.js": "/tabler-react/service-worker.js"
 }
