@@ -123,10 +123,7 @@ const navBarItems: Array<navItem> = [
   {
     icon: "file-text",
     value: "Documentation",
-    to:
-      process.env.NODE_ENV === "production"
-        ? "https://tabler.github.io/tabler-react/documentation"
-        : "/documentation",
+    to: "/documentation"
   },
 ];
 
