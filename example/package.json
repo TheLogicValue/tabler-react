@@ -1,6 +1,6 @@
 {
   "name": "tabler-react-example",
-  "homepage": "https://tabler-react.com",
+  "homepage": "https://santiagocasasrey.github.io/tabler-react",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -8,9 +8,9 @@
     "d3-scale": "^3.0.0",
     "formik": "^1.0.2",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "react": "^16.8.0",
     "react-c3js": "^0.1.20",
-    "react-dom": "^16.4.2",
+    "react-dom": "^16.8.0",
     "react-google-maps": "^9.4.5",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^2.0.3",
@@ -25,10 +25,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "yarn run build",
     "deploy": "gh-pages -d build"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gh-pages": "^2.0.0"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",

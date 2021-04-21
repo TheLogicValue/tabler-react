@@ -1,6 +1,6 @@
 {
   "name": "tabler-react",
-  "version": "1.40.0",
+  "version": "1.40.1",
   "description": "",
   "author": "santiagocasasrey",
   "license": "MIT",
@@ -14,8 +14,8 @@
     "build": "yarn run copytablercsstodist && rollup -c && yarn run flow:copy-source",
     "start": "yarn run copytablercsstodist && rollup -c -w",
     "prepare": "yarn run build && yarn run copytablercsstodist",
-    "predeploy": "cd example && yarn install && yarn run build && shx cp build/index.html build/404.html",
-    "deploy": "echo \"tabler-react.com\" > example/build/CNAME && gh-pages -d example/build",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build",
     "flow:copy-source": "node scripts/flow-copy-source.js",
     "format": "prettier --write \"+(src|example)/**/*.js\"",
     "pretty-quick": "pretty-quick",
@@ -37,8 +37,8 @@
     "react-content-loader": "^6.0.2"
   },
   "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
