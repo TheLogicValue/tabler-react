@@ -51,10 +51,12 @@ const SiteNav = ({
   rightColumnComponent,
   collapse = true,
   routerContextComponentType,
-  stickyTop = false
+  stickyTop = false,
+  condensed = false
 }: Props): React.Node => {
   const sticky = stickyTop ? "sticky-top" : ""
-  const classes = cn("header d-lg-flex p-0 " + sticky, { collapse });
+  const isCondensed = condensed ? "" : "d-lg-flex"
+  const classes = cn("header p-0 " + sticky + " " + isCondensed, { collapse });
   return (
     <div className={classes}>
       <Container>

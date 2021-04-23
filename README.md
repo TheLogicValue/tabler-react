@@ -1,10 +1,10 @@
-# Update - April 2021: Version 1.40.1
+# Update - April 2021: Version 1.40.2
 
 # Tabler React
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![NPM](https://img.shields.io/badge/github-v.1.40.1-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![NPM](https://img.shields.io/badge/github-v.1.40.2-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Install
 
@@ -53,6 +53,12 @@ To setup and run a local copy:
 4.  In seperate terminal windows, run `yarn start` in the root and example folders.
 
 You should now be up and running with live browser reloading of the example website while you work on Tabler React components in the /src folder.
+
+## Deploy
+
+1. In main package.json execute `prepare` script in order to build tabler-react.
+2. (Optional) Execute `deploy` script if you want to deploy the web example to github pages. You will locate your deploy [here](https://santiagocasasrey.github.io/tabler-react).
+
 
 ## License
 
