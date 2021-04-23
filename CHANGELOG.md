@@ -1,3 +1,8 @@
+# [1.40.2](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.1...v1.40.2) (2021-04-23)
+
+### Bug Fixes
+- **CondensedNav:** When nav was in condensed and mobile mode it didn't showed.
+
 # [1.40.1](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.0...v1.40.1) (2021-04-21)
 
 ### Features
