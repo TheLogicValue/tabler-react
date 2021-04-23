@@ -1,7 +1,7 @@
 {
   "name": "tabler-react-example",
   "homepage": "https://santiagocasasrey.github.io/tabler-react",
-  "version": "0.0.0",
+  "version": "1.40.2",
   "private": true,
   "license": "MIT",
   "dependencies": {
@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "predeploy": "yarn run build",
+    "predeploy": "yarn install && yarn run build",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {

@@ -51,6 +51,7 @@ class SiteWrapper extends React.PureComponent<Props, State> {
       ...navProps,
       collapse: this.state.collapseMobileMenu,
       routerContextComponentType: routerContextComponentType,
+      condensed: condensed
     };
     const nav = React.createElement(Site.Nav, navPropsWithCollapse);
     const footer = React.createElement(Site.Footer, footerProps);
@@ -59,7 +60,7 @@ class SiteWrapper extends React.PureComponent<Props, State> {
       <Page>
         <Page.Main>
           {header}
-          {condensed ? "" : nav}
+          {nav}
           {children}
         </Page.Main>
         {footer}

@@ -19051,15 +19051,14 @@ svg {
   background-color: white;
 }
 
+.condensed{
+  min-height: 65px !important;
+}
+
 .condensed .header{
   border-bottom:0px !important;
 }
 
 .condensed .d-flex{
   align-items: center;
-}
-
-.condensed.header{
-  padding-top:0px !important;
-  padding-bottom:0px !important;
 }
