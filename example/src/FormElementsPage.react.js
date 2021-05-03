@@ -1,6 +1,6 @@
 // @flow
 
-import * as React from "react";
+import React, {useState} from "react";
 
 import { Page, Card, Grid, Form, Button, Dropdown } from "tabler-react";
 
@@ -8,6 +8,9 @@ import ComponentDemo from "./ComponentDemo";
 import SiteWrapper from "./SiteWrapper.react";
 
 function FormElements() {
+  const [selectedColumns, setSelectedColumns] = useState([{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
+                                                          { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }
+])
   return (
     <SiteWrapper>
       <Page.Card
@@ -261,6 +264,51 @@ function FormElements() {
                   <option>United Kingdom</option>
                   <option>Germany</option>
                 </Form.Select>
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
+              <Form.Group label="SelectMultiple">
+                <Form.SelectMultiple
+                  placeholder="Seleccionar Columnas"
+                  name="Columnas"
+                  value={selectedColumns}
+                  options={[
+                    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
+                    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
+                    { value: 'purple', label: 'Purple', color: '#5243AA' },
+                    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
+                    { value: 'orange', label: 'Orange', color: '#FF8B00' },
+                    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
+                    { value: 'green', label: 'Green', color: '#36B37E' },
+                    { value: 'forest', label: 'Forest', color: '#00875A' },
+                    { value: 'slate', label: 'Slate', color: '#253858' },
+                    { value: 'silver', label: 'Silver', color: '#666666' },
+                  ]}
+                  onChange={setSelectedColumns}
+                />
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
+              <Form.Group label="SelectMultiple with icon">
+                <Form.SelectMultiple
+                  icon="grid"
+                  placeholder="Seleccionar Columnas"
+                  name="Columnas"
+                  value={selectedColumns}
+                  options={[
+                    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
+                    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
+                    { value: 'purple', label: 'Purple', color: '#5243AA' },
+                    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
+                    { value: 'orange', label: 'Orange', color: '#FF8B00' },
+                    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
+                    { value: 'green', label: 'Green', color: '#36B37E' },
+                    { value: 'forest', label: 'Forest', color: '#00875A' },
+                    { value: 'slate', label: 'Slate', color: '#253858' },
+                    { value: 'silver', label: 'Silver', color: '#666666' },
+                  ]}
+                  onChange={setSelectedColumns}
+                />
               </Form.Group>
             </ComponentDemo>
             <ComponentDemo>

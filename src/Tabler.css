@@ -290,6 +290,9 @@ button,
 select {
   text-transform: none;
 }
+.select__control {
+  margin: 0 5px
+}
 
 button,
 html [type="button"],
@@ -3226,6 +3229,7 @@ tbody.collapse.show {
 .dropup,
 .dropdown {
   position: relative;
+  width: inherit;
 }
 
 .dropdown-toggle::after {
