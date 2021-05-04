@@ -1,3 +1,8 @@
+# [1.40.3](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.2...v1.40.3) (2021-05-04)
+
+### Features
+- **FormSelectMultiple:** Add new multi select component based on react-select library.
+
 # [1.40.2](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.1...v1.40.2) (2021-04-23)
 
 ### Bug Fixes
