@@ -1,6 +1,6 @@
 {
   "name": "tabler-react",
-  "version": "1.40.2",
+  "version": "1.40.3",
   "description": "",
   "author": "santiagocasasrey",
   "license": "MIT",
@@ -9,6 +9,7 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
+    "link-react": "cd example/node_modules/react && npm link && cd ../react-dom && npm link && cd ../../../ && npm link react && npm link react-dom",
     "test": "CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "build": "yarn run copytablercsstodist && rollup -c && yarn run flow:copy-source",
@@ -32,13 +33,14 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "react-content-loader": "^6.0.2",
     "react-popper": "^1.0.0-beta.6",
-    "react-text-mask": "^5.4.1",
-    "react-content-loader": "^6.0.2"
+    "react-select": "^4.3.0",
+    "react-text-mask": "^5.4.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -68,8 +70,8 @@
     "lint-staged": "^8.0.0",
     "prettier": "1.17.1",
     "pretty-quick": "^1.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-scripts": "^2.0.3",
     "react-styleguidist": "^8.0.0",
     "rollup": "1.13.0",
