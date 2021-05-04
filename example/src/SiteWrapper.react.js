@@ -123,7 +123,7 @@ const navBarItems: Array<navItem> = [
   {
     icon: "file-text",
     value: "Documentation",
-    to: "/documentation",
+    to: "/documentation/",
     LinkComponent: withRouter(NavLink),
   },
 ];
