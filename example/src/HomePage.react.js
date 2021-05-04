@@ -331,7 +331,7 @@ function Home() {
                 <ProgressCard
                   header="New feedback"
                   content="62"
-                  progressColor="red"
+                  progressColor="primary"
                   progressWidth={28}
                 />
               </Grid.Col>
@@ -651,7 +651,7 @@ function Home() {
                         },
                       }}
                       color={{
-                        pattern: ["#467fcf"],
+                        pattern: ["var(--primary)"],
                       }}
                     />
                   }
