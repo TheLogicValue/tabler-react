@@ -26,29 +26,7 @@ type Props = {|
 |};
 
 function FormSelectMultiple(props: Props): React.Node {
-  const {
-    className,
-    children,
-    valid,
-    tick,
-    invalid,
-    cross,
-    error,
-    label,
-    disabled,
-    readOnly,
-    name,
-    value,
-    options,
-    onBlur,
-    onMouseEnter,
-    onMouseLeave,
-    onPointerEnter,
-    onPointerLeave,
-    onClick,
-    multiple
-  } = props;
-
+  
 // isOptionSelected sees previous props.value after onChange
 const valueRef = useRef(props.value);
 valueRef.current = props.value;
@@ -90,7 +68,7 @@ const customStyles = {
   option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "" : "",
-      backgroundColor: state.isSelected ? "#868e9638" : "",
+      backgroundColor: state.isSelected ? "var(--primary)" : "",
       cursor: "pointer"
     }),
 };

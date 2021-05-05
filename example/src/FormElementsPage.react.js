@@ -9,8 +9,9 @@ import SiteWrapper from "./SiteWrapper.react";
 
 function FormElements() {
   const [selectedColumns, setSelectedColumns] = useState([{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-                                                          { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }
-])
+  { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }])
+  
+  const countries = [{ value: 'france', label: 'France', id:1},{ value: 'spain', label: 'Spain', id:12},{ value: 'usa', label: 'USA', id:13}];
   return (
     <SiteWrapper>
       <Page.Card
@@ -264,6 +265,15 @@ function FormElements() {
                   <option>United Kingdom</option>
                   <option>Germany</option>
                 </Form.Select>
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
+              <Form.Group label="SelectReact">
+                <Form.SelectReact
+                  placeholder="Selecciona un país"
+                  name="paises"
+                  options={countries}
+                />
               </Form.Group>
             </ComponentDemo>
             <ComponentDemo>
