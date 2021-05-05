@@ -9,29 +9,25 @@ Dashboard UI
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-  --blue: #467fcf;
-  --indigo: #6574cd;
-  --purple: #a55eea;
-  --pink: #f66d9b;
-  --red: #cd201f;
-  --orange: #fd9644;
-  --yellow: #f1c40f;
-  --green: #5eba00;
-  --teal: #2bcbba;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #868e96;
-  --gray-dark: #343a40;
-  --azure: #45aaf2;
-  --lime: #7bd235;
-  --primary: #54d2e3;
-  --secondary: #868e96;
-  --success: #5eba00;
-  --info: #45aaf2;
-  --warning: #f1c40f;
+  --blue: #3AB0C8;
+  --blue-dark: #185A7D;
+  --pink: #ED217C;
+  --yellow: #FFBE0B;
+  --green: #95C623;
+  --gray: #F2F2F2;
+  --gray-dark: #373545;
+  --primary: #3AB0C8;
+  --secondary: #185A7D;
+  --tertiary: #F2F2F2;
+  --quaternary: #373545;
+  --quinary: #ED217C;
+  --senary: #95C623;
+  --septenary: #FFBE0B;
+  --info: #3AB0C8;
+  --warning: #FFBE0B;
   --danger: #cd201f;
-  --light: #f8f9fa;
-  --dark: #343a40;
+  --light: #F2F2F2;
+  --dark: #373545;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -2538,7 +2534,7 @@ fieldset:disabled a.btn {
 .btn-primary:hover {
   color: #fff;
   background-color: var(--primary);
-  border-color: #2f66b3;
+  border-color: var(--secondary);
 }
 
 .btn-primary:focus,
@@ -2550,15 +2546,15 @@ fieldset:disabled a.btn {
 .btn-primary:disabled {
   color: #fff;
   background-color: var(--primary);
-  border-color: var(--primary);
+  border-color: var(--secondary);
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #2f66b3;
-  border-color: #2c60a9;
+  background-color: var(--secondary);
+  border-color: var(--primary);
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,

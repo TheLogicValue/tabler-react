@@ -26,6 +26,7 @@ import CondensedPage from "./interface/CondensedNavPage.react";
 import GalleryPage from "./GalleryPage.react";
 import MapCardsPage from "./components/MapCardsPage.react";
 import BlogPage from "./components/BlogPage.react";
+import ButtonsPage from "./components/ButtonPage.react";
 import ModalPage from "./components/ModalPage.react";
 import LoadersPage from "./components/LoadersPage.react";
 
@@ -46,6 +47,7 @@ function App(props: Props): React.Node {
           <Route exact path="/500" component={Error500} />
           <Route exact path="/503" component={Error503} />
           <Route exact path="/blog" component={BlogPage} />
+          <Route exact path="/buttons" component={ButtonsPage} />
           <Route exact path="/cards" component={CardsDesignPage} />
           <Route exact path="/charts" component={ChartsPage} />
           <Route exact path="/condensed" component={CondensedPage} />
