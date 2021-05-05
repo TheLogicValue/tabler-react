@@ -124,8 +124,7 @@ const navBarItems: Array<navItem> = [
   {
     icon: "file-text",
     value: "Documentation",
-    to: "/documentation/",
-    LinkComponent: withRouter(NavLink),
+    to: "/documentation/"
   },
 ];
 

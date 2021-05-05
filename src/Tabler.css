@@ -33,8 +33,7 @@ Dashboard UI
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1280px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+  --font-family-sans-serif: Roboto,Montserrat,-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
   --font-family-monospace: Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
@@ -47,7 +46,7 @@ Dashboard UI
 }
 
 html {
-  font-family: sans-serif;
+  font-family: var(--font-family-sans-serif);
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -75,8 +74,7 @@ section {
 
 body {
   margin: 0;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-family-sans-serif);
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
@@ -5657,8 +5655,7 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-family-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5783,8 +5780,7 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-family-sans-serif);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;

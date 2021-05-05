@@ -318,18 +318,18 @@ function ButtonPage(): React.Node {
                   <Grid.Col >
                     <Button.List>
                     <Button social="facebook">Facebook</Button>
-  <Button social="twitter">Twitter</Button>
-  <Button social="google">Google</Button>
-  <Button social="youtube">Youtube</Button>
-  <Button social="vimeo">Vimeo</Button>
-  <Button social="dribbble">Dribbble</Button>
-  <Button social="github">Github</Button>
-  <Button social="instagram">Instagram</Button>
-  <Button social="pinterest">Pinterest</Button>
-  <Button social="vk">VKontakte</Button>
-  <Button social="rss">RSS</Button>
-  <Button social="flickr">Flickr</Button>
-  <Button social="bitbucket">Bitbucket</Button>
+                    <Button social="twitter">Twitter</Button>
+                    <Button social="google">Google</Button>
+                    <Button social="youtube">Youtube</Button>
+                    <Button social="vimeo">Vimeo</Button>
+                    <Button social="dribbble">Dribbble</Button>
+                    <Button social="github">Github</Button>
+                    <Button social="instagram">Instagram</Button>
+                    <Button social="pinterest">Pinterest</Button>
+                    <Button social="vk">VKontakte</Button>
+                    <Button social="rss">RSS</Button>
+                    <Button social="flickr">Flickr</Button>
+                    <Button social="bitbucket">Bitbucket</Button>
                     </Button.List>
                   </Grid.Col>
                 </Grid.Row>
