@@ -2,6 +2,7 @@
 
 ### Features
 - **FormSelectReact:** Add new single select component based on react-select library.
+- **CSS** Change colors and fonts.
 
 # [1.40.3](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.2...v1.40.3) (2021-05-04)
 
