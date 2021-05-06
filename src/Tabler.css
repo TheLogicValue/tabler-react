@@ -3835,7 +3835,7 @@ tbody.collapse.show {
   -moz-appearance: none;
   appearance: none;
 }
-.custom-select-react [class*="-ValueContainer"] {
+.custom-select-react > [class*="-control"] > div:first-child {
   cursor: pointer;
   display: inline-block;
   width: 100%;
