@@ -1,10 +1,10 @@
-# Update - May 2021: Version 1.40.4
+# Update - May 2021: Version 1.40.5
 
 # Tabler React
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![NPM](https://img.shields.io/badge/github-v.1.40.4-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![NPM](https://img.shields.io/badge/github-v.1.40.5-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Install
 
