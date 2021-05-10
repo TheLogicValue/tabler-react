@@ -85,7 +85,7 @@ function FormSelectReact(props: Props): React.Node {
     option: (provided, state) => ({
         ...provided,
         color: state.isSelected ? "" : "",
-        backgroundColor: state.isSelected ? "var(--primary)" : "",
+        backgroundColor: state.isSelected ? "var(--quaternary)" : "",
         cursor: "pointer"
       }),
       control: (styles, { data, isDisabled, isFocused, isSelected, isHover }) => ({
