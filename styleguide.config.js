@@ -65,6 +65,10 @@ module.exports = {
           components: "src/components/BlogCard/**/*.react.{js,jsx}",
         },
         {
+          name: "Breadcrumb",
+          components: "src/components/Breadcrumb/**/*.react.{js,jsx}",
+        },
+        {
           name: "Button",
           components: "src/components/Button/**/*.react.{js,jsx}",
         },

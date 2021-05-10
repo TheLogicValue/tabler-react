@@ -4767,18 +4767,16 @@ tbody.collapse.show {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
   list-style: none;
-  background-color: #e9ecef;
-  border-radius: 3px;
+  list-style-type: none;
+  padding-left: 0px;
+  height: 10px;
+  padding-top: 10px;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
   display: inline-block;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  color: #868e96;
+  color: var(--primary);
   content: "/";
 }
 
@@ -4791,7 +4789,7 @@ tbody.collapse.show {
 }
 
 .breadcrumb-item.active {
-  color: #868e96;
+  color: var(--primary);
 }
 
 .pagination {

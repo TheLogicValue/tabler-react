@@ -1,6 +1,7 @@
 # [1.40.5](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.4...v1.40.5) (2021-05-07)
 
 ### Features
+- **Breadcrumb:** Add new component to show breadcrumbs and navigate.
 - **FormGroup:** Add option to put label on left and input on right.
 
 # [1.40.4](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.3...v1.40.4) (2021-05-05)
