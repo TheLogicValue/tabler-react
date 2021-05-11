@@ -63,6 +63,7 @@ const navBarItems: Array<navItem> = [
         to: "/pricing-cards",
         LinkComponent: withRouter(NavLink),
       },
+      { value: "Tabs", to: "/tabs", LinkComponent: withRouter(NavLink) },
     ],
   },
   {

@@ -11,7 +11,9 @@ type State = {||};
 
 class Tab extends React.PureComponent<Props, State> {
   render(): React.Node {
-    return this.props.children;
+    return <div className="card-body">
+              {this.props.children}
+            </div>
   }
 }
 
