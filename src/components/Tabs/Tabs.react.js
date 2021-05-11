@@ -26,18 +26,17 @@ class Tabs extends React.PureComponent<Props, State> {
     const { children } = this.props;
     const { selectedTitle } = this.state;
     return (
-      <React.Fragment>
+      <div className="card">
         <TabbedHeader
           selectedTitle={selectedTitle}
           stateCallback={newTitle => this.setState({ selectedTitle: newTitle })}
         >
           {children}
         </TabbedHeader>
-        <div className={"margin-bottom-24"} />
         <TabbedContainer selectedTitle={selectedTitle}>
           {children}
         </TabbedContainer>
-      </React.Fragment>
+      </div>
     );
   }
 }

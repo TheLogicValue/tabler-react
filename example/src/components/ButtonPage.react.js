@@ -1,16 +1,22 @@
 // @flow
 
-import * as React from "react";
+import React from "react";
 
-import { Page, Grid, Card, Button, Text } from "tabler-react";
-
+import { Page, Grid, Card, Button, Text,Breadcrumb } from "tabler-react";
+import {useHistory} from "react-router-dom"
 import SiteWrapper from "../SiteWrapper.react";
 
 
 function ButtonPage(): React.Node {
+  const history = useHistory();
+
+  const navigateBreadcrumb = (path) => {
+    history.push(path)
+  }
 
   return (
     <SiteWrapper>
+    <Breadcrumb crumbs={ [{name:"Home", path:"/"}, {name:"Buttons", path:"/buttons"}] } selected={navigateBreadcrumb}/>
       <Page.Content title="Button">
         <Grid.Row>
           <Grid.Col>

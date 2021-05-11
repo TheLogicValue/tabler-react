@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import { Page, Card, Grid, Form, Button, Dropdown } from "tabler-react";
 
@@ -10,8 +10,8 @@ import SiteWrapper from "./SiteWrapper.react";
 function FormElements() {
   const [selectedColumns, setSelectedColumns] = useState([{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
   { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }])
-  
-  const countries = [{ value: 'france', label: 'France', id:1},{ value: 'spain', label: 'Spain', id:12},{ value: 'usa', label: 'USA', id:13}];
+
+  const countries = [{ value: 'france', label: 'France', id: 1 }, { value: 'spain', label: 'Spain', id: 12 }, { value: 'usa', label: 'USA', id: 13 }];
   return (
     <SiteWrapper>
       <Page.Card
@@ -670,128 +670,151 @@ function FormElements() {
             </ComponentDemo>
           </Grid.Col>
           <Grid.Col lg={4}>
-            <Card title="Input Mask">
-              <Card.Body>
-                <Form.Group label="Date">
-                  <Form.MaskedInput
-                    placeholder="00/00/0000"
-                    mask={[
-                      /\d/,
-                      /\d/,
-                      "/",
-                      /\d/,
-                      /\d/,
-                      "/",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
-                  />
-                </Form.Group>
-                <Form.Group label="Time">
-                  <Form.MaskedInput
-                    placeholder="00:00:00"
-                    mask={[/\d/, /\d/, ":", /\d/, /\d/, ":", /\d/, /\d/]}
-                  />
-                </Form.Group>
-                <Form.Group label="Date & Time">
-                  <Form.MaskedInput
-                    placeholder="00/00/0000 00:00:00"
-                    mask={[
-                      /\d/,
-                      /\d/,
-                      "/",
-                      /\d/,
-                      /\d/,
-                      "/",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      " ",
-                      /\d/,
-                      /\d/,
-                      ":",
-                      /\d/,
-                      /\d/,
-                      ":",
-                      /\d/,
-                      /\d/,
-                    ]}
-                  />
-                </Form.Group>
-                <Form.Group label="Zipcode">
-                  <Form.MaskedInput
-                    placeholder="91210"
-                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
-                  />
-                </Form.Group>
-                <Form.Group label="Telephone">
-                  <Form.MaskedInput
-                    placeholder="+1 (555) 495-3947"
-                    mask={[
-                      "(",
-                      /[1-9]/,
-                      /\d/,
-                      /\d/,
-                      ")",
-                      " ",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      "-",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
-                  />
-                </Form.Group>
-                <Form.Group label="Telephone with Area Code">
-                  <Form.MaskedInput
-                    placeholder="+1 (555) 495-3947"
-                    mask={[
-                      "+",
-                      "1",
-                      " ",
-                      "(",
-                      /[1-9]/,
-                      /\d/,
-                      /\d/,
-                      ")",
-                      " ",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      "-",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
-                  />
-                </Form.Group>
-                <Form.Group label="IP Address">
-                  <Form.MaskedInput
-                    placeholder="127.0.0.1"
-                    mask={[
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      ".",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      ".",
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
-                  />
-                </Form.Group>
-              </Card.Body>
-            </Card>
+            <ComponentDemo>
+              <Card title="Input Mask">
+                <Card.Body>
+                  <Form.Group label="Date">
+                    <Form.MaskedInput
+                      placeholder="00/00/0000"
+                      mask={[
+                        /\d/,
+                        /\d/,
+                        "/",
+                        /\d/,
+                        /\d/,
+                        "/",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="Time">
+                    <Form.MaskedInput
+                      placeholder="00:00:00"
+                      mask={[/\d/, /\d/, ":", /\d/, /\d/, ":", /\d/, /\d/]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="Date & Time">
+                    <Form.MaskedInput
+                      placeholder="00/00/0000 00:00:00"
+                      mask={[
+                        /\d/,
+                        /\d/,
+                        "/",
+                        /\d/,
+                        /\d/,
+                        "/",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        " ",
+                        /\d/,
+                        /\d/,
+                        ":",
+                        /\d/,
+                        /\d/,
+                        ":",
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="Zipcode">
+                    <Form.MaskedInput
+                      placeholder="91210"
+                      mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="Telephone">
+                    <Form.MaskedInput
+                      placeholder="+1 (555) 495-3947"
+                      mask={[
+                        "(",
+                        /[1-9]/,
+                        /\d/,
+                        /\d/,
+                        ")",
+                        " ",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        "-",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="Telephone with Area Code">
+                    <Form.MaskedInput
+                      placeholder="+1 (555) 495-3947"
+                      mask={[
+                        "+",
+                        "1",
+                        " ",
+                        "(",
+                        /[1-9]/,
+                        /\d/,
+                        /\d/,
+                        ")",
+                        " ",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        "-",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </Form.Group>
+                  <Form.Group label="IP Address">
+                    <Form.MaskedInput
+                      placeholder="127.0.0.1"
+                      mask={[
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        ".",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        ".",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </ComponentDemo>
+          </Grid.Col>
+          <Grid.Col lg={12}>
+            <ComponentDemo>
+              <Card title="Form data">
+                <Card.Body>
+                  <Form>
+                    <Form.Group label="Nombre" labelLeft>
+                      <Form.Input type="text"></Form.Input>
+                    </Form.Group>
+                    <Form.Group label="Correo electrónico" labelLeft>
+                      <Form.Input type="email"></Form.Input>
+                    </Form.Group>
+                  </Form>
+                  <Form.Footer>
+                  <Button.List align="right">
+                    <Button color="primary">Guardar</Button>
+                  </Button.List>
+                </Form.Footer>
+                </Card.Body>
+              </Card>
+            </ComponentDemo>
           </Grid.Col>
         </Grid.Row>
       </Page.Card>

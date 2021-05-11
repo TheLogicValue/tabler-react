@@ -1,5 +1,5 @@
 // @flow
-
+import {version} from '../package.json';
 import * as React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 
@@ -63,6 +63,7 @@ const navBarItems: Array<navItem> = [
         to: "/pricing-cards",
         LinkComponent: withRouter(NavLink),
       },
+      { value: "Tabs", to: "/tabs", LinkComponent: withRouter(NavLink) },
     ],
   },
   {
@@ -124,7 +125,7 @@ const navBarItems: Array<navItem> = [
   {
     icon: "file-text",
     value: "Documentation",
-    to: "/documentation/"
+    to: "documentation/"
   },
 ];
 
@@ -152,8 +153,7 @@ class SiteWrapper extends React.Component<Props, State> {
         avatarURL: "demo/faces/male/41.jpg",
         message: (
           <React.Fragment>
-            <strong>Nathan</strong> pushed new commit: Fix page load performance
-            issue.
+            <strong>Santi</strong> updated tabler-react to: <strong>v.{version}</strong>
           </React.Fragment>
         ),
         time: "10 minutes ago",
@@ -237,7 +237,7 @@ class SiteWrapper extends React.Component<Props, State> {
             "Premium and Open Source dashboard template with responsive and high quality UI. For Free!",
           copyright: (
             <React.Fragment>
-              Copyright © 2019
+              Copyright © 2021
               <a href="."> Tabler-react</a>. Theme by
               <a
                 href="https://codecalm.net"

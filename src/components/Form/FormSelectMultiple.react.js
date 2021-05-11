@@ -68,7 +68,7 @@ const customStyles = {
   option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "" : "",
-      backgroundColor: state.isSelected ? "var(--primary)" : "",
+      backgroundColor: state.isSelected ? "var(--quaternary)" : "",
       cursor: "pointer"
     }),
 };
