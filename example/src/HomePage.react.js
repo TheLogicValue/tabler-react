@@ -240,7 +240,7 @@ function Home() {
               <Alert.Link
                 href={
                   process.env.NODE_ENV === "production"
-                    ? "https://tabler.github.io/tabler-react/documentation"
+                    ? "https://santiagocasasrey.github.io/tabler-react/documentation/"
                     : "/documentation"
                 }
               >

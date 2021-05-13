@@ -29,3 +29,12 @@ Then use the Icon `prefix` prop
 ```jsx
 <Icon payment name="visa" />
 ```
+
+#### Size and color icon
+
+```jsx
+<Icon color="secondary" size="big" name="alert-circle"/>
+```
+
+
+        

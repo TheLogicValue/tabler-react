@@ -264,7 +264,7 @@ class SiteWrapper extends React.Component<Props, State> {
               </Grid.Col>
               <Grid.Col auto={true}>
                 <Button
-                  href="https://github.com/tabler/tabler-react"
+                  href="https://github.com/santiagocasasrey/tabler-react"
                   size="sm"
                   outline
                   color="primary"
