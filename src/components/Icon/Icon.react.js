@@ -31,6 +31,14 @@ type Props = {|
    * Use the built-in flag icon set
    */
   +flag?: boolean,
+  /**
+   * Icon color (primary | secondary | tertiary)
+   */
+  +color?: string,
+  /**
+   * Icon size (medium | big)
+   */
+   +size?: string,
 |};
 
 /**
@@ -52,15 +60,22 @@ function Icon({
   onPointerLeave,
   onFocus,
   onBlur,
+  color,
+  size
 }: Props): React.Node {
   const prefix = (payment && "payment") || (flag && "flag") || prefixFromProps;
+  const isColor = color;
+  const isSize = size;
   const classes = cn(
     {
       [prefix]: true,
       [`${prefix}-${name}`]: true,
+      ["color-"+color]: isColor,
+      ["icon-size-"+size]: isSize,
     },
     className
   );
+
   const extraProps = isAriaHidden
     ? {
         "aria-hidden": "true",

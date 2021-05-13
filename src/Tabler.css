@@ -14,19 +14,19 @@ Dashboard UI
   --pink: #ED217C;
   --yellow: #FFBE0B;
   --green: #95C623;
-  --gray: #F2F2F2;
+  --gray: #F5F5F5;
   --gray-dark: #373545;
   --primary: #185A7D;
   --secondary: #3AB0C8;
   --tertiary: #323232;
-  --quaternary: #F8F7F2;
+  --quaternary: #F5F5F5;
   --quinary: #EF6461;
   --senary: #E4B363;
   --septenary: #7BC950;
   --info: #3AB0C8;
   --warning: #E4B363;
   --danger: #EF6461;
-  --light: #F8F7F2;
+  --light: #F5F5F5;
   --dark: #323232;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -2530,9 +2530,9 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary:hover {
-  color: #fff;
-  background-color: var(--primary);
-  border-color: var(--secondary);
+  color: var(--tertiary);
+  background-color: var(--quaternary);
+  border-color: var(--primary);
 }
 
 .btn-primary:focus,
@@ -2568,9 +2568,9 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary:hover {
-  color: #fff;
-  background-color: var(--secondary);
-  border-color: var(--primary);
+  color: var(--tertiary);
+  background-color: var(--quaternary);
+  border-color: var(--secondary);
 }
 
 .btn-secondary:focus,
@@ -6196,6 +6196,22 @@ button.close {
   vertical-align: text-top !important;
 }
 
+.color-primary{
+  color: var(--primary) !important;
+}
+
+.color-secondary{
+  color: var(--secondary) !important;
+}
+
+.color-tertiary{
+  color: var(--tertiary) !important;
+}
+
+.color-quaternary{
+  color: var(--quaternary) !important;
+}
+
 .bg-primary {
   background-color: var(--primary) !important;
 }
@@ -6219,7 +6235,7 @@ button.bg-secondary:focus {
 }
 
 .bg-success {
-  background-color: #5eba00 !important;
+  background-color: var(--green) !important;
 }
 
 a.bg-success:hover,
@@ -9926,7 +9942,7 @@ body {
   -webkit-font-feature-settings: "liga" 0;
   font-feature-settings: "liga" 0;
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -11747,6 +11763,14 @@ button.bg-lime:focus {
 
 .icon i {
   vertical-align: -1px;
+}
+
+.icon-size-medium{
+  font-size: 4rem;
+}
+
+.icon-size-big{
+  font-size: 8rem;
 }
 
 a.icon {
