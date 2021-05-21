@@ -38,34 +38,51 @@ class SiteWrapper extends React.PureComponent<Props, State> {
       footerProps,
       children,
       routerContextComponentType,
-      condensed = false
+      condensed = false,
+      vertical = false
     }: Props = this.props;
 
     const headerPropsWithToggleClick = {
       ...headerProps,
       onMenuToggleClick: this.handleCollapseMobileMenu,
-      condensed: condensed
+      condensed: condensed,
+      vertical: vertical
     };
     const header = React.createElement(Site.Header, headerPropsWithToggleClick);
     const navPropsWithCollapse = {
       ...navProps,
       collapse: this.state.collapseMobileMenu,
       routerContextComponentType: routerContextComponentType,
-      condensed: condensed
+      condensed: condensed,
+      vertical: vertical
     };
     const nav = React.createElement(Site.Nav, navPropsWithCollapse);
     const footer = React.createElement(Site.Footer, footerProps);
 
-    return (
-      <Page>
-        <Page.Main>
-          {header}
-          {nav}
-          {children}
-        </Page.Main>
-        {footer}
-      </Page>
-    );
+    if (vertical){
+      return (
+        <div class="wrapper">
+          <Page.Sidebar></Page.Sidebar>
+          <Page>
+            <Page.Main>
+              {children}
+            </Page.Main>
+            {footer}
+          </Page>
+        </div>
+      );
+    }else{
+      return (
+        <Page>
+          <Page.Main>
+            {header}
+            {nav}
+            {children}
+          </Page.Main>
+          {footer}
+        </Page>
+      );
+    }
   }
 }
 

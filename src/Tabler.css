@@ -4068,14 +4068,26 @@ tbody.collapse.show {
 
 .navbar > .container,
 .navbar > .container-fluid {
-  display: -ms-flexbox;
-  display: flex;
+  /* display: -ms-flexbox;
+  display: flex; */
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+.navbar-vertical.navbar-expand-lg{
+  width: 15rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1030;
+  align-items: flex-start;
+  transition: .3s transform;
+  overflow-x: auto;
 }
 
 .navbar-brand {
@@ -4272,8 +4284,8 @@ tbody.collapse.show {
     justify-content: flex-start;
   }
   .navbar-expand-lg .navbar-nav {
-    -ms-flex-direction: row;
-    flex-direction: row;
+    -ms-flex-direction: column;
+    flex-direction: column;
   }
   .navbar-expand-lg .navbar-nav .dropdown-menu {
     position: absolute;
@@ -4459,6 +4471,10 @@ tbody.collapse.show {
 .navbar-light .navbar-text a:hover,
 .navbar-light .navbar-text a:focus {
   color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-dark{
+  background-color: var(--primary);
 }
 
 .navbar-dark .navbar-brand {
