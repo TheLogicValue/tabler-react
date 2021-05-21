@@ -27,7 +27,7 @@ import SiteWrapper from "../SiteWrapper.react";
 
 function Home() {
   return (
-    <SiteWrapper vertical={true}>
+    <SiteWrapper vertical={true} >
       <Page.Content title="Dashboard">
         <Grid.Row cards={true}>
           <Grid.Col width={6} sm={4} lg={2}>

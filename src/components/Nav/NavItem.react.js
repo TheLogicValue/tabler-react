@@ -3,6 +3,7 @@ import * as React from "react";
 import cn from "classnames";
 import Nav from "../Nav";
 import Dropdown from "../Dropdown";
+import Icon from "../Icon";
 import type { subNavItem } from "./Nav.react";
 import ClickOutside from "../../helpers/ClickOutside.react";
 
@@ -77,7 +78,6 @@ class NavItem extends React.Component<Props, State> {
     }: Props = this.props;
 
     const hasSubNav = forcedHasSubNav || !!subItems || !!subItemsObjects;
-
     const navLink =
       (typeof children === "string" || value) && hasSubNav ? (
         <Reference>
@@ -92,7 +92,8 @@ class NavItem extends React.Component<Props, State> {
               rootRef={ref}
               useExact={useExact}
             >
-              {!hasSubNav && typeof children === "string" ? children : value}
+              {!hasSubNav && typeof children === "string" ? children : <span className="nav-link-title">{value}</span>}
+              {hasSubNav && <Icon name="chevron-down" className="text-right"/>}
             </Nav.Link>
           )}
         </Reference>
@@ -106,7 +107,8 @@ class NavItem extends React.Component<Props, State> {
           active={active}
           useExact={useExact}
         >
-          {!hasSubNav && typeof children === "string" ? children : value}
+          {!hasSubNav && typeof children === "string" ?  children : <span className="nav-link-title">{value}</span>}
+          {hasSubNav && <Icon name="chevron-down" className="text-right"/>}
         </Nav.Link>
       );
 

@@ -197,7 +197,7 @@ class SiteWrapper extends React.Component<Props, State> {
         headerProps={{
           href: "/",
           alt: "Tabler React",
-          imageURL: "./demo/brand/tabler.svg",
+          imageURL: vertical ? "https://preview.tabler.io/static/logo-white.svg" : "./demo/brand/tabler.svg",
           navItems: { itemsObjects: navBarItems},
           notificationsTray: {
             notificationsObjects,

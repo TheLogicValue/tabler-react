@@ -25,10 +25,15 @@ class SiteWrapper extends React.PureComponent<Props, State> {
 
   state = {
     collapseMobileMenu: true,
+    width: window.innerWidth
   };
 
   handleCollapseMobileMenu = (): void => {
     this.setState(s => ({ collapseMobileMenu: !s.collapseMobileMenu }));
+  };
+
+  updateSize = (): void => {
+    this.setState({ width: window.innerWidth });
   };
 
   render(): React.Node {
@@ -42,27 +47,32 @@ class SiteWrapper extends React.PureComponent<Props, State> {
       vertical = false
     }: Props = this.props;
 
+    window.addEventListener('resize', this.updateSize);
+
+    let verticalMode = vertical && this.state.width >= 992;
+
     const headerPropsWithToggleClick = {
       ...headerProps,
       onMenuToggleClick: this.handleCollapseMobileMenu,
       condensed: condensed,
-      vertical: vertical
+      vertical: verticalMode
     };
+
     const header = React.createElement(Site.Header, headerPropsWithToggleClick);
     const navPropsWithCollapse = {
       ...navProps,
       collapse: this.state.collapseMobileMenu,
       routerContextComponentType: routerContextComponentType,
       condensed: condensed,
-      vertical: vertical
+      vertical: verticalMode
     };
     const nav = React.createElement(Site.Nav, navPropsWithCollapse);
     const footer = React.createElement(Site.Footer, footerProps);
 
-    if (vertical){
+    if (verticalMode){
       return (
-        <div class="wrapper">
-          <Page.Sidebar></Page.Sidebar>
+        <div className="wrapper">
+          <Page.Sidebar headerProps={headerProps} nav={nav}/>
           <Page>
             <Page.Main>
               {children}

@@ -28,6 +28,7 @@ Dashboard UI
   --danger: #EF6461;
   --light: #F5F5F5;
   --dark: #323232;
+  --vertical-nav-dark: #232e3c;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -622,14 +623,6 @@ pre code {
   .container {
     max-width: 1200px;
   }
-}
-
-.container-fluid {
-  width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .container-fluid .navbar-brand{
@@ -3994,6 +3987,19 @@ tbody.collapse.show {
 .nav-link.disabled {
   color: #868e96;
 }
+.container-fluid .nav-link{
+  width: inherit;
+}
+
+.container-fluid .nav-link-title{
+  margin-left: 0.5rem;
+}
+
+.container-fluid ul,
+.container-fluid ul li,
+.container-fluid .fe.text-right{
+  width: 100%;
+}
 
 .nav-tabs {
   border-bottom: 1px solid #dee2e6;
@@ -4497,7 +4503,7 @@ tbody.collapse.show {
 }
 
 .navbar-dark{
-  background-color: var(--primary);
+  background-color: var(--vertical-nav-dark);
 }
 
 .navbar-dark .navbar-brand {
@@ -10492,6 +10498,7 @@ body.fixed-header .header {
 }
 
 .header-toggler {
+  cursor: pointer;
   width: 2rem;
   height: 2rem;
   position: relative;
@@ -11855,7 +11862,7 @@ a.icon:hover {
 
 .container-fluid .nav-item{
   padding: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .nav-link .badge,
