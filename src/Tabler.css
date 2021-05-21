@@ -632,6 +632,19 @@ pre code {
   margin-left: auto;
 }
 
+.container-fluid .navbar-brand{
+  padding: 0.5rem 2rem;
+}
+
+.container-fluid .navbar-collapse{
+    width: auto;
+    flex: 1 1 auto;
+}
+
+.wrapper .page{
+  margin-left: 15rem;
+}
+
 .row {
   display: -ms-flexbox;
   display: flex;
@@ -4108,6 +4121,16 @@ tbody.collapse.show {
 .navbar-nav {
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.container-fluid .navbar-nav {
+  display: -ms-grid;
+  display: table-column;
   -ms-flex-direction: column;
   flex-direction: column;
   padding-left: 0;
@@ -11828,6 +11851,11 @@ a.icon:hover {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.container-fluid .nav-item{
+  padding: 0;
+  margin-bottom: 0.5rem;
 }
 
 .nav-link .badge,
