@@ -21,6 +21,10 @@ export type Props = {|
    */
   +imageURL?: string,
   /**
+   * Logo image URL
+   */
+  +darkImageURL?: string,
+  /**
    * The logo alt attribute
    */
   +alt?: string,

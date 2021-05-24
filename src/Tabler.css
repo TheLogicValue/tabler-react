@@ -28,6 +28,7 @@ Dashboard UI
   --danger: #EF6461;
   --light: #F5F5F5;
   --dark: #323232;
+  --vertical-nav-dark: #232e3c;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -624,12 +625,17 @@ pre code {
   }
 }
 
-.container-fluid {
-  width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
-  margin-right: auto;
-  margin-left: auto;
+.container-fluid .navbar-brand{
+  padding: 0.5rem 2rem;
+}
+
+.container-fluid .navbar-collapse{
+    width: auto;
+    flex: 1 1 auto;
+}
+
+.wrapper .page{
+  margin-left: 15rem;
 }
 
 .row {
@@ -3854,6 +3860,11 @@ tbody.collapse.show {
   appearance: none;
 }
 
+.custom-select-react.disabled > [class*="-ValueContainer"] {
+  color: #868e96;
+  background-color: #e9ecef;
+}
+
 .custom-select:focus {
   border-color: #1991eb;
   outline: 0;
@@ -3981,6 +3992,19 @@ tbody.collapse.show {
 .nav-link.disabled {
   color: #868e96;
 }
+.container-fluid .nav-link{
+  width: inherit;
+}
+
+.container-fluid .nav-link-title{
+  margin-left: 0.5rem;
+}
+
+.container-fluid ul,
+.container-fluid ul li,
+.container-fluid .fe.text-right{
+  width: 100%;
+}
 
 .nav-tabs {
   border-bottom: 1px solid #dee2e6;
@@ -4013,6 +4037,17 @@ tbody.collapse.show {
   color: var(--dark);
   background-color: #f5f7fb;
   border-color: #dee2e6 #dee2e6 #f5f7fb;
+}
+
+.nav-link-vertical{
+  margin-left: 6px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-link-vertical:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(101,109,119,.06);
 }
 
 .nav-tabs .dropdown-menu {
@@ -4068,14 +4103,26 @@ tbody.collapse.show {
 
 .navbar > .container,
 .navbar > .container-fluid {
-  display: -ms-flexbox;
-  display: flex;
+  /* display: -ms-flexbox;
+  display: flex; */
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+.navbar-vertical.navbar-expand-lg{
+  width: 15rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1030;
+  align-items: flex-start;
+  transition: .3s transform;
+  overflow-x: auto;
 }
 
 .navbar-brand {
@@ -4096,6 +4143,16 @@ tbody.collapse.show {
 .navbar-nav {
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.container-fluid .navbar-nav {
+  display: -ms-grid;
+  display: table-column;
   -ms-flex-direction: column;
   flex-direction: column;
   padding-left: 0;
@@ -4272,8 +4329,8 @@ tbody.collapse.show {
     justify-content: flex-start;
   }
   .navbar-expand-lg .navbar-nav {
-    -ms-flex-direction: row;
-    flex-direction: row;
+    -ms-flex-direction: column;
+    flex-direction: column;
   }
   .navbar-expand-lg .navbar-nav .dropdown-menu {
     position: absolute;
@@ -4461,6 +4518,10 @@ tbody.collapse.show {
   color: rgba(0, 0, 0, 0.9);
 }
 
+.navbar-dark{
+  background-color: var(--vertical-nav-dark);
+}
+
 .navbar-dark .navbar-brand {
   color: #fff;
 }
@@ -4486,7 +4547,8 @@ tbody.collapse.show {
 .navbar-dark .navbar-nav .show > .nav-link,
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .nav-link.active,
+.nav-link-vertical.active {
   color: #fff;
 }
 
@@ -10453,6 +10515,7 @@ body.fixed-header .header {
 }
 
 .header-toggler {
+  cursor: pointer;
   width: 2rem;
   height: 2rem;
   position: relative;
@@ -11812,6 +11875,11 @@ a.icon:hover {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.container-fluid .nav-item{
+  padding: 0;
+  margin-bottom: 0.8rem;
 }
 
 .nav-link .badge,

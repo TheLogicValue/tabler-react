@@ -1,6 +1,6 @@
 // @flow
 
-import * as React from "react";
+import React, {useState} from "react";
 import cn from "classnames";
 import Select from 'react-select';
 
@@ -31,6 +31,7 @@ type Props = {|
   +name?: string,
   +value?: string | number,
   +disabled?: boolean,
+  +clearable?: boolean,
   +readOnly?: boolean,
   +multiple?: boolean,
   
@@ -45,7 +46,6 @@ function FormSelectReact(props: Props): React.Node {
     invalid,
     cross,
     error,
-    disabled,
     readOnly,
     name,
     value,
@@ -62,6 +62,9 @@ function FormSelectReact(props: Props): React.Node {
     getValue,
     hasValue,
     isMulti,
+    isDisabled,
+    isClearable,
+    isLoading,
     options,
     selectOption,
     selectProps,
@@ -69,10 +72,12 @@ function FormSelectReact(props: Props): React.Node {
     emotion,
     placeholder
   } = props;
+
   const classes = cn(
     {
       "form-control": false,
       "custom-select-react": true,
+      "disabled": isDisabled,
       "is-valid": valid,
       "state-valid": tick,
       "is-invalid": invalid || !!error,
@@ -112,7 +117,6 @@ function FormSelectReact(props: Props): React.Node {
         onPointerLeave={onPointerLeave}
         onClick={onClick}
         className={classes}
-        disabled={disabled}
         readOnly={readOnly}
         multiple={multiple}
         clearValue={clearValue}
@@ -120,6 +124,9 @@ function FormSelectReact(props: Props): React.Node {
         getValue={getValue}
         hasValue={hasValue}
         isMulti={isMulti}
+        isClearable={isClearable}
+        isDisabled={isDisabled}
+        isLoading={isLoading}
         options={options}
         selectOption={selectOption}
         selectProps={selectProps}

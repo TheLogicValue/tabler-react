@@ -25,10 +25,15 @@ class SiteWrapper extends React.PureComponent<Props, State> {
 
   state = {
     collapseMobileMenu: true,
+    width: window.innerWidth
   };
 
   handleCollapseMobileMenu = (): void => {
     this.setState(s => ({ collapseMobileMenu: !s.collapseMobileMenu }));
+  };
+
+  updateSize = (): void => {
+    this.setState({ width: window.innerWidth });
   };
 
   render(): React.Node {
@@ -38,34 +43,56 @@ class SiteWrapper extends React.PureComponent<Props, State> {
       footerProps,
       children,
       routerContextComponentType,
-      condensed = false
+      condensed = false,
+      vertical = false
     }: Props = this.props;
+
+    window.addEventListener('resize', this.updateSize);
+
+    let verticalMode = vertical && this.state.width >= 992;
 
     const headerPropsWithToggleClick = {
       ...headerProps,
       onMenuToggleClick: this.handleCollapseMobileMenu,
-      condensed: condensed
+      condensed: condensed,
+      vertical: verticalMode
     };
+
     const header = React.createElement(Site.Header, headerPropsWithToggleClick);
     const navPropsWithCollapse = {
       ...navProps,
       collapse: this.state.collapseMobileMenu,
       routerContextComponentType: routerContextComponentType,
-      condensed: condensed
+      condensed: condensed,
+      vertical: verticalMode
     };
     const nav = React.createElement(Site.Nav, navPropsWithCollapse);
     const footer = React.createElement(Site.Footer, footerProps);
 
-    return (
-      <Page>
-        <Page.Main>
-          {header}
-          {nav}
-          {children}
-        </Page.Main>
-        {footer}
-      </Page>
-    );
+    if (verticalMode){
+      return (
+        <div className="wrapper">
+          <Page.Sidebar headerProps={headerProps} nav={nav}/>
+          <Page>
+            <Page.Main>
+              {children}
+            </Page.Main>
+            {footer}
+          </Page>
+        </div>
+      );
+    }else{
+      return (
+        <Page>
+          <Page.Main>
+            {header}
+            {nav}
+            {children}
+          </Page.Main>
+          {footer}
+        </Page>
+      );
+    }
   }
 }
 

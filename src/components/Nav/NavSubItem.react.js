@@ -23,7 +23,7 @@ function NavSubItem({
   useExact,
 }: Props): React.Node {
   return (
-    <Dropdown.Item to={to} icon={icon} RootComponent={LinkComponent} useExact={useExact || false}>
+    <Dropdown.Item className={className} to={to} icon={icon} RootComponent={LinkComponent} useExact={useExact || false}>
       {value || children}
     </Dropdown.Item>
   );
