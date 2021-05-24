@@ -28,6 +28,7 @@ export type Props = {|
    * Show the DropdownMenu
    */
   show?: boolean,
+  +vertical?: boolean,
 |};
 
 /**
@@ -41,35 +42,48 @@ function DropdownMenu({
   arrowPosition = "left",
   style,
   rootRef,
+  vertical,
   show = false,
 }: Props): React.Node {
   const classes = cn(
     {
-      "dropdown-menu": true,
+      "dropdown-menu": !vertical,
       [`dropdown-menu-${arrowPosition}`]: arrowPosition,
       [`dropdown-menu-arrow`]: arrow,
       show: show,
     },
     className
   );
-  return (
-    show && (
-      <Popper placement={position} eventsEnabled={true} positionFixed={false}>
-        {({ ref, style, placement }: PopperChildrenProps) => {
-          return (
-            <div
-              className={classes}
-              data-placement={placement}
-              style={style}
-              ref={ref}
-            >
-              {children}
-            </div>
-          );
-        }}
-      </Popper>
-    )
-  );
+  if (vertical){
+    return (
+      show && (
+      <div
+        className={classes}
+      >
+        {children}
+      </div>)
+    );
+  }
+  else{
+    return (
+      show && (
+        <Popper placement={position} eventsEnabled={true} positionFixed={false}>
+          {({ ref, style, placement }: PopperChildrenProps) => {
+            return (
+              <div
+                className={classes}
+                data-placement={placement}
+                style={style}
+                ref={ref}
+              >
+                {children}
+              </div>
+            );
+          }}
+        </Popper>
+      )
+    );
+  }
 }
 
 DropdownMenu.displayName = "Dropdown.Menu";

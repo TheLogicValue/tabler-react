@@ -18,6 +18,7 @@ type Props = {|
   +to?: string,
   +icon?: string,
   +type?: "li" | "div",
+  +vertical?: boolean,
   /**
    * Make this item behave like it has a subNav even if you dont use subItems or subItemsObjects
    */
@@ -71,6 +72,7 @@ class NavItem extends React.Component<Props, State> {
       icon,
       hasSubNav: forcedHasSubNav,
       active,
+      vertical,
       subItems,
       subItemsObjects,
       useExact,
@@ -117,11 +119,12 @@ class NavItem extends React.Component<Props, State> {
         {navLink}
         {typeof children !== "string" && !hasSubNav && children}
         {hasSubNav && (
-          <Dropdown.Menu arrow show={this.state.isOpen} position={position}>
+          <Dropdown.Menu arrow={!vertical} vertical={vertical} show={this.state.isOpen} position={position}>
             {subItems ||
               (subItemsObjects &&
                 subItemsObjects.map((a, i) => (
                   <Nav.SubItem
+                    className={ vertical ? "nav-link-vertical" : ""}
                     key={i}
                     value={a.value}
                     to={a.to}
@@ -139,11 +142,12 @@ class NavItem extends React.Component<Props, State> {
     const wrapperClasses = cn({
       "nav-item": true,
       show: this.state.isOpen,
+      "dropdown": vertical,
     });
 
     const wrappedChildren =
       type === "div" ? (
-        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>
+        <ClickOutside onOutsideClick={() => vertical ? null :this.setState({ isOpen: false })}>
           {({ setElementRef }) => (
             <div
               className={wrapperClasses}
@@ -155,7 +159,7 @@ class NavItem extends React.Component<Props, State> {
           )}
         </ClickOutside>
       ) : (
-        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>
+        <ClickOutside onOutsideClick={() => vertical ? null :this.setState({ isOpen: false })}>
           {({ setElementRef }) => (
             <li
               className={wrapperClasses}

@@ -4034,6 +4034,17 @@ tbody.collapse.show {
   border-color: #dee2e6 #dee2e6 #f5f7fb;
 }
 
+.nav-link-vertical{
+  margin-left: 6px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-link-vertical:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(101,109,119,.06);
+}
+
 .nav-tabs .dropdown-menu {
   margin-top: -1px;
   border-top-left-radius: 0;
@@ -4531,7 +4542,8 @@ tbody.collapse.show {
 .navbar-dark .navbar-nav .show > .nav-link,
 .navbar-dark .navbar-nav .active > .nav-link,
 .navbar-dark .navbar-nav .nav-link.show,
-.navbar-dark .navbar-nav .nav-link.active {
+.navbar-dark .navbar-nav .nav-link.active,
+.nav-link-vertical.active {
   color: #fff;
 }
 
