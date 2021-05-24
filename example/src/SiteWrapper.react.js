@@ -58,6 +58,7 @@ const navBarItems: Array<navItem> = [
       },
       { value: "Charts", to: "/charts", LinkComponent: withRouter(NavLink) },
       { value: "CondensedNav", to: "/condensed", LinkComponent: withRouter(NavLink) },
+      { value: "VerticalNav", to: "/vertical", LinkComponent: withRouter(NavLink) },
       {
         value: "Pricing Cards",
         to: "/pricing-cards",
@@ -188,13 +189,16 @@ class SiteWrapper extends React.Component<Props, State> {
       false
     );
     const condensed = this.props.condensed || this.state.condensed;
+    const vertical = this.props.vertical || this.state.vertical;
     return (
       <Site.Wrapper
         condensed={condensed}
+        vertical={vertical}
         headerProps={{
           href: "/",
           alt: "Tabler React",
           imageURL: "./demo/brand/tabler.svg",
+          darkImageUrl: "https://preview.tabler.io/static/logo-white.svg",
           navItems: { itemsObjects: navBarItems},
           notificationsTray: {
             notificationsObjects,

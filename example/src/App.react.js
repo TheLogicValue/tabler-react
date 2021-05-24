@@ -30,6 +30,7 @@ import ButtonsPage from "./components/ButtonPage.react";
 import ModalPage from "./components/ModalPage.react";
 import LoadersPage from "./components/LoadersPage.react";
 import TabsPage from "./components/TabsPage.react";
+import VerticalPage from "./interface/VerticalNavPage.react";
 
 import "tabler-react/dist/Tabler.css";
 
@@ -67,6 +68,7 @@ function App(props: Props): React.Node {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/store" component={StoreCardsPage} />
           <Route exact path="/tabs" component={TabsPage} />
+          <Route exact path="/vertical" component={VerticalPage} />
           <Route component={Error404} />
         </Switch>
       </Router>

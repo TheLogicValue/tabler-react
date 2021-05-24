@@ -41,6 +41,7 @@ export type Props = {|
    */
   +collapse?: boolean,
   +routerContextComponentType?: React.ElementType,
+  +vertical?: boolean,
 |};
 
 const SiteNav = ({
@@ -52,35 +53,47 @@ const SiteNav = ({
   collapse = true,
   routerContextComponentType,
   stickyTop = false,
-  condensed = false
+  condensed = false,
+  vertical = false
 }: Props): React.Node => {
   const sticky = stickyTop ? "sticky-top" : ""
   const isCondensed = condensed ? "" : "d-lg-flex"
   const classes = cn("header p-0 " + sticky + " " + isCondensed, { collapse });
-  return (
-    <div className={classes}>
-      <Container>
-        {children || (
-          <Grid.Row className="align-items-center">
-            {/* <Grid.Col lg={3} className="ml-auto" ignoreCol={true}> */}
-              {/* @TODO: add InlineSearchForm  */}
-              {/* {rightColumnComponent || (withSearchForm && <InlineSearchForm />)} */}
-              {/* {rightColumnComponent} */}
-            {/* </Grid.Col> */}
-            <Grid.Col className="col-lg order-lg-first">
-              <Nav
-                tabbed
-                className="border-0 flex-column flex-lg-row"
-                items={items}
-                itemsObjects={itemsObjects}
-                routerContextComponentType={routerContextComponentType}
-              />
-            </Grid.Col>
-          </Grid.Row>
-        )}
-      </Container>
-    </div>
-  );
+
+  if (vertical){
+    return (
+      <div className="collapse navbar-collapse" id="navbar-menu">
+        <Nav
+          tabbed={false}
+          vertical
+          className="navbar-nav pt-lg-3"
+          items={items}
+          itemsObjects={itemsObjects}
+          routerContextComponentType={routerContextComponentType}
+        />
+      </div>
+    )
+  }else{
+    return (
+      <div className={classes}>
+        <Container>
+          {children || (
+            <Grid.Row className="align-items-center">
+              <Grid.Col className="col-lg order-lg-first">
+                <Nav
+                  tabbed
+                  className="border-0 flex-column flex-lg-row"
+                  items={items}
+                  itemsObjects={itemsObjects}
+                  routerContextComponentType={routerContextComponentType}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          )}
+        </Container>
+      </div>
+    );
+  }
 };
 
 SiteNav.displayName = "Site.Nav";

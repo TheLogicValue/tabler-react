@@ -1,3 +1,9 @@
+# [1.41.0](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.6...v1.41.0) (2021-05-24)
+
+### Features
+- **FormSelectReact:** Add isClearable, isDisabled and isLoading properties.
+- **PageSideBar:** Add vertical menu.
+
 # [1.40.6](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.5...v1.40.6) (2021-05-13)
 
 ### Features

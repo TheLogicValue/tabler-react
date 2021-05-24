@@ -3,6 +3,7 @@ import * as React from "react";
 import cn from "classnames";
 import Nav from "../Nav";
 import Dropdown from "../Dropdown";
+import Icon from "../Icon";
 import type { subNavItem } from "./Nav.react";
 import ClickOutside from "../../helpers/ClickOutside.react";
 
@@ -17,6 +18,7 @@ type Props = {|
   +to?: string,
   +icon?: string,
   +type?: "li" | "div",
+  +vertical?: boolean,
   /**
    * Make this item behave like it has a subNav even if you dont use subItems or subItemsObjects
    */
@@ -70,6 +72,7 @@ class NavItem extends React.Component<Props, State> {
       icon,
       hasSubNav: forcedHasSubNav,
       active,
+      vertical,
       subItems,
       subItemsObjects,
       useExact,
@@ -77,7 +80,6 @@ class NavItem extends React.Component<Props, State> {
     }: Props = this.props;
 
     const hasSubNav = forcedHasSubNav || !!subItems || !!subItemsObjects;
-
     const navLink =
       (typeof children === "string" || value) && hasSubNav ? (
         <Reference>
@@ -92,7 +94,8 @@ class NavItem extends React.Component<Props, State> {
               rootRef={ref}
               useExact={useExact}
             >
-              {!hasSubNav && typeof children === "string" ? children : value}
+              {!hasSubNav && typeof children === "string" ? children : <span className="nav-link-title">{value}</span>}
+              {hasSubNav && <Icon name="chevron-down" className="text-right"/>}
             </Nav.Link>
           )}
         </Reference>
@@ -106,7 +109,8 @@ class NavItem extends React.Component<Props, State> {
           active={active}
           useExact={useExact}
         >
-          {!hasSubNav && typeof children === "string" ? children : value}
+          {!hasSubNav && typeof children === "string" ?  children : <span className="nav-link-title">{value}</span>}
+          {hasSubNav && <Icon name="chevron-down" className="text-right"/>}
         </Nav.Link>
       );
 
@@ -115,11 +119,12 @@ class NavItem extends React.Component<Props, State> {
         {navLink}
         {typeof children !== "string" && !hasSubNav && children}
         {hasSubNav && (
-          <Dropdown.Menu arrow show={this.state.isOpen} position={position}>
+          <Dropdown.Menu arrow={!vertical} vertical={vertical} show={this.state.isOpen} position={position}>
             {subItems ||
               (subItemsObjects &&
                 subItemsObjects.map((a, i) => (
                   <Nav.SubItem
+                    className={ vertical ? "nav-link-vertical" : ""}
                     key={i}
                     value={a.value}
                     to={a.to}
@@ -137,11 +142,12 @@ class NavItem extends React.Component<Props, State> {
     const wrapperClasses = cn({
       "nav-item": true,
       show: this.state.isOpen,
+      "dropdown": vertical,
     });
 
     const wrappedChildren =
       type === "div" ? (
-        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>
+        <ClickOutside onOutsideClick={() => vertical ? null :this.setState({ isOpen: false })}>
           {({ setElementRef }) => (
             <div
               className={wrapperClasses}
@@ -153,7 +159,7 @@ class NavItem extends React.Component<Props, State> {
           )}
         </ClickOutside>
       ) : (
-        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>
+        <ClickOutside onOutsideClick={() => vertical ? null :this.setState({ isOpen: false })}>
           {({ setElementRef }) => (
             <li
               className={wrapperClasses}

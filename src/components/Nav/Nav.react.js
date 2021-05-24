@@ -30,6 +30,7 @@ type Props = {|
   +children?: React.Node,
   +className?: string,
   +tabbed?: boolean,
+  +vertical?: boolean,
   // eslint-disable-next-line no-use-before-define
   +items?: React.ChildrenArray<React.Element<typeof Nav.Item>>,
   +itemsObjects?: Array<navItem>,
@@ -93,6 +94,7 @@ class Nav extends React.Component<Props, State> {
       className,
       children,
       tabbed = true,
+      vertical = false,
       items,
       itemsObjects,
       routerContextComponentType,
@@ -121,6 +123,7 @@ class Nav extends React.Component<Props, State> {
             (itemsObjects &&
               itemsObjects.map((a, i) => (
                 <Nav.Item
+                  vertical={vertical}
                   key={i}
                   icon={a.icon}
                   value={a.value}
