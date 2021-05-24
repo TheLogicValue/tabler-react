@@ -22,7 +22,7 @@ function PageSidebar({
           </button>
           <h1 className="navbar-brand navbar-brand-autodark">
             <a href=".">
-              <img src={headerProps.imageURL} width="110" height="32" alt="Tabler" className="navbar-brand-image"/>
+              <img src={headerProps.darkImageUrl} width="120px" alt="Tabler" className="navbar-brand-image"/>
             </a>
           </h1>
           {nav}

@@ -3860,6 +3860,11 @@ tbody.collapse.show {
   appearance: none;
 }
 
+.custom-select-react.disabled > [class*="-ValueContainer"] {
+  color: #868e96;
+  background-color: #e9ecef;
+}
+
 .custom-select:focus {
   border-color: #1991eb;
   outline: 0;

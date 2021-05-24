@@ -277,6 +277,36 @@ function FormElements() {
               </Form.Group>
             </ComponentDemo>
             <ComponentDemo>
+              <Form.Group label="SelectReact disabled">
+                <Form.SelectReact
+                  isDisabled
+                  placeholder="Selecciona un país"
+                  name="paises"
+                  options={countries}
+                />
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
+              <Form.Group label="SelectReact clearable">
+                <Form.SelectReact
+                  isClearable
+                  placeholder="Selecciona un país"
+                  name="paises"
+                  options={countries}
+                />
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
+              <Form.Group label="SelectReact loading">
+                <Form.SelectReact
+                  isLoading
+                  placeholder="Selecciona un país"
+                  name="paises"
+                  options={countries}
+                />
+              </Form.Group>
+            </ComponentDemo>
+            <ComponentDemo>
               <Form.Group label="SelectMultiple">
                 <Form.SelectMultiple
                   placeholder="Seleccionar Columnas"

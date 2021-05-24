@@ -1,10 +1,10 @@
-# Update - May 2021: Version 1.40.6
+# Update - May 2021: Version 1.41.0
 
 # Tabler React
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![NPM](https://img.shields.io/badge/github-v.1.40.6-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![NPM](https://img.shields.io/badge/github-v.1.41.0-blue)](https://www.github.com/santiagocasasrey/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Install
 
@@ -51,6 +51,7 @@ To setup and run a local copy:
 2.  Run `yarn install` in the root folder
 3.  Run `yarn install` in the example folder
 4.  In seperate terminal windows, run `yarn start` in the root and example folders.
+5.  If you see an error with react-hooks and two copies of react or react-dom execute: `npm link .\example\node_modules\react\` and `npm link .\example\node_modules\react-dom\`
 
 You should now be up and running with live browser reloading of the example website while you work on Tabler React components in the /src folder.
 
