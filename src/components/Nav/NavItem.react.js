@@ -54,10 +54,12 @@ class NavItem extends React.Component<Props, State> {
     isOpen: false,
   };
 
-  _handleOnClick = (): void => {
-    if (this.props.hasSubNav) {
+  _handleOnClick = (event): void => {
+    
+    if ((this.props.hasSubNav && !this.props.vertical) || (this.props.vertical && !event.target.className.includes("nav-link-vertical"))) {
       this.setState(s => ({ isOpen: !s.isOpen }));
     }
+
     if (this.props.onClick) this.props.onClick();
   };
 
@@ -151,7 +153,7 @@ class NavItem extends React.Component<Props, State> {
           {({ setElementRef }) => (
             <div
               className={wrapperClasses}
-              onClick={this._handleOnClick}
+              onClick={(e) => this._handleOnClick(e)}
               ref={setElementRef}
             >
               {childrenForAll}
@@ -163,7 +165,7 @@ class NavItem extends React.Component<Props, State> {
           {({ setElementRef }) => (
             <li
               className={wrapperClasses}
-              onClick={this._handleOnClick}
+              onClick={(e) => this._handleOnClick(e)}
               ref={setElementRef}
             >
               {childrenForAll}
