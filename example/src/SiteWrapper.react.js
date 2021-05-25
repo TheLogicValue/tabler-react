@@ -57,14 +57,14 @@ const navBarItems: Array<navItem> = [
         LinkComponent: withRouter(NavLink),
       },
       { value: "Charts", to: "/charts", LinkComponent: withRouter(NavLink) },
-      { value: "CondensedNav", to: "/condensed", LinkComponent: withRouter(NavLink) },
-      { value: "VerticalNav", to: "/vertical", LinkComponent: withRouter(NavLink) },
       {
         value: "Pricing Cards",
         to: "/pricing-cards",
         LinkComponent: withRouter(NavLink),
       },
       { value: "Tabs", to: "/tabs", LinkComponent: withRouter(NavLink) },
+      { value: "CondensedNav", to: "/condensed", LinkComponent: withRouter(NavLink) },
+      { value: "VerticalNav", to: "/vertical", LinkComponent: withRouter(NavLink) },
     ],
   },
   {
