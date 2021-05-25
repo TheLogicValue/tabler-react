@@ -1,6 +1,7 @@
 # [1.41.1](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.0...v1.41.1) (2021-05-25)
 
 ### Bug Fixes
+- **NavItem:** Add onClick param.
 - **PageSideBar:** Avoid close dropdown when you click on an item in a vertical menu.
 
 # [1.41.0](https://github.com/santiagocasasrey/tabler-react/compare/v1.40.6...v1.41.0) (2021-05-24)

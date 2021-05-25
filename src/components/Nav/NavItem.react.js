@@ -131,6 +131,7 @@ class NavItem extends React.Component<Props, State> {
                     value={a.value}
                     to={a.to}
                     icon={a.icon}
+                    onClick={a.onClick}
                     LinkComponent={a.LinkComponent}
                     useExact={a.useExact}
                   />

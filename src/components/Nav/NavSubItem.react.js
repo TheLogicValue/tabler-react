@@ -10,6 +10,7 @@ type Props = {|
   +icon?: string,
   +value?: string,
   +useExact?: boolean,
+  +onClick?: (event: SyntheticMouseEvent<*>) => mixed,
 |};
 
 function NavSubItem({
@@ -21,9 +22,11 @@ function NavSubItem({
   hasSubNav,
   value,
   useExact,
+  onClick
 }: Props): React.Node {
+  console.log(onClick)
   return (
-    <Dropdown.Item className={className} to={to} icon={icon} RootComponent={LinkComponent} useExact={useExact || false}>
+    <Dropdown.Item className={className} onClick={onClick} to={to} icon={icon} RootComponent={LinkComponent} useExact={useExact || false}>
       {value || children}
     </Dropdown.Item>
   );

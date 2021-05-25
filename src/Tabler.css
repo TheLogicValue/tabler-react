@@ -207,6 +207,18 @@ a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
+
+.navbar-dark a:not([href]):not([tabindex]):not(.nav-link) {
+  color: #6e7687;
+}
+
+.navbar-dark a:not([href]):not([tabindex]):not(.nav-link):hover,
+.navbar-dark a:not([href]):not([tabindex]):not(.nav-link):focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: rgba(101,109,119,.06);
+}
+
 pre,
 code,
 kbd,
@@ -13848,6 +13860,10 @@ Card alert
 .dropdown-menu-arrow.dropdown-menu-right:after {
   left: auto;
   right: 12px;
+}
+
+.dropdown-menu-left{
+  margin-top: 0.5rem;
 }
 
 .dropdown-toggle {
