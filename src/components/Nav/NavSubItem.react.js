@@ -24,7 +24,6 @@ function NavSubItem({
   useExact,
   onClick
 }: Props): React.Node {
-  console.log(onClick)
   return (
     <Dropdown.Item className={className} onClick={onClick} to={to} icon={icon} RootComponent={LinkComponent} useExact={useExact || false}>
       {value || children}

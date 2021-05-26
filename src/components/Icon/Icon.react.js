@@ -36,7 +36,7 @@ type Props = {|
    */
   +color?: string,
   /**
-   * Icon size (medium | big)
+   * Icon size (large | medium | big)
    */
    +size?: string,
 |};
@@ -71,7 +71,7 @@ function Icon({
       [prefix]: true,
       [`${prefix}-${name}`]: true,
       ["color-"+color]: isColor,
-      ["icon-size-"+size]: isSize,
+      ["icon-size-" + size]: isSize,
     },
     className
   );

@@ -1,3 +1,8 @@
+# [1.41.2](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.1...v1.41.2) (2021-05-26)
+
+### Features
+- **Icon:** Add new size large.
+
 # [1.41.1](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.0...v1.41.1) (2021-05-25)
 
 ### Bug Fixes
