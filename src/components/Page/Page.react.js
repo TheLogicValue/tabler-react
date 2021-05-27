@@ -9,7 +9,7 @@ import PageContentWithSidebar from "./PageContentWithSidebar.react";
 import PageCard from "./PageCard.react";
 import PageTitle from "./PageTitle.react";
 import PageMapHeader from "./PageMapHeader.react";
-import PageSidebar from "./PageSidebar.react";
+import PageSideBar from "./PageSideBar.react";
 
 type Props = {|
   +children?: React.Node,
@@ -28,6 +28,6 @@ Page.ContentWithSidebar = PageContentWithSidebar;
 Page.Card = PageCard;
 Page.Title = PageTitle;
 Page.MapHeader = PageMapHeader;
-Page.Sidebar = PageSidebar;
+Page.Sidebar = PageSideBar;
 
 export default Page;

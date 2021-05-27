@@ -1,7 +1,7 @@
 {
   "name": "tabler-react-example",
   "homepage": "https://santiagocasasrey.github.io/tabler-react",
-  "version": "1.41.1",
+  "version": "1.41.2",
   "private": true,
   "license": "MIT",
   "dependencies": {

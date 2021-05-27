@@ -11840,6 +11840,10 @@ button.bg-lime:focus {
   vertical-align: -1px;
 }
 
+.icon-size-large{
+  font-size: large;
+}
+
 .icon-size-medium{
   font-size: 4rem;
 }
