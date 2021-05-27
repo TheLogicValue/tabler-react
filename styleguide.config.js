@@ -1,6 +1,6 @@
 module.exports = {
   components: "src/components/**/*.react.{js,jsx}",
-  webpackConfig: require("./example/node_modules/react-scripts/config/webpack.config.dev.js"),
+  webpackConfig: require("./example/node_modules/react-scripts/config/webpack.config.js"),
   getExampleFilename(componentPath) {
     return componentPath.replace(/\.react.js?$/, ".examples.md");
   },
