@@ -30,6 +30,7 @@ type Props = {|
   +label?: string,
   +name?: string,
   +value?: string | number,
+  +defaultValue?: string | number,
   +disabled?: boolean,
   +clearable?: boolean,
   +readOnly?: boolean,
@@ -49,6 +50,7 @@ function FormSelectReact(props: Props): React.Node {
     readOnly,
     name,
     value,
+    defaultValue,
     onChange,
     onBlur,
     onMouseEnter,
@@ -109,6 +111,7 @@ function FormSelectReact(props: Props): React.Node {
       <Select
         name={name}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         onBlur={onBlur}
         onMouseEnter={onMouseEnter}

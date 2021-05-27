@@ -273,6 +273,7 @@ function FormElements() {
                   placeholder="Selecciona un país"
                   name="paises"
                   options={countries}
+                  defaultValue={countries[0]}
                 />
               </Form.Group>
             </ComponentDemo>
