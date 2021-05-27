@@ -1,6 +1,13 @@
 module.exports = {
   components: "src/components/**/*.react.{js,jsx}",
   webpackConfig: require("./example/node_modules/react-scripts/config/webpack.config.js"),
+  dangerouslyUpdateWebpackConfig(webpackConfig, env) {
+      webpackConfig.output = {
+          ...webpackConfig.output,
+          publicPath: process.env.PUBLIC_URL || ''
+      };
+      return webpackConfig;
+  },
   getExampleFilename(componentPath) {
     return componentPath.replace(/\.react.js?$/, ".examples.md");
   },
