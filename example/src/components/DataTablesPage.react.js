@@ -31,6 +31,57 @@ function DataTablesPage(): React.Node {
     }
 }
 
+const numericColumn = {
+  filterOptions: [
+        {
+            displayKey: 'mayorQue',
+            displayName: 'Mayor que',
+            test: function (filterValue, cellValue) {
+                return cellValue != null && cellValue > filterValue;
+            },
+        },
+        {
+            displayKey: 'menorQue',
+            displayName: 'Menor que',
+            test: function (filterValue, cellValue) {
+                return cellValue != null && cellValue < filterValue;
+            },
+        },
+    ],
+    alwaysShowBothConditions: true,
+    defaultJoinOperator: 'AND',
+    buttons: ['apply', 'reset'],
+    closeOnApply: 'agNumberColumnFilter',
+    numberParser: function (text) {
+    return text == null || "-"
+        ? null
+        : parseFloat(text.replace(',', ''));
+  },
+}
+
+const dateFilterParams = {
+  comparator: (filterLocalDateAtMidnight, cellValue) => {
+      const dateAsString = cellValue;
+
+      if (dateAsString == null) {
+          return 0;
+      }
+
+      const dateParts = dateAsString.split('/');
+      const day = Number(dateParts[2]);
+      const month = Number(dateParts[1]) - 1;
+      const year = Number(dateParts[0]);
+      const cellDate = new Date(year, month, day);
+
+      if (cellDate < filterLocalDateAtMidnight) {
+          return -1;
+      } else if (cellDate > filterLocalDateAtMidnight) {
+          return 1;
+      }
+      return 0;
+  }
+};
+
   const dataRow = () =>{
     return [
       {id:1, date:"31-12-2020", name:"Jaques", city:"Granada", pass:null, budget: 123},
@@ -44,12 +95,12 @@ function DataTablesPage(): React.Node {
   
   const dataColumn = () =>{
     return [
-      {header:"Id", item:"id", sort:"", valueFormatter:null, type:""},
-      {header:"Date", item:"date", sort:"", valueFormatter: null, type:""},
-      {header:"Name", item:"name", sort:"asc", valueFormatter:null, type:""},
-      {header:"City", item:"city", sort:"", valueFormatter:null, type:""},
+      {header:"Id", item:"id", maxWidth:60},
+      {header:"Date", item:"date", filter: true,filterParams: dateFilterParams},
+      {header:"Name", item:"name", sort:"asc", filter: true},
+      {header:"City", item:"city"},
       {header:"Pass", item:"pass", renderIcon: iconValueFormatter},
-      {header:"Budget", item:"budget", sort:"", valueFormatter: params => addMilesSeparatorAndRound(params.value) + " €", type:"rightAligned"}
+      {header:"Budget", item:"budget", filter: true,filterParams: numericColumn, valueFormatter: params => addMilesSeparatorAndRound(params.value) + " €", type:"rightAligned"}
     ]
   }
 
@@ -84,7 +135,7 @@ function DataTablesPage(): React.Node {
       <Page.Content title="DataTables">
       {alerts}
         <Grid.Row>
-          <Grid.Col lg={8}>
+          <Grid.Col lg={12}>
             <Card>
               <Card.Header>
                 <Card.Title>DataTable</Card.Title>

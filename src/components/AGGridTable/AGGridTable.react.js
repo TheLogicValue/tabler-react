@@ -125,15 +125,17 @@ class AGGridTable extends React.Component<Props, State> {
                         paginationPageSize={pageSize}
                     >
                         {
-                            dataColumn.map(({ header, item, valueFormatter, type, maxWidth,renderIcon, sort = "" }) => {
+                            dataColumn.map(({ header, item, valueFormatter, type, maxWidth,renderIcon,filter, filterParams, sort = "" }) => {
                                 return <AgGridColumn key={item} 
-                                                    headerName={header} 
-                                                    field={item}  
-                                                    maxWidth={maxWidth} 
-                                                    sort={sort}  
-                                                    valueFormatter={valueFormatter} 
-                                                    type={type}
-                                                    cellRendererFramework={renderIcon}>
+                                                     headerName={header} 
+                                                     field={item}  
+                                                     maxWidth={maxWidth} 
+                                                     sort={sort}  
+                                                     valueFormatter={valueFormatter} 
+                                                     type={type}
+                                                     filter={filter} 
+                                                     filterParams={filterParams} 
+                                                     cellRendererFramework={renderIcon}>
                                                     </AgGridColumn>
                             })
                         }

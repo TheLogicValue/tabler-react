@@ -56,6 +56,10 @@ module.exports = {
           components: "src/components/AccountDropdown/**/*.react.{js,jsx}",
         },
         {
+          name: "AGGridTable",
+          components: "src/components/AGGridTable/**/*.react.{js,jsx}",
+        },
+        {
           name: "Alert",
           components: "src/components/Alert/**/*.react.{js,jsx}",
         },
