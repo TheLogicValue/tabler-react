@@ -27,6 +27,7 @@ import GalleryPage from "./GalleryPage.react";
 import MapCardsPage from "./components/MapCardsPage.react";
 import BlogPage from "./components/BlogPage.react";
 import ButtonsPage from "./components/ButtonPage.react";
+import DataTablesPage from "./components/DataTablesPage.react";
 import ModalPage from "./components/ModalPage.react";
 import LoadersPage from "./components/LoadersPage.react";
 import TabsPage from "./components/TabsPage.react";
@@ -53,6 +54,7 @@ function App(props: Props): React.Node {
           <Route exact path="/cards" component={CardsDesignPage} />
           <Route exact path="/charts" component={ChartsPage} />
           <Route exact path="/condensed" component={CondensedPage} />
+          <Route exact path="/datatables" component={DataTablesPage} />
           <Route exact path="/email" component={Email} />
           <Route exact path="/empty-page" component={Empty} />
           <Route exact path="/form-elements" component={FormElementsPage} />

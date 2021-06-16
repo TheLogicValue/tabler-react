@@ -1,6 +1,14 @@
-# DataTable example
-```jsx
-const [alerts, setAlerts] = useState([]);
+// @flow
+import React, {useState} from "react";
+
+import { AGGridTable, Grid, Page, Card, Alert, Icon} from "tabler-react";
+
+import SiteWrapper from "../SiteWrapper.react";
+
+
+function DataTablesPage(): React.Node {
+  
+  const [alerts, setAlerts] = useState([]);
 
   const addMilesSeparatorAndRound = (value, decimals = 2, locale = "de-DE") => {
     if (value != null) {
@@ -98,4 +106,5 @@ const [alerts, setAlerts] = useState([]);
     </SiteWrapper>
   );
 }
-```
+
+export default DataTablesPage;
