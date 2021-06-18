@@ -1,3 +1,8 @@
+# [1.41.3](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.2...v1.41.3) (2021-06-16)
+
+### Features
+- **AGGridTable:** Add AGGrid datables.
+
 # [1.41.2](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.1...v1.41.2) (2021-05-27)
 
 ### Features
