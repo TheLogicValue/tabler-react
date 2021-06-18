@@ -73,6 +73,7 @@ const navBarItems: Array<navItem> = [
     subItems: [
       { value: "Blog", to: "/blog", LinkComponent: withRouter(NavLink) },
       { value: "Buttons", to: "/buttons", LinkComponent: withRouter(NavLink) },
+      { value: "DataTables", to: "/datatables", LinkComponent: withRouter(NavLink) },
       { value: "Icons", to: "/icons", LinkComponent: withRouter(NavLink) },
       { value: "Loaders", to: "/loaders", LinkComponent: withRouter(NavLink) },
       { value: "Maps", to: "/maps", LinkComponent: withRouter(NavLink) },
