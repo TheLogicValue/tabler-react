@@ -9,7 +9,6 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "link-react": "cd example/node_modules/react && npm link && cd ../react-dom && npm link && cd ../../../ && npm link react && npm link react-dom",
     "test": "CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
