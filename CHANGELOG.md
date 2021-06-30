@@ -1,3 +1,8 @@
+# [1.41.4](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.3...v1.41.4) (2021-06-30)
+
+### Bug Fixes
+- **Packages:** Fix versions to avoid vulnerabilities.
+
 # [1.41.3](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.2...v1.41.3) (2021-06-16)
 
 ### Features
