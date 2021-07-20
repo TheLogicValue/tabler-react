@@ -1,3 +1,8 @@
+# [1.41.5](https://github.com/thelogicvalue/tabler-react/compare/v1.41.4...v1.41.5) (2021-07-20)
+
+### Bug Fixes
+- **Documentation:** Fix documentation issues.
+
 # [1.41.4](https://github.com/santiagocasasrey/tabler-react/compare/v1.41.3...v1.41.4) (2021-06-30)
 
 ### Bug Fixes
