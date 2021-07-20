@@ -1,6 +1,5 @@
 # DataTable example
 ```jsx
-const [alerts, setAlerts] = useState([]);
 
   const addMilesSeparatorAndRound = (value, decimals = 2, locale = "de-DE") => {
     if (value != null) {
@@ -66,36 +65,16 @@ const [alerts, setAlerts] = useState([]);
   }
 
   const rowClick = (row) =>{
-    setAlerts([...alerts, <Alert type="warning" isDismissible>
-            This is {row.name} from {row.city}
-      </Alert>])
+    alert("This is "+row.name+" from "+row.city) 
   }
 
-  return (
-    <SiteWrapper>
-      <Page.Content title="DataTables">
-      {alerts}
-        <Grid.Row>
-          <Grid.Col lg={8}>
-            <Card>
-              <Card.Header>
-                <Card.Title>DataTable</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                  <AGGridTable 
-                    dataColumn={dataColumn()} 
-                    dataRow={dataRow()} 
-                    columnTotal={columnTotal()}
-                    dataTotal={dataTotal()}
-                    onRowClick={rowClick}
-                    pageSize={3}
-                    search={true}/>
-              </Card.Body>
-            </Card>
-          </Grid.Col>
-        </Grid.Row>
-      </Page.Content>
-    </SiteWrapper>
-  );
-}
+  <AGGridTable 
+    dataColumn={dataColumn()} 
+    dataRow={dataRow()} 
+    columnTotal={columnTotal()}
+    dataTotal={dataTotal()}
+    onRowClick={rowClick}
+    pageSize={3}
+    search={true}/>
+
 ```
