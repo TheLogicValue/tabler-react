@@ -1,14 +1,14 @@
 {
   "main.css": "/static/css/main.a106906c.chunk.css",
-  "main.js": "/build/main.0e7fcc88.js",
+  "main.js": "/build/main.7165b8e4.js",
   "static/css/1.dafb0650.chunk.css": "/static/css/1.dafb0650.chunk.css",
-  "build/1.88be7b29.js": "/build/1.88be7b29.js",
-  "build/2.75ca4546.js": "/build/2.75ca4546.js",
-  "runtime~main.js": "/build/bundle.f40183a7.js",
+  "build/1.c34fa1e9.js": "/build/1.c34fa1e9.js",
+  "runtime~main.js": "/build/bundle.784cd05f.js",
   "static/media/Tabler.css": "/static/media/gb-wls.2831a6dd.svg",
-  "static/css/1.dafb0650.chunk.css.map": "/static/css/1.dafb0650.chunk.css.map",
+  "build/1.c34fa1e9.js.LICENSE.txt": "/build/1.c34fa1e9.js.LICENSE.txt",
   "static/css/main.a106906c.chunk.css.map": "/static/css/main.a106906c.chunk.css.map",
+  "static/css/1.dafb0650.chunk.css.map": "/static/css/1.dafb0650.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.c44c008e145d206288669bd1ec8a698e.js": "/precache-manifest.c44c008e145d206288669bd1ec8a698e.js",
+  "precache-manifest.a2fb1158bd5ce1f998039cb0c85cbeb2.js": "/precache-manifest.a2fb1158bd5ce1f998039cb0c85cbeb2.js",
   "service-worker.js": "/service-worker.js"
 }
