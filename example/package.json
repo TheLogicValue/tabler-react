@@ -1,7 +1,7 @@
 {
   "name": "tabler-react-example",
   "homepage": "https://thelogicvalue.github.io/tabler-react",
-  "version": "1.41.4",
+  "version": "1.41.5",
   "private": true,
   "license": "MIT",
   "dependencies": {
