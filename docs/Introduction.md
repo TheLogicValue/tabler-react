@@ -1,10 +1,10 @@
-**[Demo](https://santiagocasasrey.github.io/tabler-react/)**
+**[Demo](https://thelogicvalue.github.io/tabler-react/)**
 
 ## Install
 
 Make sure you have [Node.js](https://nodejs.org/) 8+ and [yarn](https://yarnpkg.com) installed.
 
-`npm install santiagocasasrey/tabler-react`
+`npm install thelogicvalue/tabler-react`
 
 ## Basic Usage Example
 
