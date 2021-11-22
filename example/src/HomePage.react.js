@@ -505,7 +505,7 @@ function Home() {
             </Card>
           </Grid.Col>
         </Grid.Row>
-        <Grid.Row>
+        <Grid.Row cards>
           <Grid.Col sm={6} lg={4}>
             <Card title="Browser Stats">
               <Table className="card-table">
