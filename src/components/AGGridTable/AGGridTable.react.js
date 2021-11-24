@@ -135,7 +135,8 @@ class AGGridTable extends React.Component<Props, State> {
                                                      type={type}
                                                      filter={filter} 
                                                      filterParams={filterParams} 
-                                                     cellRendererFramework={renderIcon}>
+                                                     cellRendererFramework={renderIcon}
+                                                     pinned={pinned}>
                                                     </AgGridColumn>
                             })
                         }
