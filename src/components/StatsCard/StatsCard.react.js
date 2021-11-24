@@ -60,7 +60,7 @@ function StatsCard({
 
   return (
     <Card className={classes}>
-      <Card.Body className="p-3 text-center">
+      <Card.Body className="text-center">
         <Text color={movementColor} className="text-right">
           {movementString}
           <Icon

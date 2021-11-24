@@ -67,7 +67,7 @@ const SiteHeader = ({
 
     const nav = React.createElement(Site.Nav, navItems);
 
-  const headerClasses = condensed ? "header sticky-top condensed" : "header py-4"; 
+  const headerClasses = condensed ? "header sticky-top condensed" : "header"; 
   return (
     <div className={headerClasses}>
       <Container className={align}>

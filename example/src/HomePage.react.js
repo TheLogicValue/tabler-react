@@ -142,7 +142,7 @@ function Home() {
                 }}
                 tooltip={{
                   format: {
-                    title: function(x) {
+                    title: function (x) {
                       return "";
                     },
                   },
@@ -627,7 +627,7 @@ function Home() {
                       }}
                       tooltip={{
                         format: {
-                          title: function(x) {
+                          title: function (x) {
                             return "";
                           },
                         },
@@ -689,7 +689,7 @@ function Home() {
                       }}
                       tooltip={{
                         format: {
-                          title: function(x) {
+                          title: function (x) {
                             return "";
                           },
                         },
@@ -751,7 +751,7 @@ function Home() {
                       }}
                       tooltip={{
                         format: {
-                          title: function(x) {
+                          title: function (x) {
                             return "";
                           },
                         },
@@ -813,7 +813,7 @@ function Home() {
                       }}
                       tooltip={{
                         format: {
-                          title: function(x) {
+                          title: function (x) {
                             return "";
                           },
                         },

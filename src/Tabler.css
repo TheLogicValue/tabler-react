@@ -13688,9 +13688,7 @@ a.icon:hover {
 .card-body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  margin: 0;
-  padding: 1.5rem 1.5rem;
-  position: relative;
+  padding: 1rem 1rem; 
 }
 
 .card-body + .card-body {
