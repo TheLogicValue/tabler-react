@@ -1,24 +1,25 @@
 import * as React from 'react';
 import cn from "classnames";
-import {Card} from "../";
+import { Card, Text } from "../";
 
-function DoubleCard ({className, title, value1, textValue1, value2, textValue2}) {   
-        const classes = cn(className);
-        return (
-            <Card className={classes}>
-                <div style={{ paddingTop: "10px", marginLeft: "15px" }}>{title}</div>
-                <div d="flex" style={{ display: "flex", paddingTop: "15px", paddingBottom: "15px" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignContent: "flex-start", width: "50%" }}>
-                        <span style={{ margin: "auto", fontSize: "25px" }}><strong>{value1}</strong></span>
-                        <span style={{ margin: "auto", fontSize: "10px" }}>{textValue1}</span>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignContent: "flex-end", width: "50%" }}>
-                        <span style={{ margin: "auto", fontSize: "25px" }}><strong>{value2}</strong></span>
-                        <span style={{ margin: "auto", fontSize: "10px" }}>{textValue2}</span>
-                    </div>
-                </div>        
-            </Card>
-        );    
+function DoubleCard({ className, title, value1, textValue1, value2, textValue2, children }) {
+    const classes = cn(className);
+    return (
+        <Card className={classes}>
+            <Text className="mb-2 mt-4 ml-4" style={{fontSize:"1.2rem"}}>{title}</Text>
+            <div d="flex" className="text-center" style={{ display: "flex" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignContent: "flex-start", width: "50%" }}>
+                    <Text className="m-0" style={{fontSize:"1.5rem"}}><b>{value1}</b></Text>
+                    <Text className="mb-4">{textValue1}</Text>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", alignContent: "flex-end", width: "50%" }}>
+                    <Text className="m-0" style={{fontSize:"1.5rem"}}><b>{value2}</b></Text>
+                    <Text className="mb-4">{textValue2}</Text>
+                </div>
+            </div>
+            {children}
+        </Card>
+    );
 }
 
 export default DoubleCard;

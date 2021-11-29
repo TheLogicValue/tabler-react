@@ -55,7 +55,7 @@ function Home() {
           </Grid.Col>
           <Grid.Col  width={12} sm={8} lg={4}>
             <DoubleCard
-                title={"Titulo"}
+                title={"Averege"}
                 value1={"27"}
                 textValue1 = {"Years"}
                 value2={"Moderate"}
