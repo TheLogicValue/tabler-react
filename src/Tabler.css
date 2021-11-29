@@ -11,12 +11,13 @@ Dashboard UI
 :root {
   --blue: #3ab0c8;
   --blue-dark: #185a7d;
+  --blue-link: #295a9f;
   --pink: #ed217c;
   --yellow: #ffbe0b;
   --green: #95c623;
   --gray: #f5f5f5;
   --gray-dark: #373545;
-  --white: #fff; 
+  --white: #fff;
   --primary: #185a7d;
   --secondary: #3ab0c8;
   --tertiary: #323232;
@@ -26,12 +27,13 @@ Dashboard UI
   --septenary: #7bc950;
   --info: #3ab0c8;
   --warning: #e4b363;
+  --warning-hover: #c29d0b;
   --danger: #ef6461;
   --light: #f5f5f5;
   --dark: #323232;
-  --input-border: rgba(0, 40, 100, 0.12);
   --vertical-nav-dark: #232e3c;
   --body-bg: #f8fafc;
+  --input-border: rgba(0, 40, 100, 0.12);
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -199,7 +201,7 @@ a {
 }
 
 a:hover {
-  color: #295a9f;
+  color: var(--blue-link);
   text-decoration: underline;
 }
 
@@ -307,7 +309,7 @@ input:hover,
 button:hover,
 select:hover,
 optgroup:hover,
-textarea:hover{
+textarea:hover {
   border: 1px solid var(--input-border);
 }
 
@@ -2784,7 +2786,7 @@ fieldset:disabled a.btn {
 .btn-warning:hover {
   color: var(--white);
   background-color: #cea70c;
-  border-color: #c29d0b;
+  border-color: #cea70c;
 }
 
 .btn-warning:focus,
@@ -2803,8 +2805,8 @@ fieldset:disabled a.btn {
 .btn-warning:not(:disabled):not(.disabled).active,
 .show > .btn-warning.dropdown-toggle {
   color: var(--white);
-  background-color: #c29d0b;
-  border-color: #b6940b;
+  background-color: var(--warning-hover);
+  border-color: var(--warning-hover);
 }
 
 .btn-warning:not(:disabled):not(.disabled):active:focus,
@@ -5217,7 +5219,7 @@ tbody.collapse.show {
 .badge-warning[href]:focus {
   color: var(--white);
   text-decoration: none;
-  background-color: #c29d0b;
+  background-color: var(--warning-hover);
 }
 
 .badge-danger {
@@ -6543,7 +6545,7 @@ a.bg-warning:hover,
 a.bg-warning:focus,
 button.bg-warning:hover,
 button.bg-warning:focus {
-  background-color: #c29d0b !important;
+  background-color: var(--warning-hover) !important;
 }
 
 .bg-danger {
@@ -10094,7 +10096,7 @@ a.text-info:focus {
 
 a.text-warning:hover,
 a.text-warning:focus {
-  color: #c29d0b !important;
+  color: var(--warning-hover) !important;
 }
 
 .text-danger {
@@ -10575,7 +10577,7 @@ body.fixed-header .page {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   min-height: 2.25rem;
-  padding: 0 0.5rem 0 0.5rem; 
+  padding: 0 0.5rem 0 0.5rem;
 }
 
 .page-title {
@@ -11169,7 +11171,7 @@ button.bg-red-darkest:focus {
 }
 
 .bg-orange-lightest {
-  background-color: var(--white)5ec !important;
+  background-color: var(--white) 5ec !important;
 }
 
 a.bg-orange-lightest:hover,
@@ -11974,7 +11976,7 @@ a.bg-yellow:hover,
 a.bg-yellow:focus,
 button.bg-yellow:hover,
 button.bg-yellow:focus {
-  background-color: #c29d0b !important;
+  background-color: var(--warning-hover) !important;
 }
 
 .text-yellow {
@@ -13047,7 +13049,7 @@ a.icon:hover {
 .btn-yellow:hover {
   color: var(--white);
   background-color: #cea70c;
-  border-color: #c29d0b;
+  border-color: var(--warning-hover);
 }
 
 .btn-yellow:focus,
@@ -13066,7 +13068,7 @@ a.icon:hover {
 .btn-yellow:not(:disabled):not(.disabled).active,
 .show > .btn-yellow.dropdown-toggle {
   color: var(--white);
-  background-color: #c29d0b;
+  background-color: var(--warning-hover);
   border-color: #b6940b;
 }
 
@@ -13695,7 +13697,7 @@ a.icon:hover {
 .card-body {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding: 1rem 1rem; 
+  padding: 1rem 1rem;
 }
 
 .card-body + .card-body {
