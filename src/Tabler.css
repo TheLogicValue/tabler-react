@@ -18,6 +18,7 @@ Dashboard UI
   --gray: #f5f5f5;
   --gray-dark: #373545;
   --white: #fff;
+  --black: #000;
   --primary: #185a7d;
   --secondary: #3ab0c8;
   --tertiary: #323232;
@@ -5730,14 +5731,14 @@ tbody.collapse.show {
   font-size: 1.40625rem;
   font-weight: 700;
   line-height: 1;
-  color: #000;
+  color: var(--black);
   text-shadow: 0 1px 0 var(--white);
   opacity: 0.5;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
+  color: var(--black);
   text-decoration: none;
   opacity: 0.75;
 }
@@ -5834,7 +5835,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: var(--black);
 }
 
 .modal-backdrop.fade {
@@ -5977,7 +5978,7 @@ button.close {
 .bs-tooltip-auto[x-placement^="top"] .arrow::before {
   top: 0;
   border-width: 0.4rem 0.4rem 0;
-  border-top-color: #000;
+  border-top-color: var(--black);
 }
 
 .bs-tooltip-right,
@@ -5996,7 +5997,7 @@ button.close {
 .bs-tooltip-auto[x-placement^="right"] .arrow::before {
   right: 0;
   border-width: 0.4rem 0.4rem 0.4rem 0;
-  border-right-color: #000;
+  border-right-color: var(--black);
 }
 
 .bs-tooltip-bottom,
@@ -6013,7 +6014,7 @@ button.close {
 .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   bottom: 0;
   border-width: 0 0.4rem 0.4rem;
-  border-bottom-color: #000;
+  border-bottom-color: var(--black);
 }
 
 .bs-tooltip-left,
@@ -6032,7 +6033,7 @@ button.close {
 .bs-tooltip-auto[x-placement^="left"] .arrow::before {
   left: 0;
   border-width: 0.4rem 0 0.4rem 0.4rem;
-  border-left-color: #000;
+  border-left-color: var(--black);
 }
 
 .tooltip-inner {
@@ -6040,7 +6041,7 @@ button.close {
   padding: 0.25rem 0.5rem;
   color: var(--white);
   text-align: center;
-  background-color: #000;
+  background-color: var(--black);
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -10197,7 +10198,7 @@ a.text-dark:focus {
     display: none;
   }
   .badge {
-    border: 1px solid #000;
+    border: 1px solid var(--black);
   }
   .table,
   .text-wrap table {
@@ -15543,7 +15544,7 @@ a.tag-addon:hover {
 }
 
 .highlight .ow {
-  color: #000;
+  color: var(--black);
 }
 
 .highlight .w {
@@ -18032,7 +18033,7 @@ svg {
 }
 
 .selectize-dropdown-header-close:hover {
-  color: #000;
+  color: var(--black);
 }
 
 .selectize-dropdown.plugin-optgroup_columns .optgroup {
