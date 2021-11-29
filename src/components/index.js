@@ -46,5 +46,7 @@ export { default as Tag } from "./Tag";
 export { default as Text } from "./Text";
 export { default as Timeline } from "./Timeline";
 export { default as Tooltip } from "./Tooltip";
+export { default as DoubleCard } from "./DoubleCard";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
+

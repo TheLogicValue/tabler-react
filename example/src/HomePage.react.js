@@ -18,7 +18,8 @@ import {
   StampCard,
   StatsCard,
   ProgressCard,
-  Badge
+  Badge,
+  DoubleCard
 } from "tabler-react";
 
 import C3Chart from "react-c3js";
@@ -52,7 +53,16 @@ function Home() {
               label="Followers"
             />
           </Grid.Col>
-          <Grid.Col width={6} sm={4} lg={2}>
+          <Grid.Col  width={12} sm={8} lg={4}>
+            <DoubleCard
+                title={"Titulo"}
+                value1={"27"}
+                textValue1 = {"Years"}
+                value2={"Moderate"}
+                textValue2={"Status"}
+            ></DoubleCard>
+          </Grid.Col>
+          {/* <Grid.Col width={6} sm={4} lg={2}>
             <StatsCard
               layout={1}
               movement={-2}
@@ -62,7 +72,7 @@ function Home() {
           </Grid.Col>
           <Grid.Col width={6} sm={4} lg={2}>
             <StatsCard layout={1} movement={-1} total="621" label="Products" />
-          </Grid.Col>
+          </Grid.Col> */}
           <Grid.Col lg={6}>
             <Card>
               <Card.Header>

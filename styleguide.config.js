@@ -188,6 +188,10 @@ module.exports = {
           components: "src/components/StatsCard/**/*.react.{js,jsx}",
         },
         {
+          name: "DoubleCard",
+          components: "src/components/DoubleCard/**/*.react.{js,jsx}",
+        },
+        {
           name: "StoreCard",
           components: "src/components/StoreCard/**/*.react.{js,jsx}",
         },
