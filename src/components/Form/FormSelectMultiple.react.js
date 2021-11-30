@@ -22,7 +22,9 @@ type Props = {|
   +name?:string,
   +label?:string,
   +options?:string,
-  +value?:Array<Object>
+  +value?:Array<Object>,
+  +isDisabled?: boolean
+
 |};
 
 function FormSelectMultiple(props: Props): React.Node {
@@ -121,9 +123,10 @@ return (
               placeholder=""
               value={getValue()}
               menuIsOpen
+              isDisabled={props.isDisabled}
               hideSelectedOptions={false}
               closeMenuOnSelect={false}
-              isMulti
+              isMulti 
               components={{
                   MultiValueContainer: () => null,
                   DropdownIndicator:() => null,

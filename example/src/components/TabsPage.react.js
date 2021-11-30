@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { Page, Grid, Tabs, Tab, Card} from "tabler-react";
+import { Page, Grid, Tabs, Tab, Card, Button} from "tabler-react";
 
 import SiteWrapper from "../SiteWrapper.react";
 
@@ -14,7 +14,7 @@ function TabsPage(): React.Node {
   return (
     <SiteWrapper>
       <Page.Content title="Tabs">
-      <Tabs initialTab="Hello">
+      <Tabs initialTab="Hello" options={<Button>Options</Button>}>
         <Tab title="Hello">Hello World</Tab>
         <Tab title="Goodbye">Goodbye</Tab>
         <Tab title="Complex">

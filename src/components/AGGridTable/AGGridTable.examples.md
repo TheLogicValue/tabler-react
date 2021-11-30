@@ -37,8 +37,12 @@
     return [
       {header:"Id", item:"id", sort:"", valueFormatter:null, type:""},
       {header:"Date", item:"date", sort:"", valueFormatter: null, type:""},
-      {header:"Name", item:"name", sort:"asc", valueFormatter:null, type:""},
-      {header:"City", item:"city", sort:"", valueFormatter:null, type:""},
+      {header:"Location", 
+       "subItems": [
+          {header:"Name", item:"name", sort:"asc", valueFormatter:null, type:""},
+          {header:"City", item:"city", sort:"", valueFormatter:null, type:""},
+        ]  
+      },
       {header:"Pass", item:"pass", renderIcon: iconValueFormatter},
       {header:"Budget", item:"budget", sort:"", valueFormatter: params => addMilesSeparatorAndRound(params.value) + " €", type:"rightAligned"}
     ]

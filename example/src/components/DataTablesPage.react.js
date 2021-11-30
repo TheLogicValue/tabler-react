@@ -97,8 +97,12 @@ const dateFilterParams = {
     return [
       {header:"Id", item:"id", maxWidth:60},
       {header:"Date", item:"date", filter: true,filterParams: dateFilterParams},
-      {header:"Name", item:"name", sort:"asc", filter: true},
-      {header:"City", item:"city"},
+      {header:"Location", 
+       subItems: [
+          {header:"Name", item:"name", sort:"asc", valueFormatter:null, type:""},
+          {header:"City", item:"city", sort:"", valueFormatter:null, type:""},
+        ]  
+      },
       {header:"Pass", item:"pass", renderIcon: iconValueFormatter},
       {header:"Budget", item:"budget", filter: true,filterParams: numericColumn, valueFormatter: params => addMilesSeparatorAndRound(params.value) + " €", type:"rightAligned"}
     ]

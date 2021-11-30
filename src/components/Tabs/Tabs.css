@@ -1,3 +1,28 @@
 .margin-bottom-24 {
   margin-bottom: 24px !important;
 }
+
+.card-header.tab-header{
+  padding: 0rem 1rem 0rem 0rem !important;
+  background: none;
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+}
+
+.nav-tabs.Tab_header_tabs .nav-link {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 0;
+}
+
+.nav-tabs.Tab_header_tabs .nav-item {
+  margin-bottom: -1px;
+  margin-top: -2px;
+}
+
+.Tab_header_tabs{
+  border: none !important;
+}

@@ -102,6 +102,7 @@ class AGGridTable extends React.Component<Props, State> {
             this.setState({ filter: event.target.value });
         }
 
+        console.log(dataColumn)
         return (
             <Grid.Row>
                 <Grid.Col width={12}>
@@ -125,7 +126,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, item, subItems = null, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                         return <AgGridColumn key={item}
                                             headerName={header}
                                             field={item}
@@ -137,7 +138,22 @@ class AGGridTable extends React.Component<Props, State> {
                                             filterParams={filterParams}
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
-                                        </AgGridColumn>
+                                            {
+                                                subItems!= null ? subItems.map(({ header, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                    return <AgGridColumn key={item}
+                                                        headerName={header}
+                                                        field={item}
+                                                        maxWidth={maxWidth}
+                                                        sort={sort}
+                                                        valueFormatter={valueFormatter}
+                                                        type={type}
+                                                        filter={filter}
+                                                        filterParams={filterParams}
+                                                        cellRendererFramework={renderIcon}
+                                                        pinned={pinned}/>
+                                                }) : null
+                                            }
+                                        </AgGridColumn>  
                                     })
                                 }
                             </AgGridReact>
