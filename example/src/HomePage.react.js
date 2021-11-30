@@ -55,11 +55,11 @@ function Home() {
           </Grid.Col>
           <Grid.Col  width={12} sm={8} lg={4}>
             <DoubleCard
-                title={"Averege"}
-                value1={"27"}
-                textValue1 = {"Years"}
-                value2={"Moderate"}
-                textValue2={"Status"}
+                title={"Average"}
+                firstValue={"27"}
+                firstlabel = {"Years"}
+                secondValue={"Moderate"}
+                secondlabel={"Status"}
             ></DoubleCard>
           </Grid.Col>
           {/* <Grid.Col width={6} sm={4} lg={2}>

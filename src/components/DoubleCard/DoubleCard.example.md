@@ -1,9 +1,9 @@
 ```jsx
 <DoubleCard
-    title={"Titulo"}
-    value1={"27"}
-    textValue1 = {"Years"}
-    value2={"Moderate"}
-    textValue2={"Status"}
-></DoubleCard>
+  title={"Average"}
+  firstValue={"27"}
+  firstlabel={"Years"}
+  secondValue={"Moderate"}
+  secondlabel={"Status"}
+/>
 ```
