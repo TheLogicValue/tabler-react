@@ -14080,6 +14080,34 @@ Card alert
   margin: 0 0 0.5rem;
 }
 
+/* Double Card */
+.double-card-colum {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  width: 50%;
+}
+
+.double-card-body {
+  display: flex;
+  text-align: center;  
+  margin-top: 0.5rem;
+}
+
+.double-card-header {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0.5rem 1rem;
+}
+
+.double-card-text {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.double-card-subtext {
+  margin-bottom: 1rem;
+}
+
 .popover {
   -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));

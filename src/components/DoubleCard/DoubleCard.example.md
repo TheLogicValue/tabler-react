@@ -1,0 +1,9 @@
+```jsx
+<DoubleCard
+  title={"Average"}
+  firstValue={"27"}
+  firstlabel={"Years"}
+  secondValue={"Moderate"}
+  secondlabel={"Status"}
+/>
+```
