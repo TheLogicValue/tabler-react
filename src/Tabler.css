@@ -10609,6 +10609,18 @@ body.fixed-header .page {
   margin-left: auto;
 }
 
+@media (max-width: 768px) {
+  .page-options {
+    flex-flow: wrap;
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+  }
+
+  .page-options>* {
+    margin-top: 0.5rem;
+  }
+}
+
 .page-breadcrumb {
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
