@@ -53,16 +53,7 @@ function Home() {
               label="Followers"
             />
           </Grid.Col>
-          <Grid.Col  width={12} sm={8} lg={4}>
-            <DoubleCard
-                title={"Average"}
-                firstValue={"27"}
-                firstlabel = {"Years"}
-                secondValue={"Moderate"}
-                secondlabel={"Status"}
-            ></DoubleCard>
-          </Grid.Col>
-          {/* <Grid.Col width={6} sm={4} lg={2}>
+          <Grid.Col width={6} sm={4} lg={2}>
             <StatsCard
               layout={1}
               movement={-2}
@@ -71,8 +62,49 @@ function Home() {
             />
           </Grid.Col>
           <Grid.Col width={6} sm={4} lg={2}>
-            <StatsCard layout={1} movement={-1} total="621" label="Products" />
-          </Grid.Col> */}
+            <StatsCard
+              layout={1}
+              movement={-1}
+              total="621"
+              label="Products"
+            />
+          </Grid.Col>
+          <Grid.Col width={12} sm={6} md={4} lg={3}>
+            <DoubleCard
+              title={"Average"}
+              firstValue={"27"}
+              firstlabel={"Years"}
+              secondValue={"Moderate"}
+              secondlabel={"Status"}
+            ></DoubleCard>
+          </Grid.Col>
+          <Grid.Col width={12} sm={6} md={4} lg={3}>
+            <DoubleCard
+              title={"Average and long text"}
+              firstValue={"15"}
+              firstlabel={"Years"}
+              secondValue={"Moderate"}
+              secondlabel={"Status"}
+            ></DoubleCard>
+          </Grid.Col>
+          <Grid.Col width={12} sm={6} md={6} lg={3}>
+            <DoubleCard
+              title={"Average text"}
+              firstValue={"Long"}
+              firstlabel={"Durability"}
+              secondValue={"Hard"}
+              secondlabel={"Status"}
+            ></DoubleCard>
+          </Grid.Col>
+          <Grid.Col width={12} sm={6} md={6} lg={3}>
+            <DoubleCard
+              title={"Average more long text about"}
+              firstValue={"Average"}
+              firstlabel={"Durability"}
+              secondValue={"LongRange"}
+              secondlabel={"Status"}
+            ></DoubleCard>
+          </Grid.Col>
           <Grid.Col lg={6}>
             <Card>
               <Card.Header>

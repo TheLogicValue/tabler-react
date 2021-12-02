@@ -4763,7 +4763,7 @@ tbody.collapse.show {
 }
 
 .card-title {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .card-subtitle {
@@ -10616,7 +10616,7 @@ body.fixed-header .page {
     margin-top: 0.5rem;
   }
 
-  .page-options>* {
+  .page-options > * {
     margin-top: 0.5rem;
   }
 }
@@ -13755,6 +13755,7 @@ a.icon:hover {
 
 .card-header .card-title {
   margin-bottom: 0;
+  font-size: 1rem;
 }
 
 .card-header.border-0 + .card-body {
@@ -13781,7 +13782,7 @@ a.icon:hover {
 }
 
 .card-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
@@ -14095,6 +14096,7 @@ Card alert
 /* Double Card */
 .double-card-colum {
   display: flex;
+  display: -ms-flexbox;
   flex-direction: column;
   align-content: flex-end;
   width: 50%;
@@ -14102,22 +14104,41 @@ Card alert
 
 .double-card-body {
   display: flex;
-  text-align: center;  
+  display: -ms-flexbox;
+  text-align: center;
   margin-top: 0.5rem;
 }
 
 .double-card-header {
   font-size: 1rem;
-  margin: 0.5rem 0 0.5rem 1rem;
+  margin: 0.5rem 0.5rem 0.5rem 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .double-card-text {
   font-size: 1.5rem;
-  margin: 0;
+  margin: 0 0.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .double-card-subtext {
   margin-bottom: 1rem;
+}
+
+@media (max-width: 1366px) {
+  .double-card-text {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .double-card-text {
+    font-size: 1.5rem !important;
+  }
 }
 
 .popover {
