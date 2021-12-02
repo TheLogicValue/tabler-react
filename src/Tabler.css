@@ -13751,6 +13751,7 @@ a.icon:hover {
   min-height: 3.5rem;
   -ms-flex-align: center;
   align-items: center;
+  font-size: 1rem;
 }
 
 .card-header .card-title {
