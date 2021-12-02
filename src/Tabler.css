@@ -14129,18 +14129,6 @@ Card alert
   margin-bottom: 1rem;
 }
 
-@media (max-width: 1366px) {
-  .double-card-text {
-    font-size: 1.2rem !important;
-  }
-}
-
-@media (max-width: 575px) {
-  .double-card-text {
-    font-size: 1.5rem !important;
-  }
-}
-
 .popover {
   -webkit-filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
