@@ -85,7 +85,7 @@
     "rollup-plugin-url": "2.2.1",
     "semantic-release": "^17.4.4",
     "shx": "^0.3.3",
-    "webpack": "4.19.1"
+    "webpack": "5.65.0"
   },
   "files": [
     "dist"
