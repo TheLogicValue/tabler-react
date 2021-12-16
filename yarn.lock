@@ -2535,16 +2535,7 @@
     "@rollup/pluginutils" "^3.1.0"
     magic-string "^0.25.7"
 
-"@rollup/plugin-url@^4.0.0":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-url/-/plugin-url-4.0.2.tgz#af9e6ce8b26153843567bfb04e48843e72fc2dc4"
-  integrity sha512-jm0VbkSphTmfyCgbmkLpvz56Q6KYdLLQKOuMvfBEYDK5zUU7F13JQrv5D6xEU8DlDi/nOi6MSyGaloo9vfYZuQ==
-  dependencies:
-    "@rollup/pluginutils" "^3.0.4"
-    make-dir "^3.0.0"
-    mime "^2.4.4"
-
-"@rollup/pluginutils@^3.0.4", "@rollup/pluginutils@^3.1.0":
+"@rollup/pluginutils@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-3.1.0.tgz#706b4524ee6dc8b103b3c995533e5ad680c02b9b"
   integrity sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
@@ -13787,6 +13778,14 @@ rollup-plugin-terser@^7.0.0:
     jest-worker "^26.2.1"
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
+
+rollup-plugin-url@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-url/-/rollup-plugin-url-3.0.1.tgz#6362fd31d7ce6d078dc5adffbd844f080de61bd7"
+  integrity sha512-fQVrxlW335snHfPqZ7a0JIkkYEIrLeFobpAxRMQnyv7xQeJOY1yOd84STIdCaLYPoGzwOq8waOdGipNH181kzg==
+  dependencies:
+    mime "^2.4.4"
+    rollup-pluginutils "^2.8.2"
 
 rollup-pluginutils@^1.5.0:
   version "1.5.2"
