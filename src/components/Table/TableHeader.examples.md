@@ -14,6 +14,6 @@
 
 ```jsx
 <Table
-  headerItems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]}
+  headeritems={[{ content: "ID" }, { content: "Name" }, { content: "Action" }]}
 />
 ```

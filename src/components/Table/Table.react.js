@@ -35,8 +35,8 @@ type Props = {|
   +highlightRowOnHover?: boolean,
   +hasOutline?: boolean,
   +verticalAlign?: "center",
-  +headerItems?: Array<{ +content?: React.Node, +className?: string }>,
-  +bodyItems?: Array<BodyItem>,
+  +headeritems?: Array<{ +content?: React.Node, +className?: string }>,
+  +bodyitems?: Array<BodyItem>,
 |};
 
 function Table({
@@ -62,10 +62,10 @@ function Table({
     className
   );
 
-  const header = props.headerItems && (
+  const header = props.headeritems && (
     <Table.Header>
       <Table.Row>
-        {props.headerItems.map((item, i) => (
+        {props.headeritems.map((item, i) => (
           <Table.ColHeader key={i} className={item.className}>
             {item.content}
           </Table.ColHeader>
@@ -74,9 +74,9 @@ function Table({
     </Table.Header>
   );
 
-  const body = props.bodyItems && (
+  const body = props.bodyitems && (
     <Table.Body>
-      {props.bodyItems.map((row, i) => (
+      {props.bodyitems.map((row, i) => (
         <Table.Row key={row.key}>
           {row.item.map((col, i) => (
             <Table.Col

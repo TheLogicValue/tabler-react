@@ -850,7 +850,7 @@ function Home() {
               <Table
                 responsive
                 className="card-table table-vcenter text-nowrap"
-                headerItems={[
+                headeritems={[
                   { content: "No.", className: "w-1" },
                   { content: "Invoice Subject" },
                   { content: "Client" },
@@ -861,7 +861,7 @@ function Home() {
                   { content: null },
                   { content: null },
                 ]}
-                bodyItems={[
+                bodyitems={[
                   {
                     key: "1",
                     item: [

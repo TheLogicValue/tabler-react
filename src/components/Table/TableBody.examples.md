@@ -16,7 +16,7 @@
 
 ```jsx
 <Table
-  bodyItems={[
+  bodyitems={[
     {
       key: 1,
       item: [

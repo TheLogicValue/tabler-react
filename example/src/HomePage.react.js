@@ -551,6 +551,7 @@ function Home() {
           <Grid.Col sm={6} lg={4}>
             <Card title="Browser Stats">
               <Table className="card-table">
+                <Table.Body>
                 <Table.Row>
                   <Table.Col>
                     <Icon prefix="fa" name="chrome" className="text-muted" />
@@ -562,18 +563,21 @@ function Home() {
                     </Text>
                   </Table.Col>
                 </Table.Row>
+                </Table.Body>
               </Table>
             </Card>
           </Grid.Col>
           <Grid.Col sm={6} lg={4}>
             <Card title="Projects">
               <Table cards>
+                <Table.Body>
                 <Table.Row>
                   <Table.Col>Admin Template</Table.Col>
                   <Table.Col alignContent="right">
                     <Badge color="default">65%</Badge>
                   </Table.Col>
                 </Table.Row>
+                </Table.Body>
               </Table>
             </Card>
           </Grid.Col>
@@ -892,7 +896,7 @@ function Home() {
               <Table
                 responsive
                 className="card-table table-vcenter text-nowrap"
-                headerItems={[
+                headeritems={[
                   { content: "No.", className: "w-1" },
                   { content: "Invoice Subject" },
                   { content: "Client" },
@@ -903,7 +907,7 @@ function Home() {
                   { content: null },
                   { content: null },
                 ]}
-                bodyItems={[
+                bodyitems={[
                   {
                     key: "1",
                     item: [
