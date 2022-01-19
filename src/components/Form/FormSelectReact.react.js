@@ -66,6 +66,8 @@ function FormSelectReact(props: Props): React.Node {
     isMulti,
     isDisabled,
     isClearable,
+    onMenuOpen,
+    onMenuClose,
     isLoading,
     options,
     selectOption,
@@ -119,6 +121,8 @@ function FormSelectReact(props: Props): React.Node {
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         onClick={onClick}
+        onMenuOpen={onMenuOpen}
+        onMenuClose={onMenuClose}
         className={classes}
         readOnly={readOnly}
         multiple={multiple}
