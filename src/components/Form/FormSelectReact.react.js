@@ -101,6 +101,7 @@ function FormSelectReact(props: Props): React.Node {
         ...styles,
           '&:hover': { borderColor: 'var(--primary)' },
           borderColor: isFocused ? 'var(--primary)' : '', 
+          color: isDisabled ? 'var(--light)' : '',
           boxShadow: 'var(--primary)',
           borderStyle: 'unset'
       })
