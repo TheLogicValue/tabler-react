@@ -24,7 +24,7 @@ type Props = {|
     /*** Size por pagination. 0 to no paginate.*/
     +pageSize ?: Int16,
     /*** Handle onClick row*/
-    +onRowClick ?: () => void
+    +onRowClick ?: () => void,
         /**Type of row selection 'single' o 'multiple' */
         +rowSelection ?: string,
     /**Selection row with click when rowSelection is multiple */
