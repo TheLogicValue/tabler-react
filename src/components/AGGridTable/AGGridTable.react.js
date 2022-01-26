@@ -9,7 +9,7 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
 type Props = {|
-  +className ?: string,
+    +className ?: string,
     +search ?: Boolean,
     +minWidth ?: Int16,
     +flex ?: Int16,
@@ -21,14 +21,14 @@ type Props = {|
     +resizable ?: Boolean,
     +sortable ?: Boolean,
     +language ?: string,
-    /**
-     * Size por pagination. 0 to no paginate.
-     */
+    /*** Size por pagination. 0 to no paginate.*/
     +pageSize ?: Int16,
-    /**
-     * Handle onClick row
-     */
-    +onRowClick ?: () => void,
+    /*** Handle onClick row*/
+    +onRowClick ?: () => void
+        /**Type of row selection 'single' o 'multiple' */
+        +rowSelection ?: string,
+    /**Selection row with click when rowSelection is multiple */
+    +rowMultiSelectWithClick ?: Boolean,
 |};
 
 type State = {
@@ -57,7 +57,9 @@ class AGGridTable extends React.Component<Props, State> {
             sortable = true,
             language = "es",
             onRowClick,
-            pageSize = 0
+            pageSize = 0,
+            rowSelection = 'single',
+            rowMultiSelectWithClick = false
         }: Props = this.props;
 
         const classes = cn(
@@ -102,7 +104,6 @@ class AGGridTable extends React.Component<Props, State> {
             this.setState({ filter: event.target.value });
         }
 
-        console.log(dataColumn)
         return (
             <Grid.Row>
                 <Grid.Col width={12}>
@@ -115,7 +116,8 @@ class AGGridTable extends React.Component<Props, State> {
                                 onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
                                 onGridReady={onGridReady}
-                                rowSelection='single'
+                                rowSelection={rowSelection}
+                                rowMultiSelectWithClick={rowMultiSelectWithClick}
                                 domLayout={'autoHeight'}
                                 quickFilterText={this.state.filter}
                                 localeText={language === "es" ? es : null}
@@ -139,7 +141,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
                                             {
-                                                subItems!= null ? subItems.map(({ header, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
@@ -150,10 +152,10 @@ class AGGridTable extends React.Component<Props, State> {
                                                         filter={filter}
                                                         filterParams={filterParams}
                                                         cellRendererFramework={renderIcon}
-                                                        pinned={pinned}/>
+                                                        pinned={pinned} />
                                                 }) : null
                                             }
-                                        </AgGridColumn>  
+                                        </AgGridColumn>
                                     })
                                 }
                             </AgGridReact>
