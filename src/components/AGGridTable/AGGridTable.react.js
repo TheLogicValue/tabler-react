@@ -46,8 +46,7 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
-            search = false,
-            deselectAllBtn = false,
+            search = false,            
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -61,7 +60,10 @@ class AGGridTable extends React.Component<Props, State> {
             onRowClick,
             pageSize = 0,
             rowSelection = 'single',
-            rowMultiSelectWithClick = false
+            rowMultiSelectWithClick = false,
+            listBtn = false,
+            deselectAllBtn = false,
+            deselectAllOptions = {text: "Clear", hidden: false}
         }: Props = this.props;
 
         const classes = cn(
@@ -112,7 +114,11 @@ class AGGridTable extends React.Component<Props, State> {
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                         {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
-                        {deselectAllBtn === true ? <div class="btn-list"><button id="clearDataTables" onClick={deselectAll} className="btn btn-primary">Clear</button></div> : null}
+                        {listBtn === true ? <div className={ deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
+                            {
+                                deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={ deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
+                            }                            
+                            </div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 className={classes}

@@ -399,6 +399,32 @@ progress {
   -webkit-appearance: none;
 }
 
+input#searcher {
+  width: 100%;
+  padding: 12px 24px;
+  margin-bottom: 5px;
+  background-color: transparent;
+  transition: transform 250ms ease-in-out;
+  font-size: 14px;
+  line-height: 18px;
+  color: #575756;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 95% center;
+  /* border-radius: 50px; */
+  border: 1px solid #bdc3c7;
+  transition: all 250ms ease-in-out;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;   
+}
+
+input:hover,
+input:focus,
+input:active {   
+  outline: 1px solid var(--tertiary);
+}
+
 ::-webkit-file-upload-button {
   font: inherit;
   -webkit-appearance: button;
@@ -13422,6 +13448,12 @@ a.icon:hover {
   min-width: 2.75rem;
   font-weight: 400;
 }
+
+.ag-btn-list{
+  margin: 10px 0;
+  font-size: 0;
+}
+
 
 .btn-list {
   margin-bottom: -0.5rem;

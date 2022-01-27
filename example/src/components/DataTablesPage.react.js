@@ -154,9 +154,11 @@ function DataTablesPage(): React.Node {
                   onRowClick={rowClick}
                   pageSize={3}
                   search={true}
-                  // rowSelection={'multiple'}
-                  // rowMultiSelectWithClick={true}
-                  // deselectAllBtn={true}
+                  rowSelection={'multiple'}
+                  rowMultiSelectWithClick={true}
+                  listBtn={true}
+                  deselectAllBtn={true}
+                  deselectAllOptions={{ text: "Limpiar", hidden: false }}
                 />
               </Card.Body>
             </Card>
