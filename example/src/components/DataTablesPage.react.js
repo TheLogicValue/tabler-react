@@ -156,6 +156,7 @@ function DataTablesPage(): React.Node {
                   search={true}
                   // rowSelection={'multiple'}
                   // rowMultiSelectWithClick={true}
+                  // deselectAllBtn={true}
                 />
               </Card.Body>
             </Card>

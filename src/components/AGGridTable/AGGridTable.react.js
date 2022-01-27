@@ -25,8 +25,8 @@ type Props = {|
     +pageSize ?: Int16,
     /*** Handle onClick row*/
     +onRowClick ?: () => void,
-        /**Type of row selection 'single' o 'multiple' */
-        +rowSelection ?: string,
+    /**Type of row selection 'single' o 'multiple' */
+    +rowSelection ?: string,
     /**Selection row with click when rowSelection is multiple */
     +rowMultiSelectWithClick ?: Boolean,
 |};
@@ -39,13 +39,15 @@ class AGGridTable extends React.Component<Props, State> {
 
     state = {
         topGrid: [],
-        filter: ""
+        filter: "",
+        api: null,
     }
 
     render(): React.Node {
         const {
             className,
             search = false,
+            deselectAllBtn = false,
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -93,12 +95,13 @@ class AGGridTable extends React.Component<Props, State> {
 
         const onGridReady = (params) => {
             this.setState({ topGrid: params })
+            this.api = params.api;
         };
 
+        const deselectAll = () => { this.api.deselectAll(); }
+
         const onFirstDataRendered = () => {
-            if (autosize !== false) {
-                this.state.topGrid.api.sizeColumnsToFit()
-            }
+            if (autosize !== false) this.state.topGrid.api.sizeColumnsToFit();
         }
         const handleChangeFilter = (event) => {
             this.setState({ filter: event.target.value });
@@ -109,6 +112,7 @@ class AGGridTable extends React.Component<Props, State> {
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                         {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
+                        {deselectAllBtn === true ? <div class="btn-list"><button id="clearDataTables" onClick={deselectAll} className="btn btn-primary">Clear</button></div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 className={classes}
