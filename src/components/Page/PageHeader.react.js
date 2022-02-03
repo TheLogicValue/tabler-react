@@ -4,17 +4,20 @@ import * as React from "react";
 import PageTitle from "./PageTitle.react";
 import PageSubTitle from "./PageSubTitle.react";
 import PageOptions from "./PageOptions.react";
+import PageBack from "./PageBack.react";
 
 type Props = {|
   +children?: React.Node,
   +title?: string,
   +subTitle?: string,
   +options?: React.Node,
+  +back?: React.Node,
 |};
 
-function PageHeader({ children, title, subTitle, options }: Props): React.Node {
+function PageHeader({ children, title, subTitle, options, back }: Props): React.Node {
   return (
     <div className="page-header">
+      {back && <PageBack>{back}</PageBack>}
       {title && <PageTitle>{title}</PageTitle>}
       {subTitle && <PageSubTitle>{subTitle}</PageSubTitle>}
       {options && <PageOptions>{options}</PageOptions>}

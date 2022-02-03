@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import {useState} from "react";
+import { useHistory } from "react-router-dom";
 
-import { Page, Grid, Card, Button, Modal } from "tabler-react";
+import { Page, Grid, Card, Button, Modal, Icon } from "tabler-react";
 
 import SiteWrapper from "../SiteWrapper.react";
-
 
 function ModalPage(): React.Node {
   const [showModalOne, setShowModalOne] = useState(false)
@@ -32,10 +32,13 @@ function ModalPage(): React.Node {
       setShowModalTwo(true);
     }
   }
+
+  const history = useHistory();
+  const back = (<><Icon name="chevron-left" onClick={() => { history.push('/') }}/></>);
   
   return (
     <SiteWrapper>
-      <Page.Content title="Modal">
+      <Page.Content title="Modal" back={back}>
         <Modal title="One Button Modal" show={showModalOne} acceptText="I accept" onClose={closeModalOne} onAccept={closeModalOne}>The text of my modal component.</Modal>
         <Modal title="Two Buttons Modal" show={showModalTwo} type={2} cancelText="I want to cancel" onCancel={closeModalTwo} onClose={closeModalTwo} onAccept={closeModalTwo}>The text of my modal with two buttons component.</Modal>
         <Grid.Row>
