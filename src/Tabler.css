@@ -10609,9 +10609,8 @@ body.fixed-header .page {
 }
 
 .page-back > i{
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: 1.7rem;
+  font-weight: 500;  
   display: flex;
   cursor: pointer;
 }
