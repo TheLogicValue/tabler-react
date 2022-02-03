@@ -10608,6 +10608,13 @@ body.fixed-header .page {
   padding: 0 0.5rem 0 0.5rem;
 }
 
+.page-back > i{
+  font-size: 1.7rem;
+  font-weight: 500;  
+  display: flex;
+  cursor: pointer;
+}
+
 .page-title {
   margin: 0;
   font-size: 1.25rem;

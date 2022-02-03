@@ -11,6 +11,7 @@ type Props = {|
   +title?: string,
   +subTitle?: string,
   +options?: React.Node,
+  +back?: React.Node,
 |};
 
 function PageContent({
@@ -19,13 +20,14 @@ function PageContent({
   title,
   subTitle,
   options,
+  back,
 }: Props): React.Node {
   const classes = cn("page-content", className);
   return (
     <div className={classes}>
       <Container>
-        {(title || subTitle || options) && (
-          <PageHeader title={title} subTitle={subTitle} options={options} />
+        {(title || subTitle || options || back) && (
+          <PageHeader title={title} subTitle={subTitle} options={options} back={back} />
         )}
         {children}
       </Container>
