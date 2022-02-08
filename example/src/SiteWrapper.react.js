@@ -8,7 +8,7 @@ import {
   Grid,
   List,
   Button,
-  RouterContextProvider,
+  RouterContextProvider
 } from "tabler-react";
 
 import type { NotificationProps } from "tabler-react";
@@ -225,7 +225,8 @@ class SiteWrapper extends React.Component<Props, State> {
           },
           accountDropdown: accountDropdownProps,
         }}
-        navProps={{ itemsObjects: navBarItems, stickyTop: true }}
+        // navProps={{ itemsObjects: navBarItems, stickyTop: true, navOption: (<span><Icon prefix="fe" name="info"/></span>) }}
+        navProps={{ itemsObjects: navBarItems, stickyTop: true, }}
         routerContextComponentType={withRouter(RouterContextProvider)}
         footerProps={{
           links: [

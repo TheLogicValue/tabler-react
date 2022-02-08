@@ -6,42 +6,43 @@ import { Container, Grid, Nav } from "../../";
 
 type subNavItem = {|
   +value: string,
-  +to?: string,
-  +icon?: string,
-  +LinkComponent?: React.ElementType,
-  +useExact?: boolean,
+  +to ?: string,
+  +icon ?: string,
+  +LinkComponent ?: React.ElementType,
+  +useExact ?: boolean,
 |};
 
 type navItem = {|
   +value: string,
-  +to?: string,
-  +icon?: string,
-  +active?: boolean,
-  +LinkComponent?: React.ElementType,
-  +subItems?: Array<subNavItem>,
-  +useExact?: boolean,
+  +to ?: string,
+  +icon ?: string,
+  +active ?: boolean,
+  +LinkComponent ?: React.ElementType,
+  +subItems ?: Array < subNavItem >,
+  +useExact ?: boolean,
 |};
 
 type navItems = Array<navItem>;
 
 export type Props = {|
-  +children?: React.Node,
-  +items?: React.ChildrenArray<React.Element<typeof Nav.Item>>,
-  +itemsObjects?: navItems,
+  +children ?: React.Node,
+  +items ?: React.ChildrenArray < React.Element < typeof Nav.Item >>,
+  +itemsObjects ?: navItems,
   /**
    * Display a search form to the right of the nav items
    */
-  +withSearchForm?: boolean,
+  +withSearchForm ?: boolean,
   /**
    * Provide your own component to replace the search form
    */
-  +rightColumnComponent?: React.Node,
+  +rightColumnComponent ?: React.Node,
   /**
    * Toggle the collapsed state of the nav
    */
-  +collapse?: boolean,
-  +routerContextComponentType?: React.ElementType,
-  +vertical?: boolean,
+  +collapse ?: boolean,
+  +routerContextComponentType ?: React.ElementType,
+  +vertical ?: boolean,
+  +navOption ?: React.Node,
 |};
 
 const SiteNav = ({
@@ -54,13 +55,14 @@ const SiteNav = ({
   routerContextComponentType,
   stickyTop = false,
   condensed = false,
-  vertical = false
+  vertical = false,
+  navOption
 }: Props): React.Node => {
   const sticky = stickyTop ? "sticky-top" : ""
   const isCondensed = condensed ? "" : "d-lg-flex"
   const classes = cn("header p-0 " + sticky + " " + isCondensed, { collapse });
 
-  if (vertical){
+  if (vertical) {
     return (
       <div className="collapse navbar-collapse" id="navbar-menu">
         <Nav
@@ -73,7 +75,7 @@ const SiteNav = ({
         />
       </div>
     )
-  }else{
+  } else {
     return (
       <div className={classes}>
         <Container>
@@ -88,6 +90,7 @@ const SiteNav = ({
                   routerContextComponentType={routerContextComponentType}
                 />
               </Grid.Col>
+              { navOption ? <Grid.Col className="col-1"> {navOption} </Grid.Col> : null }              
             </Grid.Row>
           )}
         </Container>
