@@ -32,7 +32,8 @@ function FormToggle({
   label,
   checked,
   onChange,
-  disabled,
+  disable,
+  ref,
   onBlur,
   onFocus,
   onClick,
@@ -50,7 +51,7 @@ function FormToggle({
         value={value}
         className="custom-switch-input"
         checked={checked}
-        disable={disabled}
+        disable={disable}
         ref={ref}
         onChange={onChange}
         onBlur={onBlur}
