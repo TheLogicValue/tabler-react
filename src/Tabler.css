@@ -14196,6 +14196,11 @@ Card alert
   color: #6e7687;
 }
 
+.dropdown-item:not([href]):not([tabindex]) {
+  color: #6e7687;
+  text-decoration: none;
+}
+
 .dropdown-menu-arrow:before {
   position: absolute;
   top: -6px;
