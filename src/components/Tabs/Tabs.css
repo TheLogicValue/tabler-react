@@ -3,13 +3,17 @@
 }
 
 .card-header.tab-header{
-  padding: 0rem 1rem 0rem 0rem !important;
+  padding: 0rem !important;
   background: none;
   display: flex;
   min-height: 3.5rem;
   align-items: center;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+}
+
+.card-header.tab-header .card-options{
+  margin-right: 0.5rem;
 }
 
 .nav-tabs.Tab_header_tabs .nav-link {
