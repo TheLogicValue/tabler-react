@@ -83,7 +83,7 @@
     "rollup-plugin-peer-deps-external": "2.2.0",
     "rollup-plugin-postcss": "1.6.3",
     "rollup-plugin-url": "2.2.1",
-    "semantic-release": "^17.4.4",
+    "semantic-release": "^19.0.2",
     "shx": "^0.3.3",
     "webpack": "4.19.1"
   },
