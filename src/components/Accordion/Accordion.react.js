@@ -1,4 +1,5 @@
 import React, {  useState  } from 'react';
+import "./Accordion.css";
 
 export default function Accordion(props) {    
     const accordionBody = props.children;    
