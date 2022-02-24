@@ -46,7 +46,7 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
-            search = false,            
+            search = false,
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -63,7 +63,7 @@ class AGGridTable extends React.Component<Props, State> {
             rowMultiSelectWithClick = false,
             listBtn = false,
             deselectAllBtn = false,
-            deselectAllOptions = {text: "Clear", hidden: false}
+            deselectAllOptions = { text: "Clear", hidden: false }
         }: Props = this.props;
 
         const classes = cn(
@@ -114,11 +114,11 @@ class AGGridTable extends React.Component<Props, State> {
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                         {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
-                        {listBtn === true ? <div className={ deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
+                        {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
                             {
-                                deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={ deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
-                            }                            
-                            </div> : null}
+                                deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
+                            }
+                        </div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 className={classes}
@@ -138,12 +138,14 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, item, subItems = null, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, colId, item, subItems = null, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                         return <AgGridColumn key={item}
                                             headerName={header}
                                             field={item}
                                             maxWidth={maxWidth}
                                             sort={sort}
+                                            colId={colId}
+                                            key={item}
                                             valueFormatter={valueFormatter}
                                             type={type}
                                             filter={filter}
@@ -151,12 +153,14 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, colId, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
                                                         maxWidth={maxWidth}
                                                         sort={sort}
+                                                        colId={colId}
+                                                        key={item}
                                                         valueFormatter={valueFormatter}
                                                         type={type}
                                                         filter={filter}
@@ -186,6 +190,7 @@ class AGGridTable extends React.Component<Props, State> {
                                                 cellRendererFramework={renderIcon}
                                                 key={item}
                                                 header={header}
+                                                colId={key}
                                                 valueFormatter={valueFormatter}
                                                 field={item}
                                                 type={type}
