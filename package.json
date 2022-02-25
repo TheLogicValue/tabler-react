@@ -22,7 +22,7 @@
     "lint": "eslint --ext .js src/**/*",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
-    "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts src/images dist/",
+    "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/",
     "cm": "git-cz",
     "startagain": "shx rm -rf dist node_modules example/node_modules yarn.lock example/yarn.lock && yarn install && cd example && yarn install && cd .. && yarn build",
     "semantic-release": "semantic-release  --no-ci"

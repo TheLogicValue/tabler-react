@@ -16381,7 +16381,7 @@ a.tag-addon:hover {
   font-style: normal;
 }
 
-.browser-android-browser {
+/* .browser-android-browser {
   background-image: url("./images/browsers/android-browser.svg");
 }
 
@@ -16451,7 +16451,7 @@ a.tag-addon:hover {
 
 .browser-vivaldi {
   background-image: url("./images/browsers/vivaldi.svg");
-}
+} */
 
 .flag {
   width: 1.6rem;
@@ -16464,7 +16464,7 @@ a.tag-addon:hover {
   border-radius: 2px;
 }
 
-.flag-ad {
+/* .flag-ad {
   background-image: url("./images/flags/ad.svg");
 }
 
@@ -17482,7 +17482,7 @@ a.tag-addon:hover {
 
 .flag-zw {
   background-image: url("./images/flags/zw.svg");
-}
+} */
 
 .payment {
   width: 2.5rem;
@@ -17495,7 +17495,7 @@ a.tag-addon:hover {
   border-radius: 2px;
 }
 
-.payment-2checkout-dark {
+/* .payment-2checkout-dark {
   background-image: url("./images/payments/2checkout-dark.svg");
 }
 
@@ -17925,7 +17925,7 @@ a.tag-addon:hover {
 
 .payment-worldpay {
   background-image: url("./images/payments/worldpay.svg");
-}
+} */
 
 svg {
   -ms-touch-action: none;
