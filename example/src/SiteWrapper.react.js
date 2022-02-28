@@ -1,7 +1,7 @@
 // @flow
 import {version} from '../package.json';
 import * as React from "react";
-import { NavLink, withRouter, Link } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import {
   Site,
@@ -43,8 +43,8 @@ const navBarItems: Array<navItem> = [
   {
     value: "Home",
     to: "/",
-    icon: "home",  
-    // LinkComponent: withRouter(Link),
+    icon: "home",
+    LinkComponent: withRouter(NavLink),
     useExact: true,
   },
   {
@@ -116,13 +116,13 @@ const navBarItems: Array<navItem> = [
     value: "Forms",
     to: "/form-elements",
     icon: "check-square",
-    // LinkComponent: withRouter(NavLink),
+    LinkComponent: withRouter(NavLink),
   },
   {
     value: "Gallery",
     to: "/gallery",
     icon: "image",
-    // LinkComponent: withRouter(NavLink),
+    LinkComponent: withRouter(NavLink),
   },
   {
     icon: "file-text",
