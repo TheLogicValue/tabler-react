@@ -144,8 +144,8 @@ class AGGridTable extends React.Component<Props, State> {
                                             field={item}
                                             maxWidth={maxWidth}
                                             sort={sort}
-                                            colId={colId}
-                                            key={item}
+                                            colId={subItems == null ? item : null}
+                                            key={subItems == null ? item : null}
                                             valueFormatter={valueFormatter}
                                             type={type}
                                             filter={filter}
@@ -159,7 +159,7 @@ class AGGridTable extends React.Component<Props, State> {
                                                         field={item}
                                                         maxWidth={maxWidth}
                                                         sort={sort}
-                                                        colId={colId}
+                                                        colId={item}
                                                         key={item}
                                                         valueFormatter={valueFormatter}
                                                         type={type}
