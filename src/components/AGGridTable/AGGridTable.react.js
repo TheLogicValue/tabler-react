@@ -185,12 +185,12 @@ class AGGridTable extends React.Component<Props, State> {
                                     scrollbarWidth={0}
                                 >
                                     {
-                                        columnTotal.map(({ header, item, type, valueFormatter, maxWidth, renderIcon }) => {
+                                        columnTotal.map(({ header, item, colId, type, valueFormatter, maxWidth, renderIcon }) => {
                                             return <AgGridColumn
                                                 cellRendererFramework={renderIcon}
                                                 key={item}
                                                 header={header}
-                                                colId={key}
+                                                colId={colId}
                                                 valueFormatter={valueFormatter}
                                                 field={item}
                                                 type={type}
