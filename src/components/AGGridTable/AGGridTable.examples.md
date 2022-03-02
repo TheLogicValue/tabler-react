@@ -75,8 +75,8 @@
   <AGGridTable 
     dataColumn={dataColumn()} 
     dataRow={dataRow()} 
-    columnTotal={columnTotal()}
-    dataTotal={dataTotal()}
+    // columnTotal={columnTotal()}
+    // dataTotal={dataTotal()}
     onRowClick={rowClick}
     pageSize={3}
     search={true}/>
