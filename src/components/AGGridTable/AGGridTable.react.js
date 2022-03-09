@@ -60,7 +60,6 @@ class AGGridTable extends React.Component<Props, State> {
             onRowClick,
             pageSize = 0,
             rowSelection = 'single',
-            isRowSelectable = true,
             rowMultiSelectWithClick = false,
             listBtn = false,
             deselectAllBtn = false,
@@ -130,7 +129,6 @@ class AGGridTable extends React.Component<Props, State> {
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
                                 domLayout={'autoHeight'}
-                                isRowSelectable={isRowSelectable}
                                 quickFilterText={this.state.filter}
                                 localeText={language === "es" ? es : null}
                                 enableRangeSelection={true}
