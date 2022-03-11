@@ -61,6 +61,7 @@ class AGGridTable extends React.Component<Props, State> {
             pageSize = 0,
             rowSelection = 'single',
             rowMultiSelectWithClick = false,
+            suppressRowClickSelection = false,
             listBtn = false,
             deselectAllBtn = false,
             deselectAllOptions = { text: "Clear", hidden: false }
@@ -128,6 +129,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 onGridReady={onGridReady}
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
+                                suppressRowClickSelection={suppressRowClickSelection}
                                 domLayout={'autoHeight'}
                                 quickFilterText={this.state.filter}
                                 localeText={language === "es" ? es : null}
