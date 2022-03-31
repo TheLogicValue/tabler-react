@@ -7,6 +7,9 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import { es } from "./Languages/es";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import CustomTooltip from './tooltip';
+import Button from "../Button";
+import Icon from "../Icon"
 
 type Props = {|
     +className ?: string,
@@ -47,6 +50,8 @@ class AGGridTable extends React.Component<Props, State> {
         const {
             className,
             search = false,
+            textFileCSV = "Export",
+            downloadCSV= true,
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -110,16 +115,25 @@ class AGGridTable extends React.Component<Props, State> {
             this.setState({ filter: event.target.value });
         }
 
+        const onBtnExport = () => {
+            this.state.topGrid.api.exportDataAsCsv({fileName: textFileCSV});
+        };
+
         return (
             <Grid.Row>
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
-                        {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
-                        {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
-                            {
-                                deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
-                            }
-                        </div> : null}
+                        <div className="addons-aggrid">
+                            {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
+                            {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
+                                <Icon prefix="fe" name="download"></Icon>
+                            </Button> : null}
+                            {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
+                                {
+                                    deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
+                                }
+                            </div> : null}
+                        </div>
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 className={classes}

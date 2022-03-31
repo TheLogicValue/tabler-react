@@ -35,6 +35,8 @@ Dashboard UI
   --dark: #323232;
   --vertical-nav-dark: #232e3c;
   --body-bg: #f8fafc;
+  --ag-border: #bdc3c7;
+  --ag-background: #f5f7f7;
   --input-border: rgba(0, 40, 100, 0.12);
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -13459,6 +13461,28 @@ a.icon:hover {
 .ag-btn-list{
   margin: 10px 0;
   font-size: 0;
+}
+
+.addons-aggrid {
+  display: flex;
+  border: 1px solid var(--ag-border);
+  margin-bottom: 5px;
+}
+
+.addons-aggrid button.downloadCSV {
+  border: none;
+  background-color:  var(--ag-background);
+  color: var(--dark);
+}
+
+.addons-aggrid button.downloadCSV:hover i {
+  color: var(--primary);
+}
+
+.addons-aggrid input#searcher{
+  border: none !important;
+  outline: none !important;
+  margin-bottom: 0px !important;
 }
 
 
