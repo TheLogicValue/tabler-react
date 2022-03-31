@@ -7,7 +7,6 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import { es } from "./Languages/es";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import CustomTooltip from './tooltip';
 import Button from "../Button";
 import Icon from "../Icon"
 
