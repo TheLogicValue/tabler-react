@@ -50,7 +50,7 @@ class AGGridTable extends React.Component<Props, State> {
             className,
             search = false,
             textFileCSV = "Export",
-            downloadCSV= true,
+            downloadCSV= false,
             minWidth = null,
             flex = 1,
             dataRow = [],
