@@ -7,10 +7,7 @@ import { Page, Grid, Tabs, Tab, Card, Button} from "tabler-react";
 import SiteWrapper from "../SiteWrapper.react";
 
 
-function TabsPage(): React.Node {
-  const state = () =>{
-    return true;
-  } 
+function TabsPage(): React.Node {  
   return (
     <SiteWrapper>
       <Page.Content title="Tabs">

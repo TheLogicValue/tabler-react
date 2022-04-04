@@ -1,41 +1,21 @@
 // @flow
 
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
 import { Page, Grid, Card, Button, Modal, Icon } from "tabler-react";
-
 import SiteWrapper from "../SiteWrapper.react";
 
 function ModalPage(): React.Node {
   const [showModalOne, setShowModalOne] = useState(false)
-  const closeModalOne = () => {
-    if (showModalOne){
-      setShowModalOne(false);
-    }
-  }
-  const openModalOne = () => {
-    if (showModalOne == false){
-      setShowModalOne(true);
-    }
-  }
-
+  const closeModalOne = () => { if (showModalOne) setShowModalOne(false); }
+  const openModalOne = () => { if (showModalOne === false) setShowModalOne(true); }
   const [showModalTwo, setShowModalTwo] = useState(false)
-  const closeModalTwo = () => {
-    if (showModalTwo){
-      setShowModalTwo(false);
-    }
-  }
-  const openModalTwo = () => {
-    if (showModalTwo == false){
-      setShowModalTwo(true);
-    }
-  }
-
+  const closeModalTwo = () => { if (showModalTwo) setShowModalTwo(false); }
+  const openModalTwo = () => { if (showModalTwo === false) setShowModalTwo(true); }
   const history = useHistory();
-  const back = (<><Icon name="chevron-left" onClick={() => { history.push('/') }}/></>);
-  
+  const back = (<><Icon name="chevron-left" onClick={() => { history.push('/') }} /></>);
+
   return (
     <SiteWrapper>
       <Page.Content title="Modal" back={back}>

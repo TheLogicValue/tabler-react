@@ -153,11 +153,12 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, colId, item, subItems = null, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, colId, item, subItems = null, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                         return <AgGridColumn key={item}
                                             headerName={header}
                                             field={item}
                                             maxWidth={maxWidth}
+                                            minWidth={minWidth}
                                             sort={sort}
                                             colId={subItems == null ? item : null}
                                             key={subItems == null ? item : null}
@@ -168,11 +169,12 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, colId, item, valueFormatter, type, maxWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, colId, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
                                                         maxWidth={maxWidth}
+                                                        minWidth={minWidth}
                                                         sort={sort}
                                                         colId={item}
                                                         key={item}
