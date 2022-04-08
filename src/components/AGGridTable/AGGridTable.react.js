@@ -27,6 +27,8 @@ type Props = {|
     +pageSize ?: Int16,
     /*** Handle onClick row*/
     +onRowClick ?: () => void,
+    /*** Handle onClick cell*/
+    +onCellClick ?: () => void,
     /**Type of row selection 'single' o 'multiple' */
     +rowSelection ?: string,
     /**Selection row with click when rowSelection is multiple */
@@ -61,7 +63,8 @@ class AGGridTable extends React.Component<Props, State> {
             resizable = true,
             sortable = true,
             language = "es",
-            onRowClick,
+            onRowClick = () => null,
+            onCellClick = () => null,
             pageSize = 0,
             rowSelection = 'single',
             rowMultiSelectWithClick = false,
@@ -149,6 +152,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 enableRangeSelection={true}
                                 scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                                 onRowClicked={(e) => { onRowClick(e.data) }}
+                                onCellClicked={(e) => { onCellClick(e) }}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
