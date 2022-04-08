@@ -27,6 +27,8 @@ type Props = {|
     +pageSize ?: Int16,
     /*** Handle onClick row*/
     +onRowClick ?: () => void,
+    /*** Handle onClick cell*/
+    +onCellClick ?: () => void,
     /**Type of row selection 'single' o 'multiple' */
     +rowSelection ?: string,
     /**Selection row with click when rowSelection is multiple */
@@ -50,7 +52,7 @@ class AGGridTable extends React.Component<Props, State> {
             className,
             search = false,
             textFileCSV = "Export",
-            downloadCSV= false,
+            downloadCSV = false,
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -60,8 +62,9 @@ class AGGridTable extends React.Component<Props, State> {
             autosize = true,
             resizable = true,
             sortable = true,
-            language = "es",
-            onRowClick,
+            language = null,
+            onRowClick = () => null,
+            onCellClick = () => null,
             pageSize = 0,
             rowSelection = 'single',
             rowMultiSelectWithClick = false,
@@ -115,7 +118,7 @@ class AGGridTable extends React.Component<Props, State> {
         }
 
         const onBtnExport = () => {
-            this.state.topGrid.api.exportDataAsCsv({fileName: textFileCSV, columnSeparator: ";"});
+            this.state.topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" });
         };
 
         return (
@@ -145,19 +148,24 @@ class AGGridTable extends React.Component<Props, State> {
                                 suppressRowClickSelection={suppressRowClickSelection}
                                 domLayout={'autoHeight'}
                                 quickFilterText={this.state.filter}
-                                localeText={language === "es" ? es : null}
+                                localeText={language == null ? es : language}
                                 enableRangeSelection={true}
                                 scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                                 onRowClicked={(e) => { onRowClick(e.data) }}
+                                onCellClicked={(e) => { onCellClick(e) }}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, colId, item, subItems = null, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, valueGetter, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                         return <AgGridColumn key={item}
                                             headerName={header}
                                             field={item}
                                             maxWidth={maxWidth}
+                                            valueGetter={valueGetter}
+                                            cellClassRules={cellClassRules}
+                                            cellClass={cellClass}
+                                            cellStyle={cellStyle}
                                             minWidth={minWidth}
                                             sort={sort}
                                             colId={subItems == null ? item : null}
@@ -169,12 +177,13 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, cellClassRules,cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, valueGetter, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
                                                         maxWidth={maxWidth}
                                                         minWidth={minWidth}
+                                                        valueGetter={valueGetter}
                                                         sort={sort}
                                                         colId={item}
                                                         key={item}
