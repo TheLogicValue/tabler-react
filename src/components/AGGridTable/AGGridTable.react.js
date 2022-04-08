@@ -169,7 +169,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellRendererFramework={renderIcon}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, colId, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, cellClassRules,cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
@@ -179,6 +179,9 @@ class AGGridTable extends React.Component<Props, State> {
                                                         colId={item}
                                                         key={item}
                                                         valueFormatter={valueFormatter}
+                                                        cellClassRules={cellClassRules}
+                                                        cellClass={cellClass}
+                                                        cellStyle={cellStyle}
                                                         type={type}
                                                         filter={filter}
                                                         filterParams={filterParams}
