@@ -5,7 +5,7 @@ import { Card, Text } from "../";
 function DoubleCard({ className, title, firstValue, firstlabel, secondValue, secondlabel, classColorValue = null, children }) {
     const classes = cn(className);
 
-    const getColorClass = React.useCallback((value) => {
+    const getColorClass = (value) => {
         let color = null
 
         Object.entries(classColorValue).forEach(([key, item]) => {
@@ -13,7 +13,7 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
         })
 
         return color
-    }, [])
+    }
 
     return (
         <Card className={classes}>

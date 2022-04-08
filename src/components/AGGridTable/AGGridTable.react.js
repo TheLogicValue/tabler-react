@@ -148,7 +148,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 suppressRowClickSelection={suppressRowClickSelection}
                                 domLayout={'autoHeight'}
                                 quickFilterText={this.state.filter}
-                                localeText={language ?? es}
+                                localeText={language == null ? es : language}
                                 enableRangeSelection={true}
                                 scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                                 onRowClicked={(e) => { onRowClick(e.data) }}
