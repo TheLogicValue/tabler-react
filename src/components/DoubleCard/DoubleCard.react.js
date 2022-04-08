@@ -20,7 +20,7 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
             <Text className="double-card-header">{title}</Text>
             <div className="double-card-body">
                 <div className="double-card-colum">
-                    <Text className="double-card-text">{firstValue}</Text>
+                    <Text className="double-card-text"><b>{firstValue}</b></Text>
                     {
                         classColorValue ? <Text color={getColorClass(firstValue)} className="double-card-subtext"><b>{firstlabel}</b></Text>
                             : <Text className="double-card-subtext"><b>{firstlabel}</b></Text>
