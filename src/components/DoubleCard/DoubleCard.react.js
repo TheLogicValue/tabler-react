@@ -22,15 +22,15 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{firstValue}</b></Text>
                     {
-                        classColorValue ? <Text color={getColorClass(firstValue)} className="double-card-subtext"><b>{firstlabel}</b></Text>
-                            : <Text className="double-card-subtext"><b>{firstlabel}</b></Text>
+                        classColorValue ? <Text color={getColorClass(firstValue)} className="double-card-subtext">{firstlabel}</Text>
+                            : <Text className="double-card-subtext">{firstlabel}</Text>
                     }
                 </div>
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{secondValue}</b></Text>
                     {
-                        classColorValue ? <Text color={getColorClass(secondValue)} className="double-card-subtext"><b>{secondlabel}</b></Text>
-                            : <Text className="double-card-subtext"><b>{secondlabel}</b></Text>
+                        classColorValue ? <Text color={getColorClass(secondValue)} className="double-card-subtext">{secondlabel}</Text>
+                            : <Text className="double-card-subtext">{secondlabel}</Text>
                     }
                 </div>
             </div>
