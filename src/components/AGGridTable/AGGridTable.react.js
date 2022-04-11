@@ -125,17 +125,17 @@ class AGGridTable extends React.Component<Props, State> {
             <Grid.Row>
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
-                        <div className="addons-aggrid">
-                            {search === true ? <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} /> : null}
+                        {search === true ? <div className="addons-aggrid">
+                            <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} />
                             {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
                                 <Icon prefix="fe" name="download"></Icon>
                             </Button> : null}
-                            {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
-                                {
-                                    deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
-                                }
-                            </div> : null}
-                        </div>
+                        </div> : null}
+                        {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
+                            {
+                                deselectAllBtn === true ? <button id="clearDataTables" onClick={deselectAll} className={deselectAllOptions.hidden ? "d-none" : "btn btn-primary"}>{deselectAllOptions.text}</button> : null
+                            }
+                        </div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 className={classes}
