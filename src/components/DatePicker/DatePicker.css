@@ -1,3 +1,32 @@
+.DayPicker {
+  display: inline-block;
+  height: 100%;
+  border: 1px solid var(--input-border);
+}
+
+.DayPicker input {
+  text-align: center;
+  height: 100%;
+  border: none;
+  outline: none !important;
+}
+
+.DayPicker button {
+  border: none;
+  outline: none;
+  cursor: pointer !important;
+  line-height: normal !important;
+  height: 100%;
+  padding: 0px 10px;
+  background-color: #f5f7f7;
+  color: var(--dark);
+}
+
+.DayPicker button:hover,
+.DayPicker button:active {
+  color: var(--primary);
+}
+
 .rdp-caption_label {
   text-transform: capitalize !important;
 }
