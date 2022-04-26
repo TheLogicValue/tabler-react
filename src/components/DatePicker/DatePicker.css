@@ -1,8 +1,3 @@
-.DayPicker-TodayButton {
-  background-color: transparent;
-  color: var(--primary);
-}
-
 .rdp-caption_label {
   text-transform: capitalize !important;
 }
@@ -61,13 +56,4 @@
 
 .rdp-day_disabled {
   color: #dce0e0;
-}
-
-/* DayPickerInput */
-
-.DayPicker {
-  display: inline-block;
-  height: 100%;
-  margin-right: 15px;
-  border: 1px solid var(--input-border);
 }
