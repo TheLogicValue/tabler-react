@@ -1,0 +1,73 @@
+.DayPicker-TodayButton {
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.rdp-caption_label {
+  text-transform: capitalize !important;
+}
+
+.rdp-dropdown_icon {
+  display: none !important;
+}
+
+.rdp-dropdown:focus:not([disabled]) + .rdp-caption_label,
+.rdp-dropdown:active:not([disabled]) + .rdp-caption_label {
+  border: none !important;
+  background-color: var(--white) !important;
+}
+
+.dialog-sheet .rdp-dropdown_month:nth-child(2) {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.rdp-dropdown_month {
+  padding: 0px 17px !important;
+}
+
+.rdp-caption .rdp-button:focus:not([disabled]),
+.rdp-caption .rdp-button:active:not([disabled]),
+.rdp-caption .rdp-button:hover:not([disabled]) {
+  background-color: var(--white) !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.rdp-caption .rdp-button:hover:not([disabled]) {
+  color: var(--close-modal) !important;
+}
+
+.rdp-day_today:not([disabled]) {
+  color: inherit !important;
+  background-color: var(--white) !important;
+  border: none !important;
+  font-weight: 800;
+}
+
+.rdp-day_selected:not([disabled]) {
+  background-color: var(--primary) !important;
+  border: none !important;
+  color: var(--white);
+}
+
+.rdp-day:hover:not([disabled]) {
+  background-color: var(--primary-hover) !important;
+}
+
+.rdp-day:not([disabled]) {
+  border: none !important;
+}
+
+.rdp-day_disabled {
+  color: #dce0e0;
+}
+
+/* DayPickerInput */
+
+.DayPicker {
+  display: inline-block;
+  height: 100%;
+  margin-right: 15px;
+  border: 1px solid var(--input-border);
+}
