@@ -38,7 +38,7 @@ const DayPickerTLV = forwardRef(({ date, dateIni }, ref) => {
 
     const closePopper = () => {
         setIsPopperOpen(false);
-        buttonRef.current?.focus();
+        buttonRef.current.focus();
     };
 
     const handleInputChange = (e) => {
