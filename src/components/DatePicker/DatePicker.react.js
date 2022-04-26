@@ -106,7 +106,7 @@ const DayPickerTLV = forwardRef(({ date, dateIni }, ref) => {
                         <DayPicker
                             initialFocus={isPopperOpen}
                             mode="single"
-                            defaultMonth={selected ?? dateIniData}
+                            defaultMonth={selected == null ? dateIniData : selected}
                             selected={selected}
                             onSelect={handleDaySelect}
                             disabled={[
