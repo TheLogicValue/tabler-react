@@ -47,6 +47,7 @@ export { default as Text } from "./Text";
 export { default as Timeline } from "./Timeline";
 export { default as Tooltip } from "./Tooltip";
 export { default as DoubleCard } from "./DoubleCard";
+export { default as DatePicker } from "./DatePicker";
 export { default as Accordion } from "./Accordion";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
