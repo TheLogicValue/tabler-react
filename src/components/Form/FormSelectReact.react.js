@@ -30,6 +30,7 @@ type Props = {|
   +label?: string,
   +name?: string,
   +value?: string | number,
+  +disabledValue?: string | number,
   +defaultValue?: string | number,
   +disabled?: boolean,
   +clearable?: boolean,
@@ -41,6 +42,7 @@ type Props = {|
 function FormSelectReact(props: Props): React.Node {
   const {
     className,
+    disabledValue = "-",
     children,
     valid,
     tick,
@@ -99,11 +101,17 @@ function FormSelectReact(props: Props): React.Node {
       }),
       control: (styles, { data, isDisabled, isFocused, isSelected, isHover }) => ({
         ...styles,
-          '&:hover': { borderColor: 'var(--primary)' },
+          '&:hover': { 
+            borderColor: 'var(--primary)' 
+          },
           borderColor: isFocused ? 'var(--primary)' : '', 
-          color: isDisabled ? 'var(--light)' : '',
           boxShadow: 'var(--primary)',
           borderStyle: 'unset'
+      }),
+      valueContainer: (styles, {isDisabled}) => ({
+        ...styles,
+        background: isDisabled ? 'var(--disabled) !important': '',
+        color: isDisabled ? 'var(--light) !important' : '',
       })
   };
   
@@ -113,7 +121,7 @@ function FormSelectReact(props: Props): React.Node {
     <React.Fragment>
       <Select
         name={name}
-        value={value}
+        value={isDisabled ? disabledValue : value}
         defaultValue={defaultValue}
         onChange={onChange}
         onBlur={onBlur}
@@ -140,7 +148,7 @@ function FormSelectReact(props: Props): React.Node {
         selectProps={selectProps}
         setValue={setValue}
         emotion={emotion}
-        placeholder={placeholder}
+        placeholder={isDisabled ? disabledValue : placeholder}
         components={{
           MultiValueContainer: () => null,
           DropdownIndicator: () => null,

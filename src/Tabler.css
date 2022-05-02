@@ -38,6 +38,7 @@ Dashboard UI
   --ag-border: #bdc3c7;
   --ag-background: #f5f7f7;
   --input-border: rgba(0, 40, 100, 0.12);
+  --disabled: #fafafa;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -2633,7 +2634,7 @@ select.form-control-lg:not([size]):not([multiple]),
 .btn:focus,
 .btn.focus {
   outline: 0;
-  box-shadow: 0 0 0 2px rgba(70, 127, 207, 0.25);
+  /* box-shadow: 0 0 0 2px rgba(70, 127, 207, 0.25); */
 }
 
 .btn.disabled,
