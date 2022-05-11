@@ -6,7 +6,6 @@ import { Popper } from "react-popper";
 
 import type { Placement, PopperChildrenProps } from "react-popper";
 
-import type { Style } from "typed-styles";
 type StyleOffsets = { top: number, left: number };
 type StylePosition = { position: "absolute" | "fixed" };
 
