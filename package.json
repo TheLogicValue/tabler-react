@@ -54,7 +54,7 @@
     "react-scripts": "^5.0.1",
     "react-styleguidist": "^11.2.0",
     "rollup": "^2.72.1",
-    "rollup-plugin-babel": "^4.0.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "shx": "^0.3.4"
