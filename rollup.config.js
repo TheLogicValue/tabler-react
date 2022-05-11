@@ -7,7 +7,7 @@ import postcss from "rollup-plugin-postcss";
 
 import pkg from "./package.json";
 
-export default {
+const config ={
   input: "src/index.js",
   output: [
     {
@@ -31,4 +31,6 @@ export default {
     resolve(),
     commonjs(),
   ],
-};
+}
+
+export default config
