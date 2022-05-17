@@ -56,7 +56,7 @@ class NavItem extends React.Component<Props, State> {
 
   _handleOnClick = (event): void => {
     
-    if ((this.props.hasSubNav && !this.props.vertical) || (this.props.vertical && !event.target.className.includes("nav-link-vertical"))) {
+    if ((this.props.hasSubNav && !this.props.vertical) || (this.props.vertical && !event.target.className.includes("nav-link-item-vertical"))) {
       this.setState(s => ({ isOpen: !s.isOpen }));
     }
 
@@ -126,7 +126,7 @@ class NavItem extends React.Component<Props, State> {
               (subItemsObjects &&
                 subItemsObjects.map((a, i) => (
                   <Nav.SubItem
-                    className={ vertical ? "nav-link-vertical" : ""}
+                    className={ vertical ? "nav-link-item-vertical" : ""}
                     key={i}
                     value={a.value}
                     to={a.to}
