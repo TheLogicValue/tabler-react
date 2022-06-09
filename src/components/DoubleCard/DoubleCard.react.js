@@ -14,14 +14,14 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
                     {classColorValue ? <Text>{firstlabel}</Text>
                         : <Text className="double-card-subtext">{firstlabel}</Text>
                     }
-                    {classColorValue ? <span className={`text-${classColorValue(firstValue, secondValue)}`}></span> : null}
+                    {classColorValue ? <span className={`text-${classColorValue}`}></span> : null}
                 </div>
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{secondValue}</b></Text>
                     {classColorValue ? <Text>{secondlabel}</Text>
                         : <Text className="double-card-subtext">{secondlabel}</Text>
                     }
-                    {classColorValue ?<span className={`text-${classColorValue(firstValue, secondValue)}`}></span>  : null}
+                    {classColorValue ?<span className={`text-${classColorValue}`}></span>  : null}
                 </div>
             </div>
             {children}
