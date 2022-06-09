@@ -6,13 +6,7 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
     const classes = cn(className);
 
     const getColorClass = (value) => {
-        let color = null
-
-        Object.entries(classColorValue).forEach(([key, item]) => {
-            if (item(value)) color = key
-        })
-
-        return color
+        console.log(classColorValue)
     }
 
     return (
