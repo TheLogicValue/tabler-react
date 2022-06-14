@@ -96,7 +96,7 @@ function FormSelectReact(props: Props): React.Node {
     option: (provided, state) => ({
         ...provided,
         backgroundColor: state.isSelected ? "var(--quaternary)" : "",
-        color: state.isDisabled ? 'var(--light)' : '',
+        color: state.isDisabled ? 'var(--light-disabled)' : '',
         cursor: "pointer"
       }),
       control: (styles, { data, isDisabled, isFocused, isSelected, isHover }) => ({
@@ -111,7 +111,7 @@ function FormSelectReact(props: Props): React.Node {
       valueContainer: (styles, {isDisabled}) => ({
         ...styles,
         background: isDisabled ? 'var(--disabled) !important': '',
-        color: isDisabled ? 'var(--light) !important' : '',
+        color: isDisabled ? 'var(--light-disabled) !important' : '',
       })
   };
   
