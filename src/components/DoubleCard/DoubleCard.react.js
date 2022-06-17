@@ -11,17 +11,11 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
             <div className="double-card-body">
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{firstValue}</b></Text>
-                    {classColorValue ? <Text>{firstlabel}</Text>
-                        : <Text className="double-card-subtext">{firstlabel}</Text>
-                    }
-                    {classColorValue ? <span className={`text-${classColorValue}`}></span> : null}
+                    <Text className={`double-card-subtext ${classColorValue && "text-" + classColorValue}`}>{firstlabel}</Text>
                 </div>
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{secondValue}</b></Text>
-                    {classColorValue ? <Text>{secondlabel}</Text>
-                        : <Text className="double-card-subtext">{secondlabel}</Text>
-                    }
-                    {classColorValue ?<span className={`text-${classColorValue}`}></span>  : null}
+                    <Text className="double-card-subtext">{secondlabel}</Text>
                 </div>
             </div>
             {children}
