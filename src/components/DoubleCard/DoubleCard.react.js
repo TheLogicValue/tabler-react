@@ -10,8 +10,8 @@ function DoubleCard({ className, title, firstValue, firstlabel, secondValue, sec
             <Text className="double-card-header">{title}</Text>
             <div className="double-card-body">
                 <div className="double-card-colum">
-                    <Text className="double-card-text"><b>{firstValue}</b></Text>
-                    <Text className={`double-card-subtext ${classColorValue && "text-" + classColorValue}`}>{firstlabel}</Text>
+                    <Text className={`double-card-text ${classColorValue && "text-" + classColorValue}`}><b>{firstValue}</b></Text>
+                    <Text className="double-card-subtext">{firstlabel}</Text>
                 </div>
                 <div className="double-card-colum">
                     <Text className="double-card-text"><b>{secondValue}</b></Text>
