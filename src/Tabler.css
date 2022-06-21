@@ -32,6 +32,7 @@ Dashboard UI
   --warning-hover: #c29d0b;
   --danger: #ef6461;
   --light: #f5f5f5;
+  --light-disabled: #aba6a6;
   --dark: #323232;
   --vertical-nav-dark: #232e3c;
   --body-bg: #f8fafc;
@@ -14782,7 +14783,7 @@ textarea[cols] {
 .form-label {
   display: block;
   margin-bottom: 0.375rem;
-  font-weight: 600;
+  /* font-weight: 600; */
   font-size: 0.875rem;
 }
 
@@ -14879,7 +14880,7 @@ Icon input
 }
 
 .form-fieldset {
-  background: var(--light);
+  /* background: var(--light); */
   border: 1px solid #e9ecef;
   padding: 1rem;
   border-radius: 3px;
