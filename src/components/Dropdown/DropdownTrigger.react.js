@@ -64,7 +64,7 @@ function DropdownTrigger({
   rootRef,
 }: Props): React.Node {
   const classes = cn(
-    { "dropdown-toggle": toggle, "nav-link": isNavLink },
+    { "dropdown-toggle": toggle, "nav-link-item": isNavLink },
     className
   );
 

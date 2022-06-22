@@ -26,7 +26,7 @@ function NavLink({
   rootRef,
   useExact,
 }: Props): React.Node {
-  const classes = cn({ "nav-link": true, active: active }, className);
+  const classes = cn({ "nav-link-item": true, active: active }, className);
 
   const childrenForAll = (
     <React.Fragment>
