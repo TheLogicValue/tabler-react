@@ -174,7 +174,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             type={type}
                                             filter={filter}
                                             filterParams={filterParams}
-                                            cellRendererFramework={renderIcon}
+                                            cellRenderer={renderIcon}
                                             pinned={pinned}>
                                             {
                                                 subItems != null ? subItems.map(({ header, valueGetter, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
@@ -194,7 +194,7 @@ class AGGridTable extends React.Component<Props, State> {
                                                         type={type}
                                                         filter={filter}
                                                         filterParams={filterParams}
-                                                        cellRendererFramework={renderIcon}
+                                                        cellRenderer={renderIcon}
                                                         pinned={pinned} />
                                                 }) : null
                                             }
@@ -216,7 +216,7 @@ class AGGridTable extends React.Component<Props, State> {
                                     {
                                         columnTotal.map(({ header, item, colId, type, valueFormatter, maxWidth, renderIcon }) => {
                                             return <AgGridColumn
-                                                cellRendererFramework={renderIcon}
+                                                cellRenderer={renderIcon}
                                                 key={item}
                                                 header={header}
                                                 colId={colId}
