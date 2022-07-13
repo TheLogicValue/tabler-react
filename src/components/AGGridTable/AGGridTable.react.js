@@ -5,8 +5,7 @@ import cn from "classnames";
 import { Grid } from "../";
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import { es } from "./Languages/es";
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import "ag-grid-community/styles/ag-grid.css";
 import Button from "../Button";
 import Icon from "../Icon"
 
@@ -50,6 +49,7 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
+            theme = "ag-theme-balham",
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
@@ -76,7 +76,7 @@ class AGGridTable extends React.Component<Props, State> {
 
         const classes = cn(
             className,
-            "ag-theme-balham"
+            theme,
         );
 
         const topOptions = {
