@@ -157,7 +157,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, valueGetter, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, valueGetter, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                         return <AgGridColumn key={item}
                                             headerName={header}
                                             field={item}
@@ -175,9 +175,10 @@ class AGGridTable extends React.Component<Props, State> {
                                             filter={filter}
                                             filterParams={filterParams}
                                             cellRenderer={renderIcon}
+                                            wrapText={wrapText}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, valueGetter, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, valueGetter, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
                                                     return <AgGridColumn key={item}
                                                         headerName={header}
                                                         field={item}
@@ -193,6 +194,7 @@ class AGGridTable extends React.Component<Props, State> {
                                                         cellStyle={cellStyle}
                                                         type={type}
                                                         filter={filter}
+                                                        wrapText={wrapText}
                                                         filterParams={filterParams}
                                                         cellRenderer={renderIcon}
                                                         pinned={pinned} />
