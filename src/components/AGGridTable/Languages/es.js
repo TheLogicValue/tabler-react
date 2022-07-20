@@ -3,7 +3,8 @@
 export const es = {  // for set filter
     selectAll: 'Seleccionar Todo',
     searchOoo: 'Buscar...',
-    blanks: 'En blanco',
+    blank: 'En blanco',
+    notBlank: "No en blanco",
     // for number filter and text filter
     filterOoo: 'Filtro...',
     applyFilter: 'Aplicar Filtro',
