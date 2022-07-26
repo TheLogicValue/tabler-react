@@ -89,7 +89,6 @@ class AGGridTable extends React.Component<Props, State> {
                 minWidth: minWidth
             },
             suppressHorizontalScroll: true,
-            suppressRowTransform: true,
         }
 
         const bottomOptions = {
