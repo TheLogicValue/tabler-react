@@ -53,6 +53,7 @@ class AGGridTable extends React.Component<Props, State> {
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
+            suppressRowTransform = false,
             minWidth = null,
             flex = 1,
             dataRow = [],
@@ -147,6 +148,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
                                 suppressRowClickSelection={suppressRowClickSelection}
+                                suppressRowTransform={suppressRowTransform}
                                 domLayout={'autoHeight'}
                                 quickFilterText={this.state.filter}
                                 localeText={language == null ? es : language}
