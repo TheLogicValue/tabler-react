@@ -160,7 +160,7 @@ class AGGridTable extends React.Component<Props, State> {
                             >
                                 {
                                     dataColumn.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
-                                        return <AgGridColumn key={key ?? item}
+                                        return <AgGridColumn
                                             headerName={header}
                                             field={item}
                                             rowSpan={rowSpan}
@@ -171,8 +171,8 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellStyle={cellStyle}
                                             minWidth={minWidth}
                                             sort={sort}
-                                            colId={subItems == null ? item : null}
-                                            key={subItems == null ? item : null}
+                                            colId={subItems == null ? key ?? item : null}
+                                            key={subItems == null ? key ?? item : null}
                                             valueFormatter={valueFormatter}
                                             type={type}
                                             filter={filter}
@@ -182,8 +182,8 @@ class AGGridTable extends React.Component<Props, State> {
                                             autoHeight={autoHeight}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", pinned = null }) => {
-                                                    return <AgGridColumn key={item}
+                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", pinned = null }) => {
+                                                    return <AgGridColumn
                                                         headerName={header}
                                                         field={item}
                                                         maxWidth={maxWidth}
@@ -191,8 +191,8 @@ class AGGridTable extends React.Component<Props, State> {
                                                         valueGetter={valueGetter}
                                                         sort={sort}
                                                         rowSpan={rowSpan}
-                                                        colId={item}
-                                                        key={item}
+                                                        colId={key ?? item}
+                                                        key={key ?? item}
                                                         valueFormatter={valueFormatter}
                                                         cellClassRules={cellClassRules}
                                                         cellClass={cellClass}
