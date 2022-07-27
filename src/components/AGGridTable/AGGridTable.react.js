@@ -159,8 +159,8 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
-                                        return <AgGridColumn key={item}
+                                    dataColumn.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                        return <AgGridColumn key={key ?? item}
                                             headerName={header}
                                             field={item}
                                             rowSpan={rowSpan}
