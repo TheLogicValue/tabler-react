@@ -55,6 +55,7 @@ class AGGridTable extends React.Component<Props, State> {
             downloadCSV = false,
             suppressRowTransform = false,
             minWidth = null,
+            rowHeight = null,
             flex = 1,
             dataRow = [],
             dataTotal = [],
@@ -143,6 +144,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 gridOptions={topOptions}
                                 onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
+                                rowHeight={rowHeight}
                                 onGridReady={onGridReady}
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
