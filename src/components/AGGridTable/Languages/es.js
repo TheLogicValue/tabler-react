@@ -19,7 +19,9 @@ export const es = {  // for set filter
     andCondition: 'Y',
     orCondition: 'O',
     // other
+    loadingOoo: 'Cargando...',
     noRowsToShow: 'No hay filas para mostrar',
+    enabled: 'Habilitado',
     //pagination
     to: 'a',
     of: 'de',
