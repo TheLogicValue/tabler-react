@@ -161,7 +161,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null }) => {
+                                    dataColumn.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null, compare }) => {
                                         return <AgGridColumn
                                             headerName={header}
                                             field={item}
@@ -171,8 +171,9 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellClassRules={cellClassRules}
                                             cellClass={cellClass}
                                             cellStyle={cellStyle}
+                                            compare={compare}
                                             minWidth={minWidth}
-                                            sort={sort}
+                                            sortable={sort}
                                             colId={subItems == null ? key ?? item : null}
                                             key={subItems == null ? key ?? item : null}
                                             valueFormatter={valueFormatter}
@@ -184,14 +185,15 @@ class AGGridTable extends React.Component<Props, State> {
                                             autoHeight={autoHeight}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", compare , pinned = null }) => {
                                                     return <AgGridColumn
                                                         headerName={header}
                                                         field={item}
                                                         maxWidth={maxWidth}
                                                         minWidth={minWidth}
                                                         valueGetter={valueGetter}
-                                                        sort={sort}
+                                                        sortable={sort}
+                                                        compare={compare}
                                                         rowSpan={rowSpan}
                                                         colId={key ?? item}
                                                         key={key ?? item}
