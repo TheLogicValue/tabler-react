@@ -171,7 +171,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellClassRules={cellClassRules}
                                             cellClass={cellClass}
                                             cellStyle={cellStyle}
-                                            compare={compare}
+                                            // compare={compare}
                                             minWidth={minWidth}
                                             sortable={sort}
                                             colId={subItems == null ? key ?? item : null}
@@ -193,7 +193,7 @@ class AGGridTable extends React.Component<Props, State> {
                                                         minWidth={minWidth}
                                                         valueGetter={valueGetter}
                                                         sortable={sort}
-                                                        compare={compare}
+                                                        // compare={compare}
                                                         rowSpan={rowSpan}
                                                         colId={key ?? item}
                                                         key={key ?? item}
