@@ -11,7 +11,8 @@ import "./Tabs.css";
 type Props = {|
   +initialTab: string,
   +children: React.ChildrenArray<React.Element<typeof Tab>>,
-  +options: React.Node
+  +options: React.Node,
+  +className: string
 |};
 
 type State = {|
@@ -24,13 +25,14 @@ class Tabs extends React.PureComponent<Props, State> {
   };
 
   render(): React.Node {
-    const { children, options } = this.props;
+    const { children, options, className } = this.props;
     const { selectedTitle } = this.state;
     return (
       <div className="card">
         <TabbedHeader
           selectedTitle={selectedTitle}
           stateCallback={newTitle => this.setState({ selectedTitle: newTitle })}
+          className={className}
           options={options}
         >
           {children}
