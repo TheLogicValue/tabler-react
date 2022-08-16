@@ -5,6 +5,7 @@ import * as React from "react";
 import Tab from "./Tab.react";
 import TabbedContainer from "./TabbedContainer.react";
 import TabbedHeader from "./TabbedHeader.react";
+import cn from "classnames";
 
 import "./Tabs.css";
 
