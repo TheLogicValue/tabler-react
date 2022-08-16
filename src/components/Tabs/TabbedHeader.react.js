@@ -11,10 +11,11 @@ type Props = {|
   +selectedTitle: string,
   +options: React.Node,
   +stateCallback: (selectedTitle: string) => void,
+  +className: string
 |};
 
 function TabbedHeader(props: Props): React.Node {
-  const { children, stateCallback, options } = props;
+  const { children, stateCallback, options, className } = props;
   const classes = cn("tab-header", className);
   const tabs = React.Children.toArray(children);
   return (
