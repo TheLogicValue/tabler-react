@@ -26,7 +26,7 @@ class Tabs extends React.PureComponent<Props, State> {
   };
 
   render(): React.Node {
-    const { children, options, className } = this.props;
+    const { children, options, className, modal } = this.props;
     const { selectedTitle } = this.state;
     const classes = cn("card", className);
 
@@ -34,6 +34,7 @@ class Tabs extends React.PureComponent<Props, State> {
       <div className={classes}>
         <TabbedHeader
           selectedTitle={selectedTitle}
+          modal={modal}
           stateCallback={newTitle => this.setState({ selectedTitle: newTitle })}
           options={options}
         >

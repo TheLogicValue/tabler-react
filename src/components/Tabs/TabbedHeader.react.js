@@ -14,10 +14,12 @@ type Props = {|
 |};
 
 function TabbedHeader(props: Props): React.Node {
-  const { children, stateCallback, options } = props;
+  const { children, stateCallback, options, modal } = props;
   const tabs = React.Children.toArray(children);
+  const classes = cn("tab-header", {"modal-header": modal});
+
   return (
-    <Card.Header className="tab-header">
+    <Card.Header className={classes}>
       <ul className="nav nav-tabs Tab_header_tabs">
         {tabs.map((tab, index) => {
           const title = tab.props.title;
