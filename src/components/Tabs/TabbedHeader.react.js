@@ -11,15 +11,13 @@ type Props = {|
   +selectedTitle: string,
   +options: React.Node,
   +stateCallback: (selectedTitle: string) => void,
-  +className: string
 |};
 
 function TabbedHeader(props: Props): React.Node {
-  const { children, stateCallback, options, className } = props;
-  const classes = cn("tab-header", className);
+  const { children, stateCallback, options } = props;
   const tabs = React.Children.toArray(children);
   return (
-    <Card.Header className={classes}>
+    <Card.Header className="tab-header">
       <ul className="nav nav-tabs Tab_header_tabs">
         {tabs.map((tab, index) => {
           const title = tab.props.title;

@@ -27,12 +27,13 @@ class Tabs extends React.PureComponent<Props, State> {
   render(): React.Node {
     const { children, options, className } = this.props;
     const { selectedTitle } = this.state;
+    const classes = cn("card", className);
+
     return (
-      <div className="card">
+      <div className={classes}>
         <TabbedHeader
           selectedTitle={selectedTitle}
           stateCallback={newTitle => this.setState({ selectedTitle: newTitle })}
-          className={className}
           options={options}
         >
           {children}
