@@ -5,6 +5,7 @@ export const es = {  // for set filter
     searchOoo: 'Buscar...',
     blank: 'En blanco',
     notBlank: "No en blanco",
+    noRowsToShow: "Sin datos",
     // for number filter and text filter
     filterOoo: 'Filtro...',
     applyFilter: 'Aplicar Filtro',
@@ -20,7 +21,6 @@ export const es = {  // for set filter
     orCondition: 'O',
     // other
     loadingOoo: 'Cargando...',
-    noRowsToShow: 'No hay filas para mostrar',
     enabled: 'Habilitado',
     //pagination
     to: 'a',
