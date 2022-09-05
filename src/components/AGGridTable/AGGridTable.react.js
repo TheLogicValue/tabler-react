@@ -50,6 +50,8 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
+            panelPagination,
+            suppressPaginationPanel = false,
             gridRef,
             onPaginationChanged = () => null,
             search = false,
@@ -143,6 +145,7 @@ class AGGridTable extends React.Component<Props, State> {
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
                                 ref={gridRef}
+                                suppressPaginationPanel={suppressPaginationPanel}
                                 className={classes}
                                 gridOptions={topOptions}
                                 onFirstDataRendered={onFirstDataRendered}
@@ -220,6 +223,7 @@ class AGGridTable extends React.Component<Props, State> {
                                     })
                                 }
                             </AgGridReact>
+                            {panelPagination}
                         </div>
                         {dataTotal.length !== 0
                             ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
