@@ -50,6 +50,8 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
+            gridRef,
+            onPaginationChanged = () => null,
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
@@ -140,6 +142,7 @@ class AGGridTable extends React.Component<Props, State> {
                         </div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
+                                ref={gridRef}
                                 className={classes}
                                 gridOptions={topOptions}
                                 onFirstDataRendered={onFirstDataRendered}
@@ -157,6 +160,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                                 onRowClicked={(e) => { onRowClick(e.data) }}
                                 onCellClicked={(e) => { onCellClick(e) }}
+                                onPaginationChanged={onPaginationChanged}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
