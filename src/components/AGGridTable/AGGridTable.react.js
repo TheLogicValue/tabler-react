@@ -52,6 +52,8 @@ class AGGridTable extends React.Component<Props, State> {
             className,
             panelPagination,
             suppressPaginationPanel = false,
+            onGrid,
+            overlayLoadingTemplate,
             gridRef,
             onPaginationChanged = () => null,
             search = false,
@@ -151,7 +153,8 @@ class AGGridTable extends React.Component<Props, State> {
                                 onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
                                 rowHeight={rowHeight}
-                                onGridReady={onGridReady}
+                                overlayLoadingTemplate={overlayLoadingTemplate}
+                                onGridReady={onGrid ?? onGridReady}
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
                                 suppressRowClickSelection={suppressRowClickSelection}
