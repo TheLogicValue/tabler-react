@@ -196,7 +196,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             autoHeight={autoHeight}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", sortable, comparator , pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", sortable, comparator, pinned = null }) => {
                                                     return <AgGridColumn
                                                         headerName={header}
                                                         field={item}
@@ -226,7 +226,9 @@ class AGGridTable extends React.Component<Props, State> {
                                     })
                                 }
                             </AgGridReact>
-                            {panelPagination}
+                            <div className="ag-panel-custom">
+                                {panelPagination}
+                            </div>
                         </div>
                         {dataTotal.length !== 0
                             ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
