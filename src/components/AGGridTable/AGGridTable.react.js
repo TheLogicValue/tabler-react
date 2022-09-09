@@ -56,6 +56,7 @@ class AGGridTable extends React.Component<Props, State> {
             overlayLoadingTemplate,
             gridRef,
             onPaginationChanged = () => null,
+            onHandleChangeFilter = () => null,
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
@@ -134,7 +135,7 @@ class AGGridTable extends React.Component<Props, State> {
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                         {search === true ? <div className="addons-aggrid">
-                            <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} />
+                            <input type="text" id="searcher" placeholder="Buscar..." onInput={onHandleChangeFilter ?? handleChangeFilter} />
                             {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
                                 <Icon prefix="fe" name="download"></Icon>
                             </Button> : null}
