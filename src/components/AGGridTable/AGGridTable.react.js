@@ -57,6 +57,7 @@ class AGGridTable extends React.Component<Props, State> {
             gridRef,
             onPaginationChanged = () => null,
             onHandleChangeFilter = () => null,
+            postSortRows = () => null,
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
@@ -168,6 +169,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 onRowClicked={(e) => { onRowClick(e.data) }}
                                 onCellClicked={(e) => { onCellClick(e) }}
                                 onPaginationChanged={onPaginationChanged}
+                                postSortRows = {postSortRows}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
