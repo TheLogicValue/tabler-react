@@ -56,7 +56,7 @@ class AGGridTable extends React.Component<Props, State> {
             overlayLoadingTemplate,
             gridRef,
             onPaginationChanged = () => null,
-            onHandleChangeFilter = () => null,
+            onHandleChangeFilter = null,
             postSortRows = () => null,
             search = false,
             textFileCSV = "Export",
