@@ -4,7 +4,7 @@ import type NotificationProps from "./Notification";
 export type { NotificationProps };
 
 export { default as AccountDropdown } from "./AccountDropdown";
-export { AGGridTable, OverlayText } from "./AGGridTable";
+export { AGGridTable, OverlayLoading } from "./AGGridTable";
 export { default as Alert } from "./Alert";
 export { default as Avatar } from "./Avatar";
 export { default as Badge } from "./Badge";
