@@ -1,5 +1,9 @@
 // @flow
 
-import AGGridTable from "./AGGridTable.react";
+import AGGridTable from "./AGGridTable.react"
+import { OverlayLoading } from "./AGGridTable.react"
 
-export { AGGridTable as default };
+export {
+    AGGridTable as default,
+    OverlayLoading
+}

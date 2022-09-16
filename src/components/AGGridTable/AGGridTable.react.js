@@ -10,6 +10,10 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import Button from "../Button";
 import Icon from "../Icon"
 
+export function OverlayLoading(text){
+    return `<span class="ag-overlay-loading-center">${text}</span>`
+}
+
 type Props = {|
     +className ?: string,
     +search ?: Boolean,
