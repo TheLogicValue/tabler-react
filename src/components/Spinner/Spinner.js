@@ -1,3 +1,4 @@
+import React from 'react';
 import './Spinner.css'
 export default function Spinner({ height = 26, width = 26 }) {
     return <svg className="svg-container" height={height} width={width} viewBox="0 0 100 100">
