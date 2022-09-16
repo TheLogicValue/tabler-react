@@ -4,7 +4,7 @@ import type NotificationProps from "./Notification";
 export type { NotificationProps };
 
 export { default as AccountDropdown } from "./AccountDropdown";
-export { default as AGGridTable } from "./AGGridTable";
+export { AGGridTable, OverlayLoading } from "./AGGridTable";
 export { default as Alert } from "./Alert";
 export { default as Avatar } from "./Avatar";
 export { default as Badge } from "./Badge";
@@ -51,4 +51,4 @@ export { default as DatePicker } from "./DatePicker";
 export { default as Accordion } from "./Accordion";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
-
+export { Spinner } from './Spinner'
