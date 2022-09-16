@@ -51,4 +51,4 @@ export { default as DatePicker } from "./DatePicker";
 export { default as Accordion } from "./Accordion";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
-
+export { Spinner } from './Spinner'
