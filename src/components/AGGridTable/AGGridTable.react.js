@@ -50,6 +50,14 @@ class AGGridTable extends React.Component<Props, State> {
     render(): React.Node {
         const {
             className,
+            panelPagination,
+            suppressPaginationPanel = false,
+            onGrid,
+            overlayLoadingTemplate,
+            gridRef,
+            onPaginationChanged = () => null,
+            onHandleChangeFilter = null,
+            postSortRows = () => null,
             search = false,
             textFileCSV = "Export",
             downloadCSV = false,
@@ -128,7 +136,7 @@ class AGGridTable extends React.Component<Props, State> {
                 <Grid.Col width={12}>
                     <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                         {search === true ? <div className="addons-aggrid">
-                            <input type="text" id="searcher" placeholder="Buscar..." onInput={handleChangeFilter} />
+                            <input type="text" id="searcher" placeholder="Buscar..." onInput={onHandleChangeFilter ?? handleChangeFilter} />
                             {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
                                 <Icon prefix="fe" name="download"></Icon>
                             </Button> : null}
@@ -140,12 +148,15 @@ class AGGridTable extends React.Component<Props, State> {
                         </div> : null}
                         <div style={{ flex: '1 1 auto', height: '100%' }} >
                             <AgGridReact
+                                ref={gridRef}
+                                suppressPaginationPanel={suppressPaginationPanel}
                                 className={classes}
                                 gridOptions={topOptions}
                                 onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
                                 rowHeight={rowHeight}
-                                onGridReady={onGridReady}
+                                overlayLoadingTemplate={overlayLoadingTemplate}
+                                onGridReady={onGrid ?? onGridReady}
                                 rowSelection={rowSelection}
                                 rowMultiSelectWithClick={rowMultiSelectWithClick}
                                 suppressRowClickSelection={suppressRowClickSelection}
@@ -157,6 +168,8 @@ class AGGridTable extends React.Component<Props, State> {
                                 scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                                 onRowClicked={(e) => { onRowClick(e.data) }}
                                 onCellClicked={(e) => { onCellClick(e) }}
+                                onPaginationChanged={onPaginationChanged}
+                                postSortRows = {postSortRows}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
@@ -186,7 +199,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             autoHeight={autoHeight}
                                             pinned={pinned}>
                                             {
-                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", sortable, comparator , pinned = null }) => {
+                                                subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", sortable, comparator, pinned = null }) => {
                                                     return <AgGridColumn
                                                         headerName={header}
                                                         field={item}
@@ -216,6 +229,9 @@ class AGGridTable extends React.Component<Props, State> {
                                     })
                                 }
                             </AgGridReact>
+                            <div className="ag-panel-custom">
+                                {panelPagination}
+                            </div>
                         </div>
                         {dataTotal.length !== 0
                             ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
