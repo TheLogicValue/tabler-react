@@ -1,6 +1,6 @@
 // @flow
 
-import { fromUnixTime } from "date-fns";
+import { NavBarMenu } from "./NavBar";
 import type NotificationProps from "./Notification";
 export type { NotificationProps };
 

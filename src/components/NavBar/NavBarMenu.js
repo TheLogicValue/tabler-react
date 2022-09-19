@@ -4,7 +4,7 @@ import NavBarItem from "./NavBarItem"
 import NavBarDropDown from "./NavBarDropDown"
 import cn from "classnames"
 
-const NavBarMenu = ({ item }) => {
+export default function NavBarMenu ({ item }) {
     const [dropdown, setDropdown] = useState(false)
     const classes = cn("nav-item", { "show": dropdown }, item.className)
     const ref = useRef()
@@ -54,4 +54,3 @@ const NavBarMenu = ({ item }) => {
         </li>
     )
 }
-export default NavBarMenu
