@@ -1,5 +1,6 @@
 // @flow
 
+import { fromUnixTime } from "date-fns";
 import type NotificationProps from "./Notification";
 export type { NotificationProps };
 
@@ -52,3 +53,4 @@ export { default as Accordion } from "./Accordion";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
 export { Spinner } from './Spinner'
+export { NavBarMenu } from './NavBar'
