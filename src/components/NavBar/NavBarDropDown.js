@@ -1,3 +1,4 @@
+import React from "react"
 import NavBarItem from "./NavBarItem"
 
 const NavBarDropDown = ({ submenus, dropdown, triggerEvent = () => null }) => {

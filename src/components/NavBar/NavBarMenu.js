@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Icon from "../Icon"
 import NavBarItem from "./NavBarItem"
 import NavBarDropDown from "./NavBarDropDown"

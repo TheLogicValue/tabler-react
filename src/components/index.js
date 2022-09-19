@@ -1,6 +1,4 @@
 // @flow
-
-import { NavBarMenu } from "./NavBar";
 import type NotificationProps from "./Notification";
 export type { NotificationProps };
 
