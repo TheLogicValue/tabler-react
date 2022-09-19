@@ -27,7 +27,7 @@ export default function NavBarMenu({ items }) {
             {items.map((item, i) => {
                 const classes = (item?.subItems === undefined) ? "nav-item" : cn("nav-item", { "show": dropdown }, item.className)
                 return (
-                    <li className={classes} ref={ref}>
+                    <li className={classes} ref={ref} key={item.value}>
                         {item.subItems ? (
                             <>
                                 <div
