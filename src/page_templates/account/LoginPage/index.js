@@ -1,3 +1,3 @@
-import LoginPage from "./LoginPage.react";
-
-export default LoginPage;
+// import LoginPage from "./LoginPage.react"
+import LoginPage from "./LoginPageForm"
+export default LoginPage
