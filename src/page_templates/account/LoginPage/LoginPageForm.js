@@ -1,7 +1,7 @@
 import React from "react"
 import FormTextInput from "../../../forms/FormTextInput.react"
 import FormCard from "../../../forms/FormCard.react"
-import StandaloneFormPage from "./StandaloneFormPage"
+import StandaloneFormPage from "../../StandaloneFormPage.react"
 
 export default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children } = {}) {
 
