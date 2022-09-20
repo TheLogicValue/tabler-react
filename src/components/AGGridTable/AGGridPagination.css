@@ -1,0 +1,11 @@
+.ag-panel-custom{
+    border: 1px solid #bdc3c7;
+}
+
+.ag-root-wrapper{
+    border-bottom: none !important;
+}
+
+.ag-body-horizontal-scroll-container {
+    padding-bottom: 0.625rem !important;
+}
