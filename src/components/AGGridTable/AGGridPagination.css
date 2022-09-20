@@ -1,5 +1,6 @@
 .ag-panel-custom{
-    border: 1px solid #bdc3c7;
+    border: 1px solid;
+    border-color: var(--ag-row-border-color, #d9dcde);
 }
 
 .ag-root-wrapper{
