@@ -7,10 +7,10 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import { es } from "./Languages/es";
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import Button from "../Button";
+import { Button } from "../Button";
 import Icon from "../Icon"
 
-export function OverlayLoading(text){
+export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
 }
 
@@ -173,7 +173,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 onRowClicked={(e) => { onRowClick(e.data) }}
                                 onCellClicked={(e) => { onCellClick(e) }}
                                 onPaginationChanged={onPaginationChanged}
-                                postSortRows = {postSortRows}
+                                postSortRows={postSortRows}
                                 pagination={pageSize > 0}
                                 paginationPageSize={pageSize}
                             >
