@@ -29,7 +29,6 @@
     "react-content-loader": "^6.2.0",
     "react-day-picker": "^8.0.4",
     "react-popper": "^2.3.0",
-    "react-router-dom": "^6.4.0",
     "react-select": "^4.3.1",
     "webpack": "^4.0.0 || ^5.0.0"
   },
