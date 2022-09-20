@@ -1,5 +1,5 @@
 import "./DocModal.css"
-import React from "react"
+import * as React from "react"
 import { Tab, Tabs } from "../Tabs"
 import { Button, ButtonModal } from "../Button"
 import cn from "classnames"
