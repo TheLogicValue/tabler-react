@@ -3,12 +3,20 @@ import * as React from "react"
 import { Tab, Tabs } from "../Tabs"
 import { Button, ButtonModal } from "../Button"
 import cn from "classnames"
-import { useLocation } from "react-router-dom"
 
-export default function ModalDoc({ items, initialTab, className, spin, bodyHeight, onClose, onAccept, show = true, acceptText = "Ok" }) {
+export default function ModalDoc({ 
+    items, 
+    initialTab, 
+    className, 
+    spin, bodyHeight, 
+    onClose, 
+    onAccept, 
+    show = true, 
+    acceptText = "Ok",
+    pathname, 
+}) {
     const classnames = cn("modal modal-blur fade", { show }, className)
-    const location = useLocation();
-    const tabs = location.pathname == "/" ? items : items.filter(tab => tab.value != "features");
+    const tabs = pathname == "/" ? items : items.filter(tab => tab.value != "features");
 
     return (
         <div className={classnames}>
