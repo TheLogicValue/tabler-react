@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Button } from "../"
 import { Spinner } from "../Spinner"
 
@@ -6,4 +7,5 @@ const ButtonModal = ({ text, onClick, color, spin = false, width, height }) => {
         {text}
     </Button>
 }
+
 export default ButtonModal
