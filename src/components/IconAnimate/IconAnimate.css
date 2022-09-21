@@ -1,0 +1,57 @@
+.svg-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loader-svg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    fill: none;
+    stroke-width: 0.313rem;
+    stroke-linecap: round;
+    stroke: var(--primary);
+}
+
+.loader-svg.loading {
+    stroke-width: 0.5rem;
+    stroke: var(--secondary);
+}
+
+.animate {
+    stroke-dasharray: 242.6;
+    animation: fill-animation 1.5s cubic-bezier(1, 1, 1, 1) 0s infinite;
+}
+
+@keyframes fill-animation {
+    0% {
+        stroke-dasharray: 40 242.6;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 141.3;
+        stroke-dashoffset: 141.3;
+    }
+
+    100% {
+        stroke-dasharray: 40 242.6;
+        stroke-dashoffset: 282.6;
+    }
+}
+
+/*SUCCESS*/
+.loader-svg.success {
+    stroke-width: 0.5rem;
+    stroke: var(--success);
+}
+
+/*ERROR*/
+.loader-svg.error {
+    stroke-width: 0.5rem;
+    stroke: var(--danger);
+}
