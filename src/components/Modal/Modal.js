@@ -1,4 +1,5 @@
-﻿import { Button, ButtonModal, Spinner, Error, Success } from "../.."
+﻿import React from "react"
+import { Button, ButtonModal, Spinner, Error, Success } from "../.."
 import cn from "classnames"
 import './Modal.css'
 //type 1 Only 1 accept button
