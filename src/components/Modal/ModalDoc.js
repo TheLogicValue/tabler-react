@@ -1,4 +1,4 @@
-import "./DocModal.css"
+import "./ModalDoc.css"
 import * as React from "react"
 import { Tab, Tabs } from "../Tabs"
 import { Button, ButtonModal } from "../Button"
