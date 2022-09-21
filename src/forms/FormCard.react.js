@@ -4,15 +4,15 @@ import * as React from "react";
 
 import Form from "../components/Form";
 import Card from "../components/Card";
-import Button from "../components/Button";
+import { Button } from "../components/Button";
 
 type Props = {|
-  +action?: string,
-  +children?: React.Node,
-  +method?: string,
+  +action ?: string,
+  +children ?: React.Node,
+  +method ?: string,
   +title: string,
-  +buttonText: string,
-  +onSubmit?: Function,
+    +buttonText: string,
+      +onSubmit ?: Function,
 |};
 
 function FormCard({
