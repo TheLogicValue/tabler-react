@@ -1,4 +1,4 @@
-import Modal from "./Modal.react"
+import Modal from "./Modal"
 import ModalDoc from "./ModalDoc"
 import ModalSplash from "./ModalSplash"
 
