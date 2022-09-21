@@ -1,5 +1,5 @@
 import Modal from "./Modal.react"
 import ModalDoc from "./ModalDoc"
-import "./Modal.css"
+import ModalSplash from "./ModalSplash"
 
-export { Modal, ModalDoc }
+export { Modal, ModalDoc, ModalSplash }
