@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import cn from "classnames";
-import Loader from "../Loader";
-
+import { Loader } from "../Loader";
 import DimmerContent from "./DimmerContent.react";
 
 type Props = {|
@@ -26,7 +25,5 @@ function Dimmer({ className, children, active, loader }: Props): React.Node {
 }
 
 Dimmer.displayName = "Dimmer";
-
 Dimmer.Content = DimmerContent;
-
 export default Dimmer;
