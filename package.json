@@ -23,6 +23,8 @@
   "dependencies": {
     "ag-grid-community": "^27.2.1",
     "ag-grid-react": "^27.2.1",
+    "echarts": "^5.3.2",
+    "echarts-for-react": "^3.0.2",
     "classnames": "^2.3.2",
     "date-fns": "^2.28.0",
     "focus-trap-react": "^8.11.1",
