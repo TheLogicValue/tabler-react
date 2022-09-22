@@ -48,7 +48,7 @@ export { default as DatePicker } from "./DatePicker";
 export { default as Accordion } from "./Accordion";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { Button, ButtonModal } from "./Button";
-export { Modal, ModalDoc, ModalSplash } from "./Modal";
+export { Modal, ModalDoc, ModalSplash, useModal } from "./Modal";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
 export { Spinner, Success, Error } from './IconAnimate';
 export { default as NavBarMenu } from './NavBar';
