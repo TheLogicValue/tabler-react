@@ -46,6 +46,7 @@ export { default as Tooltip } from "./Tooltip";
 export { default as DoubleCard } from "./DoubleCard";
 export { default as DatePicker } from "./DatePicker";
 export { default as Accordion } from "./Accordion";
+export { default as ProtectedRoute } from "./ProtectedRoute";
 export { Tab, Tabs, TabbedContainer, TabbedHeader } from "./Tabs";
 export { Button, ButtonModal } from "./Button";
 export { Modal, ModalDoc, ModalSplash, useModal } from "./Modal";
