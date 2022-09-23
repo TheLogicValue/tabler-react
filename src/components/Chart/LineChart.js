@@ -39,7 +39,7 @@ function LineChart({
             type: 'category',
             boundaryGap: false,
             show: complete,
-            data: xAxisData(),
+            data: xAxisData,
             axisLabel: { rotate: 10, verticalAlign: "top", fontSize: 9 },
         },
         grid: {
