@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
-function LineChart({
+export default function LineChart({
     lines,
     height,
     selectedOptions, 
@@ -74,5 +74,3 @@ function LineChart({
 
     return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }}/>
 }
-
-export default LineChart

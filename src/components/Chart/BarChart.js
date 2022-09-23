@@ -9,12 +9,10 @@ export default function BarChart({
     colors,
     complete,
     titleBarchart,
-    rotateX,
-    //download
+    rotateX,   
     name = "Export",
     title = "",
-    download = false,
-    //functions
+    download = false,    
     tooltipformatter,
     yAxisformatter,
     yAxisMinMax,
