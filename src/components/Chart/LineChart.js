@@ -30,7 +30,7 @@ function LineChart({
         },
         legend: {
             data: selectedOptions,
-            selected: getLegend(),
+            selected: getLegend,
             show: complete,
             bottom: "0rem",
             symbol: null
