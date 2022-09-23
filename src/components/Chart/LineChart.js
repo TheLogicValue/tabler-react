@@ -54,7 +54,7 @@ function LineChart({
             splitNumber: 4,
             axisPointer: { snap: true },
             minorSplitLine: { show: true },
-            minInterval: yAxisMinInterval(),
+            minInterval: yAxisMinInterval,
             axisLabel: { formatter: (item) => yAxisformatter(item) },
             max: (value) => yAxisMinMax(value, "max"),
             min: (value) => yAxisMinMax(value, "min"),
