@@ -33,7 +33,7 @@ export default function BarChart({
     }
 
     const yAxis = {
-        type: type === "vertical" ? "Category" : "value",
+        type: type === "vertical" ? "category" : "value",
         data: yAxisData ?? []
     }
 
