@@ -27,29 +27,34 @@ export default function BarChart({
     yAxisData
 }) {
 
-    const xAxis = {
-        type: type === "vertical" ? "value" : "category",
-        data: xAxisData ?? []
+    const xAxis = () => {
+        let xAxis = {
+            type: type === "vertical" ? "value" : "category",
+            data: xAxisData
+        }
+        if (type === "vertical") {
+            xAxis.axisLabel = { rotate: rotateX, verticalAlign: "top", fontSize: 9, interval: 0 }
+        }
+        if (type !== "vertical") {
+            xAxis.boundaryGap = [0, 0.01]
+            xAxis.max = (value) => xAxisMinMax(value, "max")
+            xAxis.min = (value) => xAxisMinMax(value, "min")
+        }
+        return xAxis
     }
 
-    const yAxis = {
-        type: type === "vertical" ? "category" : "value",
-        data: yAxisData ?? []
-    }
-
-    if (type === "vertical") {
-        xAxis.axisLabel = { rotate: rotateX, verticalAlign: "top", fontSize: 9, interval: 0 }
-
-        yAxis.show = complete
-        yAxis.axisLabel = { formatter: (item) => yAxisformatter(item) }
-        yAxis.max = (value) => yAxisMinMax(value, "max")
-        yAxis.min = (value) => yAxisMinMax(value, "min")
-    }
-
-    if(type !== "vertical"){
-        xAxis.boundaryGap = [0, 0.01]
-        xAxis.max = (value) => xAxisMinMax(value, "max")
-        xAxis.min = (value) => xAxisMinMax(value, "min")
+    const yAxis = () => {
+        let yAxis = {
+            type: type === "vertical" ? "category" : "value",
+            data: yAxisData
+        }
+        if (type === "vertical") {
+            yAxis.show = complete
+            yAxis.axisLabel = { formatter: (item) => yAxisformatter(item) }
+            yAxis.max = (value) => yAxisMinMax(value, "max")
+            yAxis.min = (value) => yAxisMinMax(value, "min")
+        }
+        return yAxis
     }
 
     const grid = () => {
@@ -80,8 +85,8 @@ export default function BarChart({
             axisPointer: { type: 'shadow' },
             formatter: (item) => tooltipformatter(item)
         },
-        xAxis: xAxis,
-        yAxis: yAxis,
+        xAxis: xAxis(),
+        yAxis: yAxis(),
         grid: grid(),
         series: series.map((item, i) => ({
             type: 'bar',
