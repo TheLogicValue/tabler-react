@@ -10,7 +10,6 @@ export default function BarChart({
     rotateX,
     //series
     series,
-    seriesDataName,
     seriesName,
     seriesShowBackground = true,
     //download
@@ -90,10 +89,9 @@ export default function BarChart({
         grid: grid(),
         series: series.map((item, i) => ({
             type: 'bar',
-            color: colors[i],
-            // data: item.slice(0, seriesDataName.length),
-            data: item,
-            name: seriesName[i],
+            color: colors[i], 
+            name: seriesName[i],          
+            data: item[i],            
             showBackground: seriesShowBackground,
             backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
         }))
