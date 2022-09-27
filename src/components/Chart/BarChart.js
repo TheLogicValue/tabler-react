@@ -2,7 +2,7 @@ import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
 export default function BarChart({
-    title,
+    title = "",
     type = "vertical",
     height,
     colors,
@@ -73,6 +73,21 @@ export default function BarChart({
         return type === "vertical" ? verticalGrid : horizontalGrid
     }
 
+    const series = () => {
+        try {
+            return series.map((item, i) => ({
+                type: 'bar',
+                color: colors[i],
+                name: seriesName[i],
+                data: item[i],
+                showBackground: seriesShowBackground,
+                backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
+            }))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const option = {
         title: { text: title, left: 'center' },
         toolbox: {
@@ -87,14 +102,7 @@ export default function BarChart({
         xAxis: xAxis(),
         yAxis: yAxis(),
         grid: grid(),
-        series: series.map((item, i) => ({
-            type: 'bar',
-            color: colors[i], 
-            name: seriesName[i],          
-            data: item[i],            
-            showBackground: seriesShowBackground,
-            backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
-        }))
+        series: series()
     }
 
     return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }} />
