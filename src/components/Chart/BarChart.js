@@ -74,18 +74,14 @@ export default function BarChart({
     }
 
     const serie = () => {
-        try {
-            return series.map((item, i) => ({
-                type: 'bar',
-                color: colors[i],
-                name: seriesName[i],
-                data: item[i],
-                showBackground: seriesShowBackground,
-                backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
-            }))
-        } catch (error) {
-            console.log(error)
-        }
+        return series.map((item, i) => ({
+            type: 'bar',
+            color: colors[i],
+            name: seriesName[i],
+            data: item,
+            showBackground: seriesShowBackground,
+            backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
+        }))
     }
 
     const option = {
