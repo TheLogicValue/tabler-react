@@ -4,7 +4,8 @@ import ReactECharts from 'echarts-for-react'
 export default function BarChart({
     title = "",
     type = "vertical",
-    height,
+    height = "18.75rem",
+    paddingBottom = null,
     colors,
     complete,
     rotateX,
@@ -17,8 +18,9 @@ export default function BarChart({
     downloadTitle = "",
     download = false,
     //Methods    
-    tooltipformatter,
-    yAxisformatter,
+    tooltipFormatter,
+    yAxisFormatter,
+    xAxisFormatter,
     yAxisMinMax,
     xAxisMinMax,
     //data Axis
@@ -36,6 +38,7 @@ export default function BarChart({
         }
         if (type !== "vertical") {
             xAxis.boundaryGap = [0, 0.01]
+            xAxis.axisLabel = { formatter: (item) => xAxisFormatter(item) }
             xAxis.max = (value) => xAxisMinMax(value, "max")
             xAxis.min = (value) => xAxisMinMax(value, "min")
         }
@@ -49,7 +52,7 @@ export default function BarChart({
         }
         if (type === "vertical") {
             yAxis.show = complete
-            yAxis.axisLabel = { formatter: (item) => yAxisformatter(item) }
+            yAxis.axisLabel = { formatter: (item) => yAxisFormatter(item) }
             yAxis.max = (value) => yAxisMinMax(value, "max")
             yAxis.min = (value) => yAxisMinMax(value, "min")
         }
@@ -93,7 +96,7 @@ export default function BarChart({
         tooltip: {
             trigger: 'item',
             axisPointer: { type: 'shadow' },
-            formatter: (item) => tooltipformatter(item)
+            formatter: (item) => tooltipFormatter(item)
         },
         xAxis: xAxis(),
         yAxis: yAxis(),
@@ -101,5 +104,11 @@ export default function BarChart({
         series: serie()
     }
 
-    return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }} />
+    const style = () => {
+        let style = { height: height }
+        if (paddingBottom) style.paddingBottom = paddingBottom
+        return style
+    }
+
+    return <ReactECharts className={'charts-complete-' + complete} option={option} style={style()} />
 }
