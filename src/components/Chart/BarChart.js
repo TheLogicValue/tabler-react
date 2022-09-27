@@ -91,7 +91,8 @@ export default function BarChart({
         series: series.map((item, i) => ({
             type: 'bar',
             color: colors[i],
-            data: item.slice(0, seriesDataName.length),
+            // data: item.slice(0, seriesDataName.length),
+            data: item,
             name: seriesName[i],
             showBackground: seriesShowBackground,
             backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
