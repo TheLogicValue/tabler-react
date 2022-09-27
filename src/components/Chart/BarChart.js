@@ -73,7 +73,7 @@ export default function BarChart({
         return type === "vertical" ? verticalGrid : horizontalGrid
     }
 
-    const series = () => {
+    const serie = () => {
         try {
             return series.map((item, i) => ({
                 type: 'bar',
@@ -102,7 +102,7 @@ export default function BarChart({
         xAxis: xAxis(),
         yAxis: yAxis(),
         grid: grid(),
-        series: series()
+        series: serie()
     }
 
     return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }} />
