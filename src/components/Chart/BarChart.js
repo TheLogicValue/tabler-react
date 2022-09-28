@@ -42,8 +42,8 @@ export default function BarChart({
         if (type !== "vertical") {
             xAxis.boundaryGap = [0, 0.01]
             xAxis.axisLabel = { formatter: (item) => xAxisFormatter(item) }
-            xAxis.max = (value) => xAxisMinMax(value, "max")
-            xAxis.min = (value) => xAxisMinMax(value, "min")
+            xAxis.max = value => xAxisMinMax(value, "max")
+            xAxis.min = value => xAxisMinMax(value, "min")
         }
         return xAxis
     }
@@ -55,9 +55,9 @@ export default function BarChart({
         }
         if (type === "vertical") {
             yAxis.show = complete
-            yAxis.axisLabel = { formatter: (item) => yAxisFormatter(item) }
-            yAxis.max = (value) => yAxisMinMax(value, "max")
-            yAxis.min = (value) => yAxisMinMax(value, "min")
+            yAxis.axisLabel = { formatter: item => yAxisFormatter(item) }
+            yAxis.max = value => yAxisMinMax(value, "max")
+            yAxis.min = value => yAxisMinMax(value, "min")
         }
         return yAxis
     }
@@ -103,7 +103,7 @@ export default function BarChart({
         tooltip: {
             trigger: 'item',
             axisPointer: { type: 'shadow' },
-            formatter: (item) => tooltipFormatter(item)
+            formatter: item => tooltipFormatter(item)
         },
         xAxis: xAxis(),
         yAxis: yAxis(),

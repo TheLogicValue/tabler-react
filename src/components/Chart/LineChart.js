@@ -4,7 +4,7 @@ import ReactECharts from 'echarts-for-react'
 export default function LineChart({
     lines,
     height,
-    selectedOptions, 
+    selectedOptions,
     getLegend,
     tooltipformatter,
     xAxisData,
@@ -21,7 +21,7 @@ export default function LineChart({
             confine: true,
             trigger: 'axis',
             axisPointer: { animation: false },
-            formatter: (item) => tooltipformatter(item)
+            formatter: item => tooltipformatter(item)
         },
         toolbox: {
             feature: {
@@ -55,9 +55,9 @@ export default function LineChart({
             axisPointer: { snap: true },
             minorSplitLine: { show: true },
             minInterval: yAxisMinInterval,
-            axisLabel: { formatter: (item) => yAxisformatter(item) },
-            max: (value) => yAxisMinMax(value, "max"),
-            min: (value) => yAxisMinMax(value, "min"),
+            axisLabel: { formatter: item => yAxisformatter(item) },
+            max: value => yAxisMinMax(value, "max"),
+            min: value => yAxisMinMax(value, "min"),
         },
         series: lines?.map(item => ({
             data: item.data,
@@ -72,5 +72,5 @@ export default function LineChart({
         }))
     }
 
-    return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }}/>
+    return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }} />
 }
