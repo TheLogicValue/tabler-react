@@ -36,7 +36,7 @@ export default function RadarChart({
                 type: 'radar',
                 tooltip: {
                     trigger: 'item',
-                    formatter: item => tooltipFormatter(item),
+                    formatter: (item) => tooltipFormatter(item),
                 },
                 data: series?.map((item, i) => {
                     return {

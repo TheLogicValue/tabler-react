@@ -21,7 +21,7 @@ export default function LineChart({
             confine: true,
             trigger: 'axis',
             axisPointer: { animation: false },
-            formatter: item => tooltipformatter(item)
+            formatter: (item) => tooltipformatter(item)
         },
         toolbox: {
             feature: {
@@ -55,9 +55,9 @@ export default function LineChart({
             axisPointer: { snap: true },
             minorSplitLine: { show: true },
             minInterval: yAxisMinInterval,
-            axisLabel: { formatter: item => yAxisformatter(item) },
-            max: value => yAxisMinMax(value, "max"),
-            min: value => yAxisMinMax(value, "min"),
+            axisLabel: { formatter: (item) => yAxisformatter(item) },
+            max: (value) => yAxisMinMax(value, "max"),
+            min: (value) => yAxisMinMax(value, "min"),
         },
         series: lines?.map(item => ({
             data: item.data,
