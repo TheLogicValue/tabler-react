@@ -11,8 +11,7 @@ export default function BarChart({
     rotateX,
     //series
     series,
-    seriesName,
-    seriesShowBackground = true,
+    seriesName,    
     //download
     downloadName = "Export",
     downloadTitle = "",
@@ -25,7 +24,11 @@ export default function BarChart({
     xAxisMinMax,
     //data Axis
     xAxisData,
-    yAxisData
+    yAxisData,
+    //config series
+    stack = null,
+    seriesShowBackground = true,
+    backgroundStyleColor = 'rgba(180, 180, 180, 0.2)'
 }) {
 
     const xAxis = () => {
@@ -82,8 +85,9 @@ export default function BarChart({
             color: colors[i],
             name: seriesName[i],
             data: item,
+            stack: stack,
             showBackground: seriesShowBackground,
-            backgroundStyle: { color: 'rgba(180, 180, 180, 0.2)' },
+            backgroundStyle: { color: backgroundStyleColor },
         }))
     }
 
