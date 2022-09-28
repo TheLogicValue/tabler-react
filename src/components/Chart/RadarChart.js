@@ -10,13 +10,13 @@ export default function RadarChart({
     //series
     series,
     seriesDataName,
+    indicator,
     //download
     downloadName = "Export",
     downloadTitle = "",
     download = false,
     //Methods    
-    tooltipFormatter,    
-    indicator
+    tooltipFormatter
 }) { 
 
     const option = {
@@ -27,7 +27,7 @@ export default function RadarChart({
         },
         legend: { bottom: 2 },
         radar: {
-            indicator: indicator(),
+            indicator: indicator,
             radius: 90,
             center: ["50%", "50%"]
         },
