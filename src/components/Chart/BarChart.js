@@ -11,7 +11,7 @@ export default function BarChart({
     rotateX,
     //series
     series,
-    seriesName,    
+    seriesName,
     //download
     downloadName = "Export",
     downloadTitle = "",
@@ -80,15 +80,18 @@ export default function BarChart({
     }
 
     const serie = () => {
-        return series.map((item, i) => ({
-            type: 'bar',
-            color: colors[i],
-            name: seriesName[i],
-            data: item,
-            stack: stack,
-            showBackground: seriesShowBackground,
-            backgroundStyle: { color: backgroundStyleColor },
-        }))
+        return series.map((item, i) => {
+            let ser = {
+                type: 'bar',
+                color: colors[i],
+                name: (!stack) ? seriesName[i] : item,
+                data: (!stack) ? item : seriesName[i],
+                stack: stack,
+                showBackground: seriesShowBackground,
+                backgoundStyle: { color: backgroundStyleColor },
+            }
+            return ser
+        })
     }
 
     const option = {
