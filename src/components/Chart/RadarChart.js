@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
-export default function RarChart({
+export default function RadarChart({
     title = "",   
     height = "18.75rem",
     paddingBottom = null,
