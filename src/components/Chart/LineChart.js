@@ -6,10 +6,10 @@ export default function LineChart({
     height,
     selectedOptions,
     getLegend,
-    tooltipformatter,
+    tooltipFormatter,
     xAxisData,
     yAxisMinInterval,
-    yAxisformatter,
+    yAxisFormatter,
     yAxisMinMax,
     complete = false,
     name = "Export",
@@ -21,7 +21,7 @@ export default function LineChart({
             confine: true,
             trigger: 'axis',
             axisPointer: { animation: false },
-            formatter: (item) => tooltipformatter(item)
+            formatter: (item) => tooltipFormatter(item)
         },
         toolbox: {
             feature: {
@@ -55,7 +55,7 @@ export default function LineChart({
             axisPointer: { snap: true },
             minorSplitLine: { show: true },
             minInterval: yAxisMinInterval,
-            axisLabel: { formatter: (item) => yAxisformatter(item) },
+            axisLabel: { formatter: (item) => yAxisFormatter(item) },
             max: (value) => yAxisMinMax(value, "max"),
             min: (value) => yAxisMinMax(value, "min"),
         },
