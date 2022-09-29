@@ -42,6 +42,7 @@ type Props = {|
 function FormSelectReact(props: Props): React.Node {
   const {
     className,
+    modalContainer = false,
     disabledValue = "-",
     children,
     valid,
@@ -93,7 +94,7 @@ function FormSelectReact(props: Props): React.Node {
   );
 
   const customStyles = {
-    option: (provided, state) => ({
+      option: (provided, state) => ({
         ...provided,
         backgroundColor: state.isSelected ? "var(--quaternary)" : "",
         color: state.isDisabled ? 'var(--light-disabled)' : '',
@@ -112,7 +113,12 @@ function FormSelectReact(props: Props): React.Node {
         ...styles,
         background: isDisabled ? 'var(--disabled) !important': '',
         color: isDisabled ? 'var(--light-disabled) !important' : '',
-      })
+      }),
+      // menu: (provided) => ({
+      //   ...provided,
+      //   position: modalContainer && 'fixed',
+      //   zIndex: modalContainer && 10,
+      // }),
   };
   
   const feedback = error || props.feedback;
