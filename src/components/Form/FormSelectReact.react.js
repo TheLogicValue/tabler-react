@@ -94,7 +94,7 @@ function FormSelectReact(props: Props): React.Node {
   );
 
   const customStyles = {
-    option: (provided, state) => ({
+      option: (provided, state) => ({
         ...provided,
         backgroundColor: state.isSelected ? "var(--quaternary)" : "",
         color: state.isDisabled ? 'var(--light-disabled)' : '',

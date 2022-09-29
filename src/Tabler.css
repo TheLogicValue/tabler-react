@@ -3983,6 +3983,7 @@ tbody.collapse.show {
   line-height: 1.5;
   color: var(--dark);
   vertical-align: middle;
+  background-size: 8px 10px;
   background: var(--white)
     url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='%23999' d='M0 0L10 0L5 5L0 0'/%3E%3C/svg%3E")
     no-repeat right 0.75rem center;
