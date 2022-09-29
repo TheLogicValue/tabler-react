@@ -114,11 +114,11 @@ function FormSelectReact(props: Props): React.Node {
         background: isDisabled ? 'var(--disabled) !important': '',
         color: isDisabled ? 'var(--light-disabled) !important' : '',
       }),
-      menu: (provided) => ({
-        ...provided,
-        position: modalContainer && 'fixed',
-        zIndex: modalContainer && 10,
-      }),
+      // menu: (provided) => ({
+      //   ...provided,
+      //   position: modalContainer && 'fixed',
+      //   zIndex: modalContainer && 10,
+      // }),
   };
   
   const feedback = error || props.feedback;
