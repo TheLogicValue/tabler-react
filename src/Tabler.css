@@ -2199,7 +2199,7 @@ pre code {
   }
 }
 
-@media (min-width: 2800px) {
+@media (min-width: 2500px) {
   .col-3xl {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
