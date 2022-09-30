@@ -47,7 +47,7 @@ Dashboard UI
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1900px;
-  --breakpoint-3xl: 2500px;
+  --breakpoint-3xl: 3000px;
   --breakpoint-4xl: 3800px;
   --breakpoint-6xl: 5700px;
   --breakpoint-8xl: 7600px;
@@ -2199,7 +2199,7 @@ pre code {
   }
 }
 
-@media (min-width: 2500px) {
+@media (min-width: 3000px) {
   .col-3xl {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
