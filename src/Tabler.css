@@ -722,27 +722,50 @@ pre code {
   }
 }
 
+@media (min-width: 2500px) {
+  .container {
+    max-width: 2300px;
+  }
+}
+
 @media (min-width: 2800px) {
   .container {
-    max-width: 2790px;
+    /* max-width: 2790px; */
+    max-width: 2600px;
+  }
+}
+
+@media (min-width: 3200px) {
+  .container {
+    max-width: 3000px;
   }
 }
 
 @media (min-width: 3800px) {
   .container {
-    max-width: 3720px;
+    /* max-width: 3720px; */
+    max-width: 3600px;
+  }
+}
+
+@media (min-width: 5000px) {
+  .container {
+    /* max-width: 5580px; */
+    max-width: 4800px;
   }
 }
 
 @media (min-width: 5700px) {
   .container {
-    max-width: 5580px;
+    /* max-width: 5580px; */
+    max-width: 5500px;
   }
 }
 
 @media (min-width: 7600px) {
   .container {
-    max-width: 7440px;
+    /* max-width: 7440px; */
+    max-width: 7400px;
   }
 }
 
