@@ -412,16 +412,16 @@ progress {
 
 input#searcher {
   width: 100%;
-  padding: 12px 24px;
-  margin-bottom: 5px;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 0.625rem;
   background-color: transparent;
   transition: transform 250ms ease-in-out;
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 0.875rem;
+  line-height: 1.125rem;
   color: #575756;
   background-color: #fff;
   background-repeat: no-repeat;
-  background-size: 18px 18px;
+  background-size: 1.125rem 1.125rem;
   background-position: 95% center;
   /* border-radius: 50px; */
   border: 1px solid #bdc3c7;
@@ -695,11 +695,17 @@ pre code {
   .container {
     max-width: 720px;
   }
+  html {
+    font-size: calc(100% * (768/1900));
+  }
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
+  }
+  html {
+    font-size: calc(100% * (992/1900));
   }
 }
 
@@ -707,11 +713,17 @@ pre code {
   .container {
     max-width: 1140px;
   }
+  html {
+    font-size: calc(100% * (1200/1900));
+  }
 }
 
 @media (min-width: 1400px) {
   .container {
     max-width: 1320px;
+  }
+  html {
+    font-size: calc(100% * (1400/1900));
   }
 }
 
@@ -720,11 +732,17 @@ pre code {
     /* max-width: 1860px; */
     max-width: 1700px;
   }
+  html {
+    font-size: 100%;
+  }
 }
 
 @media (min-width: 2500px) {
   .container {
     max-width: 2300px;
+  }
+  html {
+    font-size: calc(100% * (2500/1900));    
   }
 }
 
@@ -733,39 +751,57 @@ pre code {
     /* max-width: 2790px; */
     max-width: 2600px;
   }
+  html {
+    font-size: calc(100% * (2800/1900));    
+  }
 }
 
 @media (min-width: 3200px) {
   .container {
     max-width: 3000px;
   }
+  html {
+    font-size: calc(100% * (3200/1900));    
+  }
 }
 
 @media (min-width: 3800px) {
   .container {
     /* max-width: 3720px; */
-    max-width: 3600px;
+    max-width: 3500px;
+  }
+  html {
+    font-size: calc(100% * (3800/1900)); 
   }
 }
 
 @media (min-width: 5000px) {
   .container {
     /* max-width: 5580px; */
-    max-width: 4800px;
+    max-width: 4700px;
+  }
+  html {
+    font-size: calc(100% * (5000/1900)); 
   }
 }
 
 @media (min-width: 5700px) {
   .container {
     /* max-width: 5580px; */
-    max-width: 5500px;
+    max-width: 5400px;
+  }
+  html {
+    font-size: calc(100% * (5700/1900)); 
   }
 }
 
 @media (min-width: 7600px) {
   .container {
     /* max-width: 7440px; */
-    max-width: 7400px;
+    max-width: 7200px;
+  }
+  html {
+    font-size: calc(100% * (7600/1900)); 
   }
 }
 
