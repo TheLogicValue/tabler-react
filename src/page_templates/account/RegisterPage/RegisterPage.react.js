@@ -54,10 +54,11 @@ function RegisterPage(props: Props): React.Node {
     values,
     strings = {},
     errors,
+    imageURL,
   } = props;
 
   return (
-    <StandaloneFormPage imageURL={"./demo/logo.svg"}>
+    <StandaloneFormPage imageURL={imageURL}>
       <FormCard
         buttonText={strings.buttonText || defaultStrings.buttonText}
         title={strings.title || defaultStrings.title}
