@@ -20,6 +20,7 @@ const NavBarItem = ({
         className={({ isActive }) => {
             return cn("nav-link", { "nav-link-item": menuItem }, { "active": isActive || location.pathname.includes(route?.length > 1 && route[0]) }, className)
         }}
+        end
     >{value || children}</NavLink>
     else return <a className={classes} href={to} onClick={onClick}>{value || children}</a>
 }
