@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Button } from "../";
 import cn from "classnames";
+import "./Modal.css"
+
 //type 1 Only 1 accept button
 //type 2 2 buttons accept and cancel
 function ModalObject({

@@ -1,5 +1,6 @@
 // @flow
+import Loader from "./Loader.react"
+import LoaderZone from "./LoaderZone"
+import LoaderNoData from "./LoaderNodata"
 
-import Loader from "./Loader.react";
-
-export { Loader as default };
+export { Loader, LoaderZone, LoaderNoData }
