@@ -82,7 +82,7 @@ const SiteHeader = ({
                 {nav}
               </div>
               ) : ""}              
-              <div className="d-flex order-lg-1">
+              <div className="d-flex order-lg-1 options">
                 {options}
               </div>             
               <div className="d-flex order-lg-2 ml-auto">
