@@ -38,7 +38,8 @@ export type Props = {|
    * Handle toggling/collapsing of the mobile menu when the collapse icon is clicked
    */
   +onMenuToggleClick?: () => void,
-  +condensed: boolean
+  +condensed: boolean,
+  +options?: React.Node,
 |};
 
 /**
@@ -55,7 +56,8 @@ const SiteHeader = ({
   accountDropdown: accountDropdownFromProps,
   navItems,
   onMenuToggleClick,
-  condensed
+  condensed,
+  options,
 }: Props): React.Node => {
   const notificationsTray =
     notificationsTrayFromProps &&
@@ -78,6 +80,11 @@ const SiteHeader = ({
               { condensed ? (
               <div className="d-flex order-lg-1">
                 {nav}
+              </div>
+              ) : ""}
+              { options ? (
+              <div className="d-flex order-lg-1">
+                {options}
               </div>
               ) : ""}
               <div className="d-flex order-lg-2 ml-auto">
