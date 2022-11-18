@@ -81,12 +81,10 @@ const SiteHeader = ({
               <div className="d-flex order-lg-1">
                 {nav}
               </div>
-              ) : ""}
-              { options ? (
+              ) : ""}              
               <div className="d-flex order-lg-1">
                 {options}
-              </div>
-              ) : ""}
+              </div>             
               <div className="d-flex order-lg-2 ml-auto">
                 {notificationsTray}
                 {accountDropdown}
