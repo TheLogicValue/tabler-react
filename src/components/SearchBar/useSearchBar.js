@@ -3,8 +3,7 @@
 export default function useSearchBar() {
     const [filter, setFilter] = useState(undefined)
 
-    const handleChangeFilter = useCallback((e) => {
-        console.log(e)
+    const handleChangeFilter = useCallback((e) => {        
         setFilter(e.target.value.trim().length > 0 ? e.target.value.trim() : undefined)
     }, [setFilter])
 
