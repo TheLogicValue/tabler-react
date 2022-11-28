@@ -7,38 +7,38 @@ import type { Props as AccountDropdownProps } from "../AccountDropdown/AccountDr
 import type { Props as SiteNavProps } from "./SiteNav.react";
 
 export type Props = {|
-  +children?: React.Node,
+  +children ?: React.Node,
   /**
    * header alignment
    */
-  +align?: string,
+  +align ?: string,
   /**
    * href attribute for the logo
    */
-  +href?: string,
+  +href ?: string,
   /**
    * Logo image URL
    */
-  +imageURL?: string,
+  +imageURL ?: string,
   /**
    * Logo image URL
    */
-  +darkImageURL?: string,
+  +darkImageURL ?: string,
   /**
    * The logo alt attribute
    */
-  +alt?: string,
+  +alt ?: string,
   /**
    * Include a notifications tray
    */
-  +notificationsTray?: NotificationTrayProps,
-  +accountDropdown?: AccountDropdownProps,
-  +navItems?: SiteNavProps,
+  +notificationsTray ?: NotificationTrayProps,
+  +accountDropdown ?: AccountDropdownProps,
+  +navItems ?: SiteNavProps,
   /**
    * Handle toggling/collapsing of the mobile menu when the collapse icon is clicked
    */
-  +onMenuToggleClick?: () => void,
-  +condensed: boolean
+  +onMenuToggleClick ?: () => void,
+  +condensed: boolean, 
 |};
 
 /**
@@ -55,7 +55,7 @@ const SiteHeader = ({
   accountDropdown: accountDropdownFromProps,
   navItems,
   onMenuToggleClick,
-  condensed
+  condensed,
 }: Props): React.Node => {
   const notificationsTray =
     notificationsTrayFromProps &&
@@ -65,9 +65,9 @@ const SiteHeader = ({
     accountDropdownFromProps &&
     React.createElement(AccountDropdown, accountDropdownFromProps);
 
-    const nav = React.createElement(Site.Nav, navItems);
+  const nav = React.createElement(Site.Nav, navItems);
 
-  const headerClasses = condensed ? "header sticky-top condensed" : "header"; 
+  const headerClasses = condensed ? "header sticky-top condensed" : "header";
   return (
     <div className={headerClasses}>
       <Container className={align}>
@@ -75,10 +75,10 @@ const SiteHeader = ({
           {children || (
             <React.Fragment>
               <Site.Logo href={href} alt={alt} src={imageURL} />
-              { condensed ? (
-              <div className="d-flex order-lg-1">
-                {nav}
-              </div>
+              {condensed ? (
+                <div className="d-flex order-lg-1">
+                  {nav}
+                </div>
               ) : ""}
               <div className="d-flex order-lg-2 ml-auto">
                 {notificationsTray}
