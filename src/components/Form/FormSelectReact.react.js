@@ -42,7 +42,7 @@ type Props = {|
 function FormSelectReact(props: Props): React.Node {
   const {
     className,
-    ref,
+    selectRef,
     modalContainer = false,
     disabledValue = "-",
     children,
@@ -157,7 +157,7 @@ function FormSelectReact(props: Props): React.Node {
         setValue={setValue}
         emotion={emotion}
         placeholder={isDisabled ? disabledValue : placeholder}
-        ref={ref}
+        ref={selectRef}
         components={{
           MultiValueContainer: () => null,
           DropdownIndicator: () => null,
