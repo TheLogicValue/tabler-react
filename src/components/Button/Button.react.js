@@ -58,6 +58,7 @@ const Button = (props: Props): React.Node => {
   const {
     size = "",
     outline,
+    type,
     link,
     block,
     className,
@@ -103,6 +104,7 @@ const Button = (props: Props): React.Node => {
 
   const propsForAll = {
     className: classes,
+    type: type,
     disabled: disabled,
     onClick: onClick,
     onMouseEnter: onMouseEnter,
