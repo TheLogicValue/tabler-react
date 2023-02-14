@@ -73,6 +73,7 @@ function FormSelectReact(props: Props): React.Node {
     menuIsOpen,
     onMenuOpen,
     onMenuClose,
+    closeMenuOnScroll,
     isLoading,
     options,
     selectOption,
@@ -141,6 +142,7 @@ function FormSelectReact(props: Props): React.Node {
         onClick={onClick}
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
+        closeMenuOnScroll={closeMenuOnScroll}
         className={classes}
         classNamePrefix="react-select"
         readOnly={readOnly}
