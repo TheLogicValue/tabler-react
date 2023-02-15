@@ -71,6 +71,8 @@ function FormSelectReact(props: Props): React.Node {
     isDisabled,
     isClearable,
     menuPlacement,
+    isFixedMenu,
+    menuTarget,
     menuIsOpen,
     onMenuOpen,
     onMenuClose,
@@ -104,6 +106,7 @@ function FormSelectReact(props: Props): React.Node {
         color: state.isDisabled ? 'var(--light-disabled)' : '',
         cursor: "pointer"
       }),
+      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
       control: (styles, { data, isDisabled, isFocused, isSelected, isHover }) => ({
         ...styles,
           '&:hover': { 
@@ -141,6 +144,8 @@ function FormSelectReact(props: Props): React.Node {
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         onClick={onClick}
+        menuPortalTarget={menuTarget ?? document.body}
+        menuPosition={isFixedMenu ? 'fixed' : 'absolute'}
         menuPlacement={menuPlacement}
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
