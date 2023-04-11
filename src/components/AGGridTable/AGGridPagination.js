@@ -5,14 +5,15 @@ import usePagination from './Hooks/usePagination'
 import cn from "classnames"
 import "./AGGridPagination.css"
 
-const AGGridPagination = forwardRef(({ controles, lastPage, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
+const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
     const { page, numRows, nextPage, previousPage, firstPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
     const nextClasses = cn("ag-paging-button", { "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page })
 
     const defaultStrings = {
         "to": "to",
-        "page": "Page"
+        "page": "Page",
+        "of": 'de'
     }
 
     const handleNextPage = () => {
@@ -42,6 +43,8 @@ const AGGridPagination = forwardRef(({ controles, lastPage, pagesSizes = null, s
             <span className="ag-paging-row-summary-panel-number">{numRows + 1}</span>
             <span> {strings.to || defaultStrings.to} </span>
             <span className="ag-paging-row-summary-panel-number">{numRows + ((pagesSizes && pagesSizes[page - 1]) || pageSize)}</span>
+            <span> {strings.of || defaultStrings.of} </span>
+            <span className="ag-paging-row-summary-panel-number">{totalElements}</span>
         </span>}
         <span className="ag-paging-page-summary-panel" role="presentation">
             <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" aria-disabled="true" disabled={page == 1}>
@@ -50,6 +53,8 @@ const AGGridPagination = forwardRef(({ controles, lastPage, pagesSizes = null, s
             <span className="ag-paging-description" role="status">
                 <span> {strings.page || defaultStrings.page} </span>
                 <span className="ag-paging-number">{page}</span>
+                <span> {strings.of || defaultStrings.of} </span>
+                <span className="ag-paging-row-summary-panel-number">{totalPages}</span>
             </span>
             <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0" aria-disabled="false">
                 <span className="ag-icon ag-icon-next" unselectable="on" role="presentation"></span>
