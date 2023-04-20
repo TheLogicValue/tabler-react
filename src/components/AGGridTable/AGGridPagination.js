@@ -16,24 +16,34 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
         "of": 'de'
     }
 
+    const handleFirstPage = () => {
+        controles.current.api.paginationGoToPage(0)
+        firstPage()
+    }
+
     const handleNextPage = () => {
         if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {
             controles.current.api.paginationGoToNextPage()
-            nextPage({ pageSize: pageSize })
+            nextPage({ pageSize })
         }
+    }
+
+    const handleLastPage = () => {
+        controles.current.api.paginationGoToPage(totalPages - 1)
+        lastPage({page: totalPages, pageSize})
     }
 
     const handlePreviousPage = () => {
         if (page > 1) {
             controles.current.api.paginationGoToPreviousPage()
-            previousPage({ pageSize: pageSize })
+            previousPage({ pageSize })
         }
     }
 
     useImperativeHandle(ref, () => {
         return {
             page: page,
-            noData: () => handlePreviousPage({ pageSize: pageSize }),
+            noData: () => handlePreviousPage({ pageSize }),
             firstPage: () => firstPage()
         }
     })
@@ -47,6 +57,9 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
             <span className="ag-paging-row-summary-panel-number">{totalElements}</span>
         </span>}
         <span className="ag-paging-page-summary-panel" role="presentation">
+            <div className={previousClasses} role="button" aria-label="First Page"  aria-disabled="true" onClick={handleFirstPage}>
+                <span class="ag-icon ag-icon-first" unselectable="on" role="presentation"></span>
+            </div>
             <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" aria-disabled="true" disabled={page == 1}>
                 <span className="ag-icon ag-icon-previous" unselectable="on" role="presentation"></span>
             </div>
@@ -58,6 +71,9 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
             </span>
             <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0" aria-disabled="false">
                 <span className="ag-icon ag-icon-next" unselectable="on" role="presentation"></span>
+            </div>
+            <div class={nextClasses} role="button" aria-label="Last Page" onClick={handleLastPage} tabindex="0">
+            <span class="ag-icon ag-icon-last" unselectable="on" role="presentation"></span>
             </div>
         </span>
     </div>
