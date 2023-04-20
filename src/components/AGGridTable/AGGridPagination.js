@@ -44,7 +44,7 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
         return {
             page: page,
             noData: () => handlePreviousPage({ pageSize }),
-            firstPage: () => firstPage()
+            firstPage: () => goToFirstPage()
         }
     })
 
