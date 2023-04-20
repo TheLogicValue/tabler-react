@@ -8,7 +8,7 @@ import "./AGGridPagination.css"
 const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
     const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
-    const nextClasses = cn("ag-paging-button", { 
+    const nextClasses = cn("ag-paging-button", {
         "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page
     })
 
@@ -32,7 +32,7 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
 
     const handleLastPage = () => {
         controles.current.api.paginationGoToPage(totalPages - 1)
-        goToLastPage({page: totalPages, pageSize})
+        goToLastPage({ page: totalPages, pageSize })
     }
 
     const handlePreviousPage = () => {
@@ -59,7 +59,7 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
             <span className="ag-paging-row-summary-panel-number">{totalElements}</span>
         </span>}
         <span className="ag-paging-page-summary-panel" role="presentation">
-            <div className={previousClasses} role="button" aria-label="First Page"  aria-disabled="true" onClick={handleFirstPage}>
+            <div className={previousClasses} role="button" aria-label="First Page" aria-disabled="true" onClick={handleFirstPage}>
                 <span class="ag-icon ag-icon-first" unselectable="on" role="presentation"></span>
             </div>
             <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" aria-disabled="true" disabled={page == 1}>
@@ -74,11 +74,13 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
             <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0" aria-disabled="false">
                 <span className="ag-icon ag-icon-next" unselectable="on" role="presentation"></span>
             </div>
-            <div class={nextClasses} role="button" aria-label="Last Page" onClick={handleLastPage} tabindex="0">
-            <span class="ag-icon ag-icon-last" unselectable="on" role="presentation"></span>
+            <div className={nextClasses} role="button" aria-label="Last Page" aria-disabled="false" onClick={handleLastPage} tabindex="0">
+                <span className="ag-icon ag-icon-last" unselectable="on" role="presentation"></span>
             </div>
         </span>
     </div>
 })
+
+
 
 export default AGGridPagination
