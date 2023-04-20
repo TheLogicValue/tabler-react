@@ -6,7 +6,7 @@ import cn from "classnames"
 import "./AGGridPagination.css"
 
 const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
-    const { page, numRows, nextPage, previousPage, firstPage } = usePagination()
+    const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
     const nextClasses = cn("ag-paging-button", { "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page })
 
@@ -18,7 +18,7 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
 
     const handleFirstPage = () => {
         controles.current.api.paginationGoToPage(0)
-        firstPage()
+        goToFirstPage()
     }
 
     const handleNextPage = () => {
@@ -30,7 +30,7 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
 
     const handleLastPage = () => {
         controles.current.api.paginationGoToPage(totalPages - 1)
-        lastPage({page: totalPages, pageSize})
+        goToLastPage({page: totalPages, pageSize})
     }
 
     const handlePreviousPage = () => {
