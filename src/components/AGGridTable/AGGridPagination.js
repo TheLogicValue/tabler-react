@@ -8,7 +8,9 @@ import "./AGGridPagination.css"
 const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
     const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
-    const nextClasses = cn("ag-paging-button", { "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page })
+    const nextClasses = cn("ag-paging-button", { 
+        "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page
+    })
 
     const defaultStrings = {
         "to": "to",
