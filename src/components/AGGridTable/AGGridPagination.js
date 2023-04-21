@@ -5,11 +5,11 @@ import usePagination from './Hooks/usePagination'
 import cn from "classnames"
 import "./AGGridPagination.css"
 
-const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
+const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
     const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
     const nextClasses = cn("ag-paging-button", {
-        "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page
+        "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || totalPages == page
     })
 
     const defaultStrings = {
@@ -24,14 +24,14 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
     }
 
     const handleNextPage = () => {
-        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {
+        if (pagesSizes[page - 1] == pageSize && totalPages != page + 1) {
             controles.current.api.paginationGoToNextPage()
             nextPage({ pageSize })
         }
     }
 
     const handleLastPage = () => {
-        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {
+        if (pagesSizes[page - 1] == pageSize && totalPages != page + 1) {
             controles.current.api.paginationGoToPage(totalPages - 1)
             goToLastPage({ page: totalPages, pageSize })
         }
