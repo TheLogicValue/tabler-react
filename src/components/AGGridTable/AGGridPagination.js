@@ -6,9 +6,11 @@ import cn from "classnames"
 import "./AGGridPagination.css"
 
 const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
-    const { page, numRows, nextPage, previousPage, firstPage } = usePagination()
+    const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
-    const nextClasses = cn("ag-paging-button", { "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page })
+    const nextClasses = cn("ag-paging-button", {
+        "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page
+    })
 
     const defaultStrings = {
         "to": "to",
@@ -16,25 +18,37 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
         "of": 'de'
     }
 
+    const handleFirstPage = () => {
+        controles.current.api.paginationGoToPage(0)
+        goToFirstPage()
+    }
+
     const handleNextPage = () => {
         if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {
             controles.current.api.paginationGoToNextPage()
-            nextPage({ pageSize: pageSize })
+            nextPage({ pageSize })
+        }
+    }
+
+    const handleLastPage = () => {
+        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {
+            controles.current.api.paginationGoToPage(totalPages - 1)
+            goToLastPage({ page: totalPages, pageSize })
         }
     }
 
     const handlePreviousPage = () => {
         if (page > 1) {
             controles.current.api.paginationGoToPreviousPage()
-            previousPage({ pageSize: pageSize })
+            previousPage({ pageSize })
         }
     }
 
     useImperativeHandle(ref, () => {
         return {
             page: page,
-            noData: () => handlePreviousPage({ pageSize: pageSize }),
-            firstPage: () => firstPage()
+            noData: () => handlePreviousPage({ pageSize }),
+            firstPage: () => goToFirstPage()
         }
     })
 
@@ -47,7 +61,10 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
             <span className="ag-paging-row-summary-panel-number">{totalElements}</span>
         </span>}
         <span className="ag-paging-page-summary-panel" role="presentation">
-            <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" aria-disabled="true" disabled={page == 1}>
+            <div className={previousClasses} role="button" aria-label="First Page" onClick={handleFirstPage}>
+                <span class="ag-icon ag-icon-first" unselectable="on" role="presentation"></span>
+            </div>
+            <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" disabled={page == 1}>
                 <span className="ag-icon ag-icon-previous" unselectable="on" role="presentation"></span>
             </div>
             <span className="ag-paging-description" role="status">
@@ -56,11 +73,16 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
                 <span> {strings.of || defaultStrings.of} </span>
                 <span className="ag-paging-row-summary-panel-number">{totalPages}</span>
             </span>
-            <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0" aria-disabled="false">
+            <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0">
                 <span className="ag-icon ag-icon-next" unselectable="on" role="presentation"></span>
+            </div>
+            <div className={nextClasses} role="button" aria-label="Last Page" onClick={handleLastPage} tabindex="0">
+                <span className="ag-icon ag-icon-last" unselectable="on" role="presentation"></span>
             </div>
         </span>
     </div>
 })
+
+
 
 export default AGGridPagination

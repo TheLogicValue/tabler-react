@@ -49,8 +49,8 @@ export default function usePagination({ initialPage = 1, initialNumRows = 0 } = 
     return {
         nextPage: ({ pageSize }) => dispatch({ type: ACTIONS.NEXT_PAGE, pageSize: pageSize }),
         previousPage: ({ pageSize }) => dispatch({ type: ACTIONS.PREVIOUS_PAGE, pageSize: pageSize }),
-        firstPage: () => dispatch({type: ACTIONS.FIRST_PAGE}),
-        lastPage:({pageSize, page}) => dispatch({ type: ACTIONS.LAST_PAGE, pageSize: pageSize, lastPage: page}),
+        goToFirstPage: () => dispatch({type: ACTIONS.FIRST_PAGE}),
+        goToLastPage:({pageSize, page}) => dispatch({ type: ACTIONS.LAST_PAGE, pageSize: pageSize, lastPage: page}),
         page: state.page,
         numRows: state.numRows
     }
