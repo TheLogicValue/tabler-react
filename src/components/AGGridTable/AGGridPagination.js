@@ -33,7 +33,7 @@ const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pag
     const handleLastPage = () => {
         if (pagesSizes[page - 1] == pageSize && totalPages != page + 1) {
             controles.current.api.paginationGoToPage(totalPages - 1)
-            goToLastPage({ page: totalPages, pageSize })
+            goToLastPage({ page: totalPages, pageSize: pagesSizes[page - 1] })
         }
     }
 
