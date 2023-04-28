@@ -5,11 +5,13 @@ import usePagination from './Hooks/usePagination'
 import cn from "classnames"
 import "./AGGridPagination.css"
 
-const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {
-    const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()
+const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pageSize = 20, strings = {} }, ref) => {
+    const { page, numRows, numRowsOf, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination({
+        totalElements, initialNumRowsOf: pageSize
+    })
     const previousClasses = cn("ag-paging-button", { "ag-disabled": page <= 1 })
     const nextClasses = cn("ag-paging-button", {
-        "ag-disabled": (pagesSizes && pagesSizes[page - 1] < pageSize) || totalPages == page
+        "ag-disabled": totalPages == page
     })
 
     const defaultStrings = {
@@ -20,20 +22,24 @@ const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pag
 
     const handleFirstPage = () => {
         controles.current.api.paginationGoToPage(0)
-        goToFirstPage()
+        goToFirstPage({ pageSize, totalElements })
     }
 
     const handleNextPage = () => {
-        if (pagesSizes[page - 1] == pageSize && totalPages != page + 1) {
+        if (totalPages > page + 1) {
             controles.current.api.paginationGoToNextPage()
             nextPage({ pageSize })
+        }
+        if (totalPages == page + 1) {
+            controles.current.api.paginationGoToNextPage()
+            goToLastPage({ page: totalPages, totalElements, pageSize })
         }
     }
 
     const handleLastPage = () => {
-        if (pagesSizes[page - 1] == pageSize && totalPages != page + 1) {
+        if (totalPages != page && page > 0) {
             controles.current.api.paginationGoToPage(totalPages - 1)
-            goToLastPage({ page: totalPages, pageSize: pagesSizes[page - 1] })
+            goToLastPage({ page: totalPages, totalElements, pageSize })
         }
     }
 
@@ -47,16 +53,16 @@ const AGGridPagination = forwardRef(({ controles, totalElements, totalPages, pag
     useImperativeHandle(ref, () => {
         return {
             page: page,
-            noData: () => handlePreviousPage({ pageSize }),
-            firstPage: () => goToFirstPage()
+            lastPage: ({ totalPages, totalElements }) => goToLastPage({ page: totalPages, totalElements, pageSize }),
+            firstPage: () => goToFirstPage({ pageSize, totalElements })
         }
     })
 
     return <div className="ag-paging-panel ag-unselectable ag-panel-custom" >
-        {pagesSizes && <span className="ag-paging-row-summary-panel" role="status">
-            <span className="ag-paging-row-summary-panel-number">{numRows + 1}</span>
+        {<span className="ag-paging-row-summary-panel" role="status">
+            <span className="ag-paging-row-summary-panel-number">{numRows}</span>
             <span> {strings.to || defaultStrings.to} </span>
-            <span className="ag-paging-row-summary-panel-number">{numRows + ((pagesSizes && pagesSizes[page - 1]) || pageSize)}</span>
+            <span className="ag-paging-row-summary-panel-number">{totalElements < numRowsOf ? totalElements : numRowsOf}</span>
             <span> {strings.of || defaultStrings.of} </span>
             <span className="ag-paging-row-summary-panel-number">{totalElements}</span>
         </span>}
