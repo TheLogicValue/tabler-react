@@ -43,6 +43,7 @@ type BtnAComponent = {|
   +RootComponent: "a",
   +href?: string,
   +target?: string,
+  +rel?: string,
 |};
 
 type BtnInputComponent = {|
@@ -134,9 +135,9 @@ const Button = (props: Props): React.Node => {
     const { type, value } = props;
     return <input {...propsForAll} type={type} value={value} ref={rootRef} />;
   } else if (props.RootComponent === "a") {
-    const { href, target } = props;
+    const { href, target, rel } = props;
     return (
-      <a {...propsForAll} href={href} target={target} ref={rootRef}>
+      <a {...propsForAll} href={href} target={target} ref={rootRef} rel={rel}>
         {childrenForAll}
       </a>
     );
