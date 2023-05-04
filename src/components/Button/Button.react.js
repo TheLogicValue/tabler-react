@@ -44,6 +44,7 @@ type BtnAComponent = {|
   +href?: string,
   +target?: string,
   +rel?: string,
+  +download?: string,
 |};
 
 type BtnInputComponent = {|
@@ -135,9 +136,9 @@ const Button = (props: Props): React.Node => {
     const { type, value } = props;
     return <input {...propsForAll} type={type} value={value} ref={rootRef} />;
   } else if (props.RootComponent === "a") {
-    const { href, target, rel } = props;
+    const { href, target, rel, download } = props;
     return (
-      <a {...propsForAll} href={href} target={target} ref={rootRef} rel={rel}>
+      <a {...propsForAll} href={href} target={target} ref={rootRef} rel={rel} download={download}>
         {childrenForAll}
       </a>
     );
