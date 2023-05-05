@@ -6,15 +6,14 @@
   "license": "MIT",
   "dependencies": {   
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.2",
-    "react-scripts": "5.0.1",
-    "tabler-react": "github:thelogicvalue/tabler-react#develop",
-    "web-vitals": "^3.0.3"
+    "react-router-dom": "^6.11.1",    
+    "tabler-react": "github:thelogicvalue/tabler-react#feature/example",
+    "web-vitals": "^3.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,5 +38,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
+  },
+  "resolutions": {
+    "nth-check": "^2.0.1",
+    "svgo": "^2.8.0",
+    "webpack": "^5.76.0",
+    "loader-utils": "1.4.2 || ^2.0.4 || ^3.2.1",
+    "json5": "1.0.2 || ^2.2.2",    
+    "minimatch": "^3.0.5"
   }
 }
