@@ -17,7 +17,7 @@ import {
   DoubleCard
 } from "tabler-react"
 
-const baseimages = process.env.REACT_APP_BASE_IMAGES
+const baseimages = process.env.PUBLIC_URL + process.env.REACT_APP_BASE_IMAGES
 
 export default function Home() {
   return (

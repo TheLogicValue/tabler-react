@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Formik } from "formik"
 import { LoginPage as TablerLoginPage } from "tabler-react"
-const baseimages = process.env.REACT_APP_BASE_IMAGES
+const baseimages = process.env.PUBLIC_URL + process.env.REACT_APP_BASE_IMAGES
 
 export default function LoginPage() {
   const initialValues = { email: "", password: "", }

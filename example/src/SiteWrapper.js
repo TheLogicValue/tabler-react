@@ -2,7 +2,7 @@ import { Site, NavBarMenu, Grid, Button } from "tabler-react"
 import Config from './Config.json'
 
 const basename = process.env.REACT_APP_BASENAME
-const baseimages = process.env.REACT_APP_BASE_IMAGES
+const baseimages = process.env.PUBLIC_URL + process.env.REACT_APP_BASE_IMAGES
 
 const t = {
     "copyright": "All rights reserved",

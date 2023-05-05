@@ -18,7 +18,7 @@ import {
   Badge
 } from "tabler-react"
 
-const baseimages = process.env.REACT_APP_BASE_IMAGES
+const baseimages = process.env.PUBLIC_URL + process.env.REACT_APP_BASE_IMAGES
 
 export default function Home() {
   return (
@@ -57,7 +57,7 @@ export default function Home() {
           </Grid.Col>
           <Grid.Col width={6} sm={4} lg={2}>
             <StatsCard layout={1} movement={-1} total="621" label="Products" />
-          </Grid.Col>      
+          </Grid.Col>
           <Grid.Col md={6}>
             <Alert type="primary">
               <Alert.Link
@@ -71,7 +71,7 @@ export default function Home() {
               </Alert.Link>{" "}
               with code samples.
             </Alert>
-            <Grid.Row>              
+            <Grid.Row>
               <Grid.Col sm={6}>
                 <ProgressCard
                   header="New feedback"
@@ -181,7 +181,7 @@ export default function Home() {
                   <Table.Row>
                     <Table.Col alignContent="center">
                       <Avatar
-                        imageURL={baseimages+"faces/female/26.jpg"}
+                        imageURL={baseimages + "faces/female/26.jpg"}
                         className="d-block"
                         status="green"
                       />
@@ -290,7 +290,7 @@ export default function Home() {
                         <Avatar
                           size="md"
                           className="d-block"
-                          imageURL={baseimages+"faces/female/12.jpg"}
+                          imageURL={baseimages + "faces/female/12.jpg"}
                         />
                       </Grid.Col>
                       <Grid.Col>
@@ -337,7 +337,7 @@ export default function Home() {
                 </ul>
               </Card.Body>
             </Card>
-          </Grid.Col>          
+          </Grid.Col>
           <Grid.Col width={12}>
             <Card title="Invoices">
               <Table
