@@ -178,7 +178,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 paginationPageSize={pageSize}
                             >
                                 {
-                                    dataColumn.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null, sortable, comparator }) => {
+                                    dataColumn.map(({ header, key = null, getQuickFilterText, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null, sortable, comparator }) => {
                                         return <AgGridColumn
                                             headerName={header}
                                             field={item}
@@ -190,6 +190,7 @@ class AGGridTable extends React.Component<Props, State> {
                                             cellStyle={cellStyle}
                                             comparator={comparator}
                                             minWidth={minWidth}
+                                            getQuickFilterText={getQuickFilterText}
                                             sort={sort}
                                             sortable={sortable}
                                             colId={subItems == null ? key ?? item : null}
