@@ -1,45 +1,34 @@
 // @flow
 
 import * as React from "react";
-import { Icon } from "../";
+import { Icon } from "..";
 import cn from "classnames";
-import AvatarList from "./AvatarList.react";
+import AvatarList from "./AvatarList";
 
-import type { MouseEvents, PointerEvents } from "../../";
+//import type { MouseEvents, PointerEvents } from "../..";
 
-export type Props = {|
-  ...MouseEvents,
-  ...PointerEvents,
-  +children?: React.Node,
-  +className?: string,
-  /**
-   * The URL of the image to be displayed
-   */
-  +imageURL?: string,
-  +style?: Object,
-  +size?: "sm" | "md" | "lg" | "xl" | "xxl",
-  /**
-   * Display a colored status dot with the avatar
-   */
-  +status?: "grey" | "red" | "yellow" | "green",
-  /**
-   * Displays the user icon as a placeholder
-   */
-  +placeholder?: boolean,
-  /**
-   * Render an icon instead of an imageURL
-   */
-  +icon?: string,
-  /**
-   * The background and font color of the circle
-   */
-  +color?: string,
-|};
+interface Props {
+  onClick?: (event: React.MouseEvent) => void;
+  onMouseEnter?: (event: React.MouseEvent) => void;
+  onMouseLeave?: (event: React.MouseEvent) => void;
+  onPointerEnter?: (event: React.SyntheticEvent) => void;
+  onPointerLeave?: (event: React.SyntheticEvent) => void;
+  children?: React.ReactNode;
+  className?: string;
+  imageURL?: string;
+  style?: Object;
+  size?: "" | "sm" | "md" | "lg" | "xl" | "xxl";
+  status?: "grey" | "red" | "yellow" | "green";
+  placeholder?: boolean;
+  icon?: string;
+  color?: string;
+}
 
 /**
  * Renders a single circular avatar
  */
-function Avatar({
+
+const Avatar = ({
   className,
   children,
   imageURL,
@@ -54,7 +43,7 @@ function Avatar({
   onMouseLeave,
   onPointerEnter,
   onPointerLeave,
-}: Props): React.Node {
+}: Props) => {
   const classes = cn(
     {
       avatar: true,
@@ -64,6 +53,7 @@ function Avatar({
     },
     className
   );
+
   return (
     <span
       className={classes}
@@ -88,7 +78,7 @@ function Avatar({
       {children}
     </span>
   );
-}
+};
 
 Avatar.List = AvatarList;
 

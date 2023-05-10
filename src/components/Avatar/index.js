@@ -1,5 +1,5 @@
 // @flow
 
-import Avatar from "./Avatar.react";
+import Avatar from "./Avatar";
 
 export { Avatar as default };
