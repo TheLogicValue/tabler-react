@@ -43,7 +43,7 @@ type State = {
     topGrid: Array,
 };
 
-class AGGridTable extends React.Component<Props, State> {
+class AGGridTable extends React.Component {
 
     state = {
         topGrid: [],
@@ -51,7 +51,7 @@ class AGGridTable extends React.Component<Props, State> {
         api: null,
     }
 
-    render(): React.Node {
+    render() {
         const {
             className,
             panelPagination,
@@ -86,7 +86,7 @@ class AGGridTable extends React.Component<Props, State> {
             listBtn = false,
             deselectAllBtn = false,
             deselectAllOptions = { text: "Clear", hidden: false }
-        }: Props = this.props;
+        } = this.props;
 
         const classes = cn(
             className,
@@ -125,9 +125,11 @@ class AGGridTable extends React.Component<Props, State> {
         //revisar cuando se page el aggrid a function
         const onFirstDataRendered = () => {
             if (autosize !== false) this.api?.sizeColumnsToFit()
-        };
+        }
 
-        const deselectAll = () => { this.api.deselectAll(); }
+        const deselectAll = () => { 
+            this.api.deselectAll()
+        }
 
         const handleChangeFilter = (event) => {
             this.setState({ filter: event.target.value });
