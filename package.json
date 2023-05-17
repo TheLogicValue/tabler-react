@@ -21,6 +21,7 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
   },
   "dependencies": {
+    "@rollup/plugin-terser": "^0.4.2",
     "ag-grid-community": "^27.2.1",
     "ag-grid-react": "^27.2.1",
     "classnames": "^2.3.2",
@@ -58,7 +59,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "react-styleguidist": "^13.1.1",
-    "rollup": "^2.72.1",
+    "rollup": "^3.21.8",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",

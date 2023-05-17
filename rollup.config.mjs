@@ -4,8 +4,10 @@ import resolve from "@rollup/plugin-node-resolve";
 import url from "@rollup/plugin-url";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-
-import pkg from "./package.json";
+import pkg from "./package.json" assert {
+  type: 'json',
+  // integrity: 'sha384-ABC123'
+};
 
 const config ={
   input: "src/index.js",
