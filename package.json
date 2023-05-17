@@ -21,7 +21,6 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
   },
   "dependencies": {
-    "@rollup/plugin-terser": "^0.4.2",
     "ag-grid-community": "^27.2.1",
     "ag-grid-react": "^27.2.1",
     "classnames": "^2.3.2",
@@ -52,6 +51,7 @@
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-url": "^7.0.0",
+    "@rollup/plugin-terser": "^0.4.2",
     "eslint": "^8.23.1",
     "eslint-config-react-app": "^7.0.1",
     "flow-copy-source": "^2.0.9",
