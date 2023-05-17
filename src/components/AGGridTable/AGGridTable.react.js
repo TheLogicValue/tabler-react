@@ -160,7 +160,6 @@ class AGGridTable extends React.Component {
                                 suppressPaginationPanel={suppressPaginationPanel}
                                 className={classes}
                                 gridOptions={topOptions}
-                                onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
                                 rowHeight={rowHeight}
                                 overlayLoadingTemplate={overlayLoadingTemplate}
