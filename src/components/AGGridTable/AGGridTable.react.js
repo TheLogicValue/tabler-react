@@ -125,8 +125,9 @@ class AGGridTable extends React.Component<Props, State> {
         const deselectAll = () => { this.api.deselectAll(); }
 
         const onFirstDataRendered = () => {
-            if (autosize !== false) this.state.topGrid.api.sizeColumnsToFit();
+            if (autosize !== false) gridRef.current.api.sizeColumnsToFit();
         }
+
         const handleChangeFilter = (event) => {
             this.setState({ filter: event.target.value });
         }
