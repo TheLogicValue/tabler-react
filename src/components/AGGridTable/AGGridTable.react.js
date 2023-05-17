@@ -51,10 +51,6 @@ class AGGridTable extends React.Component<Props, State> {
         api: null,
     }
 
-    onFirstDataRendered = (params, autosize) => {
-        if (autosize !== false) params.api?.sizeColumnsToFit();
-    };
-
     render(): React.Node {
         const {
             className,
@@ -126,6 +122,11 @@ class AGGridTable extends React.Component<Props, State> {
             this.api = params.api;
         };
 
+        //revisar cuando se page el aggrid a function
+        const onFirstDataRendered = () => {
+            if (autosize !== false) this.api?.sizeColumnsToFit()
+        };
+
         const deselectAll = () => { this.api.deselectAll(); }
 
         const handleChangeFilter = (event) => {
@@ -157,7 +158,7 @@ class AGGridTable extends React.Component<Props, State> {
                                 suppressPaginationPanel={suppressPaginationPanel}
                                 className={classes}
                                 gridOptions={topOptions}
-                                onFirstDataRendered={this.onFirstDataRendered.bind(this, autosize)}
+                                onFirstDataRendered={onFirstDataRendered}
                                 rowData={dataRow}
                                 rowHeight={rowHeight}
                                 overlayLoadingTemplate={overlayLoadingTemplate}
