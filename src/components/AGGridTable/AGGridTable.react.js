@@ -52,7 +52,7 @@ class AGGridTable extends React.Component<Props, State> {
     }
 
     onFirstDataRendered = (params, autosize) => {
-        if (autosize !== false) params.api.sizeColumnsToFit();
+        if (autosize !== false) params.api?.sizeColumnsToFit();
     };
 
     render(): React.Node {
