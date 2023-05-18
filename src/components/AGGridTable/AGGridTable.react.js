@@ -1,13 +1,13 @@
 // @flow
-import React, { useCallback, useRef, useState } from "react";
-import cn from "classnames";
-import { Grid } from "../";
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import { es } from "./Languages/es";
-// import 'ag-grid-community/styles/ag-grid.css';
-// import 'ag-grid-community/styles/ag-theme-balham.css';
-import { Button } from "../Button";
+import React, { useCallback, useRef, useState } from "react"
+import cn from "classnames"
+import { Grid } from "../"
+import { AgGridReact } from 'ag-grid-react'
+import { es } from "./Languages/es"
+import { Button } from "../Button"
 import Icon from "../Icon"
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-balham.css'
 
 export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
@@ -50,6 +50,28 @@ export default function AGGridTable({
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
+    const [columnDefs] = useState(
+        dataColumn.map(column => {
+            const { header, key, subItems, item, ...props } = column
+            return {
+                ...props,
+                headerName: header,
+                field: item,
+                colId: subItems == null ? key ?? item : null,
+                key: subItems == null ? key ?? item : null,
+                children: subItems.map(subItem => {
+                    const { header, key, subItems, item, ...props } = subItem
+                    return {
+                        ...props,
+                        headerName: header,
+                        field: item,
+                        colId: key ?? item,
+                        key: key ?? item,
+                    }
+                })
+            }
+        })
+    )
 
     const classes = cn(
         className,
@@ -91,9 +113,9 @@ export default function AGGridTable({
     const onFirstDataRendered = useCallback(() => {
         if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
     }, [autosize, gridRef])
- 
+
     const handleChangeFilter = (event) => {
-        setFilter(event.target.value )
+        setFilter(event.target.value)
     }
 
     const onBtnExport = () => {
@@ -121,6 +143,7 @@ export default function AGGridTable({
                             suppressPaginationPanel={suppressPaginationPanel}
                             className={classes}
                             gridOptions={topOptions}
+                            columnDefs={columnDefs}
                             rowData={dataRow}
                             rowHeight={rowHeight}
                             overlayLoadingTemplate={overlayLoadingTemplate}
@@ -142,68 +165,12 @@ export default function AGGridTable({
                             pagination={pageSize > 0}
                             paginationPageSize={pageSize}
                         >
-                            {
-                                dataColumn.map(({ header, key = null, getQuickFilterText, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, subItems = null, valueFormatter, type, maxWidth, minWidth, rowSpan, renderIcon, filter, filterParams, sort = "", pinned = null, sortable, comparator }) => {
-                                    return <AgGridColumn
-                                        headerName={header}
-                                        field={item}
-                                        rowSpan={rowSpan}
-                                        maxWidth={maxWidth}
-                                        valueGetter={valueGetter}
-                                        cellClassRules={cellClassRules}
-                                        cellClass={cellClass}
-                                        cellStyle={cellStyle}
-                                        comparator={comparator}
-                                        minWidth={minWidth}
-                                        getQuickFilterText={getQuickFilterText}
-                                        sort={sort}
-                                        sortable={sortable}
-                                        colId={subItems == null ? key ?? item : null}
-                                        key={subItems == null ? key ?? item : null}
-                                        valueFormatter={valueFormatter}
-                                        type={type}
-                                        filter={filter}
-                                        filterParams={filterParams}
-                                        cellRenderer={renderIcon}
-                                        wrapText={wrapText}
-                                        autoHeight={autoHeight}
-                                        pinned={pinned}>
-                                        {
-                                            subItems != null ? subItems.map(({ header, key = null, valueGetter, autoHeight = false, wrapText = false, cellClassRules, cellClass, cellStyle, item, valueFormatter, type, maxWidth, minWidth, renderIcon, rowSpan, filter, filterParams, sort = "", sortable, comparator, pinned = null }) => {
-                                                return <AgGridColumn
-                                                    headerName={header}
-                                                    field={item}
-                                                    maxWidth={maxWidth}
-                                                    minWidth={minWidth}
-                                                    valueGetter={valueGetter}
-                                                    sort={sort}
-                                                    comparator={comparator}
-                                                    sortable={sortable}
-                                                    rowSpan={rowSpan}
-                                                    colId={key ?? item}
-                                                    key={key ?? item}
-                                                    valueFormatter={valueFormatter}
-                                                    cellClassRules={cellClassRules}
-                                                    cellClass={cellClass}
-                                                    cellStyle={cellStyle}
-                                                    type={type}
-                                                    filter={filter}
-                                                    wrapText={wrapText}
-                                                    autoHeight={autoHeight}
-                                                    filterParams={filterParams}
-                                                    cellRenderer={renderIcon}
-                                                    pinned={pinned} />
-                                            }) : null
-                                        }
-                                    </AgGridColumn>
-                                })
-                            }
                         </AgGridReact>
                         <div className="ag-panel-custom">
                             {panelPagination}
                         </div>
                     </div>
-                    {dataTotal.length !== 0
+                    {/* {dataTotal.length !== 0
                         ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
                             <AgGridReact
                                 className={classes}
@@ -231,7 +198,7 @@ export default function AGGridTable({
                             </AgGridReact>
                         </div>
                         : null
-                    }
+                    } */}
                 </div>
             </Grid.Col>
         </Grid.Row>
