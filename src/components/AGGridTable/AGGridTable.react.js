@@ -1,5 +1,5 @@
 // @flow
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
 import { AgGridReact } from 'ag-grid-react'
@@ -50,8 +50,7 @@ export default function AGGridTable({
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
-    const [columnDefs] = useState(
-        dataColumn.map(column => {
+    const columnDefs = useMemo(() => dataColumn?.map(column => {
             const { header, key, subItems, item, ...props } = column
             return {
                 ...props,
@@ -70,8 +69,7 @@ export default function AGGridTable({
                     }
                 })
             }
-        })
-    )
+        }), [dataColumn])
 
     const classes = cn(
         className,
