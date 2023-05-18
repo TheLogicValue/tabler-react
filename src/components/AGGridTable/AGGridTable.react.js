@@ -4,8 +4,8 @@ import cn from "classnames"
 import { Grid } from "../"
 import { AgGridReact } from 'ag-grid-react'
 import { es } from "./Languages/es"
-import { Button } from "../Button"
-import Icon from "../Icon"
+// import { Button } from "../Button"
+// import Icon from "../Icon"
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
 
@@ -128,9 +128,9 @@ export default function AGGridTable({
                 <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                     {search === true ? <div className="addons-aggrid">
                         <input type="text" id="searcher" placeholder="Buscar..." onInput={onHandleChangeFilter ?? handleChangeFilter} />
-                        {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
+                        {/* {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
                             <Icon prefix="fe" name="download"></Icon>
-                        </Button> : null}
+                        </Button> : null} */}
                     </div> : null}
                     {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
                         {
