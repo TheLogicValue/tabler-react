@@ -4,8 +4,8 @@ import cn from "classnames"
 import { Grid } from "../"
 import { AgGridReact } from 'ag-grid-react'
 import { es } from "./Languages/es"
-// import { Button } from "../Button"
-// import Icon from "../Icon"
+import { Button } from "../Button"
+import Icon from "../Icon"
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
 
@@ -51,25 +51,25 @@ export default function AGGridTable({
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
     const columnDefs = useMemo(() => dataColumn?.map(column => {
-            const { header, key, subItems, item, ...props } = column
-            return {
-                ...props,
-                headerName: header,
-                field: item,
-                colId: subItems == null ? key ?? item : null,
-                key: subItems == null ? key ?? item : null,
-                children: subItems.map(subItem => {
-                    const { header, key, subItems, item, ...props } = subItem
-                    return {
-                        ...props,
-                        headerName: header,
-                        field: item,
-                        colId: key ?? item,
-                        key: key ?? item,
-                    }
-                })
-            }
-        }), [dataColumn])
+        const { header, key, subItems, item, ...props } = column
+        return {
+            ...props,
+            headerName: header,
+            field: item,
+            colId: subItems == null ? key ?? item : null,
+            key: subItems == null ? key ?? item : null,
+            children: subItems?.map(subItem => {
+                const { header, key, subItems, item, ...props } = subItem
+                return {
+                    ...props,
+                    headerName: header,
+                    field: item,
+                    colId: key ?? item,
+                    key: key ?? item,
+                }
+            })
+        }
+    }), [dataColumn])
 
     const classes = cn(
         className,
@@ -126,9 +126,9 @@ export default function AGGridTable({
                 <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                     {search === true ? <div className="addons-aggrid">
                         <input type="text" id="searcher" placeholder="Buscar..." onInput={onHandleChangeFilter ?? handleChangeFilter} />
-                        {/* {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
+                        {downloadCSV === true ? <Button square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
                             <Icon prefix="fe" name="download"></Icon>
-                        </Button> : null} */}
+                        </Button> : null}
                     </div> : null}
                     {listBtn === true ? <div className={deselectAllOptions.hidden ? "d-none" : "ag-btn-list"}>
                         {
