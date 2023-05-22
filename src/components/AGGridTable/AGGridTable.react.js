@@ -142,6 +142,7 @@ export default function AGGridTable({
                             className={classes}
                             gridOptions={topOptions}
                             columnDefs={columnDefs}
+                            defaultColDef={topOptions.defaultColDef}
                             rowData={dataRow}
                             rowHeight={rowHeight}
                             overlayLoadingTemplate={overlayLoadingTemplate}
