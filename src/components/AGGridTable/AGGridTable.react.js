@@ -132,7 +132,8 @@ class AGGridTable extends React.Component<Props, State> {
         }
 
         const onBtnExport = () => {
-            this.state.topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" });
+            const columns = dataColumn.filter(column => column.csv == true).map(column => column.item)
+            this.state.topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";", columnKeys: columns });
         };
 
         return (
