@@ -1,23 +1,28 @@
 {
   "extends": "react-app",
   "root": true,
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "rules": {
-        "eqeqeq": "off",
-        "no-implied-eval": "off",
-        "jsx-a11y/anchor-is-valid": [
-          "error",
-          {
-            "components": ["Link"],
-            "specialLink": ["hrefLeft", "hrefRight"],
-            "aspects": ["noHref", "invalidHref", "preferButton"]
-          }
-        ]
+    "babelOptions": {
+      "parserOpts": {
+        "plugins": ["importAssertions"]
+      }
     }
+  },
+  "rules": {
+    "eqeqeq": "off",
+    "no-implied-eval": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ]
+  }
 }
