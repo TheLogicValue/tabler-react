@@ -23,10 +23,10 @@ export default function TLVModal({ children, className, body, spin, bodyHeight, 
                         noFooter ? null :
                             <div className="modal-footer">
                                 {body === "load" ? null : type === 2 ? (
-                                    <ButtonModal onClick={onCancel} color="danger" text={cancelText} spin={spin} />
+                                    <ButtonModal type="button" onClick={onCancel} color="danger" text={cancelText} spin={spin} />
                                 ) : null}
                                 {body === "load" ? null :
-                                    <ButtonModal onClick={onAccept} color="primary" text={acceptText} spin={spin} />
+                                    <ButtonModal type="button" onClick={onAccept} color="primary" text={acceptText} spin={spin} />
                                 }
                             </div>
                     }

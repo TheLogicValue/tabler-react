@@ -18,18 +18,18 @@ type optionsType = Array<defaultOptionType | itemObject>;
 type defaultOptionsType = { [defaultOptionType]: itemObject };
 
 export type Props = {|
-  +avatarURL?: string,
-  +name?: string,
-  +description?: string,
+  +avatarURL ?: string,
+  +name ?: string,
+  +description ?: string,
   /**
    * An array of the option items within the Dropdown
    */
-  +options?: optionsType,
+  +options ?: optionsType,
   /**
    * The default RootComponent for all options.
    * optionsObjects[x].RootComponent takes priority
    */
-  +optionsRootComponent?: React.ElementType,
+  +optionsRootComponent ?: React.ElementType,
 |};
 
 const defaultOptions: defaultOptionsType = {
@@ -50,6 +50,7 @@ const itemsFromDefaultOptions = (options: optionsType) =>
  */
 function AccountDropdown({
   avatarURL,
+  avatarImage,
   name,
   description,
   options = [],
@@ -63,6 +64,7 @@ function AccountDropdown({
       triggerClassName="pr-0 leading-none"
       triggerContent={
         <React.Fragment>
+          {avatarImage}
           {avatarURL && <Avatar imageURL={avatarURL} />}
           <span className="ml-2 d-none d-lg-block">
             <span className="text-default">{name}</span>

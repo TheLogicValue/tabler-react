@@ -42,6 +42,7 @@ type Props = {|
 function FormSelectReact(props: Props): React.Node {
   const {
     className,
+    selectRef,
     modalContainer = false,
     disabledValue = "-",
     children,
@@ -69,8 +70,13 @@ function FormSelectReact(props: Props): React.Node {
     isMulti,
     isDisabled,
     isClearable,
+    menuPlacement,
+    isFixedMenu,
+    menuTarget,
+    menuIsOpen,
     onMenuOpen,
     onMenuClose,
+    closeMenuOnScroll,
     isLoading,
     options,
     selectOption,
@@ -100,6 +106,7 @@ function FormSelectReact(props: Props): React.Node {
         color: state.isDisabled ? 'var(--light-disabled)' : '',
         cursor: "pointer"
       }),
+      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
       control: (styles, { data, isDisabled, isFocused, isSelected, isHover }) => ({
         ...styles,
           '&:hover': { 
@@ -130,15 +137,21 @@ function FormSelectReact(props: Props): React.Node {
         value={isDisabled ? disabledValue : value}
         defaultValue={defaultValue}
         onChange={onChange}
+        menuIsOpen={menuIsOpen}
         onBlur={onBlur}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
         onClick={onClick}
+        menuPortalTarget={menuTarget ?? document.body}
+        menuPosition={isFixedMenu ? 'fixed' : 'absolute'}
+        menuPlacement={menuPlacement}
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
+        closeMenuOnScroll={closeMenuOnScroll}
         className={classes}
+        classNamePrefix="react-select"
         readOnly={readOnly}
         multiple={multiple}
         clearValue={clearValue}
@@ -155,6 +168,7 @@ function FormSelectReact(props: Props): React.Node {
         setValue={setValue}
         emotion={emotion}
         placeholder={isDisabled ? disabledValue : placeholder}
+        ref={selectRef}
         components={{
           MultiValueContainer: () => null,
           DropdownIndicator: () => null,
