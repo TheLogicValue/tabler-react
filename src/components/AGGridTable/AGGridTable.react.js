@@ -57,7 +57,7 @@ export default function AGGridTable({
             headerName: header,
             field: item,
             colId: subItems == null ? key ?? item : null,
-            key: subItems == null ? key ?? item : null,
+            // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
                 return {
@@ -65,7 +65,7 @@ export default function AGGridTable({
                     headerName: header,
                     field: item,
                     colId: key ?? item,
-                    key: key ?? item,
+                    // key: key ?? item,
                 }
             })
         }
