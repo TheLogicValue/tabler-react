@@ -32,7 +32,7 @@ export default function AGGridTable({
     dataRow = [],
     dataTotal = [],
     dataColumn = [],
-    columnTotal = [],
+    cellEditor = 'agNumberCellEditor',
     autosize = true,
     resizable = true,
     sortable = true,
@@ -82,7 +82,11 @@ export default function AGGridTable({
             resizable: resizable,
             sortable: sortable,
             flex: flex,
-            minWidth: minWidth
+            minWidth: minWidth,
+            cellEditor : cellEditor,
+            cellEditorParams: {
+                showStepperButtons: true
+            }
         },
         suppressHorizontalScroll: true,
     }
