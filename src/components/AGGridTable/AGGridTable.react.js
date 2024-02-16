@@ -32,7 +32,7 @@ export default function AGGridTable({
     dataRow = [],
     dataTotal = [],
     dataColumn = [],
-    cellEditor = 'agNumberCellEditor',
+    suppressHorizontalScroll = true,
     autosize = true,
     resizable = true,
     sortable = true,
@@ -63,32 +63,22 @@ export default function AGGridTable({
                 return {
                     ...props,
                     headerName: header,
+                    resizable: resizable,
+                    sortable: sortable,
+                    flex: flex,
+                    minWidth: minWidth,
                     field: item,
                     colId: key ?? item,
                     // key: key ?? item,
                 }
             })
         }
-    }), [dataColumn])
+    }), [dataColumn, flex, minWidth, resizable, sortable])
 
     const classes = cn(
         className,
         "ag-theme-balham"
     );
-
-    const topOptions = {
-        defaultColDef: {
-            resizable: resizable,
-            sortable: sortable,
-            flex: flex,
-            minWidth: minWidth,
-            cellEditor : cellEditor,
-            cellEditorParams: {
-                showStepperButtons: true
-            }
-        },
-        suppressHorizontalScroll: true,
-    }
 
     const onGridReady = useCallback((params) => {
         setTopGrid(params)
@@ -130,9 +120,8 @@ export default function AGGridTable({
                             ref={gridRef}
                             suppressPaginationPanel={suppressPaginationPanel}
                             className={classes}
-                            gridOptions={topOptions}
+                            suppressHorizontalScroll={suppressHorizontalScroll}
                             columnDefs={columnDefs}
-                            defaultColDef={topOptions.defaultColDef}
                             rowData={dataRow}
                             rowHeight={rowHeight}
                             overlayLoadingTemplate={overlayLoadingTemplate}
