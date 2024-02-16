@@ -54,7 +54,7 @@ export default function AGGridTable({
     const [filter, setFilter] = useState("")
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, key, subItems, item, ...props } = column
-        return {
+        const columnDef = {
             ...props,
             headerName: header,
             field: item,
@@ -62,7 +62,6 @@ export default function AGGridTable({
             resizable: resizable,
             sortable: sortable,
             flex: flex,
-            minWidth: minWidth,
             // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
@@ -75,6 +74,8 @@ export default function AGGridTable({
                 }
             })
         }
+        if(minWidth != null) columnDef["minWidth"] = minWidth
+        return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
     const classes = cn(
