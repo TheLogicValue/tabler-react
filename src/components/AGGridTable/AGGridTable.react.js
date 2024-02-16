@@ -77,7 +77,6 @@ export default function AGGridTable({
     );
 
     const topOptions = {
-        alignedGrids: [],
         defaultColDef: {
             resizable: resizable,
             sortable: sortable,
@@ -90,19 +89,6 @@ export default function AGGridTable({
         },
         suppressHorizontalScroll: true,
     }
-
-    const bottomOptions = {
-        alignedGrids: [],
-        defaultColDef: {
-            resizable: resizable,
-            sortable: sortable,
-            flex: flex,
-            minWidth: minWidth
-        },
-    }
-
-    topOptions.alignedGrids.push(bottomOptions)
-    bottomOptions.alignedGrids.push(topOptions)
 
     const onGridReady = useCallback((params) => {
         setTopGrid(params)
