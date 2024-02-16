@@ -33,6 +33,8 @@ export default function AGGridTable({
     dataTotal = [],
     dataColumn = [],
     suppressHorizontalScroll = true,
+    alwaysShowHorizontalScroll= false,
+    alwaysShowVerticalScroll= false,
     autosize = true,
     resizable = true,
     sortable = true,
@@ -121,6 +123,8 @@ export default function AGGridTable({
                             suppressPaginationPanel={suppressPaginationPanel}
                             className={classes}
                             suppressHorizontalScroll={suppressHorizontalScroll}
+                            alwaysShowHorizontalScroll={alwaysShowHorizontalScroll}
+                            alwaysShowVerticalScroll={alwaysShowVerticalScroll}
                             columnDefs={columnDefs}
                             rowData={dataRow}
                             rowHeight={rowHeight}
