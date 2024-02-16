@@ -57,16 +57,16 @@ export default function AGGridTable({
             headerName: header,
             field: item,
             colId: subItems == null ? key ?? item : null,
+            resizable: resizable,
+            sortable: sortable,
+            flex: flex,
+            minWidth: minWidth,
             // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
                 return {
                     ...props,
                     headerName: header,
-                    resizable: resizable,
-                    sortable: sortable,
-                    flex: flex,
-                    minWidth: minWidth,
                     field: item,
                     colId: key ?? item,
                     // key: key ?? item,
