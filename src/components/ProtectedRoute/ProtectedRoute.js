@@ -4,10 +4,11 @@ import React from 'react';
 export const ProtectedRoute = ({
   isAllowed,
   redirectTo = "/",
+  replace = true,
   children,
 }) => {
   if (!isAllowed) {
-    return <Navigate to={redirectTo} replace />;
+    return <Navigate to={redirectTo} replace={replace} />;
   }
 
   return children ? children : <Outlet />;
