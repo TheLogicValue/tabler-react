@@ -15,7 +15,8 @@ const currentMonth = new Date();
 const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
-const DayPickerTLV = forwardRef(({ date, dateIni }, ref) => {
+const DayPickerTLV = forwardRef((props, ref) => {
+    const { date, dateIni } = props
 
     const dateIniData = dateIni != undefined ? new Date(dateIni) : currentMonth;
     const dateData = date != undefined ? new Date(date) : dateIniData;
@@ -104,6 +105,7 @@ const DayPickerTLV = forwardRef(({ date, dateIni }, ref) => {
                         role="dialog"
                     >
                         <DayPicker
+                            {...props}
                             initialFocus={isPopperOpen}
                             mode="single"
                             defaultMonth={selected == null ? dateIniData : selected}
