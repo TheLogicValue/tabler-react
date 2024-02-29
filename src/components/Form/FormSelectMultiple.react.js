@@ -117,6 +117,7 @@ return (
       triggerContent={titulo}
       items={
           <ReactSelect
+              {...props}
               isOptionSelected={isOptionSelected}
               options={getOptions()}
               onChange={onChange}
@@ -138,7 +139,6 @@ return (
               isClearable={true}
               controlShouldRenderValue={true}
               tabSelectsValue={false}
-
           />
       }
   /> 

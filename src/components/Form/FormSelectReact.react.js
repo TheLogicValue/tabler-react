@@ -133,6 +133,7 @@ function FormSelectReact(props: Props): React.Node {
   const contents = (
     <React.Fragment>
       <Select
+        {...props}
         name={name}
         value={isDisabled ? disabledValue : value}
         defaultValue={defaultValue}

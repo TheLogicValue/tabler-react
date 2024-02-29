@@ -13,42 +13,45 @@ export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
 }
 
-export default function AGGridTable({
-    className,
-    panelPagination,
-    suppressPaginationPanel = false,
-    onGrid,
-    overlayLoadingTemplate,
-    onPaginationChanged = () => null,
-    onHandleChangeFilter = null,
-    postSortRows = () => null,
-    search = false,
-    textFileCSV = "Export",
-    downloadCSV = false,
-    suppressRowTransform = false,
-    minWidth = null,
-    rowHeight = null,
-    flex = 1,
-    dataRow = [],
-    dataTotal = [],
-    dataColumn = [],
-    suppressHorizontalScroll = true,
-    alwaysShowHorizontalScroll= false,
-    alwaysShowVerticalScroll= false,
-    autosize = true,
-    resizable = true,
-    sortable = true,
-    language = null,
-    onRowClick = () => null,
-    onCellClick = () => null,
-    pageSize = 0,
-    rowSelection = 'single',
-    rowMultiSelectWithClick = false,
-    suppressRowClickSelection = false,
-    listBtn = false,
-    deselectAllBtn = false,
-    deselectAllOptions = { text: "Clear", hidden: false }
-}) {
+export default function AGGridTable(gridProps) {
+
+    const {
+        className,
+        panelPagination,
+        suppressPaginationPanel = false,
+        onGrid,
+        overlayLoadingTemplate,
+        onPaginationChanged = () => null,
+        onHandleChangeFilter = null,
+        postSortRows = () => null,
+        search = false,
+        textFileCSV = "Export",
+        downloadCSV = false,
+        suppressRowTransform = false,
+        minWidth = null,
+        rowHeight = null,
+        flex = 1,
+        dataRow = [],
+        dataTotal = [],
+        dataColumn = [],
+        suppressHorizontalScroll = true,
+        alwaysShowHorizontalScroll= false,
+        alwaysShowVerticalScroll= false,
+        autosize = true,
+        resizable = true,
+        sortable = true,
+        language = null,
+        onRowClick = () => null,
+        onCellClick = () => null,
+        pageSize = 0,
+        rowSelection = 'single',
+        rowMultiSelectWithClick = false,
+        suppressRowClickSelection = false,
+        listBtn = false,
+        deselectAllBtn = false,
+        deselectAllOptions = { text: "Clear", hidden: false }
+    } = gridProps
+
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
@@ -120,6 +123,7 @@ export default function AGGridTable({
                     </div> : null}
                     <div style={{ flex: '1 1 auto', height: '100%' }} >
                         <AgGridReact
+                            {...gridProps}
                             ref={gridRef}
                             suppressPaginationPanel={suppressPaginationPanel}
                             className={classes}
