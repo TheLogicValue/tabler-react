@@ -142,8 +142,7 @@ export default function AGGridTable(gridProps) {
                             suppressRowTransform={suppressRowTransform}
                             domLayout={'autoHeight'}
                             quickFilterText={filter}
-                            localeText={language == null ? es : language}
-                            enableRangeSelection={true}
+                            localeText={language == null ? es : language}                            
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                             onRowClicked={(e) => { onRowClick(e.data) }}
                             onCellClicked={(e) => { onCellClick(e) }}
