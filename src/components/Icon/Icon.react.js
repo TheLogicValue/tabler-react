@@ -48,6 +48,7 @@ type Props = {|
 function Icon({
   prefix: prefixFromProps = "fe",
   name,
+  title,
   className,
   link,
   isAriaHidden,
@@ -93,9 +94,9 @@ function Icon({
   };
 
   return !link ? (
-    <i className={classes} {...eventProps} />
+    <i className={classes} {...eventProps} title={title}/>
   ) : (
-    <a className="icon" {...extraProps} {...eventProps}>
+    <a className="icon" {...extraProps} {...eventProps} title={title}>
       <i className={classes} />
     </a>
   );
