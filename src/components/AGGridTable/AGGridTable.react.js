@@ -6,8 +6,13 @@ import { AgGridReact } from 'ag-grid-react'
 import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
+
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
+
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
+import { ModuleRegistry } from "@ag-grid-community/core"
+ModuleRegistry.registerModules([ClientSideRowModelModule])
 
 export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
