@@ -5,6 +5,7 @@
     "@babel/preset-flow"
   ],
   "plugins": [
+    "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-import-assertions",
     "@babel/plugin-external-helpers",
     "@babel/plugin-syntax-dynamic-import",

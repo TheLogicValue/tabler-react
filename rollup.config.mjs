@@ -17,10 +17,12 @@ const config ={
     {
       file: pkg.main,
       format: "cjs",
+      external: [/@babel\/runtime/]
     },
     {
       file: pkg.module,
       format: "es",
+      external: [/@babel\/runtime/]
     },
   ],
   plugins: [
@@ -31,6 +33,7 @@ const config ={
     url(),
     terser(),
     babel({
+      babelHelpers: 'runtime',
       exclude: "node_modules/**",
     }),
     resolve(),
