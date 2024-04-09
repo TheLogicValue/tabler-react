@@ -33,7 +33,7 @@ const config ={
     url(),
     terser(),
     babel({
-      babelHelpers: 'runtime',
+      babelHelpers: 'external',
       exclude: "node_modules/**",
     }),
     resolve(),
