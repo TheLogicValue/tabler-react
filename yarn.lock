@@ -15,7 +15,7 @@
     "@ag-grid-community/core" "31.2.1"
     tslib "^2.3.0"
 
-"@ag-grid-community/core@31.2.1":
+"@ag-grid-community/core@31.2.1", "@ag-grid-community/core@^31.0.3":
   version "31.2.1"
   resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-31.2.1.tgz#eefc018e39e22d82b53dbb4229d7330167ebe25a"
   integrity sha512-tTDt8c6KykR+Y0cNwwbpokkhMmD1L1WVILPwZ0Z3lsSxSkmzGbTKSD2jOSvlw9vpPuAJpU0R5tMe1dfsEXO1YA==
