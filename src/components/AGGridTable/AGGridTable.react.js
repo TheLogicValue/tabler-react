@@ -113,10 +113,10 @@ const AGGridTable = forwardRef(function AGGridTable(gridProps, ref) {
     useImperativeHandle(ref, () => {
         return { 
             getDisplayedRowAtIndex(row) {
-                gridRef.current.getDisplayedRowAtIndex(row)
+                gridRef.current.api.getDisplayedRowAtIndex(row)
             },
             flashCells(item) {
-                gridRef.current.flashCells(item)
+                gridRef.current.api.flashCells(item)
             }
         }
     }, [])
