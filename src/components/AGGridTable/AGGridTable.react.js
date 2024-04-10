@@ -1,5 +1,5 @@
 // @flow
-import React, { useCallback, useMemo, useRef, useState } from "react"
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
 import { AgGridReact } from 'ag-grid-react'
@@ -17,7 +17,7 @@ export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
 }
 
-export default function AGGridTable(gridProps) {
+const AGGridTable = forwardRef(function AGGridTable(gridProps, ref) {
 
     const {
         className,
@@ -110,6 +110,17 @@ export default function AGGridTable(gridProps) {
         topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
     }
 
+    useImperativeHandle(ref, () => {
+        return { 
+            getDisplayedRowAtIndex(row) {
+                gridRef.current.getDisplayedRowAtIndex(row)
+            },
+            flashCells(item) {
+                gridRef.current.flashCells(item)
+            }
+        }
+    }, [])
+
     return (
         <Grid.Row>
             <Grid.Col width={12}>
@@ -193,4 +204,6 @@ export default function AGGridTable(gridProps) {
             </Grid.Col>
         </Grid.Row>
     )
-}
+})
+
+export default AGGridTable
