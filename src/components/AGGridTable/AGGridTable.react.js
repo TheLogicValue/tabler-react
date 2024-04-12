@@ -1,4 +1,3 @@
-// @flow
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
@@ -17,7 +16,7 @@ export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
 }
 
-const AGGridTable = forwardRef(function AGGridTable(gridProps, ref) {
+const AGGridTable = forwardRef((gridProps, ref) => {
 
     const {
         className,
