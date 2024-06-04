@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
-export default function BarChart({
+export default function BarChart ({
     title = "",
     type = "vertical",
     height = "18.75rem",
     paddingBottom = null,
+    legend = true,
     colors,
     complete,
     rotateX,
@@ -27,6 +28,7 @@ export default function BarChart({
     yAxisData,
     //config series
     stack = null,
+    decal = null,
     seriesShowBackground = true,
     backgroundStyleColor = 'rgba(180, 180, 180, 0.2)'
 }) {
@@ -81,6 +83,7 @@ export default function BarChart({
 
     const serie = () => {
         return series.map((item, i) => {
+
             let ser = {
                 type: 'bar',
                 color: colors[i],
@@ -89,7 +92,23 @@ export default function BarChart({
                 stack: stack,
                 showBackground: seriesShowBackground,
                 backgoundStyle: { color: backgroundStyleColor },
+              
             }
+
+            if(!!decal) {
+                ser.itemStyle = {
+                    decal: {
+                        show: seriesName[i] != "Fondo",
+                        color: 'white',
+                        rotation: 0.5,
+                        dashArrayX: [1, 0],
+                        dashArrayY: [2, 5],
+                        symbolSize: 0.5
+                    }
+                }
+                if(seriesName[i] == "Fondo") ser.itemStyle.decal.symbol = "none"
+            }
+
             return ser
         })
     }
@@ -99,7 +118,7 @@ export default function BarChart({
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { show: complete, bottom: "0rem", symbol: null },
+        legend: { show: legend, bottom: "0rem", symbol: null },
         tooltip: {
             trigger: 'item',
             axisPointer: { type: 'shadow' },
