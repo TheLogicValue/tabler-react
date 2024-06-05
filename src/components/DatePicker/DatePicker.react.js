@@ -16,10 +16,11 @@ const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni } = props
+    const { date, dateIni, today } = props
 
-    const dateIniData = dateIni != undefined ? new Date(dateIni) : currentMonth;
-    const dateData = date != undefined ? new Date(date) : dateIniData;
+    const dateIniData = dateIni != undefined ? new Date(dateIni) : currentMonth
+    if(!today) dateIniData.setDate(dateIniData.getDate() - 1)
+    const dateData = date != undefined ? new Date(date) : dateIniData
 
     const [inputValue, setInputValue] = useState(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));
     const [selected, setSelected] = useState(date);
