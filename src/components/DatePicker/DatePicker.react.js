@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useState, forwardRef, useImperativeHandle, useMemo } from 'react';
 
 import { Icon } from "../"
 import { format, isValid, parse } from 'date-fns';
@@ -16,10 +16,17 @@ const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni } = props
+    const { date, dateIni, today } = props
 
-    const dateIniData = dateIni != undefined ? new Date(dateIni) : currentMonth;
-    const dateData = date != undefined ? new Date(date) : dateIniData;
+    const dateIniData = useMemo(() => {
+        const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
+        if(!today) {
+            valueDate.setDate(valueDate.getDate() - 1)
+        }
+
+        return valueDate
+    }, [dateIni, today]) 
+    const dateData = date != undefined ? new Date(date) : dateIniData
 
     const [inputValue, setInputValue] = useState(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));
     const [selected, setSelected] = useState(date);
