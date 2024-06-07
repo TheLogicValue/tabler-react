@@ -71,6 +71,7 @@ const customStyles = {
       ...provided,
       color: state.isSelected ? "" : "",
       backgroundColor: state.isSelected ? "var(--quaternary)" : "",
+      fontWeight: state.isSelected ? "bold" : "",
       cursor: "pointer"
     }),
 };
