@@ -16,16 +16,16 @@ const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni, today } = props
+    const { date, dateIni, lastDate, today } = props
 
     const dateIniData = useMemo(() => {
         const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
-        if(!today) {
+        if (!today) {
             valueDate.setDate(valueDate.getDate() - 1)
         }
 
         return valueDate
-    }, [dateIni, today]) 
+    }, [dateIni, today])
     const dateData = date != undefined ? new Date(date) : dateIniData
 
     const [inputValue, setInputValue] = useState(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));
@@ -120,7 +120,7 @@ const DayPickerTLV = forwardRef((props, ref) => {
                             onSelect={handleDaySelect}
                             disabled={[
                                 {
-                                    after: dateIniData,
+                                    after: lastDate ?? dateIniData,
                                 }
                             ]}
                             today={dateIniData}

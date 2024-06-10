@@ -69,6 +69,10 @@
   font-weight: 800;
 }
 
+.rdp-day_selected, .rdp-day_selected:focus-visible, .rdp-day_selected:hover {
+  background-color: var(--primary) !important;
+}
+
 .rdp-day_selected:not([disabled]) {
   background-color: var(--primary) !important;
   border: none !important;
@@ -86,3 +90,4 @@
 .rdp-day_disabled {
   color: #dce0e0;
 }
+
