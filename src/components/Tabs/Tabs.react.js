@@ -1,5 +1,5 @@
 // @flow
-import { forwardRef, useImperativeHandle, useState } from "react"
+import React, { forwardRef, useImperativeHandle, useState } from "react"
 import TabbedContainer from "./TabbedContainer.react"
 import TabbedHeader from "./TabbedHeader.react"
 import cn from "classnames"
