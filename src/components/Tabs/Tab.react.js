@@ -5,6 +5,7 @@ import * as React from "react";
 type Props = {|
   title: string,
   children: React.Node,
+  id: number
 |};
 
 type State = {||};

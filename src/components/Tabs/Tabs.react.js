@@ -6,27 +6,27 @@ import cn from "classnames"
 
 import "./Tabs.css"
 
-const Tabs = forwardRef(({ children, options, className, modal, initialTab }, ref) => {
-  const [selectedTitle, setTitle] = useState(initialTab)
+const Tabs = forwardRef(({ children, options, className, modal, initialTab = 1 }, ref) => {
+  const [selectedTab, setTab] = useState(initialTab)
   const classes = cn("card", className)
 
   useImperativeHandle(ref, () => {
     return {
-      activeTab: selectedTitle,
+      activeTab: selectedTab,
     }
   })
 
   return (
     <div className={classes}>
       <TabbedHeader
-        selectedTitle={selectedTitle}
+        selectedTab={selectedTab}
         modal={modal}
-        stateCallback={newTitle => setTitle(newTitle)}
+        stateCallback={id => setTab(id)}
         options={options}
       >
         {children}
       </TabbedHeader>
-      <TabbedContainer selectedTitle={selectedTitle}>
+      <TabbedContainer selectedTab={selectedTab}>
         {children}
       </TabbedContainer>
     </div>

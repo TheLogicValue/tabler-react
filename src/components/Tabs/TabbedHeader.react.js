@@ -8,9 +8,9 @@ import cn from "classnames";
 
 type Props = {|
   +children: React.ChildrenArray<React.Element<typeof Tab>>,
-  +selectedTitle: string,
+  +selectedTab: number,
   +options: React.Node,
-  +stateCallback: (selectedTitle: string) => void,
+  +stateCallback: (selectedTab: id) => void,
 |};
 
 function TabbedHeader(props: Props): React.Node {
@@ -22,13 +22,13 @@ function TabbedHeader(props: Props): React.Node {
     <Card.Header className={classes}>
       <ul className="nav nav-tabs Tab_header_tabs">
         {tabs.map((tab, index) => {
-          const title = tab.props.title;
+          const {title, id} = tab.props
           return (
             <Nav.Item
               key={index}
               value={title}
-              onClick={() => stateCallback(title)}
-              active={title === props.selectedTitle}
+              onClick={() => stateCallback(id)}
+              active={id === props.selectedTab}
             />
           );
         })}
