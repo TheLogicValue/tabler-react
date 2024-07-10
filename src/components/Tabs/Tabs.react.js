@@ -1,51 +1,36 @@
 // @flow
+import React, { forwardRef, useImperativeHandle, useState } from "react"
+import TabbedContainer from "./TabbedContainer.react"
+import TabbedHeader from "./TabbedHeader.react"
+import cn from "classnames"
 
-import * as React from "react";
+import "./Tabs.css"
 
-import Tab from "./Tab.react";
-import TabbedContainer from "./TabbedContainer.react";
-import TabbedHeader from "./TabbedHeader.react";
-import cn from "classnames";
+const Tabs = forwardRef(({ children, options, className, modal, initialTab }, ref) => {
+  const [selectedTitle, setTitle] = useState(initialTab)
+  const classes = cn("card", className)
 
-import "./Tabs.css";
+  useImperativeHandle(ref, () => {
+    return {
+      activeTab: selectedTitle,
+    }
+  })
 
-type Props = {|
-  +initialTab: string,
-  +children: React.ChildrenArray<React.Element<typeof Tab>>,
-  +options: React.Node,
-  +className: string
-|};
-
-type State = {|
-  selectedTitle: string,
-|};
-
-class Tabs extends React.PureComponent<Props, State> {
-  state = {
-    selectedTitle: this.props.initialTab,
-  };
-
-  render(): React.Node {
-    const { children, options, className, modal } = this.props;
-    const { selectedTitle } = this.state;
-    const classes = cn("card", className);
-
-    return (
-      <div className={classes}>
-        <TabbedHeader
-          selectedTitle={selectedTitle}
-          modal={modal}
-          stateCallback={newTitle => this.setState({ selectedTitle: newTitle })}
-          options={options}
-        >
-          {children}
-        </TabbedHeader>
-        <TabbedContainer selectedTitle={selectedTitle}>
-          {children}
-        </TabbedContainer>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes}>
+      <TabbedHeader
+        selectedTitle={selectedTitle}
+        modal={modal}
+        stateCallback={newTitle => setTitle(newTitle)}
+        options={options}
+      >
+        {children}
+      </TabbedHeader>
+      <TabbedContainer selectedTitle={selectedTitle}>
+        {children}
+      </TabbedContainer>
+    </div>
+  )
+})
 
 export default Tabs;
