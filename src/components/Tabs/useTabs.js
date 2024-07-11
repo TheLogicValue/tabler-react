@@ -5,7 +5,7 @@ import TabbedHeader from "./TabbedHeader.react"
 import cn from "classnames"
 import "./Tabs.css"
 
-export default function Tabs2() {
+export default function useTabs() {
 
     const [selectedTitle, setTitle] = useState(null)
     const Tabss = ({ children, options, className, modal, initialTab }) => {
