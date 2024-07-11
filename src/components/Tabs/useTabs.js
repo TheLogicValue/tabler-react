@@ -8,7 +8,7 @@ import "./Tabs.css"
 export default function useTabs() {
 
     const [selectedTitle, setTitle] = useState(null)
-    const Tabss = ({ children, options, className, modal, initialTab }) => {
+    const Tabs = ({ children, options, className, modal, initialTab }) => {
         const classes = cn("card", className)
 
         return (
@@ -27,5 +27,5 @@ export default function useTabs() {
             </div>
         )
     }
-    return { Tabss, selectedTitle }
+    return { Tabs, selectedTitle }
 }
