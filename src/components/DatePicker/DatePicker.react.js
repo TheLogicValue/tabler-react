@@ -41,7 +41,10 @@ const DayPickerTLV = forwardRef((props, ref) => {
     });
 
     useImperativeHandle(ref, () => {
-        return parse(inputValue, 'dd/MM/y', new Date())
+        return { 
+            value: parse(inputValue, 'dd/MM/y', new Date()),
+            reset: () => setInputValue(new Date())
+        }
     })
 
     const closePopper = () => {
