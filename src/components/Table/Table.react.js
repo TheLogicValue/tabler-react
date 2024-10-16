@@ -42,9 +42,9 @@ type Props = {|
 function Table({
   className,
   children,
-  cards,
-  striped,
-  responsive,
+  cards = false,
+  striped = false,
+  responsive = false,
   highlightRowOnHover,
   hasOutline,
   verticalAlign,
@@ -101,12 +101,6 @@ function Table({
 
   return !responsive ? table : <div className="table-responsive">{table}</div>;
 }
-
-Table.defaultProps = {
-  cards: false,
-  striped: false,
-  responsive: false,
-};
 
 Table.Header = TableHeader;
 Table.Body = TableBody;
