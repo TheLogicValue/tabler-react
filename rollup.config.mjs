@@ -5,20 +5,16 @@ import url from "@rollup/plugin-url";
 import terser from "@rollup/plugin-terser";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import pkg from "./package.json" assert {
-  type: 'json',
-  // integrity: 'sha384-ABC123'
-};
 
-const config ={
+const config = {
   input: "src/index.js",
   output: [
     {
-      file: pkg.main,
+      file: "dist/index.js",
       format: "cjs",
     },
     {
-      file: pkg.module,
+      file: "dist/index.es.js",
       format: "es",
     },
   ],
@@ -31,10 +27,11 @@ const config ={
     terser(),
     babel({
       exclude: "node_modules/**",
+      plugins: ["@babel/plugin-transform-json-strings"]
     }),
     resolve(),
     commonjs(),
   ],
-}
+};
 
-export default config
+export default config;
