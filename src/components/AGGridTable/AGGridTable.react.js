@@ -1,5 +1,4 @@
-// @flow
-import React, { useCallback, useMemo, useRef, useState } from "react"
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
 import { AgGridReact } from 'ag-grid-react'
@@ -9,11 +8,15 @@ import Icon from "../Icon"
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
 
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import { ModuleRegistry } from "@ag-grid-community/core"
+ModuleRegistry.registerModules([ClientSideRowModelModule])
+
 export function OverlayLoading(text) {
     return `<span class="ag-overlay-loading-center">${text}</span>`
 }
 
-export default function AGGridTable(gridProps) {
+const AGGridTable = forwardRef((gridProps, ref) => {
 
     const {
         className,
@@ -108,6 +111,17 @@ export default function AGGridTable(gridProps) {
         topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
     }
 
+    useImperativeHandle(ref, () => {
+        return { 
+            getDisplayedRowAtIndex(row) {
+                gridRef.current.api.getDisplayedRowAtIndex(row)
+            },
+            flashCells(item) {
+                gridRef.current.api.flashCells(item)
+            }
+        }
+    }, [])
+
     return (
         <Grid.Row>
             <Grid.Col width={12}>
@@ -191,4 +205,6 @@ export default function AGGridTable(gridProps) {
             </Grid.Col>
         </Grid.Row>
     )
-}
+})
+
+export default AGGridTable
