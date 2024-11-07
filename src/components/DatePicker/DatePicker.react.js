@@ -54,6 +54,7 @@ const DayPickerTLV = forwardRef((props, ref) => {
 
     const handleInputChange = (e) => {
         const { value } = e.currentTarget;
+
         setInputValue(value);
         const date = parse(value, 'dd/MM/y', new Date());
         if (isValid(date)) {
@@ -118,6 +119,7 @@ const DayPickerTLV = forwardRef((props, ref) => {
                             {...props}
                             initialFocus={isPopperOpen}
                             mode="single"
+                            timeZone="+01:00"
                             defaultMonth={selected == null ? dateIniData : selected}
                             selected={selected}
                             onSelect={handleDaySelect}
