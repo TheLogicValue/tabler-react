@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactECharts from 'echarts-for-react'
+import React from "react";
+import ReactECharts from "echarts-for-react";
 
-export default function LineChart({
+export default function LineChartTabler({
     lines,
     height,
     selectedOptions,
@@ -14,43 +14,59 @@ export default function LineChart({
     complete = false,
     name = "Export",
     title = "",
-    download = false
+    top = null,
+    right = null,
+    left = null,
+    bottom = null,
+    download = false,
+    onExpand = null,
 }) {
     const option = {
         tooltip: {
             confine: true,
-            trigger: 'axis',
+            trigger: "axis",
             axisPointer: { animation: false },
-            formatter: (item) => tooltipFormatter(item)
+            formatter: (item) => tooltipFormatter(item),
         },
         toolbox: {
+            itemSize: onExpand != null ? 8 : 15,
             feature: {
-                saveAsImage: { name: name, title: title, show: download }
-            }
+                saveAsImage: { name: name, title: title, show: download },
+                myTool2: {
+                    show: onExpand != null,
+                    title: "",
+                    icon: "path://M15,3 L21,3 L21,9 M9,21 L3,21 L3,15 M21,3 L14,10 M3,21 L10,14",
+                    onclick: onExpand,
+                },
+            },
         },
         legend: {
             data: selectedOptions,
             selected: getLegend,
             show: complete,
             bottom: "0rem",
-            symbol: null
+            symbol: null,
         },
         xAxis: {
-            type: 'category',
+            type: "category",
             boundaryGap: false,
             show: complete,
             data: xAxisData,
             axisLabel: { rotate: 10, verticalAlign: "top", fontSize: 9 },
         },
         grid: {
-            top: download == true ? 30 : 10,
-            bottom: complete == true ? 70 : 0,
-            left: complete == true ? 60 : 0,
-            right: complete == true ? 60 : 0,
+            // borderWidth: 1.5,
+            // borderColor: "rgba(109, 13, 13, 1)",
+            // backgroundColor: "rgba(190, 56, 56, 1)",
+            // show: true,
+            top: top || (download == true ? 30 : 10),
+            bottom: bottom || (complete == true ? 70 : 0),
+            left: left || (complete == true ? 60 : 0),
+            right: right || (complete == true ? 60 : 0),
         },
         yAxis: {
             show: complete,
-            type: 'value',
+            type: "value",
             splitNumber: 4,
             axisPointer: { snap: true },
             minorSplitLine: { show: true },
@@ -59,18 +75,24 @@ export default function LineChart({
             max: (value) => yAxisMinMax(value, "max"),
             min: (value) => yAxisMinMax(value, "min"),
         },
-        series: lines?.map(item => ({
+        series: lines?.map((item) => ({
             data: item.data,
             color: item.color,
             name: item.name,
-            type: 'line',
+            type: "line",
             smooth: false,
             showSymbol: true,
-            sampling: 'lttb',
+            sampling: "lttb",
             animation: false,
             lineStyle: { width: 2, animation: false, type: "solid" },
-        }))
-    }
+        })),
+    };
 
-    return <ReactECharts className={'charts-complete-' + complete} option={option} style={{ height: height }} />
+    return (
+        <ReactECharts
+            className={"charts-complete-" + complete}
+            option={option}
+            style={{ height: height }}
+        />
+    );
 }
