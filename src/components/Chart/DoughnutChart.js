@@ -30,7 +30,7 @@ export default function DoughnutChart({
                 type: 'pie',
                 radius: ['30%', '70%'],
                 label: {
-                    show: false,
+                    show: true,
                     formatter: '{c}',
                     position: 'inside'
                 },
