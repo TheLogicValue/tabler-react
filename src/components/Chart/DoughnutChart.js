@@ -2,11 +2,11 @@ import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
 export default function DoughnutChart({
-    title = "",   
+    title = "",
     height = "18.75rem",
     paddingBottom = null,
     colors,
-    complete,   
+    complete,
     //series
     series,
     seriesDataName,
@@ -16,7 +16,7 @@ export default function DoughnutChart({
     download = false,
     //Methods    
     tooltipFormatter
-}) { 
+}) {
 
     const option = {
         title: { text: title },
@@ -24,12 +24,17 @@ export default function DoughnutChart({
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { bottom: 2 }, 
+        legend: { bottom: 2 },
         series: [
             {
                 type: 'pie',
                 radius: ['30%', '70%'],
-                tooltip: {                    
+                label: {
+                    show: false,
+                    formatter: '{c}',
+                    position: 'inside'
+                },
+                tooltip: {
                     formatter: (item) => tooltipFormatter(item),
                 },
                 data: series?.map((item, i) => {
