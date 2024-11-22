@@ -24,13 +24,12 @@ export default function DoughnutChart({
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { bottom: 2 },     
-        radius: ['30%', '70%'],
+        legend: { bottom: 2 }, 
         series: [
             {
                 type: 'pie',
-                tooltip: {
-                    trigger: 'item',
+                radius: ['30%', '70%'],
+                tooltip: {                    
                     formatter: (item) => tooltipFormatter(item),
                 },
                 data: series?.map((item, i) => {
