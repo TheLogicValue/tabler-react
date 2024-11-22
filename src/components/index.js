@@ -53,5 +53,5 @@ export { Modal, ModalDoc, ModalSplash, useModal } from "./Modal";
 export { BarChartLoader, PieChartLoader, TableLoader } from "./ContentLoader";
 export { Spinner, Success, Error } from './IconAnimate';
 export { default as NavBarMenu } from './NavBar';
-export { LineChart, BarChart, RadarChart } from './Chart';
+export { LineChart, BarChart, RadarChart, DoughnutChart} from './Chart';
 export { SearchBar, useSearchBar } from './SearchBar';
