@@ -6,6 +6,7 @@ export default function DoughnutChart({
     height = "18.75rem",
     paddingBottom = null,
     legend = true,
+    legendFormatter = '{d}%',
     colors,
     complete,
     //series
@@ -32,7 +33,7 @@ export default function DoughnutChart({
                 radius: ['30%', '70%'],
                 label: {
                     show: true,
-                    formatter: '{c}',
+                    formatter: legendFormatter,
                     position: 'inside'
                 },
                 tooltip: {

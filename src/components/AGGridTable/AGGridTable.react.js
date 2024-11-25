@@ -37,6 +37,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         dataRow = [],
         dataTotal = [],
         dataColumn = [],
+        pinnedTopRowData=[],
         suppressHorizontalScroll = true,
         alwaysShowHorizontalScroll= false,
         alwaysShowVerticalScroll= false,
@@ -53,7 +54,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         suppressRowClickSelection = false,
         listBtn = false,
         deselectAllBtn = false,
-        deselectAllOptions = { text: "Clear", hidden: false }
+        deselectAllOptions = { text: "Clear", hidden: false }        
     } = gridProps
 
     const gridRef = useRef()
@@ -149,6 +150,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             columnDefs={columnDefs}
                             rowData={dataRow}
                             rowHeight={rowHeight}
+                            pinnedTopRowData={pinnedTopRowData}
                             overlayLoadingTemplate={overlayLoadingTemplate}
                             onGridReady={onGrid ?? onGridReady}
                             onFirstDataRendered={onFirstDataRendered}
