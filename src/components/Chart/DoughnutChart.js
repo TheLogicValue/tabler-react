@@ -5,6 +5,7 @@ export default function DoughnutChart({
     title = "",
     height = "18.75rem",
     paddingBottom = null,
+    legend = true,
     colors,
     complete,
     //series
@@ -24,7 +25,7 @@ export default function DoughnutChart({
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { bottom: 2 },
+        legend: { show: legend, bottom: "0rem", symbol: null },
         series: [
             {
                 type: 'pie',
