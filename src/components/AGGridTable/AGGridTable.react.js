@@ -97,6 +97,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     }, [])
 
     const deselectAll = useCallback(() => {
+        setFilter()
         gridRef.current.api.deselectAll()
     }, [gridRef])
 
