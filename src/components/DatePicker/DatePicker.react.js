@@ -16,12 +16,12 @@ const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni, lastDate, today } = props
+    const { date, dateIni, lastDate, today, previousDay = null } = props
 
     const dateIniData = useMemo(() => {
         const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
         if (!today) {
-            valueDate.setDate(valueDate.getDate() - 1)
+            valueDate.setDate(valueDate.getDate() - previousDay ?? 1)
         }
 
         return valueDate
