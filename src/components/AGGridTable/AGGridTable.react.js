@@ -98,6 +98,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
     const deselectAll = useCallback(() => {
         setFilter()
+        document.getElementById("searcher").value = ""
         gridRef.current.api.deselectAll()
     }, [gridRef])
 
