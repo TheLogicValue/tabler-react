@@ -16,7 +16,7 @@ const fromMonth = new Date(currentYear - 5, 0);
 const toMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni, lastDate, today, previousDay = null, isHistoric = true } = props
+    const { date, dateIni, lastDate, today, previousDay = null, isHistoric = true, disabled = false } = props
 
     const dateIniData = useMemo(() => {
         const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
@@ -123,8 +123,9 @@ const DayPickerTLV = forwardRef((props, ref) => {
                             defaultMonth={selected == null ? dateIniData : selected}
                             selected={selected}
                             onSelect={handleDaySelect}
-                            disabled={[
+                            disabled={disabled || [
                                 {
+                                    before: !isHistoric && lastDate,
                                     after: isHistoric && (lastDate ?? dateIniData),
                                 }
                             ]}
