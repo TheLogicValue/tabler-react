@@ -8,13 +8,14 @@ const NavBarItem = ({
     LinkComponent,
     menuItem,
     value,
+    rootIndex,
     children,
     onClick = () => null
 }) => {
     const route = to?.substring(1).split("/")
     const location = useLocation()
     const classes = cn("nav-link", { "nav-link-item": menuItem }, { 
-        "active": (location.pathname.includes(route[0]) && route[0].length > 0) || (location.pathname.at(-1) == "/" && route[0].length == 0)
+        "active": (location.pathname.includes(route[rootIndex]) && route[rootIndex].length > 0) || (location.pathname.at(-1) == "/" && route[0].length == 0)
     }, className)
 
     if (LinkComponent) return <NavLink to={to} className={classes} end>{value || children}</NavLink>
