@@ -1,24 +1,32 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
-import { AgGridReact } from 'ag-grid-react'
 import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
+import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
+// import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+// import { ModuleRegistry } from "@ag-grid-community/core"
+// ModuleRegistry.registerModules([ClientSideRowModelModule])
+import { ModuleRegistry, ClientSideRowModelModule } from "ag-grid-community";
+import { AllEnterpriseModule, LicenseManager } from "ag-grid-enterprise";
 
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { ModuleRegistry } from "@ag-grid-community/core"
-ModuleRegistry.registerModules([ClientSideRowModelModule])
+export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
-export function OverlayLoading(text) {
-    return `<span class="ag-overlay-loading-center">${text}</span>`
+function configureAgGrid(licenseKey) {
+    if (licenseKey !== null || licenseKey !== undefined || licenseKey !== "") {
+        ModuleRegistry.registerModules([AllEnterpriseModule])
+        LicenseManager.setLicenseKey(licenseKey)
+    }
+    else ModuleRegistry.registerModules([ClientSideRowModelModule])
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
 
     const {
+        licenseKey,
         className,
         panelPagination,
         suppressPaginationPanel = false,
@@ -37,10 +45,10 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         dataRow = [],
         dataTotal = [],
         dataColumn = [],
-        pinnedTopRowData=[],
+        pinnedTopRowData = [],
         suppressHorizontalScroll = true,
-        alwaysShowHorizontalScroll= false,
-        alwaysShowVerticalScroll= false,
+        alwaysShowHorizontalScroll = false,
+        alwaysShowVerticalScroll = false,
         autosize = true,
         resizable = true,
         sortable = true,
@@ -54,8 +62,10 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         suppressRowClickSelection = false,
         listBtn = false,
         deselectAllBtn = false,
-        deselectAllOptions = { text: "Clear", hidden: false }        
+        deselectAllOptions = { text: "Clear", hidden: false }
     } = gridProps
+
+    configureAgGrid(licenseKey)
 
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
@@ -83,7 +93,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                 }
             })
         }
-        if(minWidth != null) columnDef["minWidth"] = minWidth
+        if (minWidth != null) columnDef["minWidth"] = minWidth
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
@@ -115,7 +125,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     }
 
     useImperativeHandle(ref, () => {
-        return { 
+        return {
             getDisplayedRowAtIndex(row) {
                 gridRef.current.api.getDisplayedRowAtIndex(row)
             },
@@ -162,7 +172,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             suppressRowTransform={suppressRowTransform}
                             domLayout={'autoHeight'}
                             quickFilterText={filter}
-                            localeText={language == null ? es : language}                            
+                            localeText={language == null ? es : language}
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                             onRowClicked={(e) => { onRowClick(e.data) }}
                             onCellClicked={(e) => { onCellClick(e) }}

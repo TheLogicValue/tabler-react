@@ -19,10 +19,9 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
   },
   "dependencies": {
-    "@ag-grid-community/core": "^31.0.3",
-    "@ag-grid-community/client-side-row-model": "^31.0.3",
-    "ag-grid-community": "^31.0.3",
-    "ag-grid-react": "^31.0.3",
+    "ag-grid-community": "^33.1.1",
+    "ag-grid-enterprise": "^33.1.1",
+    "ag-grid-react": "^33.1.1",
     "classnames": "^2.5.1",
     "date-fns": "^2.30.0",
     "echarts": "^5.5.1",
