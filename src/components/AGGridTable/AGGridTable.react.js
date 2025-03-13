@@ -7,27 +7,27 @@ import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
-// import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 // import { ModuleRegistry } from "@ag-grid-community/core"
 // ModuleRegistry.registerModules([ClientSideRowModelModule])
-import { ModuleRegistry, ClientSideRowModelModule } from "ag-grid-community";
+import { ModuleRegistry } from "ag-grid-community";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { AllEnterpriseModule, LicenseManager } from "ag-grid-enterprise";
 
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
     console.log(licenseKey)
-    if (licenseKey !== null && licenseKey !== undefined && licenseKey !== "") {
+    if (licenseKey !== null) {
         ModuleRegistry.registerModules([AllEnterpriseModule])
         LicenseManager.setLicenseKey(licenseKey)
     }
-    else ModuleRegistry.registerModules([ClientSideRowModelModule])
+    ModuleRegistry.registerModules([ClientSideRowModelModule])
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
 
     const {
-        licenseKey,
+        licenseKey = null,
         className,
         panelPagination,
         suppressPaginationPanel = false,
