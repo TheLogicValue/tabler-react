@@ -10,7 +10,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css'
 // import { ModuleRegistry } from "@ag-grid-community/core"
 // ModuleRegistry.registerModules([ClientSideRowModelModule])
 import { ModuleRegistry } from "ag-grid-community";
-import { ClientSideRowModelModule } from "ag-grid-community/client-side-row-model";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { AllEnterpriseModule, LicenseManager } from "ag-grid-enterprise";
 
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
