@@ -16,6 +16,7 @@ import { AllEnterpriseModule, LicenseManager } from "ag-grid-enterprise";
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
+    console.log(licenseKey)
     if (licenseKey !== null && licenseKey !== undefined && licenseKey !== "") {
         ModuleRegistry.registerModules([AllEnterpriseModule])
         LicenseManager.setLicenseKey(licenseKey)
