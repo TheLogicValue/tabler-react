@@ -57,6 +57,7 @@ function FormTextarea(props: Props): React.Node {
     onPointerEnter,
     onPointerLeave,
     label,
+    maxlength,
   } = props;
   const classes = cn(
     "form-control",
@@ -88,6 +89,7 @@ function FormTextarea(props: Props): React.Node {
         onMouseLeave={onMouseLeave}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
+        maxlength={maxlength}
       />
       {feedback && <span className="invalid-feedback">{feedback}</span>}
     </React.Fragment>
