@@ -31,6 +31,7 @@ type Props = {|
   +rows?: number,
   +children?: string,
   +label?: string,
+  +maxlength?: number
 |};
 
 function FormTextarea(props: Props): React.Node {
