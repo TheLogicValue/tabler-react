@@ -6,7 +6,7 @@ export default function PieChart({
     height = "18.75rem",
     paddingBottom = null,
     legend = true,
-    legendformatter = '{c}',   
+    legendformatter = '{c}',
     colors,
     complete,
     //series
@@ -30,12 +30,7 @@ export default function PieChart({
         series: [
             {
                 type: 'pie',
-                radius: ['50%'],
-                label: {
-                    show: true,
-                    formatter: legendformatter,
-                    position: 'inside'
-                },
+                radius: ['50%'],               
                 tooltip: {
                     formatter: (item) => tooltipFormatter(item),
                 },
