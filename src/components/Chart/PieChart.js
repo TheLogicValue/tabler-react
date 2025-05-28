@@ -46,11 +46,7 @@ export default function PieChart({
                 labelLine: {
                     show: true,
                     length: 20,
-                    length2: 10,
-                    lineStyle: {
-                        color: '#000',
-                        width: 1
-                    }
+                    length2: 10                   
                 },
                 tooltip: {
                     formatter: (item) => tooltipFormatter(item),
