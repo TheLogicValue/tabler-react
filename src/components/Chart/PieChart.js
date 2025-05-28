@@ -30,7 +30,13 @@ export default function PieChart({
         series: [
             {
                 type: 'pie',
-                radius: ['50%'],               
+                radius: ['50%'],
+                label: {
+                    show: true,                    
+                },
+                labelLine: {
+                    show: true
+                },
                 tooltip: {
                     formatter: (item) => tooltipFormatter(item),
                 },
