@@ -17,7 +17,8 @@ export default function PieChart({
     downloadTitle = "",
     download = false,
     //Methods    
-    tooltipFormatter
+    tooltipFormatter,
+    center = ['50%', '50%'],
 }) {
 
     const option = {
@@ -46,8 +47,9 @@ export default function PieChart({
                 labelLine: {
                     show: true,
                     length: 20,
-                    length2: 10                   
+                    length2: 10
                 },
+                center: center,
                 tooltip: {
                     formatter: (item) => tooltipFormatter(item),
                 },
