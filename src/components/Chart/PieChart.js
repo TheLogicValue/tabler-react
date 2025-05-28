@@ -24,29 +24,42 @@ export default function PieChart({
         title: { text: title },
         tooltip: { trigger: 'item' },
         toolbox: {
-            feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
+            feature: {
+                saveAsImage: {
+                    name: downloadName,
+                    title: downloadTitle,
+                    show: download
+                }
+            }
         },
-        legend: { show: legend, bottom: "0rem", symbol: null },
+        legend: {
+            show: legend,
+            bottom: "0rem",
+        },
         series: [
             {
                 type: 'pie',
-                radius: ['50%'],
+                radius: '50%',
                 label: {
-                    show: true,                    
+                    show: true
                 },
                 labelLine: {
-                    show: true
+                    show: true,
+                    length: 20,
+                    length2: 10,
+                    lineStyle: {
+                        color: '#000',
+                        width: 1
+                    }
                 },
                 tooltip: {
                     formatter: (item) => tooltipFormatter(item),
                 },
-                data: series?.map((item, i) => {
-                    return {
-                        name: seriesDataName[i],
-                        value: item,
-                        itemStyle: { color: colors[i] }
-                    }
-                })
+                data: series?.map((item, i) => ({
+                    name: seriesDataName[i],
+                    value: item,
+                    itemStyle: { color: colors[i] }
+                }))
             }
         ]
     }
