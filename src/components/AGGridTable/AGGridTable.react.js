@@ -21,6 +21,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     const {
         className,
         panelPagination,
+        autoHeaderTooltip = false,
         suppressPaginationPanel = false,
         onGrid,
         overlayLoadingTemplate,
@@ -61,10 +62,11 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
     const columnDefs = useMemo(() => dataColumn?.map(column => {
-        const { header, key, subItems, item, ...props } = column
+        const { header, headerTooltip, key, subItems, item, ...props } = column
         const columnDef = {
             ...props,
             headerName: header,
+            headerTooltip: headerTooltip || (autoHeaderTooltip && header),
             field: item,
             colId: subItems == null ? key ?? item : null,
             resizable: resizable,
