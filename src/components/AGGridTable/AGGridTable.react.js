@@ -83,12 +83,12 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     // key: key ?? item,
                 }
                 
-                element["headerTooltip"] = subItem?.headerTooltip.trim() || header || subItem?.name
+                element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
         }
 
-        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip.trim() || header || name
+        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if(minWidth != null) columnDef["minWidth"] = minWidth
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
