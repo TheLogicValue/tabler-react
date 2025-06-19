@@ -66,7 +66,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         const columnDef = {
             ...props,
             headerName: header,
-            headerTooltip: headerTooltip || (autoHeaderTooltip && header),
             field: item,
             colId: subItems == null ? key ?? item : null,
             resizable: resizable,
@@ -85,6 +84,8 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                 }
             })
         }
+
+        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip || header
         if(minWidth != null) columnDef["minWidth"] = minWidth
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
