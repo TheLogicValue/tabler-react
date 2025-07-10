@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import cn from "classnames";
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 
 import type {
   FocusEvents,
