@@ -100,23 +100,23 @@ function FormSelectReact(props: Props): React.Node {
   );
 
   const CustomValueContainer = ({ children, ...props }) => {
-    const selectedCount = props.getValue().length;
 
     if(!isMulti) return <components.ValueContainer {...props}>
             {props.getValue()}
             {children[1]} {/* Esto mantiene el input visible */}
         </components.ValueContainer>
-    else return (
-        <components.ValueContainer {...props}>
-            {" "}
-            {selectedCount > 0
-                ? `${selectedCount} ${name} seleccionadas`
-                : props.selectProps.placeholder}
-            {children[1]} {/* Esto mantiene el input visible */}
-            {" "}
-        </components.ValueContainer>
-    );
-  };
+    else{
+      const selectedCount = props.getValue().length;
+      return <components.ValueContainer {...props}>
+        {" "}
+        {selectedCount > 0
+            ? `${selectedCount} ${name} seleccionadas`
+            : props.selectProps.placeholder}
+        {children[1]} {/* Esto mantiene el input visible */}
+        {" "}
+      </components.ValueContainer>
+    }
+  }
 
   const customStyles = {
       option: (provided, state) => ({
