@@ -4,42 +4,7 @@ import React, {useState} from "react";
 import cn from "classnames";
 import Select, { components } from 'react-select';
 
-import type {
-  FocusEvents,
-  FormEvents,
-  MouseEvents,
-  PointerEvents,
-} from "../../";
-
-type Props = {|
-  ...FocusEvents,
-  ...FormEvents,
-  ...MouseEvents,
-  ...PointerEvents,
-  +children?: React.Node,
-  +className?: string,
-  +valid?: boolean,
-  +tick?: boolean,
-  +invalid?: boolean,
-  +cross?: boolean,
-  +feedback?: string,
-  +error?: string,
-  /**
-   * Wraps the select in Form.Group and adds a label
-   */
-  +label?: string,
-  +name?: string,
-  +value?: string | number,
-  +disabledValue?: string | number,
-  +defaultValue?: string | number,
-  +disabled?: boolean,
-  +clearable?: boolean,
-  +readOnly?: boolean,
-  +multiple?: boolean,
-  
-|};
-
-function FormSelectReact(props: Props): React.Node {
+function FormSelectReact(props) {
   const {
     className,
     selectRef,
@@ -99,25 +64,43 @@ function FormSelectReact(props: Props): React.Node {
     className
   );
 
-  const CustomValueContainer = ({ children, ...props }) => {
+  const CustomValueContainer = ({
+    children,
+    ...props
+  }) => {
+    let [values, input] = children;
 
-    if(!isMulti) return <components.ValueContainer {...props}>
-            {props.getValue()}
-            {children[1]} {/* Esto mantiene el input visible */}
-        </components.ValueContainer>
-    else{
-      const selectedCount = props.getValue().length;
-      return <components.ValueContainer {...props}>
-        {" "}
-        {selectedCount > 0
-            ? `${selectedCount} ${name} seleccionadas`
-            : props.selectProps.placeholder}
-        {children[1]} {/* Esto mantiene el input visible */}
-        {" "}
-      </components.ValueContainer>
+    if (Array.isArray(values)) {
+      const val = (i) => values[i].props.children;
+      const { length } = values;
+
+      switch (length) {
+        case 1:
+          values = `${val(0)} selecionada`;
+          break;
+        case 2:
+          values = `${val(0)} y ${val(1)} selecionada`;
+          break;
+        case 3:
+          values = `${val(0)}, ${val(1)} y ${val(2)} selecionada`;
+          break;
+        default:
+          const plural = values.length === 3 + 1 ? "" : "s";
+          const otherCount = length - 3;
+          values = `${val(0)}, ${val(1)}, ${val(
+            2
+          )} y ${otherCount} otra${plural} selecionada${plural}`;
+          break;
+      }
     }
-  }
 
+    return (
+      <components.ValueContainer {...props}>
+        {values}
+        {input}
+      </components.ValueContainer>
+    )
+  }
   const customStyles = {
       option: (provided, state) => ({
         ...provided,
