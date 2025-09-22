@@ -21,6 +21,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     const {
         className,
         panelPagination,
+        domLayout='autoHeight',
         autoHeaderTooltip = false,
         suppressPaginationPanel = false,
         onGrid,
@@ -166,7 +167,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             rowMultiSelectWithClick={rowMultiSelectWithClick}
                             suppressRowClickSelection={suppressRowClickSelection}
                             suppressRowTransform={suppressRowTransform}
-                            domLayout={'autoHeight'}
+                            domLayout={domLayout}
                             quickFilterText={filter}
                             localeText={language == null ? es : language}                            
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
