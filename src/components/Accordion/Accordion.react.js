@@ -1,10 +1,8 @@
 import React, {  useState  } from 'react';
 import "./Accordion.css";
 
-export default function Accordion(props) {    
-    const accordionBody = props.children;    
-    const accordionButton = props.button;
-    const [collapse, setCollapse] = useState(true);
+export default function Accordion({children, accordionButton, collapse = true}) {    
+    const [collapse, setCollapse] = useState(collapse);
 
     return (
         <div className="accordion-item">
@@ -12,7 +10,7 @@ export default function Accordion(props) {
                 <button type="button" className={collapse ? "accordion-button" : "accordion-button collapseBtn"} onClick={() => setCollapse((collapse) ? false : true)}>{accordionButton}</button>
             </h2>
             <div className={collapse ? "accordion-collapse collapse" : "accordion-collapse collapse show" }>
-                <div className="accordion-body">{accordionBody}</div>
+                <div className="accordion-body">{children}</div>
             </div>
         </div>
     )
