@@ -1,8 +1,8 @@
 import React, {  useState  } from 'react';
 import "./Accordion.css";
 
-export default function Accordion({children, accordionButton, collapse = true}) {    
-    const [collapse, setCollapse] = useState(collapse);
+export default function Accordion({children, accordionButton, collapseDefault = true}) {    
+    const [collapse, setCollapse] = useState(collapseDefault);
 
     return (
         <div className="accordion-item">
