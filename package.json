@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^31.3.4",
+    "@ag-grid-enterprise/multi-filter": "^31.3.4",
+    "@ag-grid-enterprise/set-filter": "^31.3.4",
     "ag-grid-community": "^31.3.4",
     "ag-grid-enterprise": "^31.3.4",
     "ag-grid-react": "^31.3.4",
