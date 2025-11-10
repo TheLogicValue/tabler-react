@@ -33,6 +33,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         licenseKey = null,
         className,
         panelPagination,
+        autoHeaderTooltip = false,
         suppressPaginationPanel = false,
         onGrid,
         overlayLoadingTemplate,
@@ -69,13 +70,11 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         deselectAllOptions = { text: "Clear", hidden: false }
     } = gridProps
 
-    configureAgGrid(licenseKey)
-
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
     const columnDefs = useMemo(() => dataColumn?.map(column => {
-        const { header, key, subItems, item, ...props } = column
+        const { header, name, headerTooltip, key, subItems, item, ...props } = column
         const columnDef = {
             ...props,
             headerName: header,
@@ -88,16 +87,21 @@ const AGGridTable = forwardRef((gridProps, ref) => {
             // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
-                return {
+                const element = {
                     ...props,
                     headerName: header,
                     field: item,
                     colId: key ?? item,
                     // key: key ?? item,
                 }
+                
+                element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
+                return element
             })
         }
-        if (minWidth != null) columnDef["minWidth"] = minWidth
+
+        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
+        if(minWidth != null) columnDef["minWidth"] = minWidth
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
