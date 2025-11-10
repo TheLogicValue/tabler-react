@@ -15,7 +15,6 @@ import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter';
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
-    console.log(licenseKey)
     if (licenseKey !== null) {
         LicenseManager.setLicenseKey(licenseKey)
         //Añadir los modulos necesarios de pago.
@@ -23,7 +22,7 @@ function configureAgGrid(licenseKey) {
             MultiFilterModule,
             SetFilterModule
         )
-        console.log(licenseKey, modules)
+        ModuleRegistry.registerModules(modules);
     }
     ModuleRegistry.registerModules([ClientSideRowModelModule])
 }
