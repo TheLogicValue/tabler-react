@@ -9,7 +9,7 @@ import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
 // import { ModuleRegistry } from "@ag-grid-community/core"
 // ModuleRegistry.registerModules([ClientSideRowModelModule])
-import { AllEnterpriseModule } from "ag-grid-enterprise";
+// import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { ModuleRegistry } from "ag-grid-community";
 import { LicenseManager } from 'ag-grid-enterprise';
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
@@ -19,7 +19,7 @@ export function OverlayLoading(text) { return `<span class="ag-overlay-loading-c
 function configureAgGrid(licenseKey) {
     console.log(licenseKey)
     if (licenseKey !== null) {
-        ModuleRegistry.registerModules([AllEnterpriseModule])
+        // ModuleRegistry.registerModules([AllEnterpriseModule])
         LicenseManager.setLicenseKey(licenseKey)
     }
     ModuleRegistry.registerModules([ClientSideRowModelModule])
