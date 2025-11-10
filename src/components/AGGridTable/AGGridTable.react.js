@@ -15,16 +15,17 @@ import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter';
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
+    const modules = [ClientSideRowModelModule]
     if (licenseKey !== null) {
         LicenseManager.setLicenseKey(licenseKey)
-        //Añadir los modulos necesarios de pago.
+        //Añadir los modulos necesarios de enterprise
         modules.push(
             MultiFilterModule,
             SetFilterModule
         )
         ModuleRegistry.registerModules(modules);
     }
-    ModuleRegistry.registerModules([ClientSideRowModelModule])
+    ModuleRegistry.registerModules([modules])
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
