@@ -10,7 +10,8 @@ import 'ag-grid-community/styles/ag-theme-balham.css'
 import { ModuleRegistry } from "ag-grid-community";
 import { LicenseManager } from 'ag-grid-enterprise';
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { SetFilterModule, MultiFilterModule } from '@ag-grid-enterprise';
+import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
+import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter';
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
