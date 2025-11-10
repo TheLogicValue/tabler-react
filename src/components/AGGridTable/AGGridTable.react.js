@@ -71,6 +71,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         deselectAllOptions = { text: "Clear", hidden: false }
     } = gridProps
 
+    configureAgGrid(licenseKey) //Revisar licencia
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
