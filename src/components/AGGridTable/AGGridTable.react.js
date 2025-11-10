@@ -7,20 +7,20 @@ import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
-// import { ModuleRegistry } from "@ag-grid-community/core"
-// ModuleRegistry.registerModules([ClientSideRowModelModule])
-// import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { ModuleRegistry } from "ag-grid-community";
 import { LicenseManager } from 'ag-grid-enterprise';
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-
+import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter';
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
     console.log(licenseKey)
-    if (licenseKey !== null) {
-        // ModuleRegistry.registerModules([AllEnterpriseModule])
-        LicenseManager.setLicenseKey(licenseKey)
+    if (licenseKey !== null) {        
+        LicenseManager.setLicenseKey(licenseKey)        
+        //Añadir los modulos necesarios de pago.
+        modules.push(
+            MultiFilterModule
+        )
     }
     ModuleRegistry.registerModules([ClientSideRowModelModule])
 }
