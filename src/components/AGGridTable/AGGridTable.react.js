@@ -16,13 +16,14 @@ export function OverlayLoading(text) { return `<span class="ag-overlay-loading-c
 
 function configureAgGrid(licenseKey) {
     console.log(licenseKey)
-    if (licenseKey !== null) {        
-        LicenseManager.setLicenseKey(licenseKey)        
+    if (licenseKey !== null) {
+        LicenseManager.setLicenseKey(licenseKey)
         //Añadir los modulos necesarios de pago.
         modules.push(
             MultiFilterModule,
             SetFilterModule
         )
+        console.log(licenseKey, modules)
     }
     ModuleRegistry.registerModules([ClientSideRowModelModule])
 }
@@ -94,14 +95,14 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     colId: key ?? item,
                     // key: key ?? item,
                 }
-                
+
                 element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
         }
 
-        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
-        if(minWidth != null) columnDef["minWidth"] = minWidth
+        if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
+        if (minWidth != null) columnDef["minWidth"] = minWidth
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
