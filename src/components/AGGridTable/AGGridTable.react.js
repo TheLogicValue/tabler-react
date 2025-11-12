@@ -149,6 +149,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     </div> : null}
                     <div style={{ flex: '1 1 auto', height: '100%' }} >
                         <AgGridReact
+                            columnDefs={columnDefs}
                             {...gridProps}
                             ref={gridRef}
                             suppressPaginationPanel={suppressPaginationPanel}
@@ -156,7 +157,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             suppressHorizontalScroll={suppressHorizontalScroll}
                             alwaysShowHorizontalScroll={alwaysShowHorizontalScroll}
                             alwaysShowVerticalScroll={alwaysShowVerticalScroll}
-                            columnDefs={columnDefs}
                             rowData={dataRow}
                             rowHeight={rowHeight}
                             pinnedTopRowData={pinnedTopRowData}
