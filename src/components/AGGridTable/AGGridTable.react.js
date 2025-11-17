@@ -77,6 +77,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
+
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, name, headerTooltip, key, subItems, item, ...props } = column
         const columnDef = {
@@ -107,12 +108,13 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
 
-        if (filter === "set") {
-            columnDef.filterParams = {
-                ...columnDef.filterParams,
-                cellRenderer: IconSetFilterRenderer
-            }
+        if (column.filter === "set" || column.filter === "agSetColumnFilter") {
+        columnDef.filter = "agSetColumnFilter"
+        columnDef.filterParams = {
+            ...columnDef.filterParams,
+            cellRenderer: IconSetFilterRenderer
         }
+    }
 
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
