@@ -30,6 +30,8 @@ function configureAgGrid(licenseKey) {
 
 const AGGridTable = forwardRef((gridProps, ref) => {
 
+    console.log("🟢 Usando AGGridTable para modificar el filtro V1 "); 
+
     const {
         licenseKey = null,
         className,
