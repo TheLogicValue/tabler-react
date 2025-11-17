@@ -108,11 +108,19 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
 
-        if (column.filter === "set" || column.filter === "agSetColumnFilter") {
-            columnDef.filter = "agSetColumnFilter"
-            columnDef.filterParams = {
-                ...columnDef.filterParams,
-                cellRendererFramework: IconSetFilterRenderer
+        if (item.filter === "agSetColumnFilter") {
+            item.filterParams = {
+                ...item.filterParams,
+                cellRendererFramework: (props) => {
+                    if (props.value === undefined) return null; 
+                    const isSelected = props.api.getFilterInstance(props.colDef.field)?.getModel()?.values?.includes(props.value);
+                    return (
+                        <span style={{ display: "flex", alignItems: "center" }}>
+                            <input type="checkbox" readOnly checked={isSelected} style={{ marginRight: "4px" }} />
+                            {props.value}
+                        </span>
+                    )
+                }
             }
         }
 
