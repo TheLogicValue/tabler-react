@@ -30,7 +30,7 @@ function configureAgGrid(licenseKey) {
 
 const AGGridTable = forwardRef((gridProps, ref) => {
 
-    console.log("🟢 Usando AGGridTable para modificar el filtro V1 "); 
+    console.log("Usando AGGridTable para modificar el filtro V1 "); 
 
     const {
         licenseKey = null,
@@ -106,6 +106,14 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
+
+        if (filter === "set") {
+            columnDef.filterParams = {
+                ...columnDef.filterParams,
+                cellRenderer: IconSetFilterRenderer
+            }
+        }
+
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
