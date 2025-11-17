@@ -135,6 +135,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     }
 
    const IconSetFilterRenderer = (params) => {
+        
+    console.log(`Usando IconSetFilterRenderer en V1`);
+
     const value = params.value;
     return `<span style="display:flex; align-items:center;">
                 <span style="color:green; margin-right:4px;">✔</span>${value}
