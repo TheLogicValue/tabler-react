@@ -134,6 +134,13 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
     }
 
+   const IconSetFilterRenderer = (params) => {
+    const value = params.value;
+    return `<span style="display:flex; align-items:center;">
+                <span style="color:green; margin-right:4px;">✔</span>${value}
+            </span>`;
+    };
+
     useImperativeHandle(ref, () => {
         return {
             getDisplayedRowAtIndex(row) {
