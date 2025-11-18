@@ -115,7 +115,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     if (props.value === undefined) return null; 
                     const isSelected = props.api.getFilterInstance(props.colDef.field)?.getModel()?.values?.includes(props.value);
                     return (
-                        <span style={{ display: "flex", alignItems: "center" }}>
+                        <span style={{ display: "flex", alignItems: "left" }}>
                             <input type="checkbox" readOnly checked={isSelected} style={{ marginRight: "4px" }} />
                             {props.value}
                         </span>
