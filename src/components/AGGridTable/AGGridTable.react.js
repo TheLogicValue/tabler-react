@@ -30,7 +30,7 @@ function configureAgGrid(licenseKey) {
 
 const AGGridTable = forwardRef((gridProps, ref) => {
 
-    console.log("Usando AGGridTable para modificar el filtro V2 "); 
+    console.log("Usando AGGridTable para modificar el filtro V3 "); 
 
     const {
         licenseKey = null,
@@ -108,21 +108,13 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
 
-        if (item.filter === "agSetColumnFilter") {
-            item.filterParams = {
-                ...item.filterParams,
-                cellRendererFramework: (props) => {
-                    if (props.value === undefined) return null; 
-                    const isSelected = props.api.getFilterInstance(props.colDef.field)?.getModel()?.values?.includes(props.value);
-                    return (
-                        <span style={{ display: "flex", alignItems: "left" }}>
-                            <input type="checkbox" readOnly checked={isSelected} style={{ marginRight: "4px" }} />
-                            {props.value}
-                        </span>
-                    )
-                }
-            }
-        }
+      if (item.filter === "agSetColumnFilter") {
+        item.filterParams = {
+          ...item.filterParams,
+          cellRenderer: IconSetFilterRenderer  
+        };
+      }
+
 
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
@@ -154,19 +146,25 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
     }
 
-   const IconSetFilterRenderer = (props) => {
-    const { value, api, colDef } = props;
-    const isSelected = api.getFilterInstance(colDef.field).getModel()?.values?.includes(value);
+  const IconSetFilterRenderer = (props) => {
 
-    console.log("Usando IconSetFilterRenderer en V2", value, isSelected);
+    console.log("UsandoIconSetFilterRenderer para modificar el filtro V3 "); 
+
+    const { value, selected } = props;
 
     return (
-        <span style={{ display: "flex", alignItems: "center" }}>
-            <input type="checkbox" readOnly checked={isSelected} style={{ marginRight: "4px" }} />
-            {value}
-        </span>
+      <span style={{ display: "flex", alignItems: "center" }}>
+        <input
+          type="checkbox"
+          readOnly
+          checked={selected}
+          style={{ marginRight: "4px" }}
+        />
+        {value}
+      </span>
     );
-};
+  };
+
 
 
     useImperativeHandle(ref, () => {
