@@ -18,12 +18,13 @@
     "lint": "eslint --ext .js src/**/*",
     "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
   },
-  "dependencies": {
+  "dependencies": { 
+    "@ag-grid-community/core": "31.3.4",
     "@ag-grid-community/client-side-row-model": "31.3.4",
-    "@ag-grid-enterprise/set-filter": "31.3.4",
-    "ag-grid-community": "31.3.4",
-    "ag-grid-enterprise": "31.3.4",
     "ag-grid-react": "31.3.4",
+    "@ag-grid-enterprise/set-filter": "31.3.4",
+    "@ag-grid-enterprise/core": "31.3.4",
+    "ag-grid-community": "31.3.4",
     "classnames": "^2.5.1",
     "date-fns": "^2.30.0",
     "echarts": "^5.5.1",

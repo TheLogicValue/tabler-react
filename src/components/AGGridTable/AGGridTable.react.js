@@ -7,21 +7,20 @@ import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
-import { ModuleRegistry } from "ag-grid-community"
-import { LicenseManager } from 'ag-grid-enterprise'
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
+import { ModuleRegistry } from '@ag-grid-community/core'
+import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model'
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
+import { LicenseManager } from '@ag-grid-enterprise/core'
+
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
-function configureAgGrid(licenseKey) {
+export function configureAgGrid(licenseKey) {
     const modules = [ClientSideRowModelModule]
-    if (licenseKey !== null) {
-        LicenseManager.setLicenseKey(licenseKey)
-        //Añadir los modulos necesarios de enterprise
+    if (licenseKey && licenseKey.trim() !== '') {
+        LicenseManager.setLicenseKey(licenseKey.trim())
         modules.push(SetFilterModule)
-        ModuleRegistry.registerModules(modules)
-    }
-    ModuleRegistry.registerModules([modules])
+    }    
+    ModuleRegistry.registerModules(modules)
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
