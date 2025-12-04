@@ -7,31 +7,29 @@ import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
-import { ModuleRegistry } from "ag-grid-community";
-import { LicenseManager } from 'ag-grid-enterprise';
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
-import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter';
+import { ModuleRegistry } from "ag-grid-community"
+import { LicenseManager } from 'ag-grid-enterprise'
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
+import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
+import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter'
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
     const modules = [ClientSideRowModelModule]
     if (licenseKey !== null) {
+        console.log(licenseKey)
         LicenseManager.setLicenseKey(licenseKey)
         //Añadir los modulos necesarios de enterprise
         modules.push(
             MultiFilterModule,
             SetFilterModule
         )
-        ModuleRegistry.registerModules(modules);
+        ModuleRegistry.registerModules(modules)
     }
     ModuleRegistry.registerModules([modules])
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
-
-    console.log("Usando AGGridTable para modificar el filtro V3 "); 
-
     const {
         licenseKey = null,
         className,
@@ -89,7 +87,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
             suppressMovable: suppressMovable,
             sortable: sortable,
             flex: flex,
-            // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
                 const element = {
@@ -97,7 +94,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     headerName: header,
                     field: item,
                     colId: key ?? item,
-                    // key: key ?? item,
                 }
 
                 element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
@@ -108,13 +104,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
 
-      if (item.filter === "agSetColumnFilter") {
-        item.filterParams = {
-          ...item.filterParams,
-          cellRenderer: IconSetFilterRenderer  
-        };
-      }
-
+        if (item.filter === "agSetColumnFilter") {
+            item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
+        }
 
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
@@ -122,7 +114,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     const classes = cn(
         className,
         "ag-theme-balham"
-    );
+    )
 
     const onGridReady = useCallback((params) => {
         setTopGrid(params)
@@ -143,29 +135,23 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     }
 
     const onBtnExport = () => {
-        topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
+        topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" })
     }
 
-  const IconSetFilterRenderer = (props) => {
-
-    console.log("UsandoIconSetFilterRenderer para modificar el filtro V3 "); 
-
-    const { value, selected } = props;
-
-    return (
-      <span style={{ display: "flex", alignItems: "center" }}>
-        <input
-          type="checkbox"
-          readOnly
-          checked={selected}
-          style={{ marginRight: "4px" }}
-        />
-        {value}
-      </span>
-    );
-  };
-
-
+    const IconSetFilterRenderer = (props) => {
+        const { value, selected } = props
+        return (
+            <span style={{ display: "flex", alignItems: "center" }}>
+                <input
+                    type="checkbox"
+                    readOnly
+                    checked={selected}
+                    style={{ marginRight: "4px" }}
+                />
+                {value}
+            </span>
+        )
+    }
 
     useImperativeHandle(ref, () => {
         return {
@@ -229,35 +215,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             {panelPagination}
                         </div>
                     </div>
-                    {/* {dataTotal.length !== 0
-                        ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
-                            <AgGridReact
-                                className={classes}
-                                gridOptions={bottomOptions}
-                                rowData={dataTotal}
-                                headerHeight="0"
-                                rowStyle={{ fontWeight: 'bold' }}
-                                scrollbarWidth={0}
-                            >
-                                {
-                                    columnTotal.map(({ header, item, colId, type, valueFormatter, maxWidth, renderIcon }) => {
-                                        return <AgGridColumn
-                                            cellRenderer={renderIcon}
-                                            key={item}
-                                            header={header}
-                                            colId={colId}
-                                            valueFormatter={valueFormatter}
-                                            field={item}
-                                            type={type}
-                                            maxWidth={maxWidth}
-                                        >
-                                        </AgGridColumn>
-                                    })
-                                }
-                            </AgGridReact>
-                        </div>
-                        : null
-                    } */}
                 </div>
             </Grid.Col>
         </Grid.Row>
