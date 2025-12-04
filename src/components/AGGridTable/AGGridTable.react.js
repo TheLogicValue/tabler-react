@@ -11,7 +11,6 @@ import { ModuleRegistry } from "ag-grid-community"
 import { LicenseManager } from 'ag-grid-enterprise'
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
-import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter'
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 function configureAgGrid(licenseKey) {
@@ -20,10 +19,7 @@ function configureAgGrid(licenseKey) {
         console.log(licenseKey)
         LicenseManager.setLicenseKey(licenseKey)
         //Añadir los modulos necesarios de enterprise
-        modules.push(
-            MultiFilterModule,
-            SetFilterModule
-        )
+        modules.push(SetFilterModule)
         ModuleRegistry.registerModules(modules)
     }
     ModuleRegistry.registerModules([modules])
