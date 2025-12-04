@@ -16,6 +16,7 @@ export function OverlayLoading(text) { return `<span class="ag-overlay-loading-c
 
 export function configureAgGrid(licenseKey) {
     const modules = [ClientSideRowModelModule]
+    console.log(licenseKey && licenseKey.trim() !== '', licenseKey)
     if (licenseKey && licenseKey.trim() !== '') {
         LicenseManager.setLicenseKey(licenseKey.trim())
         modules.push(SetFilterModule)
