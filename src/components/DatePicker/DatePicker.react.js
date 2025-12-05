@@ -12,11 +12,11 @@ import './DatePicker.css';
 
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date();
-const fromMonth = new Date(currentYear - 5, 0);
-const toMonth = new Date(currentYear, 11);
+const defaultFromMonth = new Date(currentYear - 5, 0);
+const defaultToMonth = new Date(currentYear, 11);
 
 const DayPickerTLV = forwardRef((props, ref) => {
-    const { date, dateIni, lastDate, today, previousDay = null, isHistoric = true, disabled = false } = props
+    const { date, dateIni, toMonth, fromMonth, lastDate, today, previousDay = null, isHistoric = true, disabled = false } = props
 
     const dateIniData = useMemo(() => {
         const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
@@ -130,8 +130,8 @@ const DayPickerTLV = forwardRef((props, ref) => {
                                 }
                             ]}
                             today={dateIniData}
-                            fromMonth={fromMonth}
-                            toMonth={toMonth}
+                            fromMonth={fromMonth || defaultFromMonth}
+                            toMonth={toMonth || defaultToMonth}
                             locale={es}
                             captionLayout="buttons"
                         />
