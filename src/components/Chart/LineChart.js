@@ -22,12 +22,14 @@ export default function LineChartTabler({
     onExpand = null,
 }) {
     const option = {
-        tooltip: {
-            confine: true,
-            trigger: "axis",
-            axisPointer: { animation: false },
-            formatter: (item) => tooltipFormatter(item),
-        },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: { animation: false },
+        confine: false,
+        appendToBody: true,
+
+        formatter: (item) => tooltipFormatter(item),
+      },
         toolbox: {
             itemSize: onExpand != null ? 8 : 15,
             feature: {
