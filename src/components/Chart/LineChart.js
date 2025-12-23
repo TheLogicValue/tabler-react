@@ -23,9 +23,10 @@ export default function LineChartTabler({
 }) {
     const option = {
         tooltip: {
-            confine: true,
             trigger: "axis",
             axisPointer: { animation: false },
+            confine: false,
+            appendToBody: true,
             formatter: (item) => tooltipFormatter(item),
         },
         toolbox: {
