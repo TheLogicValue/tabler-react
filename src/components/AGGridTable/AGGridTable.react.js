@@ -28,6 +28,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         licenseKey = null,
         className,
         panelPagination,
+        domLayout='autoHeight',
         autoHeaderTooltip = false,
         suppressPaginationPanel = false,
         onGrid,
@@ -175,6 +176,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     </div> : null}
                     <div style={{ flex: '1 1 auto', height: '100%' }} >
                         <AgGridReact
+                            columnDefs={columnDefs}
                             {...gridProps}
                             ref={gridRef}
                             suppressPaginationPanel={suppressPaginationPanel}
@@ -182,7 +184,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             suppressHorizontalScroll={suppressHorizontalScroll}
                             alwaysShowHorizontalScroll={alwaysShowHorizontalScroll}
                             alwaysShowVerticalScroll={alwaysShowVerticalScroll}
-                            columnDefs={columnDefs}
                             rowData={dataRow}
                             rowHeight={rowHeight}
                             pinnedTopRowData={pinnedTopRowData}
@@ -193,7 +194,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             rowMultiSelectWithClick={rowMultiSelectWithClick}
                             suppressRowClickSelection={suppressRowClickSelection}
                             suppressRowTransform={suppressRowTransform}
-                            domLayout={'autoHeight'}
+                            domLayout={domLayout}
                             quickFilterText={filter}
                             localeText={language == null ? es : language}
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
