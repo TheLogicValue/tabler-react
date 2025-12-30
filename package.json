@@ -20,6 +20,7 @@
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "32.3.9",
     "@ag-grid-enterprise/set-filter": "32.3.9",
+    "@babel/runtime": "^7.28.4",
     "ag-grid-community": "32.3.9",
     "ag-grid-enterprise": "32.3.9",
     "ag-grid-react": "32.3.9",
@@ -33,15 +34,14 @@
     "react-day-picker": "^9.13.0",
     "react-select": "^5.7.3",
     "svgo": "^4.0.0",
-    "webpack": "^5.104.1",
-    "@babel/runtime": "^7.28.4"
+    "webpack": "^5.104.1"
   },
   "peerDependencies": {
+    "@popperjs/core": "^2.11.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router-dom": "7.11.0",
     "react-popper": "^2.3.0",
-    "@popperjs/core": "^2.11.8"
+    "react-router-dom": "7.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
