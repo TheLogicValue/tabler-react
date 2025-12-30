@@ -38,8 +38,8 @@
     "webpack": "^4.0.0 || ^5.0.0"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -58,14 +58,14 @@
     "eslint": "^9.14.0",
     "eslint-config-react-app": "^7.0.1",
     "flow-copy-source": "^2.0.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-scripts": "^5.0.1",
-    "rollup": "^4.24.4",
+    "rollup": "^4.54.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "shx": "^0.3.4"
+    "shx": "^0.4.0"
   },
   "files": [
     "dist"
