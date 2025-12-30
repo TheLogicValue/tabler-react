@@ -1,7 +1,5 @@
 // @flow
-import type NotificationProps from "./Notification";
-export type { NotificationProps };
-
+export { default as Notification } from "./Notification";
 export { default as AccountDropdown } from "./AccountDropdown";
 export { AGGridTable, OverlayLoading, AGGridPagination } from "./AGGridTable";
 export { default as Alert } from "./Alert";
