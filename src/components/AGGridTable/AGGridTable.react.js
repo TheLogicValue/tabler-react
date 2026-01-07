@@ -12,8 +12,6 @@ import { LicenseManager } from '@ag-grid-enterprise/core'
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
 
-export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
-
 export function configureAgGrid(licenseKey) {
     const modules = [ClientSideRowModelModule]
     if (licenseKey && licenseKey.trim() !== '') {
@@ -215,5 +213,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         </Grid.Row>
     )
 })
+
+export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 export default AGGridTable
