@@ -20,6 +20,8 @@ export default function LineChartTabler({
     bottom = null,
     download = false,
     onExpand = null,
+    toolboxTop = 5,
+    toolboxRight = 5,
 }) {
     const option = {
         tooltip: {
@@ -30,6 +32,8 @@ export default function LineChartTabler({
             formatter: (item) => tooltipFormatter(item),
         },
         toolbox: {
+            top: toolboxTop,
+            right: toolboxRight,
             itemSize: onExpand != null ? 8 : 15,
             feature: {
                 saveAsImage: { name: name, title: title, show: download },
