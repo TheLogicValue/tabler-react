@@ -62,14 +62,10 @@ export default function LineChartTabler({
             axisLabel: { rotate: 10, verticalAlign: "top", fontSize: 9 },
         },
         grid: {
-            // borderWidth: 1.5,
-            // borderColor: "rgba(109, 13, 13, 1)",
-            // backgroundColor: "rgba(190, 56, 56, 1)",
-            // show: true,
-            top: top || (download == true ? 30 : 10),
-            bottom: bottom || (complete == true ? 70 : 10),
-            left: left || (complete == true ? 60 : 10),
-            right: right || (complete == true ? 60 : 10),
+            top: top || (download ? 30 : 10),
+            bottom: bottom || (complete ? 70 : onExpand != null ? 30 : 0),
+            left: left || (complete ? 60 : 0),
+            right: right || (complete ? 60 : onExpand != null ? 30 : 0),
         },
         yAxis: {
             show: complete,
