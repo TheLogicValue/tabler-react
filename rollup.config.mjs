@@ -27,9 +27,7 @@ const config = {
       ],
     }),
     resolve({
-      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
-      browser: true,
-      preferBuiltins: false,
+      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
     }),
     commonjs(),
     postcss({ modules: false }),
