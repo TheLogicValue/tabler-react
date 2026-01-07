@@ -26,7 +26,11 @@ const config = {
         '@babel/plugin-transform-json-strings',
       ],
     }),
-    resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'] }),
+    resolve({
+      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
+      browser: true,
+      preferBuiltins: false,
+    }),
     commonjs(),
     postcss({ modules: false }),
     url(),
