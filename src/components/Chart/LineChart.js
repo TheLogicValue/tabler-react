@@ -20,8 +20,9 @@ export default function LineChartTabler({
     bottom = null,
     download = false,
     onExpand = null,
-    toolboxTop = 5,
-    toolboxRight = 5,
+    toolboxTop = 0,
+    toolboxRight = 10,
+    toolboxBottom = 10,
 }) {
     const option = {
         tooltip: {
@@ -34,6 +35,7 @@ export default function LineChartTabler({
         toolbox: {
             top: toolboxTop,
             right: toolboxRight,
+            bottom: toolboxBottom,
             itemSize: onExpand != null ? 8 : 15,
             feature: {
                 saveAsImage: { name: name, title: title, show: download },
@@ -65,9 +67,9 @@ export default function LineChartTabler({
             // backgroundColor: "rgba(190, 56, 56, 1)",
             // show: true,
             top: top || (download == true ? 30 : 10),
-            bottom: bottom || (complete == true ? 70 : 0),
-            left: left || (complete == true ? 60 : 0),
-            right: right || (complete == true ? 60 : 0),
+            bottom: bottom || (complete == true ? 70 : 10),
+            left: left || (complete == true ? 60 : 10),
+            right: right || (complete == true ? 60 : 10),
         },
         yAxis: {
             show: complete,
