@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle } from 'react'
 import usePagination from './Hooks/usePagination'
 import cn from "classnames"
 import "./AGGridPagination.css"
