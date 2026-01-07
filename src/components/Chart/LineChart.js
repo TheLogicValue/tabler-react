@@ -63,9 +63,9 @@ export default function LineChartTabler({
         },
         grid: {
             top: top || (download ? 30 : 10),
-            bottom: bottom || (complete ? 70 : onExpand != null ? 30 : 0),
+            bottom: bottom || (complete ? 70 : 0),
             left: left || (complete ? 60 : 0),
-            right: right || (complete ? 60 : onExpand != null ? 30 : 0),
+            right: right || (complete ? 60 : 0),
         },
         yAxis: {
             show: complete,
