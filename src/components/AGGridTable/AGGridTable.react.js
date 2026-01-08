@@ -64,10 +64,10 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         listBtn = false,
         deselectAllBtn = false,
         deselectAllOptions = { text: "Clear", hidden: false },
-        tooltipShowMode = "whenTruncated"
+        tooltipShowMode = "standard" // standard - whenTruncated
     } = gridProps
 
-    configureAgGrid(licenseKey) //Revisar licencia
+    configureAgGrid(licenseKey)
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
@@ -91,7 +91,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     field: item,
                     colId: key ?? item,
                 }
-
                 element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
@@ -99,22 +98,14 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
-
-        if (item.filter === "agSetColumnFilter") {
-            item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
-        }
+        if (item.filter === "agSetColumnFilter") item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
 
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
-    const classes = cn(
-        className,
-        "ag-theme-balham"
-    )
+    const classes = cn(className, "ag-theme-balham")
 
-    const onGridReady = useCallback((params) => {
-        setTopGrid(params)
-    }, [])
+    const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
 
     const deselectAll = useCallback(() => {
         setFilter()
@@ -126,13 +117,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
     }, [autosize, gridRef])
 
-    const handleChangeFilter = (event) => {
-        setFilter(event.target.value)
-    }
+    const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
-    const onBtnExport = () => {
-        topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" })
-    }
+    const onBtnExport = () => { topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" }) }
 
     const IconSetFilterRenderer = (props) => {
         const { value, selected } = props
@@ -151,12 +138,8 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
     useImperativeHandle(ref, () => {
         return {
-            getDisplayedRowAtIndex(row) {
-                gridRef.current.api.getDisplayedRowAtIndex(row)
-            },
-            flashCells(item) {
-                gridRef.current.api.flashCells(item)
-            }
+            getDisplayedRowAtIndex(row) { gridRef.current.api.getDisplayedRowAtIndex(row) },
+            flashCells(item) { gridRef.current.api.flashCells(item) }
         }
     }, [])
 
