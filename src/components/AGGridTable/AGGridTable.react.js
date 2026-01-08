@@ -63,7 +63,8 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         suppressRowClickSelection = false,
         listBtn = false,
         deselectAllBtn = false,
-        deselectAllOptions = { text: "Clear", hidden: false }
+        deselectAllOptions = { text: "Clear", hidden: false },
+        tooltipShowMode = "whenTruncated"
     } = gridProps
 
     configureAgGrid(licenseKey) //Revisar licencia
