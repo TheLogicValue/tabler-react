@@ -7,8 +7,8 @@ import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
 import '@ag-grid-community/styles/ag-grid.css'
 import '@ag-grid-community/styles/ag-theme-balham.css'
-import { ModuleRegistry } from '@ag-grid-community/core'
-import { LicenseManager } from '@ag-grid-enterprise/core'
+import { ModuleRegistry } from "ag-grid-community"
+import { LicenseManager } from 'ag-grid-enterprise'
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
 
