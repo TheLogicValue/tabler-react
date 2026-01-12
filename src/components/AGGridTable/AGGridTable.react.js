@@ -173,7 +173,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             pinnedTopRowData={pinnedTopRowData}
                             overlayLoadingTemplate={overlayLoadingTemplate}
                             onGridReady={onGrid ?? onGridReady}
-                            onFirstDataRendered={onFirstDataRendered}
+                            // onFirstDataRendered={onFirstDataRendered}
                             rowSelection={rowSelection}
                             rowMultiSelectWithClick={rowMultiSelectWithClick}
                             suppressRowClickSelection={suppressRowClickSelection}
