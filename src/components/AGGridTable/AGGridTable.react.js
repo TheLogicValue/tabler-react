@@ -105,7 +105,10 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
     const classes = cn(className, "ag-theme-balham")
 
-    const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
+    const onGridReady = useCallback((params) => {
+        setTopGrid(params);
+        if (autosize !== false) params.api.sizeColumnsToFit();
+    }, [autosize])
 
     const deselectAll = useCallback(() => {
         setFilter()

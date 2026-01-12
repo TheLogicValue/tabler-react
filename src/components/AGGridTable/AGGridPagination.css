@@ -5,6 +5,7 @@
 
 .ag-root-wrapper{
     border-bottom: none !important;
+    min-width: 0;
 }
 
 .ag-body-horizontal-scroll-container {
