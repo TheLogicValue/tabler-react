@@ -105,10 +105,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
     const classes = cn(className, "ag-theme-balham")
 
-    const onGridReady = useCallback((params) => {
-        setTopGrid(params);
-        if (autosize !== false) params.api.sizeColumnsToFit();
-    }, [autosize])
+    const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
 
     const deselectAll = useCallback(() => {
         setFilter()
@@ -116,9 +113,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         gridRef.current.api.deselectAll()
     }, [gridRef])
 
-    const onFirstDataRendered = useCallback(() => {
-        if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
-    }, [autosize, gridRef])
+    // const onFirstDataRendered = useCallback(() => {
+    //     if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
+    // }, [autosize, gridRef])
 
     const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
