@@ -104,20 +104,15 @@ const AGGridTable = forwardRef((gridProps, ref) => {
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
     const classes = cn(className, "ag-theme-balham")
-
     const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
+    const onFirstDataRendered = useCallback(() => { }, [])
+    const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
     const deselectAll = useCallback(() => {
         setFilter()
         document.getElementById("searcher").value = ""
         gridRef.current.api.deselectAll()
     }, [gridRef])
-
-    // const onFirstDataRendered = useCallback(() => {
-    //     if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
-    // }, [autosize, gridRef])
-
-    const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
     const onBtnExport = () => { topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" }) }
 
@@ -173,7 +168,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             pinnedTopRowData={pinnedTopRowData}
                             overlayLoadingTemplate={overlayLoadingTemplate}
                             onGridReady={onGrid ?? onGridReady}
-                            // onFirstDataRendered={onFirstDataRendered}
+                            onFirstDataRendered={onFirstDataRendered}
                             rowSelection={rowSelection}
                             rowMultiSelectWithClick={rowMultiSelectWithClick}
                             suppressRowClickSelection={suppressRowClickSelection}
