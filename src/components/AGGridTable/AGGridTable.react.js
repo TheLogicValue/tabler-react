@@ -5,22 +5,16 @@ import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
 import { AgGridReact } from 'ag-grid-react'
-import '@ag-grid-community/styles/ag-grid.css'
-import '@ag-grid-community/styles/ag-theme-balham.css'
-import { ModuleRegistry } from "ag-grid-community"
+import 'ag-grid-community/styles/ag-grid.css'
+import 'ag-grid-community/styles/ag-theme-balham.css'
 import { LicenseManager } from 'ag-grid-enterprise'
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
-import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
 
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
 export function configureAgGrid(licenseKey) {
-    const modules = [ClientSideRowModelModule]
     if (licenseKey && licenseKey.trim() !== '') {
         LicenseManager.setLicenseKey(licenseKey)
-        modules.push(SetFilterModule)
     }
-    ModuleRegistry.registerModules(modules)
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
