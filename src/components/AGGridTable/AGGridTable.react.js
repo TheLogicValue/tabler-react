@@ -51,10 +51,8 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         language = null,
         onRowClick = () => null,
         onCellClick = () => null,
+        onSelectionChanged = () => onSelectionChanged,
         pageSize = 0,
-        // rowSelection = 'single',
-        // rowMultiSelectWithClick = false,
-        // suppressRowClickSelection = false,
         rowSelection = {
             mode: 'single', //'multiRow'
             enableClickSelection: false,
@@ -170,8 +168,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             onGridReady={onGrid ?? onGridReady}
                             onFirstDataRendered={onFirstDataRendered}
                             rowSelection={rowSelection}
-                            // rowMultiSelectWithClick={rowMultiSelectWithClick}
-                            // suppressRowClickSelection={suppressRowClickSelection}
                             suppressRowTransform={suppressRowTransform}
                             domLayout={domLayout}
                             quickFilterText={filter}
@@ -179,6 +175,7 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                             onRowClicked={(e) => { onRowClick(e.data) }}
                             onCellClicked={(e) => { onCellClick(e) }}
+                            onSelectionChanged={(e) => { onSelectionChanged(e) }}
                             onPaginationChanged={onPaginationChanged}
                             postSortRows={postSortRows}
                             pagination={pageSize > 0}
