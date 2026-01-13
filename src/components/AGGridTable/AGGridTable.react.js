@@ -52,9 +52,15 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         onRowClick = () => null,
         onCellClick = () => null,
         pageSize = 0,
-        rowSelection = 'single',
-        rowMultiSelectWithClick = false,
-        suppressRowClickSelection = false,
+        // rowSelection = 'single',
+        // rowMultiSelectWithClick = false,
+        // suppressRowClickSelection = false,
+        rowSelection = {
+            mode: 'single', //'multiRow'
+            enableClickSelection: false,
+            checkboxes: false,
+            headerCheckbox: false,
+        },
         listBtn = false,
         deselectAllBtn = false,
         deselectAllOptions = { text: "Clear", hidden: false },
