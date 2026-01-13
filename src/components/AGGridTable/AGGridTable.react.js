@@ -170,8 +170,8 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             onGridReady={onGrid ?? onGridReady}
                             onFirstDataRendered={onFirstDataRendered}
                             rowSelection={rowSelection}
-                            rowMultiSelectWithClick={rowMultiSelectWithClick}
-                            suppressRowClickSelection={suppressRowClickSelection}
+                            // rowMultiSelectWithClick={rowMultiSelectWithClick}
+                            // suppressRowClickSelection={suppressRowClickSelection}
                             suppressRowTransform={suppressRowTransform}
                             domLayout={domLayout}
                             quickFilterText={filter}
