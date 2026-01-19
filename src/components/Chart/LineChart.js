@@ -20,17 +20,22 @@ export default function LineChartTabler({
     bottom = null,
     download = false,
     onExpand = null,
+    toolboxTop = 0,
+    toolboxRight = 10,
+    toolboxBottom = 10,
 }) {
     const option = {
-      tooltip: {
-        trigger: "axis",
-        axisPointer: { animation: false },
-        confine: false,
-        appendToBody: true,
-
-        formatter: (item) => tooltipFormatter(item),
-      },
+        tooltip: {
+            trigger: "axis",
+            axisPointer: { animation: false },
+            confine: false,
+            appendToBody: true,
+            formatter: (item) => tooltipFormatter(item),
+        },
         toolbox: {
+            top: toolboxTop,
+            right: toolboxRight,
+            bottom: toolboxBottom,
             itemSize: onExpand != null ? 8 : 15,
             feature: {
                 saveAsImage: { name: name, title: title, show: download },
@@ -57,14 +62,10 @@ export default function LineChartTabler({
             axisLabel: { rotate: 10, verticalAlign: "top", fontSize: 9 },
         },
         grid: {
-            // borderWidth: 1.5,
-            // borderColor: "rgba(109, 13, 13, 1)",
-            // backgroundColor: "rgba(190, 56, 56, 1)",
-            // show: true,
-            top: top || (download == true ? 30 : 10),
-            bottom: bottom || (complete == true ? 70 : 0),
-            left: left || (complete == true ? 60 : 0),
-            right: right || (complete == true ? 60 : 0),
+            top: top || (download ? 30 : 10),
+            bottom: bottom || (complete ? 70 : 0),
+            left: left || (complete ? 60 : 0),
+            right: right || (complete ? 60 : 0),
         },
         yAxis: {
             show: complete,

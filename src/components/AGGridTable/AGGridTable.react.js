@@ -1,27 +1,28 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
 import { Grid } from "../"
-import { AgGridReact } from 'ag-grid-react'
 import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
+import { AgGridReact } from 'ag-grid-react'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-balham.css'
+import { LicenseManager } from 'ag-grid-enterprise'
 
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { ModuleRegistry } from "@ag-grid-community/core"
-ModuleRegistry.registerModules([ClientSideRowModelModule])
+export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
-export function OverlayLoading(text) {
-    return `<span class="ag-overlay-loading-center">${text}</span>`
+export function configureAgGrid(licenseKey) {
+    if (licenseKey && licenseKey.trim() !== '') {
+        LicenseManager.setLicenseKey(licenseKey)
+    }
 }
 
 const AGGridTable = forwardRef((gridProps, ref) => {
-
     const {
+        licenseKey = null,
         className,
         panelPagination,
-        domLayout='autoHeight',
+        domLayout = 'autoHeight',
         autoHeaderTooltip = false,
         suppressPaginationPanel = false,
         onGrid,
@@ -39,10 +40,10 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         dataRow = [],
         dataTotal = [],
         dataColumn = [],
-        pinnedTopRowData=[],
+        pinnedTopRowData = [],
         suppressHorizontalScroll = true,
-        alwaysShowHorizontalScroll= false,
-        alwaysShowVerticalScroll= false,
+        alwaysShowHorizontalScroll = false,
+        alwaysShowVerticalScroll = false,
         autosize = true,
         resizable = true,
         sortable = true,
@@ -50,18 +51,25 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         language = null,
         onRowClick = () => null,
         onCellClick = () => null,
+        onSelectionChanged = () => onSelectionChanged,
         pageSize = 0,
-        rowSelection = 'single',
-        rowMultiSelectWithClick = false,
-        suppressRowClickSelection = false,
+        rowSelection = {
+            mode: 'single', //'multiRow'
+            enableClickSelection: false,
+            checkboxes: false,
+            headerCheckbox: false,
+        },
         listBtn = false,
         deselectAllBtn = false,
-        deselectAllOptions = { text: "Clear", hidden: false }        
+        deselectAllOptions = { text: "Clear", hidden: false },
+        tooltipShowMode = "standard" // standard - whenTruncated
     } = gridProps
 
+    configureAgGrid(licenseKey)
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
+
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, name, headerTooltip, key, subItems, item, ...props } = column
         const columnDef = {
@@ -73,7 +81,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
             suppressMovable: suppressMovable,
             sortable: sortable,
             flex: flex,
-            // key: subItems == null ? key ?? item : null,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
                 const element = {
@@ -81,27 +88,23 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     headerName: header,
                     field: item,
                     colId: key ?? item,
-                    // key: key ?? item,
                 }
-                
                 element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
         }
 
-        if(autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
-        if(minWidth != null) columnDef["minWidth"] = minWidth
+        if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
+        if (minWidth != null) columnDef["minWidth"] = minWidth
+        if (item.filter === "agSetColumnFilter") item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
+
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
-    const classes = cn(
-        className,
-        "ag-theme-balham"
-    );
-
-    const onGridReady = useCallback((params) => {
-        setTopGrid(params)
-    }, [])
+    const classes = cn(className, "ag-theme-balham")
+    const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
+    const onFirstDataRendered = useCallback(() => { }, [])
+    const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
     const deselectAll = useCallback(() => {
         setFilter()
@@ -109,26 +112,27 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         gridRef.current.api.deselectAll()
     }, [gridRef])
 
-    const onFirstDataRendered = useCallback(() => {
-        if (autosize !== false) gridRef.current.api?.sizeColumnsToFit()
-    }, [autosize, gridRef])
+    const onBtnExport = () => { topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" }) }
 
-    const handleChangeFilter = (event) => {
-        setFilter(event.target.value)
-    }
-
-    const onBtnExport = () => {
-        topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: ";" })
+    const IconSetFilterRenderer = (props) => {
+        const { value, selected } = props
+        return (
+            <span style={{ display: "flex", alignItems: "center" }}>
+                <input
+                    type="checkbox"
+                    readOnly
+                    checked={selected}
+                    style={{ marginRight: "4px" }}
+                />
+                {value}
+            </span>
+        )
     }
 
     useImperativeHandle(ref, () => {
-        return { 
-            getDisplayedRowAtIndex(row) {
-                gridRef.current.api.getDisplayedRowAtIndex(row)
-            },
-            flashCells(item) {
-                gridRef.current.api.flashCells(item)
-            }
+        return {
+            getDisplayedRowAtIndex(row) { gridRef.current.api.getDisplayedRowAtIndex(row) },
+            flashCells(item) { gridRef.current.api.flashCells(item) }
         }
     }, [])
 
@@ -164,15 +168,14 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             onGridReady={onGrid ?? onGridReady}
                             onFirstDataRendered={onFirstDataRendered}
                             rowSelection={rowSelection}
-                            rowMultiSelectWithClick={rowMultiSelectWithClick}
-                            suppressRowClickSelection={suppressRowClickSelection}
                             suppressRowTransform={suppressRowTransform}
                             domLayout={domLayout}
                             quickFilterText={filter}
-                            localeText={language == null ? es : language}                            
+                            localeText={language == null ? es : language}
                             scrollbarWidth={dataTotal.length === 0 ? 0 : null}
                             onRowClicked={(e) => { onRowClick(e.data) }}
                             onCellClicked={(e) => { onCellClick(e) }}
+                            onSelectionChanged={(e) => { onSelectionChanged(e) }}
                             onPaginationChanged={onPaginationChanged}
                             postSortRows={postSortRows}
                             pagination={pageSize > 0}
@@ -183,35 +186,6 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                             {panelPagination}
                         </div>
                     </div>
-                    {/* {dataTotal.length !== 0
-                        ? <div style={{ flex: 'none', height: '31px', cursor: 'default !important' }}>
-                            <AgGridReact
-                                className={classes}
-                                gridOptions={bottomOptions}
-                                rowData={dataTotal}
-                                headerHeight="0"
-                                rowStyle={{ fontWeight: 'bold' }}
-                                scrollbarWidth={0}
-                            >
-                                {
-                                    columnTotal.map(({ header, item, colId, type, valueFormatter, maxWidth, renderIcon }) => {
-                                        return <AgGridColumn
-                                            cellRenderer={renderIcon}
-                                            key={item}
-                                            header={header}
-                                            colId={colId}
-                                            valueFormatter={valueFormatter}
-                                            field={item}
-                                            type={type}
-                                            maxWidth={maxWidth}
-                                        >
-                                        </AgGridColumn>
-                                    })
-                                }
-                            </AgGridReact>
-                        </div>
-                        : null
-                    } */}
                 </div>
             </Grid.Col>
         </Grid.Row>

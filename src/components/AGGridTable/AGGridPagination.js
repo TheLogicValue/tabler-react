@@ -1,6 +1,4 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
-// import 'ag-grid-community/styles/ag-theme-balham.css'
-// import 'ag-grid-community/styles/ag-grid.css'
 import usePagination from './Hooks/usePagination'
 import cn from "classnames"
 import "./AGGridPagination.css"
