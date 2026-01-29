@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
-  "scripts": {
+  "scripts": { 
     "build": "yarn run copytablercsstodist && rollup -c",
     "start": "yarn run copytablercsstodist && rollup -c -w",
     "prepare": "yarn run build && yarn run copytablercsstodist",
@@ -16,7 +16,6 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.0",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
@@ -27,14 +26,16 @@
     "focus-trap-react": "^11.0.4",
     "react-content-loader": "^7.1.1",
     "react-day-picker": "^8.10.1",
-    "react-select": "^5.7.3"
+    "react-select": "^5.7.3",
+    "@babel/runtime": "^7.28.0",
+     "postcss": "^8.4.47"
   },
   "peerDependencies": {
-    "@popperjs/core": "^2.11.8",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
-    "react-popper": "^2.3.0",
-    "react-router-dom": "^7.0.0"
+    "react-router-dom": "^7.0.0",
+    "@popperjs/core": "^2.11.8",
+    "react-popper": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
@@ -68,5 +69,6 @@
   "files": [
     "dist"
   ],
-  "resolutions": {}
+  "resolutions": {
+  }
 }
