@@ -27,7 +27,10 @@ const config = {
       ],
     }),
     resolve({
-      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
+      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],      
+      dedupe: ['react', 'react-dom'],
+      preferBuiltins: false,
+
     }),
     commonjs(),
     postcss({ modules: false }),
