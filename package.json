@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
-  "scripts": { 
+  "scripts": {
     "build": "yarn run copytablercsstodist && rollup -c",
     "start": "yarn run copytablercsstodist && rollup -c -w",
     "prepare": "yarn run build && yarn run copytablercsstodist",
@@ -28,7 +28,7 @@
     "react-day-picker": "^8.10.1",
     "react-select": "^5.7.3",
     "@babel/runtime": "^7.28.0",
-     "postcss": "^8.4.47"
+    "postcss": "^8.4.47"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -69,6 +69,5 @@
   "files": [
     "dist"
   ],
-  "resolutions": {
-  }
+  "resolutions": {}
 }
