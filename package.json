@@ -8,12 +8,23 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
   "scripts": {
     "build": "yarn run copytablercsstodist && rollup -c",
     "start": "yarn run copytablercsstodist && rollup -c -w",
     "prepare": "yarn run build && yarn run copytablercsstodist",
     "lint": "eslint --ext .js src/**/*",
-    "copytablercsstodist": "shx mkdir -p dist && shx cp src/Tabler.css src/Tabler.RTL.css dist/ && shx cp -r src/fonts dist/"
+    "copytablercsstodist": "shx mkdir -p dist && shx cp -r src/fonts dist/"
   },
   "dependencies": {
     "ag-grid-community": "^32.3.9",

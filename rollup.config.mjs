@@ -26,12 +26,18 @@ const config = {
       ],
     }),
     resolve({
-      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],      
+      extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
       dedupe: ['react', 'react-dom'],
       preferBuiltins: false
     }),
     commonjs(),
-    postcss({ modules: false }),
+    postcss({
+      modules: false,
+      extract: 'style.css',
+      minimize: false,
+      sourceMap: true,
+      include: ['**/*.css'],
+    }),
     url(),
     terser(),
   ],

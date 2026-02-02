@@ -1,5 +1,5 @@
 // @flow
-
+import './Tabler.css'
 export * from "./components";
 export type { Animation as AnimationEvents } from "./flow";
 export type { Clipboard as ClipboardEvents } from "./flow";
