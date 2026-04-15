@@ -1,6 +1,6 @@
 // @flow
-import { AGGridWrapper } from "./AGGridWrapper"
-import { AGGridPagination } from "./AGGridPagination"
+import AGGridWrapper from "./AGGridWrapper"
+import AGGridPagination from "./AGGridPagination"
 import { useGrid } from "./Hooks/useGrid"
 import { useColumns } from "./Hooks/useColumns"
 
