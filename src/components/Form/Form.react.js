@@ -48,7 +48,7 @@ function Form({
   action,
   method,
   onSubmit,
-  autoComplete,
+  autoComplete = "off",
 }: Props): React.Node {
   return (
     <form
@@ -62,11 +62,6 @@ function Form({
     </form>
   );
 }
-
-Form.defaultProps = {
-  autoComplete: "off",
-};
-
 Form.Group = FormGroup;
 Form.Label = FormLabel;
 Form.Input = FormInput;

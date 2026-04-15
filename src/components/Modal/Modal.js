@@ -2,6 +2,7 @@
 import { Button, ButtonModal, Spinner, Error, Success } from "../.."
 import cn from "classnames"
 import './Modal.css'
+
 //type 1 Only 1 accept button
 //type 2 2 buttons accept and cancel
 export default function TLVModal({ children, className, body, spin, bodyHeight, title, onClose, onAccept, onCancel, onRemove, noFooter = false, modalLG = false, show = true, type = 1, acceptText = "Ok", cancelText = "Cancel", removeText = "Leave Page"  }) {

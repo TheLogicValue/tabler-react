@@ -1,9 +1,7 @@
 // @flow
-import type { NotificationProps } from "./Notification";
-export type { NotificationProps }
 
 export { default as AccountDropdown } from "./AccountDropdown";
-export { AGGridTable, OverlayLoading, AGGridPagination } from "./AGGridTable";
+export { useColumns, useGrid, AGGridWrapper, AGGridPagination } from "./AGGridTable";
 export { default as Alert } from "./Alert";
 export { default as Avatar } from "./Avatar";
 export { default as Badge } from "./Badge";

@@ -1,7 +1,9 @@
 // @flow
+import { AGGridWrapper } from "./AGGridWrapper"
+import { AGGridPagination } from "./AGGridPagination"
+import { useGrid } from "./Hooks/useGrid"
+import { useColumns } from "./Hooks/useColumns"
 
-import AGGridTable from "./AGGridTable.react"
-import { OverlayLoading } from "./AGGridTable.react"
-import AGGridPagination from "./AGGridPagination"
+const OverlayLoading = (text) => { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
-export { AGGridTable, OverlayLoading, AGGridPagination }
+export { useGrid, useColumns, OverlayLoading, AGGridPagination, AGGridWrapper }

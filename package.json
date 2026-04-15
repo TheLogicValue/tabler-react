@@ -27,8 +27,6 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp -r src/fonts dist/"
   },
   "dependencies": {
-    "ag-grid-community": "^32.3.9",
-    "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
