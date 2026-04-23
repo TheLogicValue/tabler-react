@@ -1,16 +1,15 @@
 // @flow
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import TabbedContainer from "./TabbedContainer.react"
 import TabbedHeader from "./TabbedHeader.react"
 import cn from "classnames"
 import "./Tabs.css"
 
 export default function useTabs() {
-
     const [selectedTitle, setTitle] = useState(null)
-    const Tabs = ({ children, options, className, modal, initialTab }) => {
-        const classes = cn("card", className)
 
+    const Tabs = useCallback(({ children, options, className, modal, initialTab }) => {
+        const classes = cn("card", className)
         return (
             <div className={classes}>
                 <TabbedHeader
@@ -26,6 +25,7 @@ export default function useTabs() {
                 </TabbedContainer>
             </div>
         )
-    }
+    }, [selectedTitle])
+
     return { Tabs, selectedTitle }
 }
