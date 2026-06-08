@@ -4,22 +4,12 @@ import { Grid } from "../"
 import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
-import { AgGridReact } from 'ag-grid-react'
-import 'ag-grid-community/styles/ag-grid.css'
-import 'ag-grid-community/styles/ag-theme-balham.css'
-import { LicenseManager } from 'ag-grid-enterprise'
 
 export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
 
-export function configureAgGrid(licenseKey) {
-    if (licenseKey && licenseKey.trim() !== '') {
-        LicenseManager.setLicenseKey(licenseKey)
-    }
-}
-
-const AGGridTable = forwardRef((gridProps, ref) => {
+const AGGridTable = forwardRef((props, ref) => {
     const {
-        licenseKey = null,
+        AgGridReact,
         className,
         panelPagination,
         domLayout = 'autoHeight',
@@ -62,13 +52,22 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         listBtn = false,
         deselectAllBtn = false,
         deselectAllOptions = { text: "Clear", hidden: false },
-        tooltipShowMode = "standard" // standard - whenTruncated
+        ...gridProps
     } = gridProps
 
-    configureAgGrid(licenseKey)
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
     const [filter, setFilter] = useState("")
+
+    const IconSetFilterRenderer = (props) => {
+        const { value, selected } = props
+        return (
+            <span style={{ display: "flex", alignItems: "center" }}>
+                <input type="checkbox" readOnly checked={selected} style={{ marginRight: "4px" }} />
+                {value}
+            </span>
+        )
+    }
 
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, name, headerTooltip, key, subItems, item, ...props } = column
@@ -77,9 +76,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
             headerName: header,
             field: item,
             colId: subItems == null ? key ?? item : null,
-            resizable: resizable,
-            suppressMovable: suppressMovable,
-            sortable: sortable,
+            // resizable: resizable,
+            // suppressMovable: suppressMovable,
+            // sortable: sortable,
             flex: flex,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
@@ -88,8 +87,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     headerName: header,
                     field: item,
                     colId: key ?? item,
+                    headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name
                 }
-                element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
+                // element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
         }
@@ -101,9 +101,9 @@ const AGGridTable = forwardRef((gridProps, ref) => {
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
-    const classes = cn(className, "ag-theme-balham")
+    // const classes = cn(className, "ag-theme-balham")
     const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
-    const onFirstDataRendered = useCallback(() => { }, [])
+    // const onFirstDataRendered = useCallback(() => { }, [])
     const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
     const deselectAll = useCallback(() => {
@@ -114,25 +114,11 @@ const AGGridTable = forwardRef((gridProps, ref) => {
 
     const onBtnExport = () => { topGrid.api.exportDataAsCsv({ fileName: textFileCSV, columnSeparator: "" }) }
 
-    const IconSetFilterRenderer = (props) => {
-        const { value, selected } = props
-        return (
-            <span style={{ display: "flex", alignItems: "center" }}>
-                <input
-                    type="checkbox"
-                    readOnly
-                    checked={selected}
-                    style={{ marginRight: "4px" }}
-                />
-                {value}
-            </span>
-        )
-    }
-
     useImperativeHandle(ref, () => {
         return {
             getDisplayedRowAtIndex(row) { gridRef.current.api.getDisplayedRowAtIndex(row) },
-            flashCells(item) { gridRef.current.api.flashCells(item) }
+            flashCells(item) { gridRef.current.api.flashCells(item) },
+            api: gridRef.current?.api
         }
     }, [])
 
@@ -153,38 +139,23 @@ const AGGridTable = forwardRef((gridProps, ref) => {
                     </div> : null}
                     <div style={{ flex: '1 1 auto', height: '100%' }} >
                         <AgGridReact
-                            columnDefs={columnDefs}
                             {...gridProps}
                             ref={gridRef}
-                            suppressPaginationPanel={suppressPaginationPanel}
-                            className={classes}
-                            suppressHorizontalScroll={suppressHorizontalScroll}
-                            alwaysShowHorizontalScroll={alwaysShowHorizontalScroll}
-                            alwaysShowVerticalScroll={alwaysShowVerticalScroll}
+                            columnDefs={columnDefs}
                             rowData={dataRow}
-                            rowHeight={rowHeight}
-                            pinnedTopRowData={pinnedTopRowData}
-                            overlayLoadingTemplate={overlayLoadingTemplate}
-                            onGridReady={onGrid ?? onGridReady}
-                            onFirstDataRendered={onFirstDataRendered}
-                            rowSelection={rowSelection}
-                            suppressRowTransform={suppressRowTransform}
-                            domLayout={domLayout}
+                            onGridReady={onGridReady}
                             quickFilterText={filter}
-                            localeText={language == null ? es : language}
-                            scrollbarWidth={dataTotal.length === 0 ? 0 : null}
-                            onRowClicked={(e) => { onRowClick(e.data) }}
-                            onCellClicked={(e) => { onCellClick(e) }}
-                            onSelectionChanged={(e) => { onSelectionChanged(e) }}
-                            onPaginationChanged={onPaginationChanged}
-                            postSortRows={postSortRows}
+                            localeText={language || es}
                             pagination={pageSize > 0}
                             paginationPageSize={pageSize}
+                            onRowClicked={(e) => onRowClick(e.data)}
+                            onCellClicked={(e) => onCellClick(e)}
+                            onSelectionChanged={(e) => onSelectionChanged(e)}
+                            domLayout={domLayout}
+                            suppressPaginationPanel={suppressPaginationPanel}
                         >
                         </AgGridReact>
-                        <div className="ag-panel-custom">
-                            {panelPagination}
-                        </div>
+                        <div className="ag-panel-custom">{panelPagination}</div>
                     </div>
                 </div>
             </Grid.Col>

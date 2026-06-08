@@ -27,26 +27,31 @@
     "copytablercsstodist": "shx mkdir -p dist && shx cp -r src/fonts dist/"
   },
   "dependencies": {
-    "ag-grid-community": "^32.3.9",
-    "ag-grid-enterprise": "^32.3.9",
-    "ag-grid-react": "^32.3.9",
+    "@babel/runtime": "^7.28.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "echarts": "^6.0.0",
     "echarts-for-react": "^3.0.2",
     "focus-trap-react": "^11.0.4",
+    "postcss": "^8.4.47",
     "react-content-loader": "^7.1.1",
     "react-day-picker": "^8.10.1",
-    "react-select": "^5.7.3",
-    "@babel/runtime": "^7.28.0",
-    "postcss": "^8.4.47"
+    "react-select": "^5.7.3"
   },
   "peerDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "ag-grid-community": "^32.3.9",
+    "ag-grid-enterprise": "^32.3.9",
+    "ag-grid-react": "^32.3.9",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
-    "react-router-dom": "^7.0.0",
-    "@popperjs/core": "^2.11.8",
-    "react-popper": "^2.3.0"
+    "react-popper": "^2.3.0",
+    "react-router-dom": "^7.17.0"
+  },
+  "peerDependenciesMeta": {
+    "ag-grid-enterprise": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
@@ -62,8 +67,11 @@
     "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-url": "^8.0.2",
+    "ag-grid-community": "^32.3.9",
+    "ag-grid-enterprise": "^32.3.9",
+    "ag-grid-react": "^32.3.9",
     "browserslist": "^4.24.2",
     "eslint": "^9.14.0",
     "eslint-config-react-app": "^7.0.1",
@@ -71,7 +79,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-popper": "^2.3.0",
-    "react-router-dom": "7.12.0",
+    "react-router-dom": "^7.17.0",
     "rollup": "^4.54.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",

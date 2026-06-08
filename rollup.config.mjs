@@ -12,7 +12,16 @@ const config = {
     { file: 'dist/index.js', format: 'cjs', exports: 'named', sourcemap: true },
     { file: 'dist/index.es.js', format: 'es', sourcemap: true },
   ],
-  external: ['react', 'react-dom', 'react-router-dom', '@popperjs/core', 'react-popper'],
+  external: [
+    'react',
+    'react-dom',
+    'react-router-dom',
+    '@popperjs/core',
+    'react-popper',
+    'ag-grid-community',
+    'ag-grid-enterprise',
+    'ag-grid-react'
+  ],
   plugins: [
     external(),
     babel({
