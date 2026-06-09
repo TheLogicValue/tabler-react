@@ -74,9 +74,6 @@ const AGGridTable = forwardRef(({
             headerName: header,
             field: item,
             colId: subItems == null ? key ?? item : null,
-            // resizable: resizable,
-            // suppressMovable: suppressMovable,
-            // sortable: sortable,
             flex: flex,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
@@ -87,7 +84,6 @@ const AGGridTable = forwardRef(({
                     colId: key ?? item,
                     headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name
                 }
-                // element["headerTooltip"] = subItem?.headerTooltip?.trim() || header || subItem?.name
                 return element
             })
         }
@@ -101,7 +97,6 @@ const AGGridTable = forwardRef(({
 
     const classes = cn(className, "ag-theme-balham")
     const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
-    // const onFirstDataRendered = useCallback(() => { }, [])
     const handleChangeFilter = (event) => { setFilter(event.target.value) }
 
     const deselectAll = useCallback(() => {
