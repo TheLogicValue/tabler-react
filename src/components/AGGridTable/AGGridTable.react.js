@@ -53,7 +53,7 @@ const AGGridTable = forwardRef((props, ref) => {
         deselectAllBtn = false,
         deselectAllOptions = { text: "Clear", hidden: false },
         ...gridProps
-    } = gridProps
+    } = props
 
     const gridRef = useRef()
     const [topGrid, setTopGrid] = useState([])
@@ -101,7 +101,7 @@ const AGGridTable = forwardRef((props, ref) => {
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
 
-    // const classes = cn(className, "ag-theme-balham")
+    const classes = cn(className, "ag-theme-balham")
     const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
     // const onFirstDataRendered = useCallback(() => { }, [])
     const handleChangeFilter = (event) => { setFilter(event.target.value) }
