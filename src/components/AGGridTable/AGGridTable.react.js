@@ -146,6 +146,7 @@ const AGGridTable = forwardRef(({
                             onSelectionChanged={(e) => onSelectionChanged(e)}
                             domLayout={domLayout}
                             suppressPaginationPanel={suppressPaginationPanel}
+                            rowSelection={rowSelection}
                         >
                         </AgGridReact>
                         <div className="ag-panel-custom">{panelPagination}</div>
