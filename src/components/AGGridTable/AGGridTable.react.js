@@ -70,19 +70,19 @@ const AGGridTable = forwardRef(({
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, name, headerTooltip, key, subItems, item, ...props } = column
         const columnDef = {
-            ...props,
             headerName: header,
             field: item,
             colId: subItems == null ? key ?? item : null,
             flex: flex,
+            ...props,
             children: subItems?.map(subItem => {
                 const { header, key, subItems, item, ...props } = subItem
                 const element = {
-                    ...props,
                     headerName: header,
                     field: item,
                     colId: key ?? item,
-                    headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name
+                    headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name,
+                    ...props
                 }
                 return element
             })
