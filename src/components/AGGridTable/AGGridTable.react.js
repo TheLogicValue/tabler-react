@@ -90,7 +90,7 @@ const AGGridTable = forwardRef(({
 
         if (autoHeaderTooltip) columnDef["headerTooltip"] = headerTooltip?.trim() || header || name
         if (minWidth != null) columnDef["minWidth"] = minWidth
-        if (item.filter === "agSetColumnFilter") item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
+        if (item?.filter === "agSetColumnFilter") item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
 
         return columnDef
     }), [dataColumn, flex, minWidth, resizable, sortable])
