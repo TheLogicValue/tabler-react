@@ -1,10 +1,10 @@
-# Update - July 2021: Version 1.41.5
-
 # Tabler React
+
+Última actualización: **22/10/2026**. Versión de la biblioteca: **2.0.0**, según el campo `version` de [package.json](./package.json).
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![NPM](https://img.shields.io/badge/github-v.1.41.5-blue)](https://www.github.com/thelogicvalue/tabler-react) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Install
 
@@ -16,7 +16,7 @@ There's no package of this Fork. If you want to try it type:
 ```jsx
 import React, { Component } from "react";
 
-import "tabler-react/dist/Tabler.css";
+import "tabler-react/style.css";
 
 import { Card, Button } from "tabler-react";
 
@@ -40,25 +40,97 @@ For more examples and documentation see the [demo website](https://thelogicvalue
 
 ## Setup
 
-The package is made up of 2 main folders:
+Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 11.
 
-- /src contains all the Tabler React components
-- /example is our [create-react-app](https://github.com/facebook/create-react-app/) based demo website
+1. Clone this repository.
+2. Run `npm ci` in the root folder to install the versions in `package-lock.json`.
+3. Run `npm run build` to compile the component library, or `npm start` to rebuild it when source files change.
 
-To setup and run a local copy:
+Use `npm install` when intentionally adding or updating dependencies, and commit the updated `package-lock.json`.
+The repository's `.npmrc` enables `legacy-peer-deps` because existing React/Popper and lint plugin peer ranges do not yet declare all the versions exercised here. This setting applies to development in this repository; consuming projects keep their own npm configuration.
 
-1.  Clone this repo with `git clone https://github.com/thelogicvalue/tabler-react`
-2.  Run `yarn install` in the root folder
-3.  Run `yarn install` in the example folder
-4.  In seperate terminal windows, run `yarn start` in the root and example folders.
-5.  If you see an error with react-hooks and two copies of react or react-dom execute: `npm link .\example\node_modules\react\` and `npm link .\example\node_modules\react-dom\`
+The build uses Vite in library mode with `src/index.js` as its only entry point.
+Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
 
-You should now be up and running with live browser reloading of the example website while you work on Tabler React components in the /src folder.
+The published package keeps these entry points:
+
+- `dist/index.js`: CommonJS (`require('tabler-react')`).
+- `dist/index.es.js`: ES modules (`import { Card } from 'tabler-react'`).
+- `dist/style.css`: styles (`import 'tabler-react/style.css'`).
+- `dist/fonts/feather/`: font assets referenced by the stylesheet.
+
+JavaScript source maps are generated. Vite's CSS extraction does not emit the previous `style.css.map` file.
+React, React DOM and all other peer dependencies (including their subpaths) stay external and must be provided by the consuming project.
+The `files` allowlist publishes only `dist`; the separate `demo/` app stays outside the library build and package.
+
+## Laboratorio Tabler: demo de integración
+
+Laboratorio Tabler (`demo/`) es un consumidor independiente con React 19, React Router 7, Vite 7 y AG Grid Community 32. Incluye ejemplos de los componentes más utilizados en un consumidor de referencia. No necesita una API, datos reales ni licencia de AG Grid Enterprise.
+
+Desde la raíz, prepara la biblioteca y las dependencias de la demo:
+
+```sh
+# 1. Genera los archivos que consume la demo (dist/ de la biblioteca).
+npm run build
+
+# 2. Instala las dependencias propias de la demo; se hace la primera vez
+#    y cuando cambie demo/package.json o demo/package-lock.json.
+npm --prefix demo ci
+
+# 3. Arranca la demo y mantén esta terminal abierta.
+npm --prefix demo run dev
+```
+
+Abre `http://127.0.0.1:5174`. Para recompilar la biblioteca mientras editas componentes, ejecuta `npm start` en otra terminal. La demo importa `dist/index.es.js` y `dist/style.css` mediante sus nombres públicos; no importa el código Flow de `src`.
+
+Para probar cambios en componentes, abre una segunda terminal en la raíz:
+
+```sh
+# Reconstruye la biblioteca cada vez que cambies sus fuentes.
+# La demo abierta lee el nuevo dist/; si es necesario, recarga el navegador.
+npm start
+```
+
+La demo mantiene su propio `package.json`, `package-lock.json` y `.npmrc`. Su compilación y previsualización son independientes:
+
+```sh
+# Genera solo demo/dist/. No modifica el dist/ de la biblioteca.
+npm --prefix demo run build
+
+# Sirve esa compilación en http://127.0.0.1:5174.
+# Detén antes el servidor dev con Ctrl+C, porque utilizan el mismo puerto.
+npm --prefix demo run preview
+```
+
+`npm run build` en la raíz sigue compilando únicamente la biblioteca. La demo no entra en el paquete publicado.
+
+Las vistas de la demo permiten probar:
+
+- **Resumen:** Page, Grid, Card, Text, Icon y navegación con NavBarMenu.
+- **Tablas y datos:** AGGridTable con Community: búsqueda, filtros, ordenación, paginación, selección y CSV; comparación con Table. Activa y desactiva «Mostrar ayuda en las cabeceras» y pasa el ratón por un título para comprobar los tooltips sin recargar la tabla.
+- **Formularios y fechas:** Form, react-select, DatePicker, referencia de fecha, validación y restablecimiento. En «Fecha inicial y días anteriores», cambia el desplazamiento y pulsa «Restablecer fecha»: por defecto muestra 14/10/2026, con 0 días muestra 15/10/2026 y con 3 días muestra 12/10/2026.
+- **Interacciones:** Modal/useModal, Tabs/Tab/useTabs, Dropdown, Accordion y ProtectedRoute con Outlet y redirección. En «Controles de tarjeta y cabecera», prueba plegar, maximizar, cerrar y restaurar la tarjeta; abre el desplegable con Intro o Espacio. Por debajo de 992 px aparece el botón de navegación de Site.Header. Comprueba que todos estos controles mantienen a cero los envíos del formulario.
+- **Gráficos y estados:** LineChart, BarChart y PieChart; TableLoader, LoaderZone, LoaderNoData, Spinner y reintento de error simulado.
+- **Cobertura de componentes:** inventario de imports, componentes incluidos y guion para repetir las comprobaciones.
+
+El inventario `demo/src/usage.json` cuenta archivos de producción que importan cada componente en un consumidor de referencia, excluyendo tests; no mide ejecuciones ni frecuencia real de uso. Para regenerarlo desde cualquier consumidor local:
+
+```sh
+node demo/scripts/scan-usage.mjs <ruta-al-src-del-consumidor>
+```
+
+La cobertura de un componente en la demo no certifica todas sus variantes ni sustituye las pruebas funcionales del consumidor. Los errores reales de renderizado se muestran en pantalla; el error de carga de la vista de gráficos es intencional.
+
+## Lint
+
+`npm run lint` analiza la biblioteca y `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
+Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos.
+
+Para compilar y ejecutar las pruebas de regresión de DatePicker y de los atributos de formulario, usa `npm test` desde la raíz.
 
 ## Deploy
 
-1. In main package.json execute `prepare` script in order to build tabler-react.
-2. (Optional) Execute `deploy` script if you want to deploy the web example to github pages. You will locate your deploy [here](https://thelogicvalue.github.io/tabler-react).
+The `prepare` script builds the library before packaging. Run `npm run build` to generate the artifacts locally. Both the library and demo use npm with independent `package-lock.json` files.
 
 
 ## License

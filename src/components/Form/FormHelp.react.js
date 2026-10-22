@@ -20,9 +20,9 @@ function FormHelp({
   return (
     <span
       className={classes}
-      dataContent={message}
-      dataToggle="popover"
-      dataPlacement={position}
+      data-content={message}
+      data-toggle="popover"
+      data-placement={position}
     >
       {children || "?"}
     </span>

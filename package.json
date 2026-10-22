@@ -1,6 +1,7 @@
 {
   "name": "tabler-react",
   "version": "2.0.0",
+  "packageManager": "npm@11.19.0",
   "description": "",
   "author": "thelogicvalue",
   "license": "MIT",
@@ -20,11 +21,12 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build": "yarn run copytablercsstodist && rollup -c",
-    "start": "yarn run copytablercsstodist && rollup -c -w",
-    "prepare": "yarn run build && yarn run copytablercsstodist",
-    "lint": "eslint --ext .js src/**/*",
-    "copytablercsstodist": "shx mkdir -p dist && shx cp -r src/fonts dist/"
+    "build": "vite build",
+    "start": "vite build --watch",
+    "prepare": "vite build",
+    "lint": "eslint src",
+    "lint:demo": "eslint demo/src demo/vite.config.mjs demo/scripts",
+    "test": "npm run build && node --test tests/*.test.cjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.10",
@@ -33,7 +35,7 @@
     "echarts": "^6.0.0",
     "echarts-for-react": "^3.0.2",
     "focus-trap-react": "^11.0.4",
-    "postcss": "^8.5.30",
+    "postcss": "^8.5.31",
     "react-content-loader": "^7.1.1",
     "react-day-picker": "^8.10.1",
     "react-select": "^5.7.3"
@@ -55,6 +57,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
+    "@babel/plugin-syntax-import-assertions": "^7.29.7",
     "@babel/plugin-external-helpers": "^7.25.9",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-syntax-import-meta": "^7.10.4",
@@ -63,30 +66,28 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-flow": "^7.25.9",
     "@babel/preset-react": "^7.25.9",
+    "@eslint/compat": "^2.1.1",
+    "@eslint/js": "^10.0.1",
     "@popperjs/core": "^2.11.8",
-    "@rollup/plugin-babel": "^6.1.0",
-    "@rollup/plugin-commonjs": "^29.0.0",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^1.0.0",
-    "@rollup/plugin-url": "^8.0.2",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
-    "browserslist": "^4.29.3",
-    "eslint": "^9.39.5",
-    "eslint-config-react-app": "^7.0.1",
+    "browserslist": "^4.29.4",
+    "eslint": "^10.13.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "flow-copy-source": "^2.0.9",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "globals": "^17.13.0",
+    "hermes-eslint": "^0.37.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-popper": "^2.3.0",
     "react-router-dom": "^7.18.4",
-    "rollup": "^4.64.6",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "shx": "^0.4.0"
+    "terser": "5.51.2",
+    "vite": "8.3.5"
   },
   "files": [
     "dist"
-  ],
-  "resolutions": {}
+  ]
 }

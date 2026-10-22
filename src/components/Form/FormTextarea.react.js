@@ -90,7 +90,7 @@ function FormTextarea(props: Props): React.Node {
         onMouseLeave={onMouseLeave}
         onPointerEnter={onPointerEnter}
         onPointerLeave={onPointerLeave}
-        maxlength={maxlength}
+        maxLength={maxlength}
       />
       {feedback && <span className="invalid-feedback">{feedback}</span>}
     </React.Fragment>

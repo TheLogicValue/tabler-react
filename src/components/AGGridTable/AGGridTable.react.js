@@ -93,7 +93,7 @@ const AGGridTable = forwardRef(({
         if (item?.filter === "agSetColumnFilter") item.filterParams = { ...item.filterParams, cellRenderer: IconSetFilterRenderer }
 
         return columnDef
-    }), [dataColumn, flex, minWidth, resizable, sortable])
+    }), [dataColumn, flex, minWidth, autoHeaderTooltip])
 
     const classes = cn(className, "ag-theme-balham")
     const onGridReady = useCallback((params) => { setTopGrid(params) }, [])
@@ -156,5 +156,7 @@ const AGGridTable = forwardRef(({
         </Grid.Row>
     )
 })
+
+AGGridTable.displayName = "AGGridTable"
 
 export default AGGridTable

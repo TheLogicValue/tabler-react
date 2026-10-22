@@ -31,7 +31,6 @@ type Props = {|
   +className?: string,
   +tabbed?: boolean,
   +vertical?: boolean,
-  // eslint-disable-next-line no-use-before-define
   +items?: React.ChildrenArray<React.Element<typeof Nav.Item>>,
   +itemsObjects?: Array<navItem>,
   +routerContextComponentType?: React.ElementType,

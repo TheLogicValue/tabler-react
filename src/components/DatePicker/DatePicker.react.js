@@ -19,13 +19,13 @@ const DayPickerTLV = forwardRef((props, ref) => {
     const { date, dateIni, toMonth, fromMonth, lastDate, today, previousDay = null, isHistoric = true, disabled = false } = props
 
     const dateIniData = useMemo(() => {
-        const valueDate = dateIni != undefined ? new Date(dateIni) : currentMonth
+        const valueDate = new Date(dateIni != undefined ? dateIni : currentMonth)
         if (!today) {
-            valueDate.setDate(valueDate.getDate() - previousDay ?? 1)
+            valueDate.setDate(valueDate.getDate() - (previousDay ?? 1))
         }
 
         return valueDate
-    }, [dateIni, today])
+    }, [dateIni, today, previousDay])
     const dateData = date != undefined ? new Date(date) : dateIniData
 
     const [inputValue, setInputValue] = useState(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));
@@ -141,5 +141,7 @@ const DayPickerTLV = forwardRef((props, ref) => {
         </div>
     );
 })
+
+DayPickerTLV.displayName = "DatePicker"
 
 export default DayPickerTLV

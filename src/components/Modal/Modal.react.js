@@ -4,6 +4,18 @@ import { Button } from "../";
 import cn from "classnames";
 import "./Modal.css"
 
+type Props = {|
+  +children?: React.Node,
+  +title?: React.Node,
+  +onClose?: () => mixed,
+  +onAccept?: () => mixed,
+  +onCancel?: () => mixed,
+  +show?: boolean,
+  +type?: number,
+  +acceptText?: React.Node,
+  +cancelText?: React.Node,
+|};
+
 //type 1 Only 1 accept button
 //type 2 2 buttons accept and cancel
 function ModalObject({

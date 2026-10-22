@@ -1,0 +1,135 @@
+{
+  "source": "Proyecto consumidor de referencia",
+  "analyzedOn": "2026-10-22",
+  "files": 146,
+  "components": [
+    {
+      "name": "Grid",
+      "files": 75
+    },
+    {
+      "name": "Button",
+      "files": 59
+    },
+    {
+      "name": "Card",
+      "files": 46
+    },
+    {
+      "name": "Page",
+      "files": 39
+    },
+    {
+      "name": "Form",
+      "files": 33
+    },
+    {
+      "name": "Tab",
+      "files": 32
+    },
+    {
+      "name": "Modal",
+      "files": 26
+    },
+    {
+      "name": "TableLoader",
+      "files": 25
+    },
+    {
+      "name": "Tabs",
+      "files": 22
+    },
+    {
+      "name": "DatePicker",
+      "files": 21
+    },
+    {
+      "name": "Text",
+      "files": 21
+    },
+    {
+      "name": "Icon",
+      "files": 20
+    },
+    {
+      "name": "useModal",
+      "files": 19
+    },
+    {
+      "name": "Table",
+      "files": 18
+    },
+    {
+      "name": "useTabs",
+      "files": 12
+    },
+    {
+      "name": "LoaderNoData",
+      "files": 10
+    },
+    {
+      "name": "LoaderZone",
+      "files": 10
+    },
+    {
+      "name": "Spinner",
+      "files": 10
+    },
+    {
+      "name": "BarChart",
+      "files": 3
+    },
+    {
+      "name": "Alert",
+      "files": 2
+    },
+    {
+      "name": "Dropdown",
+      "files": 2
+    },
+    {
+      "name": "AGGridTable",
+      "files": 1
+    },
+    {
+      "name": "DoubleCard",
+      "files": 1
+    },
+    {
+      "name": "LineChart",
+      "files": 1
+    },
+    {
+      "name": "ModalDoc",
+      "files": 1
+    },
+    {
+      "name": "ModalSplash",
+      "files": 1
+    },
+    {
+      "name": "NavBarMenu",
+      "files": 1
+    },
+    {
+      "name": "PieChart",
+      "files": 1
+    },
+    {
+      "name": "PieChartLoader",
+      "files": 1
+    },
+    {
+      "name": "ProtectedRoute",
+      "files": 1
+    },
+    {
+      "name": "RadarChart",
+      "files": 1
+    },
+    {
+      "name": "Site",
+      "files": 1
+    }
+  ]
+}

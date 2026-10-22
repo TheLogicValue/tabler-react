@@ -2,7 +2,7 @@
 
 ## Install
 
-Make sure you have [Node.js](https://nodejs.org/) 8+ and [yarn](https://yarnpkg.com) installed.
+For development, use [Node.js](https://nodejs.org/) `^20.19.0 || ^22.13.0 || >=24` and npm 11. Run `npm ci` in the repository root to install the locked dependencies.
 
 `npm install thelogicvalue/tabler-react`
 
@@ -11,7 +11,7 @@ Make sure you have [Node.js](https://nodejs.org/) 8+ and [yarn](https://yarnpkg.
 ```jsx static
 import React, { Component } from "react";
 
-import "tabler-react/dist/Tabler.css";
+import "tabler-react/style.css";
 
 import { Card, Button } from "tabler-react";
 

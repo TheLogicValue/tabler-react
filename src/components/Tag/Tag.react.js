@@ -110,7 +110,7 @@ class Tag extends React.Component<Props, State> {
       <React.Fragment>
         {avatar && (
           <span
-            class="tag-avatar avatar"
+            className="tag-avatar avatar"
             style={{ backgroundImage: `url(${avatar})` }}
           />
         )}

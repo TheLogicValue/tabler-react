@@ -90,7 +90,7 @@ function ContactCard({
           <Media.Body>
             {name && <Header.H5>{name}</Header.H5>}
             {address && (
-              <address class="text-muted small">
+              <address className="text-muted small">
                 {address.line1}
                 {address.line2 && <br />}
                 {address.line2}

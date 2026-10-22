@@ -33,4 +33,6 @@ const Tabs = forwardRef(({ children, options, className, modal, initialTab }, re
   )
 })
 
+Tabs.displayName = "Tabs";
+
 export default Tabs;

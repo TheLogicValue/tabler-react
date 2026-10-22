@@ -95,7 +95,7 @@ export default function BarChart ({
               
             }
 
-            if(!!decal) {
+            if(decal) {
                 ser.itemStyle = {
                     decal: {
                         show: seriesName[i] != "Fondo",

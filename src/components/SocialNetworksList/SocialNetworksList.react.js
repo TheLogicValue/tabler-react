@@ -25,7 +25,7 @@ function listItemFromObjectFactory(
   asButtons: boolean = false,
   iconPrefix: string
 ) {
-  return (item: itemObject) => {
+  return function SocialNetworkListItem(item: itemObject, index: number) {
     const itemContent = asButtons ? (
       <Button to={item.to} social={item.name} color={item.color} size="sm">
         {item.label}
@@ -35,7 +35,7 @@ function listItemFromObjectFactory(
         <Icon prefix={iconPrefix} name={item.name} />
       </a>
     );
-    return <List.Item inline>{itemContent}</List.Item>;
+    return <List.Item key={index} inline>{itemContent}</List.Item>;
   };
 }
 
@@ -54,7 +54,7 @@ function SocialNetworksList(props: Props): React.Node {
 
   const contents =
     (itemsObjects && itemsObjects.map(getObjectListItem)) ||
-    (items && items.map(item => <List.Item inline>{item}</List.Item>)) ||
+    (items && items.map((item, index) => <List.Item key={index} inline>{item}</List.Item>)) ||
     children;
 
   return (

@@ -8,6 +8,7 @@ import type { Placement, PopperChildrenProps } from "react-popper";
 
 type StyleOffsets = { top: number, left: number };
 type StylePosition = { position: "absolute" | "fixed" };
+type Style = { [property: string]: string | number | null | void };
 
 export type Props = {|
   +children?: React.Node,

@@ -84,12 +84,14 @@ const SiteHeader = ({
                 {notificationsTray}
                 {accountDropdown}
               </div>
-              <a
-                className="header-toggler d-lg-none ml-3 ml-lg-0"
+              <button
+                type="button"
+                className="tabler-action header-toggler d-lg-none ml-3 ml-lg-0"
+                aria-label="Toggle navigation"
                 onClick={onMenuToggleClick}
               >
-                <span className="header-toggler-icon" />
-              </a>
+                <span className="header-toggler-icon" aria-hidden="true" />
+              </button>
             </React.Fragment>
           )}
         </div>

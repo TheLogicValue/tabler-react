@@ -212,6 +212,41 @@ a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
+.tabler-action {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.tabler-action[type="button"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.tabler-action:hover {
+  border: 0;
+}
+
+.tabler-dropdown-trigger {
+  display: inline;
+}
+
+.tabler-action.header-toggler,
+.tabler-action.header-toggler:hover,
+.tabler-action.header-toggler:focus {
+  color: inherit;
+}
+
+.tabler-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 pre,
 code,
 kbd,
@@ -13878,7 +13913,8 @@ a.icon:hover {
   align-self: center;
 }
 
-.card-options a:not(.btn) {
+.card-options a:not(.btn),
+.card-options .tabler-action:not(.btn) {
   margin-right: 0.5rem;
   color: #9aa0ac;
   display: inline-block;
@@ -13890,7 +13926,12 @@ a.icon:hover {
   color: #6e7687;
 }
 
-.card-options a:not(.btn) i {
+.card-options .tabler-action:not(.btn) {
+  color: inherit;
+}
+
+.card-options a:not(.btn) i,
+.card-options .tabler-action:not(.btn) i {
   font-size: 1rem;
   vertical-align: middle;
 }

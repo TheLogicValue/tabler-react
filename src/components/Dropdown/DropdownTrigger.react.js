@@ -19,7 +19,7 @@ type Props = {|
    */
   +value?: string,
   /**
-   * Render the trigger as an <a> tag or a Button
+   * Render a button with link styling or standard Button styling
    */
   +type?: "link" | "button",
   /**
@@ -83,15 +83,16 @@ function DropdownTrigger({
   return type === "link" ? (
     <Reference>
       {({ ref }: ReferenceChildrenProps) => (
-        <a className={classes} onClick={onClick} ref={ref}>
+        <button type="button" className={cn("tabler-action tabler-dropdown-trigger", classes)} onClick={onClick} ref={ref} aria-label={!value && !children ? "Open menu" : undefined}>
           {childrenFragment}
-        </a>
+        </button>
       )}
     </Reference>
   ) : (
     <Reference>
       {({ ref }: ReferenceChildrenProps) => (
         <Button
+          type="button"
           className={classes}
           color={color}
           isDropdownToggle

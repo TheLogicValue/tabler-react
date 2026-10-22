@@ -10,6 +10,7 @@ type Props = {|
   +icon?: string,
   +type?: "collapse" | "close" | "fullscreen",
   +onClick?: () => mixed,
+  +"aria-label"?: string,
 |};
 
 function CardOptionsItem({
@@ -18,8 +19,10 @@ function CardOptionsItem({
   icon,
   type,
   onClick,
+  "aria-label": ariaLabel,
 }: Props): React.Node {
   const classes = cn(
+    "tabler-action",
     {
       "card-options-collapse": type === "collapse",
       "card-options-remove": type === "close",
@@ -58,9 +61,15 @@ function CardOptionsItem({
   })();
 
   return (
-    <a className={classes} data-toggle={dataToggle} onClick={onClick}>
+    <button
+      type="button"
+      className={classes}
+      data-toggle={dataToggle}
+      onClick={onClick}
+      aria-label={ariaLabel || ({ collapse: "Collapse card", close: "Close card", fullscreen: "Toggle fullscreen" }[type]) || "Card action"}
+    >
       <Icon name={iconName} />
-    </a>
+    </button>
   );
 }
 

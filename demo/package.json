@@ -1,0 +1,24 @@
+{
+  "name": "tabler-react-demo",
+  "version": "0.0.0",
+  "packageManager": "npm@11.19.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5174 --strictPort"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "ag-grid-community": "32.3.9",
+    "ag-grid-react": "32.3.9",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-popper": "2.3.0",
+    "react-router-dom": "7.18.4"
+  },
+  "devDependencies": {
+    "vite": "7.3.7"
+  }
+}

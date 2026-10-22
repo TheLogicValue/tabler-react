@@ -60,10 +60,10 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
         </span>}
         <span className="ag-paging-page-summary-panel" role="presentation">
             <div className={previousClasses} role="button" aria-label="First Page" onClick={handleFirstPage}>
-                <span class="ag-icon ag-icon-first" unselectable="on" role="presentation"></span>
+                <span className="ag-icon ag-icon-first" style={{ userSelect: "none" }} role="presentation"></span>
             </div>
             <div className={previousClasses} role="button" aria-label="Previous Page" onClick={handlePreviousPage} tabIndex="0" disabled={page == 1}>
-                <span className="ag-icon ag-icon-previous" unselectable="on" role="presentation"></span>
+                <span className="ag-icon ag-icon-previous" style={{ userSelect: "none" }} role="presentation"></span>
             </div>
             <span className="ag-paging-description" role="status">
                 <span> {strings.page || defaultStrings.page} </span>
@@ -72,15 +72,17 @@ const AGGridPagination = forwardRef(({ controles, lastPage, totalElements, total
                 <span className="ag-paging-row-summary-panel-number">{totalPages}</span>
             </span>
             <div className={nextClasses} role="button" aria-label="Next Page" onClick={handleNextPage} tabIndex="0">
-                <span className="ag-icon ag-icon-next" unselectable="on" role="presentation"></span>
+                <span className="ag-icon ag-icon-next" style={{ userSelect: "none" }} role="presentation"></span>
             </div>
-            <div className={nextClasses} role="button" aria-label="Last Page" onClick={handleLastPage} tabindex="0">
-                <span className="ag-icon ag-icon-last" unselectable="on" role="presentation"></span>
+            <div className={nextClasses} role="button" aria-label="Last Page" onClick={handleLastPage} tabIndex="0">
+                <span className="ag-icon ag-icon-last" style={{ userSelect: "none" }} role="presentation"></span>
             </div>
         </span>
     </div>
 })
 
 
+
+AGGridPagination.displayName = "AGGridPagination"
 
 export default AGGridPagination

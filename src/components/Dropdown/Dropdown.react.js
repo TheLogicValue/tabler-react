@@ -45,7 +45,7 @@ type WithAnyTriggerProps = {|
    */
   +isNavLink?: boolean,
   /**
-   * Should the trigger render a link or a buttton
+   * Should the trigger use link styling or standard button styling
    */
   +type?: "link" | "button",
   /**

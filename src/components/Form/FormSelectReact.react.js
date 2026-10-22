@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useState} from "react";
+import React from "react";
 import cn from "classnames";
 import Select from 'react-select';
 
@@ -43,7 +43,6 @@ function FormSelectReact(props: Props): React.Node {
   const {
     className,
     selectRef,
-    modalContainer = false,
     disabledValue = "-",
     children,
     valid,
@@ -121,11 +120,6 @@ function FormSelectReact(props: Props): React.Node {
         background: isDisabled ? 'var(--disabled) !important': '',
         color: isDisabled ? 'var(--light-disabled) !important' : '',
       }),
-      // menu: (provided) => ({
-      //   ...provided,
-      //   position: modalContainer && 'fixed',
-      //   zIndex: modalContainer && 10,
-      // }),
   };
   
   const feedback = error || props.feedback;
