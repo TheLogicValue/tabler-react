@@ -63,6 +63,8 @@
     "@babel/preset-react": "^7.25.9",
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
@@ -79,7 +81,8 @@
     "react-router-dom": "^7.18.4",
     "terser": "5.51.2",
     "vite": "8.3.5",
-    "happy-dom": "^21.0.4"
+    "happy-dom": "^21.0.4",
+    "yaml": "^2.9.1"
   },
   "files": [
     "dist"
