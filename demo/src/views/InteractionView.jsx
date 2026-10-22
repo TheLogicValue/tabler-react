@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
-import { Accordion, Alert, Button, Card, Dropdown, Form, Grid, Modal, ProtectedRoute, Site, Tab, Tabs, useModal, useTabs } from 'tabler-react'
+import { Accordion, Alert, Button, Card, Dropdown, Form, Grid, Modal, Nav, ProtectedRoute, Site, Tab, Tabs, Tooltip, useModal, useTabs } from 'tabler-react'
 import { Result, Scenario } from '../shared.jsx'
 
 function HookTabs() {
@@ -30,6 +30,33 @@ function ActionControls() {
   </Scenario>
 }
 
+function FloatingExamples() {
+  const [position, setPosition] = useState('bottom-start')
+  const [action, setAction] = useState('Prueba varios menús de forma independiente.')
+  const positions = ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end', 'auto', 'auto-start', 'auto-end']
+  return <Scenario title="Posicionamiento con Floating UI" description="Cambia la posición, abre los menús y desplaza la página o redimensiona la ventana. Comprueba el ajuste a los bordes, Escape y el clic fuera. Las ayudas se abren con el ratón o al recibir foco con Tab." components={['Dropdown', 'Button.Dropdown', 'Nav', 'Tooltip']}>
+    <Form.Group label="Posición de prueba"><Form.Select value={position} onChange={event => setPosition(event.target.value)}>
+      {positions.map(value => <option key={value} value={value}>{value}</option>)}
+    </Form.Select></Form.Group>
+    <div className="action-row mb-4" style={{ justifyContent: 'space-between' }}>
+      <Dropdown type="button" triggerContent="Menú con posición" color="secondary" position={position} arrow arrowPosition={position.endsWith('end') ? 'right' : 'left'} itemsObject={[
+        { value: 'Acción del menú posicionado', onClick: () => setAction('Menú posicionado: acción ejecutada.') },
+      ]} />
+      <Button.Dropdown value="Button.Dropdown" color="secondary" dropdownProps={{ position, arrow: true }}>
+        <Dropdown.Item onClick={() => setAction('Button.Dropdown: acción ejecutada.')}>Acción del botón desplegable</Dropdown.Item>
+      </Button.Dropdown>
+      <Dropdown trigger={<Button type="button" color="secondary">Disparador personalizado</Button>} position={position}
+        itemsObject={[{ value: 'Acción personalizada', onClick: () => setAction('Disparador personalizado: acción ejecutada.') }]} />
+      <Tooltip content="Ayuda de Floating UI" placement={position}><button type="button" className="btn btn-secondary">Ayuda con posición</button></Tooltip>
+    </div>
+    <Nav><Nav.Item value="Submenú horizontal" position={position} subItemsObjects={[
+      { value: 'Opción horizontal', to: '#/interacciones', onClick: () => setAction('Navegación horizontal: opción seleccionada.') },
+    ]} /></Nav>
+    <Nav vertical itemsObjects={[{ value: 'Submenú vertical', subItems: [{ value: 'Opción vertical', to: '#/interacciones' }] }]} />
+    <Result>{action}</Result>
+  </Scenario>
+}
+
 export default function InteractionView() {
   const modal = useModal()
   const [message, setMessage] = useState('Abre el modal y confirma o cancela la operación.')
@@ -48,7 +75,7 @@ export default function InteractionView() {
         </Modal>}
       </Scenario>
     </Grid.Col><Grid.Col lg={6}>
-      <Scenario title="Menú desplegable y acordeón" description="Comprueba el posicionamiento del menú con Popper y despliega el detalle." components={['Dropdown', 'Accordion', 'Icon']}>
+      <Scenario title="Menú desplegable y acordeón" description="Comprueba el posicionamiento del menú con Floating UI y despliega el detalle." components={['Dropdown', 'Accordion', 'Icon']}>
         <Dropdown type="button" color="secondary" triggerContent="Acciones de prueba" toggle itemsObject={[
           { value: 'Marcar como revisado', icon: 'check', onClick: e => { e.preventDefault(); setMenuAction('Fondo marcado como revisado.') } },
           { value: 'Preparar informe', icon: 'file-text', onClick: e => { e.preventDefault(); setMenuAction('Informe ficticio preparado.') } },
@@ -58,6 +85,7 @@ export default function InteractionView() {
       </Scenario>
     </Grid.Col></Grid.Row>
     <ActionControls />
+    <FloatingExamples />
     <Scenario title="Pestañas con componente y hook" description="Prueba los dos patrones de pestañas de la biblioteca. Cambia la pestaña interior de cada ejemplo." components={['Tabs', 'Tab', 'useTabs']}>
       <Tabs initialTab="Componente Tabs">
         <Tab title="Componente Tabs"><Tabs initialTab="Datos generales"><Tab title="Datos generales">Datos generales del fondo ficticio.</Tab><Tab title="Métricas ESG">Puntuación ESG: 7,8 · Cobertura: 94%.</Tab></Tabs></Tab>

@@ -19,6 +19,7 @@ export const testedComponents = [
   'Tabs', 'Text', 'DatePicker', 'Icon', 'useModal', 'Table', 'useTabs',
   'LoaderZone', 'LoaderNoData', 'Spinner', 'BarChart', 'Alert', 'Dropdown',
   'ProtectedRoute', 'LineChart', 'PieChart', 'AGGridTable', 'NavBarMenu', 'Site',
+  'Tooltip', 'Nav',
 ]
 
 export const categoryOptions = ['Artículo 6', 'Artículo 8', 'Artículo 9'].map(value => ({ value, label: value }))

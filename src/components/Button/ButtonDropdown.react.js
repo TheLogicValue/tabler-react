@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import { Button, Dropdown } from "../";
-import { Manager, Reference } from "react-popper";
+import { FloatingProvider, FloatingReference } from "../../helpers/Floating.react";
 import type { Props as ButtonProps } from "../Button/Button.react";
 import type { Props as DropdownMenuProps } from "../Dropdown/DropdownMenu.react";
 
-import type { ReferenceChildrenProps } from "react-popper";
 
 type Props = ButtonProps & {
   +value?: string,
@@ -24,13 +23,14 @@ class ButtonDropdown extends React.Component<Props, State> {
   _handleButtonOnClick = (e: SyntheticMouseEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState(s => ({ isOpen: !s.isOpen }));
+    if (this.props.onClick) this.props.onClick(e);
   };
 
   render(): React.Node {
     const { children, value, dropdownProps, ...buttonProps } = this.props;
 
     const propsForDropdownMenu: DropdownMenuProps = dropdownProps
-      ? Object.assign(dropdownProps, { show: this.state.isOpen })
+      ? { ...dropdownProps, show: this.state.isOpen }
       : {
           show: this.state.isOpen,
         };
@@ -42,23 +42,23 @@ class ButtonDropdown extends React.Component<Props, State> {
     );
 
     return (
-      <Manager>
-        <Reference>
-          {({ ref }: ReferenceChildrenProps) => {
+      <FloatingProvider outsidePress onDismiss={() => this.setState({ isOpen: false })}>
+        <FloatingReference rootRef={buttonProps.rootRef}>
+          {({ ref }) => {
             const propsForButton = Object.assign(
-              {
+              {}, buttonProps, {
+                type: buttonProps.type || "button",
                 onClick: this._handleButtonOnClick,
                 rootRef: ref,
                 isDropdownToggle: true,
-              },
-              buttonProps
+              }
             );
             const button = React.createElement(Button, propsForButton, value);
             return button;
           }}
-        </Reference>
+        </FloatingReference>
         {dropdownMenu}
-      </Manager>
+      </FloatingProvider>
     );
   }
 }

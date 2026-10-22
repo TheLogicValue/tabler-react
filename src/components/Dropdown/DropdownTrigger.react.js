@@ -4,8 +4,7 @@ import * as React from "react";
 import cn from "classnames";
 import { Button, Icon } from "../";
 
-import { Reference } from "react-popper";
-import type { ReferenceChildrenProps } from "react-popper";
+import { FloatingReference } from "../../helpers/Floating.react";
 
 type Props = {|
   +children?: React.Node,
@@ -81,16 +80,16 @@ function DropdownTrigger({
   );
 
   return type === "link" ? (
-    <Reference>
-      {({ ref }: ReferenceChildrenProps) => (
-        <button type="button" className={cn("tabler-action tabler-dropdown-trigger", classes)} onClick={onClick} ref={ref} aria-label={!value && !children ? "Open menu" : undefined}>
+    <FloatingReference rootRef={rootRef}>
+      {({ ref, open }) => (
+        <button type="button" className={cn("tabler-action tabler-dropdown-trigger", classes, { show: open })} onClick={onClick} ref={ref} aria-expanded={open} aria-haspopup="true" aria-label={!value && !children ? "Open menu" : undefined}>
           {childrenFragment}
         </button>
       )}
-    </Reference>
+    </FloatingReference>
   ) : (
-    <Reference>
-      {({ ref }: ReferenceChildrenProps) => (
+    <FloatingReference rootRef={rootRef}>
+      {({ ref, open }) => (
         <Button
           type="button"
           className={classes}
@@ -99,11 +98,13 @@ function DropdownTrigger({
           isOption={isOption}
           onClick={onClick}
           rootRef={ref}
+          aria-expanded={open}
+          aria-haspopup="true"
         >
           {childrenFragment}
         </Button>
       )}
-    </Reference>
+    </FloatingReference>
   );
 }
 

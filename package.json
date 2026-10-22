@@ -24,9 +24,10 @@
     "build": "vite build",
     "start": "vite build --watch",
     "prepare": "vite build",
-    "lint": "eslint src tests vite.config.mjs eslint.config.mjs",
+    "lint": "eslint src tests scripts/*.mjs vite.config.mjs eslint.config.mjs",
     "lint:demo": "eslint demo/src demo/vite.config.mjs demo/scripts",
-    "test": "npm run build && node --test tests/*.test.cjs"
+    "test": "npm run build && node --test --test-timeout=30000 tests/*.test.cjs",
+    "test:react18": "npm run build && node scripts/test-react18.mjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.10",
@@ -37,16 +38,15 @@
     "focus-trap-react": "^11.0.4",
     "react-content-loader": "^7.1.1",
     "react-day-picker": "^8.10.1",
-    "react-select": "^5.7.3"
+    "react-select": "^5.7.3",
+    "@floating-ui/react": "^0.27.20"
   },
   "peerDependencies": {
-    "@popperjs/core": "^2.11.8",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
-    "react-popper": "^2.3.0",
     "react-router-dom": "^7.18.4"
   },
   "peerDependenciesMeta": {
@@ -63,7 +63,6 @@
     "@babel/preset-react": "^7.25.9",
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
-    "@popperjs/core": "^2.11.8",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
@@ -77,10 +76,10 @@
     "postcss": "^8.5.31",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-popper": "^2.3.0",
     "react-router-dom": "^7.18.4",
     "terser": "5.51.2",
-    "vite": "8.3.5"
+    "vite": "8.3.5",
+    "happy-dom": "^21.0.4"
   },
   "files": [
     "dist"

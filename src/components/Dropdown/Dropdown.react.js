@@ -9,9 +9,9 @@ import DropdownItemDivider from "./DropdownItemDivider.react";
 
 import ClickOutside from "../../helpers/ClickOutside.react";
 
-import { Manager } from "react-popper";
+import { FloatingProvider, FloatingReference, getElementRef } from "../../helpers/Floating.react";
 
-import type { Placement } from "react-popper";
+import type { Placement } from "../../helpers/Floating.react";
 
 type DefaultProps = {|
   +children?: React.Node,
@@ -201,10 +201,14 @@ class Dropdown extends React.Component<Props, State> {
 
     const trigger = (() => {
       if (props.trigger) {
-        return React.cloneElement(props.trigger, {
-          onClick: e => this._handleTriggerOnClick(e, props.trigger),
-        });
-        // return props.trigger;
+        const customTrigger = props.trigger;
+        return <FloatingReference rootRef={customTrigger.props.rootRef || getElementRef(customTrigger)}>
+          {({ ref }) => React.cloneElement(customTrigger, {
+            ...(typeof customTrigger.type === "string" || customTrigger.type.$$typeof
+              ? { ref } : { rootRef: ref }),
+            onClick: e => this._handleTriggerOnClick(e, customTrigger.props),
+          })}
+        </FloatingReference>;
       }
       if (props.icon || props.triggerContent || props.toggle) {
         const {
@@ -279,7 +283,7 @@ class Dropdown extends React.Component<Props, State> {
     })();
 
     return (
-      <Manager>
+      <FloatingProvider open={this.state.isOpen} onDismiss={() => this.setState({ isOpen: false })}>
         <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>
           {({ setElementRef }) => (
             <div className={classes} ref={setElementRef}>
@@ -288,7 +292,7 @@ class Dropdown extends React.Component<Props, State> {
             </div>
           )}
         </ClickOutside>
-      </Manager>
+      </FloatingProvider>
     );
   }
 }

@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import cn from "classnames";
-import { Popper } from "react-popper";
+import { FloatingSurface } from "../../helpers/Floating.react";
 
-import type { Placement, PopperChildrenProps } from "react-popper";
+import type { Placement } from "../../helpers/Floating.react";
+import "./Dropdown.css";
 
 type StyleOffsets = { top: number, left: number };
 type StylePosition = { position: "absolute" | "fixed" };
@@ -59,30 +60,16 @@ function DropdownMenu({
       show && (
       <div
         className={classes}
+        ref={rootRef}
+        style={style}
       >
         {children}
       </div>)
     );
   }
   else{
-    return (
-      show && (
-        <Popper placement={position} eventsEnabled={true} positionFixed={false}>
-          {({ ref, style, placement }: PopperChildrenProps) => {
-            return (
-              <div
-                className={classes}
-                data-placement={placement}
-                style={style}
-                ref={ref}
-              >
-                {children}
-              </div>
-            );
-          }}
-        </Popper>
-      )
-    );
+    return <FloatingSurface placement={position} open={show} rootRef={rootRef}
+      className={classes} style={style}>{children}</FloatingSurface>;
   }
 }
 

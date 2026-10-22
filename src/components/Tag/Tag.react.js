@@ -11,6 +11,8 @@ type PropsForAll = {|
   ...MouseEvents,
   ...PointerEvents,
   ...FocusEvents,
+  +rootRef?: (?HTMLElement) => void,
+  +"aria-describedby"?: string,
   +children?: React.Node,
   +className?: string,
   +rounded?: boolean,
@@ -93,6 +95,8 @@ class Tag extends React.Component<Props, State> {
     );
 
     const eventProps = {
+      ref: this.props.rootRef,
+      "aria-describedby": this.props["aria-describedby"],
       onClick,
       onMouseEnter,
       onMouseLeave,

@@ -3,7 +3,6 @@
 
 .npmrc
 !/.npmrc
-!/demo/.npmrc
 
 # dependencies
 node_modules

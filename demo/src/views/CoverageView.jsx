@@ -7,7 +7,7 @@ import { Scenario } from '../shared.jsx'
 const checks = [
   ['Tablas y datos', 'Buscar un fondo, ordenar ESG, filtrar una columna, paginar, seleccionar una fila y descargar CSV.'],
   ['Formularios y fechas', 'Editar el nombre, buscar una clasificación, abrir el calendario, guardar, probar una fecha inválida y restablecer.'],
-  ['Interacciones', 'Confirmar y cancelar el modal, usar los dos estilos de menú, probar los controles de tarjeta y cabecera con Intro/Espacio sin enviar el formulario, alternar ambas variantes de pestañas y entrar con/sin permiso.'],
+  ['Interacciones', 'Confirmar y cancelar el modal, usar ambos estilos de menú, Button.Dropdown y el disparador personalizado; probar las posiciones y ayudas con ratón/Tab, Escape, clic fuera, scroll y redimensionado. Abrir los submenús horizontal y vertical. Probar controles sin enviar el formulario, pestañas y rutas con/sin permiso.'],
   ['Gráficos y estados', 'Cambiar periodo, revisar tooltips/leyendas y alternar carga, vacío, error y reintento.'],
 ]
 

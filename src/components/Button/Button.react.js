@@ -6,11 +6,15 @@ import { Icon } from "../";
 import ButtonList from "./ButtonList.react";
 import ButtonDropdown from "./ButtonDropdown.react";
 
-import type { MouseEvents, PointerEvents } from "../../";
+import type { MouseEvents, PointerEvents, FocusEvents } from "../../";
 
 type PropsForAll = {|
   ...MouseEvents,
   ...PointerEvents,
+  ...FocusEvents,
+  +"aria-describedby"?: string,
+  +"aria-expanded"?: boolean,
+  +"aria-haspopup"?: string,
   +size?: "sm" | "lg",
   +outline?: boolean,
   +link?: boolean,
@@ -81,6 +85,8 @@ const Button = (props: Props): React.Node => {
     onMouseLeave,
     onPointerEnter,
     onPointerLeave,
+    onFocus,
+    onBlur,
   } = props;
 
   const classes = cn(
@@ -112,6 +118,11 @@ const Button = (props: Props): React.Node => {
     onPointerEnter: onPointerEnter,
     onPointerLeave: onPointerLeave,
     tabIndex: tabIndex,
+    onFocus,
+    onBlur,
+    "aria-describedby": props["aria-describedby"],
+    "aria-expanded": props["aria-expanded"],
+    "aria-haspopup": props["aria-haspopup"],
   };
 
   const childrenForAll = (

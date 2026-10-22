@@ -39,7 +39,7 @@ function NavLink({
     </React.Fragment>
   );
   return RootComponent ? (
-    <RootComponent exact={useExact || false} className={classes} to={to}>
+    <RootComponent exact={useExact || false} className={classes} to={to} ref={rootRef}>
       {childrenForAll}
     </RootComponent>
   ) : (

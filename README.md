@@ -47,7 +47,7 @@ Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 11.
 3. Run `npm run build` to compile the component library, or `npm start` to rebuild it when source files change.
 
 Use `npm install` when intentionally adding or updating dependencies, and commit the updated `package-lock.json`.
-The repository's `.npmrc` enables `legacy-peer-deps` because existing React/Popper and lint plugin peer ranges do not yet declare all the versions exercised here. This setting applies to development in this repository; consuming projects keep their own npm configuration.
+The repository's `.npmrc` enables `legacy-peer-deps` because the ESLint plugins still declare ESLint up to 9 and react-day-picker 8 declares date-fns up to 3. This setting applies to development in this repository; consuming projects keep their own npm configuration. The demo installs without this setting.
 
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
@@ -95,7 +95,7 @@ Para probar cambios en componentes, abre una segunda terminal en la raíz:
 npm start
 ```
 
-La demo mantiene su propio `package.json`, `package-lock.json` y `.npmrc`. Su compilación y previsualización son independientes:
+La demo mantiene su propio `package.json` y `package-lock.json`. Ya no necesita `.npmrc` ni `legacy-peer-deps`. Su compilación y previsualización son independientes:
 
 ```sh
 # Genera solo demo/dist/. No modifica el dist/ de la biblioteca.
@@ -111,9 +111,11 @@ npm --prefix demo run preview
 Las vistas de la demo permiten probar:
 
 - **Resumen:** Page, Grid, Card, Text, Icon y navegación con NavBarMenu.
+- **Menú principal:** NavBarMenu incluye «Componentes» y «Gráficos y cobertura». Abre ambos desplegables con ratón, Intro o Espacio; selecciona una página y comprueba el enlace activo, Escape y clic fuera. Los submenús utilizan el mismo posicionamiento de Floating UI que Dropdown.
 - **Tablas y datos:** AGGridTable con Community: búsqueda, filtros, ordenación, paginación, selección y CSV; comparación con Table. Activa y desactiva «Mostrar ayuda en las cabeceras» y pasa el ratón por un título para comprobar los tooltips sin recargar la tabla.
 - **Formularios y fechas:** Form, react-select, DatePicker, referencia de fecha, validación y restablecimiento. En «Fecha inicial y días anteriores», cambia el desplazamiento y pulsa «Restablecer fecha»: por defecto muestra 14/10/2026, con 0 días muestra 15/10/2026 y con 3 días muestra 12/10/2026.
 - **Interacciones:** Modal/useModal, Tabs/Tab/useTabs, Dropdown, Accordion y ProtectedRoute con Outlet y redirección. En «Controles de tarjeta y cabecera», prueba plegar, maximizar, cerrar y restaurar la tarjeta; abre el desplegable con Intro o Espacio. Por debajo de 992 px aparece el botón de navegación de Site.Header. Comprueba que todos estos controles mantienen a cero los envíos del formulario.
+- **Posicionamiento, dentro de Interacciones:** Dropdown, Button.Dropdown, disparador personalizado, Nav horizontal/vertical y Tooltip. Cambia entre las quince posiciones, incluidas `auto`, `auto-start` y `auto-end`; comprueba Escape, clic fuera, scroll y redimensionado. Las ayudas se abren con ratón y foco, conservan `aria-describedby` y orientan la flecha según la posición final.
 - **Gráficos y estados:** LineChart, BarChart y PieChart; TableLoader, LoaderZone, LoaderNoData, Spinner y reintento de error simulado.
 - **Cobertura de componentes:** inventario de imports, componentes incluidos y guion para repetir las comprobaciones.
 
@@ -131,12 +133,43 @@ La compilación separa React, ECharts y su renderer para permitir su caché inde
 
 El CSS publicado ya no contiene el hack antiguo `*display`. Las rutas de imágenes heredadas de la hoja principal están desactivadas y las fuentes locales se comprueban después de compilar mediante `npm test`.
 
+## Migración de Popper a Floating UI
+
+La biblioteca utiliza `@floating-ui/react` para el posicionamiento de Dropdown, Dropdown.Trigger, Dropdown.Menu, Button.Dropdown, Nav.Item, NavBarMenu, Tooltip y DatePicker. Se mantienen los componentes públicos, sus propiedades y la compatibilidad con React 18 y React 19. Floating UI es una dependencia interna; los consumidores no necesitan añadirla como peer ni instalar `react-popper` o `@popperjs/core` para usar estos componentes.
+
+El plan se realiza por etapas:
+
+1. Comprobar la compilación y el lint de partida.
+2. Centralizar el posicionamiento en `src/helpers/Floating.react.js`, con referencias independientes, ajuste a bordes y actualización al hacer scroll o redimensionar. Las posiciones `auto` utilizan `autoPlacement` y las posiciones explícitas utilizan `flip`.
+3. Adaptar juntos los desplegables y los submenús de navegación, conservando los menús verticales en el flujo de la página.
+4. Adaptar Tooltip y DatePicker. Mantener la gestión de foco del calendario y orientar las flechas de la ayuda según la posición resuelta.
+5. Retirar las dependencias de Popper y actualizar ambos locks. Retirar la excepción de instalación de la demo; la raíz la conserva por los conflictos de peers indicados en Setup.
+6. Validar con las pruebas de interacción, la demo y un consumidor aislado con React 18. Antes de publicar, repetir los flujos propios de cada proyecto consumidor.
+
+Para repetir las comprobaciones:
+
+```sh
+# Compila y ejecuta las pruebas de componentes, interacciones y assets con React 19.
+npm test
+
+# Comprueba biblioteca, pruebas, scripts y demo.
+npm run lint
+npm run lint:demo
+npm --prefix demo run build
+
+# Compila, empaqueta e instala en un consumidor temporal con React 18.3.1.
+# Necesita acceso a npm; no cambia las dependencias de la raíz ni de la demo.
+npm run test:react18
+```
+
+Las pruebas DOM verifican apertura, cierre, callbacks, referencias, las quince posiciones aceptadas y el foco del calendario en React 18 y 19. El entorno DOM simula los rectángulos para probar el foco; la geometría real, las flechas y el ajuste a bordes se comprueban en la demo del navegador. Esta migración no introduce navegación completa de menús con flechas ni portales: esas mejoras se pueden incorporar después mediante las utilidades de Floating UI, sin mezclar cambios de API con la sustitución del motor.
+
 ## Lint
 
-`npm run lint` analiza la biblioteca, las pruebas y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
+`npm run lint` analiza la biblioteca, las pruebas, los scripts `.mjs` y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
 Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos.
 
-Para compilar y ejecutar las pruebas de regresión de DatePicker y de los atributos de formulario, usa `npm test` desde la raíz.
+Para compilar y ejecutar las pruebas de regresión de componentes, posicionamiento, foco y assets, usa `npm test` desde la raíz.
 
 ## Deploy
 

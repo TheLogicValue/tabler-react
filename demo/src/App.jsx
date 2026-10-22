@@ -20,6 +20,12 @@ const pages = [
   { to: '/cobertura', value: 'Cobertura de componentes', icon: 'check-square', description: 'Qué componentes se incluyen y cómo repetir las comprobaciones.' },
 ]
 
+const navigationItems = [
+  { ...pages[0], LinkComponent: true },
+  { value: 'Componentes', icon: 'layers', subItems: pages.slice(1, 4).map(page => ({ ...page, LinkComponent: true })) },
+  { value: 'Gráficos y cobertura', icon: 'bar-chart-2', subItems: pages.slice(4).map(page => ({ ...page, LinkComponent: true })) },
+]
+
 function Overview() {
   return <>
     <div className="intro-panel">
@@ -77,7 +83,7 @@ export default function App() {
       <Link to="/" className="brand"><span className="brand-mark">t.</span><span>tabler<span className="brand-divider">/</span><strong>laboratorio tabler</strong></span></Link>
       <div className="build-tags"><span className="local-dot" />Biblioteca {__LIBRARY_VERSION__}<Badge color="secondary">Vite {__DEMO_VITE_VERSION__}</Badge></div>
     </div></header>
-    <nav className="demo-nav" aria-label="Ejemplos de componentes"><div className="demo-container"><NavBarMenu items={pages.map(page => ({ ...page, LinkComponent: true }))} /></div></nav>
+    <nav className="demo-nav" aria-label="Ejemplos de componentes"><div className="demo-container"><NavBarMenu items={navigationItems} /></div></nav>
     <main><Page.Content title={current.value} subTitle={current.description}>
       <ScenarioBoundary key={current.to}>
         <Suspense fallback={<div className="route-loading"><Spinner /> Preparando ejemplo…</div>}>

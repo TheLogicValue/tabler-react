@@ -3,7 +3,7 @@ import React, { useRef, useState, forwardRef, useImperativeHandle, useMemo } fro
 import { Icon } from "../"
 import { format, isValid, parse } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
-import { usePopper } from 'react-popper';
+import { usePositioning } from '../../helpers/Floating.react';
 import FocusTrap from 'focus-trap-react';
 
 import es from 'date-fns/locale/es';
@@ -32,11 +32,11 @@ const DayPickerTLV = forwardRef((props, ref) => {
     const [selected, setSelected] = useState(date);
     const [isPopperOpen, setIsPopperOpen] = useState(false);
 
-    const popperRef = useRef(null);
+    const [referenceElement, setReferenceElement] = useState(null);
     const buttonRef = useRef(null);
-    const [popperElement, setPopperElement] = useState(null);
-
-    const popper = usePopper(popperRef.current, popperElement, {
+    const floating = usePositioning({
+        reference: referenceElement,
+        open: isPopperOpen,
         placement: 'bottom-start'
     });
 
@@ -80,7 +80,7 @@ const DayPickerTLV = forwardRef((props, ref) => {
 
     return (
         <div>
-            <div ref={popperRef} className="DayPicker">
+            <div ref={setReferenceElement} className="DayPicker">
                 <input
                     type="text"
                     placeholder={format(new Date(), 'dd/MM/y')}
@@ -109,10 +109,10 @@ const DayPickerTLV = forwardRef((props, ref) => {
                 >
                     <div
                         tabIndex={-1}
-                        style={popper.styles.popper}
+                        style={floating.floatingStyles}
                         className="dialog-sheet"
-                        {...popper.attributes.popper}
-                        ref={setPopperElement}
+                        data-placement={floating.placement}
+                        ref={floating.refs.setFloating}
                         role="dialog"
                     >
                         <DayPicker

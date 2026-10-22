@@ -1,0 +1,26 @@
+/* Keep the existing Tabler caret, oriented to the resolved (possibly flipped) side. */
+.dropdown-menu-arrow[data-placement^="top"]::before,
+.dropdown-menu-arrow[data-placement^="top"]::after {
+  top: auto;
+  transform: rotate(180deg);
+}
+.dropdown-menu-arrow[data-placement^="top"]::before { bottom: -6px; }
+.dropdown-menu-arrow[data-placement^="top"]::after { bottom: -5px; }
+
+.dropdown-menu-arrow[data-placement^="right"]::before,
+.dropdown-menu-arrow[data-placement^="right"]::after {
+  top: 12px;
+  right: auto;
+  transform: rotate(-90deg);
+}
+.dropdown-menu-arrow[data-placement^="right"]::before { left: -8px; }
+.dropdown-menu-arrow[data-placement^="right"]::after { left: -7px; }
+
+.dropdown-menu-arrow[data-placement^="left"]::before,
+.dropdown-menu-arrow[data-placement^="left"]::after {
+  top: 12px;
+  left: auto;
+  transform: rotate(90deg);
+}
+.dropdown-menu-arrow[data-placement^="left"]::before { right: -8px; }
+.dropdown-menu-arrow[data-placement^="left"]::after { right: -7px; }

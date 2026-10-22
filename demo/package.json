@@ -10,14 +10,12 @@
     "preview": "vite preview --host 127.0.0.1 --port 5174 --strictPort"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
     "ag-grid-community": "32.3.9",
     "ag-grid-react": "32.3.9",
     "echarts": "6.1.0",
     "echarts-for-react": "3.0.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "react-popper": "2.3.0",
     "react-router-dom": "7.18.4"
   },
   "devDependencies": {

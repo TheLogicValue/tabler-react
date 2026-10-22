@@ -7,8 +7,8 @@ import Icon from "../Icon";
 import type { subNavItem } from "./Nav.react";
 import ClickOutside from "../../helpers/ClickOutside.react";
 
-import { Manager, Reference } from "react-popper";
-import type { Placement, ReferenceChildrenProps } from "react-popper";
+import { FloatingProvider, FloatingReference } from "../../helpers/Floating.react";
+import type { Placement } from "../../helpers/Floating.react";
 type Props = {|
   +children?: React.Node,
   +className?: string,
@@ -45,7 +45,7 @@ type State = {
 };
 
 /**
- * A NavItem with react-popper powered subIems Dropdowns
+ * A NavItem with Floating UI powered subItems Dropdowns
  */
 class NavItem extends React.Component<Props, State> {
   displayName = "Nav.Item";
@@ -56,7 +56,7 @@ class NavItem extends React.Component<Props, State> {
 
   _handleOnClick = (event): void => {
     
-    if ((this.props.hasSubNav && !this.props.vertical) || (this.props.vertical && !event.target.className.includes("nav-link-item-vertical"))) {
+    if (((this.props.hasSubNav || this.props.subItems || this.props.subItemsObjects) && !this.props.vertical) || (this.props.vertical && !event.target.className.includes("nav-link-item-vertical"))) {
       this.setState(s => ({ isOpen: !s.isOpen }));
     }
 
@@ -84,8 +84,8 @@ class NavItem extends React.Component<Props, State> {
     const hasSubNav = forcedHasSubNav || !!subItems || !!subItemsObjects;
     const navLink =
       (typeof children === "string" || value) && hasSubNav ? (
-        <Reference>
-          {({ ref }: ReferenceChildrenProps) => (
+        <FloatingReference>
+          {({ ref }) => (
             <Nav.Link
               className={className}
               to={to}
@@ -100,7 +100,7 @@ class NavItem extends React.Component<Props, State> {
               {hasSubNav && <Icon name="chevron-down" className="text-right"/>}
             </Nav.Link>
           )}
-        </Reference>
+        </FloatingReference>
       ) : (
         <Nav.Link
           className={className}
@@ -175,7 +175,7 @@ class NavItem extends React.Component<Props, State> {
         </ClickOutside>
       );
 
-    return hasSubNav ? <Manager>{wrappedChildren}</Manager> : wrappedChildren;
+    return hasSubNav ? <FloatingProvider onDismiss={() => this.setState({ isOpen: false })}>{wrappedChildren}</FloatingProvider> : wrappedChildren;
   }
 }
 
