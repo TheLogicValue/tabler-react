@@ -6,6 +6,9 @@ import { defineConfig, esmExternalRequirePlugin, normalizePath } from 'vite'
 const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
 const sourceDirectory = normalizePath(fileURLToPath(new URL('./src/', import.meta.url)))
 const peers = Object.keys(packageJson.peerDependencies)
+// Keep the chart engine visible to the consumer's bundler so it can split its
+// modules, instead of embedding ECharts inside the library's single entry file.
+const externals = [...peers, 'echarts-for-react']
 
 export default defineConfig({
   base: './',
@@ -16,7 +19,7 @@ export default defineConfig({
     // requires to imports in ESM so the package runs in browsers without require.
     // This plugin owns external resolution for both roots and peer subpaths.
     esmExternalRequirePlugin({
-      external: peers.flatMap(peer => [peer, new RegExp('^' + peer + '/')]),
+      external: externals.flatMap(dependency => [dependency, new RegExp('^' + dependency + '/')]),
     }),
     {
       name: 'tabler-flow-and-jsx',

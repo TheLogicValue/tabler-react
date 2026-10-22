@@ -1,12 +1,10 @@
 [ignore]
-.*/node_modules/findup/.*
-.*/example/node_modules/findup/.*
-.*/node_modules/eslint-plugin-jsx-a11y/.*
+.*/demo/.*
+.*/dist/.*
 [include]
 
 [libs]
 ./flow-typed
-./dist/index.js.flow
 [lints]
 
 [options]

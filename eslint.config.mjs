@@ -20,7 +20,7 @@ const flowGlobals = Object.fromEntries([
 export default [
   { ignores: ['**/node_modules/**', 'dist/**', 'demo/dist/**', 'flow-typed/**'] },
   {
-    files: ['src/**/*.js', 'demo/src/**/*.{js,jsx}', '**/*.mjs'],
+    files: ['src/**/*.js', 'tests/**/*.cjs', 'demo/src/**/*.{js,jsx}', '**/*.mjs'],
     ...js.configs.recommended,
     languageOptions: {
       ecmaVersion: 'latest',
@@ -62,8 +62,8 @@ export default [
     languageOptions: { globals: globals.node },
   },
   {
-    files: ['src/test.js', '**/*.{test,spec}.{js,jsx}'],
-    languageOptions: { globals: globals.jest },
+    files: ['tests/**/*.cjs'],
+    languageOptions: { sourceType: 'commonjs', globals: globals.node },
   },
   {
     files: ['demo/src/**/*.{js,jsx}'],

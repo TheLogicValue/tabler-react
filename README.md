@@ -4,7 +4,7 @@
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Type definitions](https://img.shields.io/badge/type%20definitions-flow-green.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/tabler/tabler-react.svg)](https://greenkeeper.io/) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Tipos en las fuentes](https://img.shields.io/badge/source%20types-Flow-green.svg)
 
 ## Install
 
@@ -52,6 +52,8 @@ The repository's `.npmrc` enables `legacy-peer-deps` because existing React/Popp
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
 
+La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Se conservan las anotaciones de las fuentes, `@babel/preset-flow`, Hermes y las definiciones de `flow-typed`. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`. La compilación no publica declaraciones `.js.flow` ni `.d.ts`.
+
 The published package keeps these entry points:
 
 - `dist/index.js`: CommonJS (`require('tabler-react')`).
@@ -62,6 +64,8 @@ The published package keeps these entry points:
 JavaScript source maps are generated. Vite's CSS extraction does not emit the previous `style.css.map` file.
 React, React DOM and all other peer dependencies (including their subpaths) stay external and must be provided by the consuming project.
 The `files` allowlist publishes only `dist`; the separate `demo/` app stays outside the library build and package.
+
+La biblioteca mantiene `echarts-for-react` como dependencia externa del bundle: npm la instala junto con la biblioteca y el empaquetador del consumidor puede procesarla y dividirla. Las rutas públicas y los componentes de gráficos conservan su API.
 
 ## Laboratorio Tabler: demo de integración
 
@@ -121,9 +125,15 @@ node demo/scripts/scan-usage.mjs <ruta-al-src-del-consumidor>
 
 La cobertura de un componente en la demo no certifica todas sus variantes ni sustituye las pruebas funcionales del consumidor. Los errores reales de renderizado se muestran en pantalla; el error de carga de la vista de gráficos es intencional.
 
+La demo configura un motor modular de ECharts para los componentes LineChart, BarChart, PieChart, DoughnutChart y RadarChart. Esta configuración pertenece al consumidor de ejemplo; la biblioteca publicada conserva su dependencia normal de `echarts-for-react`.
+
+La compilación separa React, ECharts y su renderer para permitir su caché independiente. AG Grid 32 se distribuye como un módulo generado grande: queda aislado en `vendor-ag-grid` y se carga al entrar en «Tablas y datos». `demo/scripts/bundle-budget.mjs` hace fallar la compilación si cualquier archivo JavaScript supera 500 kB, con una excepción explícita de 1 MB para ese único vendor. El umbral general de aviso de Vite se ajusta a esa excepción; el resto de archivos sigue sujeto al presupuesto más estricto. La demo descarta únicamente el aviso de directiva `use client` de React Router, que no se aplica a esta SPA de cliente.
+
+El CSS publicado ya no contiene el hack antiguo `*display`. Las rutas de imágenes heredadas de la hoja principal están desactivadas y las fuentes locales se comprueban después de compilar mediante `npm test`.
+
 ## Lint
 
-`npm run lint` analiza la biblioteca y `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
+`npm run lint` analiza la biblioteca, las pruebas y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
 Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos.
 
 Para compilar y ejecutar las pruebas de regresión de DatePicker y de los atributos de formulario, usa `npm test` desde la raíz.
