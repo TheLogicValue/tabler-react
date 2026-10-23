@@ -1,13 +1,13 @@
 {
   "name": "Dimmer",
   "kind": "Componente",
-  "source": "src/components/Dimmer/index.js",
-  "implementation": "src/components/Dimmer/Dimmer.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Loader } from \"../Loader\";\nimport DimmerContent from \"./DimmerContent.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +active?: boolean,\n  +loader?: boolean,\n|};\n\nfunction Dimmer({ className, children, active, loader }: Props): React.Node {\n  const classes = cn({ dimmer: true, active: active }, className);\n  return (\n    <div className={classes}>\n      <React.Fragment>\n        {loader && <Loader />}\n        <DimmerContent>{children}</DimmerContent>\n      </React.Fragment>\n    </div>\n  );\n}\n\nDimmer.displayName = \"Dimmer\";\nDimmer.Content = DimmerContent;\nexport default Dimmer;",
+  "source": "src/components/Dimmer/index.ts",
+  "implementation": "src/components/Dimmer/Dimmer.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport { Loader } from \"../Loader\";\nimport DimmerContent from \"./DimmerContent.react\";\n\nexport type DimmerProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly active?: boolean;\n  readonly loader?: boolean;\n};\n\nfunction Dimmer({ className, children, active, loader }: DimmerProps): React.ReactElement {\n  const classes = cn({ dimmer: true, active: active }, className);\n  return (\n    <div className={classes}>\n      <React.Fragment>\n        {loader && <Loader />}\n        <DimmerContent>{children}</DimmerContent>\n      </React.Fragment>\n    </div>\n  );\n}\n\nDimmer.displayName = \"Dimmer\";\nDimmer.Content = DimmerContent;\nexport default Dimmer;",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -38,11 +38,11 @@
   "childApis": [
     {
       "name": "Content",
-      "source": "src/components/Dimmer/DimmerContent.react.js",
+      "source": "src/components/Dimmer/DimmerContent.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },

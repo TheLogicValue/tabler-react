@@ -541,6 +541,59 @@ test('Tooltip admite Button y Tag de la biblioteca y conserva sus rootRef', asyn
   }
 })
 
+test('Tag mantiene eventos, referencias y retirada interna o delegada al consumidor', async () => {
+  const { Tag } = components
+  const ref = React.createRef()
+  const events = []
+  const names = ['onClick', 'onMouseEnter', 'onMouseLeave', 'onPointerEnter', 'onPointerLeave', 'onFocus', 'onBlur']
+  const handlers = Object.fromEntries(names.map(name => [name, event => events.push([name, event.currentTarget.tagName])]))
+  await render(React.createElement(Tag, { ...handlers, link: true, href: '#atlas', rootRef: ref }, 'Atlas'))
+  const anchor = container.querySelector('a')
+  assert.equal(ref.current, anchor)
+  await React.act(async () => {
+    for (const [kind, Constructor] of [['click', window.MouseEvent], ['mouseover', window.MouseEvent], ['mouseout', window.MouseEvent], ['pointerover', window.PointerEvent], ['pointerout', window.PointerEvent], ['focusin', window.FocusEvent], ['focusout', window.FocusEvent]]) anchor.dispatchEvent(new Constructor(kind, { bubbles: true, relatedTarget: document.body }))
+  })
+  assert.deepEqual(events, names.map(name => [name, 'A']))
+  await React.act(async () => root.render(React.createElement(Tag, { key: 'internal', remove: true }, 'Interna')))
+  assert.equal(ref.current, null)
+  await click(container.querySelector('.tag-addon'))
+  assert.equal(container.querySelector('.tag'), null)
+  let removed = 0, added = 0
+  await React.act(async () => root.render(React.createElement(Tag, { key: 'external', remove: true, addOn: 'Extra', onRemoveClick: event => { event.preventDefault(); removed++ }, onAddOnClick: () => added++ }, 'Externa')))
+  await click(container.querySelector('span.tag-addon'))
+  await click(container.querySelector('a.tag-addon'))
+  assert.equal(removed, 1)
+  assert.equal(added, 1)
+  assert.ok(container.querySelector('.tag'), 'El callback externo conserva el control de la retirada')
+})
+
+test('Tag utiliza Link como raíz personalizada y conserva su referencia', async () => {
+  const { Link } = consumerRequire('react-router-dom')
+  const ref = React.createRef()
+  let clicks = 0
+  await render(React.createElement(MemoryRouter, null, React.createElement(components.Tag, { RootComponent: Link, to: '/atlas', rootRef: ref, onClick: () => clicks++ }, 'Atlas')))
+  assert.equal(ref.current, container.querySelector('a'))
+  assert.equal(ref.current.getAttribute('href'), '/atlas')
+  assert.ok(ref.current.classList.contains('tag'))
+  await click(ref.current)
+  assert.equal(clicks, 1)
+})
+
+test('Tooltip conserva referencias de callback en disparadores memo y forwardRef', async () => {
+  const refs = []
+  const Trigger = React.memo(React.forwardRef(function Trigger(props, ref) { return React.createElement('button', { ...props, ref }) }))
+  await render(React.createElement(components.Tooltip, { content: 'Ayuda memo', placement: 'left-end' }, React.createElement(Trigger, { ref: element => { refs.push(element) } }, 'Referencia')))
+  const button = container.querySelector('button')
+  assert.equal(refs.at(-1), button)
+  await React.act(async () => { button.focus(); await new Promise(resolve => setTimeout(resolve, 30)) })
+  assert.equal(container.querySelector('[role=tooltip]').textContent, 'Ayuda memo')
+  await key(button, 'Escape')
+  assert.equal(container.querySelector('[role=tooltip]'), null)
+  await React.act(async () => root.render(React.createElement(components.Tooltip, { content: 'Sin disparador' })))
+  assert.equal(refs.at(-1), null)
+  assert.equal(container.innerHTML, '')
+})
+
 test('DatePicker abre, selecciona fecha, devuelve foco y cierra por Escape y clic fuera', async () => {
   const { DatePicker } = components
   const ref = React.createRef()

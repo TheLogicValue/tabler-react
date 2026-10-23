@@ -1,22 +1,29 @@
 {
   "name": "LoaderNoData",
   "kind": "Componente",
-  "source": "src/components/Loader/index.js",
-  "implementation": "src/components/Loader/LoaderNodata.js",
-  "implementationCode": "\nimport React from 'react'\nconst LoaderNoData = ({ height, backgroundColor = \"#fff\", title = \"No data\" }) => {\n    return <div style={\n        {\n            height: height,\n            alignItems: \"center\",\n            display: \"flex\",\n            justifyContent: \"center\",\n            backgroundColor: backgroundColor\n        }\n    }>{title}</div>\n}\nexport default LoaderNoData",
+  "source": "src/components/Loader/index.ts",
+  "implementation": "src/components/Loader/LoaderNodata.tsx",
+  "implementationCode": "\nimport React from 'react'\n\nexport type LoaderNoDataProps = {\n    readonly height?: React.CSSProperties[\"height\"];\n    readonly backgroundColor?: React.CSSProperties[\"backgroundColor\"];\n    readonly title?: React.ReactNode;\n};\n\nconst LoaderNoData = ({ height, backgroundColor = \"#fff\", title = \"No data\" }: LoaderNoDataProps): React.ReactElement => {\n    return <div style={\n        {\n            height: height,\n            alignItems: \"center\",\n            display: \"flex\",\n            justifyContent: \"center\",\n            backgroundColor: backgroundColor\n        }\n    }>{title}</div>\n}\nexport default LoaderNoData\n",
   "props": [
     {
-      "name": "height"
+      "name": "height",
+      "type": "React.CSSProperties[\"height\"]",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "backgroundColor",
-      "default": "\"#fff\"",
-      "optional": true
+      "type": "React.CSSProperties[\"backgroundColor\"]",
+      "optional": true,
+      "description": "",
+      "default": "\"#fff\""
     },
     {
       "name": "title",
-      "default": "\"No data\"",
-      "optional": true
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": "",
+      "default": "\"No data\""
     }
   ],
   "subcomponents": [],
@@ -29,7 +36,8 @@
     "summary": "Zona que comunica la ausencia de datos.",
     "behavior": [
       "Configura title, height y backgroundColor para adaptar su apariencia.",
-      "El consumidor decide cuándo está realmente vacía la información."
+      "El consumidor decide cuándo está realmente vacía la información.",
+      "height utiliza un tamaño CSS y title admite texto o un nodo React. Solo se reenvían estas propiedades y backgroundColor."
     ],
     "example": "<LoaderNoData title=\"No hay registros\" height=\"240px\" />"
   }

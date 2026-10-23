@@ -1,35 +1,49 @@
 {
   "name": "LoaderZone",
   "kind": "Componente",
-  "source": "src/components/Loader/index.js",
-  "implementation": "src/components/Loader/LoaderZone.js",
-  "implementationCode": "import React from 'react'\nimport ContentLoader from \"react-content-loader\"\n\nconst LoaderZone = ({ width, height, title = \"Loading\", speed = 2, backgroundColor = \"#f3f3f3\", foregroundColor = \"#ecebeb\" }) => {\n\n    const updateHeight = (height, operation, operationValue = 0.313) => {\n        let unity = \"\";\n        let value = \"\";\n\n        for (let h of height) {\n            if (isNaN(parseInt(h))) unity += h\n            else value += h\n        }\n\n        const operations = {\n            \"res\": () => (parseFloat(value) - operationValue) + unity.replace(\".\", \"\"),\n            \"sum\": () => (parseFloat(value) + operationValue) + unity.replace(\".\", \"\")\n        }\n\n        return operations[operation]()\n    }\n\n    return <ContentLoader\n        speed={speed}\n        className=\"loading-zone\"\n        width={width}\n        height={height}\n        backgroundColor={backgroundColor}\n        foregroundColor={foregroundColor}\n        title={title}\n        style={{ padding: \"0.125rem 0.313rem\" }}\n    >\n        <rect x=\"0\" y=\"0\" rx=\"2\" ry=\"2\" width={width} height={updateHeight(height, \"res\")} />\n    </ContentLoader>\n}\nexport default LoaderZone",
+  "source": "src/components/Loader/index.ts",
+  "implementation": "src/components/Loader/LoaderZone.tsx",
+  "implementationCode": "import React from 'react'\nimport ContentLoader from \"react-content-loader\"\nimport type { IContentLoaderProps } from \"react-content-loader\"\n\nexport type LoaderZoneProps = {\n    readonly width?: IContentLoaderProps[\"width\"];\n    readonly height: string | number;\n    readonly title?: string;\n    readonly speed?: number;\n    readonly backgroundColor?: string;\n    readonly foregroundColor?: string;\n};\n\n// Keep the legacy subtraction for numeric lengths, including fractional units.\n// Expressions such as calc()/var() are passed through without interpretation.\nfunction contentHeight(height: string | number): string | number {\n    if (typeof height === \"number\") return height - 0.313;\n    const length = /^(-?(?:\\d+\\.?\\d*|\\.\\d+))([a-z%]*)$/i.exec(height);\n    return length ? `${Number(length[1]) - 0.313}${length[2]}` : height;\n}\n\nconst LoaderZone = ({ width, height, title = \"Loading\", speed = 2, backgroundColor = \"#f3f3f3\", foregroundColor = \"#ecebeb\" }: LoaderZoneProps): React.ReactElement => {\n\n    return <ContentLoader\n        speed={speed}\n        className=\"loading-zone\"\n        width={width}\n        height={height}\n        backgroundColor={backgroundColor}\n        foregroundColor={foregroundColor}\n        title={title}\n        style={{ padding: \"0.125rem 0.313rem\" }}\n    >\n        <rect x=\"0\" y=\"0\" rx=\"2\" ry=\"2\" width={width} height={contentHeight(height)} />\n    </ContentLoader>\n}\nexport default LoaderZone\n",
   "props": [
     {
-      "name": "width"
+      "name": "width",
+      "type": "IContentLoaderProps[\"width\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "height"
+      "name": "height",
+      "type": "string | number",
+      "optional": false,
+      "description": ""
     },
     {
       "name": "title",
-      "default": "\"Loading\"",
-      "optional": true
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Loading\""
     },
     {
       "name": "speed",
-      "default": "2",
-      "optional": true
+      "type": "number",
+      "optional": true,
+      "description": "",
+      "default": "2"
     },
     {
       "name": "backgroundColor",
-      "default": "\"#f3f3f3\"",
-      "optional": true
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"#f3f3f3\""
     },
     {
       "name": "foregroundColor",
-      "default": "\"#ecebeb\"",
-      "optional": true
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"#ecebeb\""
     }
   ],
   "subcomponents": [],
@@ -41,8 +55,9 @@
   "guide": {
     "summary": "Esqueleto de carga de una zona de contenido.",
     "behavior": [
-      "Utiliza react-content-loader; width, height y colores ajustan el SVG.",
-      "Representa un estado visual, no inicia ni cancela la carga de datos."
+      "Utiliza react-content-loader. height es obligatorio y admite un número o una cadena con unidades; width es opcional. También reenvía title, speed, backgroundColor y foregroundColor.",
+      "Conserva el ajuste heredado de 0.313 en la altura del rectángulo, en la unidad recibida. Las alturas numéricas y fraccionarias se calculan correctamente. Las expresiones calc()/var() se pasan sin interpretar.",
+      "Representa un estado visual, no inicia ni cancela la carga de datos. No reenvía otras propiedades de react-content-loader."
     ],
     "example": "<LoaderZone width={600} height={240} title=\"Cargando información\" />"
   }

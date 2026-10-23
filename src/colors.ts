@@ -1,5 +1,6 @@
-// @ flow
-const colors: { [string]: string } = {
+export type TablerColors = Record<string, string>;
+
+const colors: TablerColors = {
   blue: "#467fcf",
   "blue-darkest": "#0e1929",
   "blue-darker": "#1c3353",

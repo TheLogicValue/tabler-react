@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type DimmerContentProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function DimmerContent({ className, children }: Props): React.Node {
+function DimmerContent({ className, children }: DimmerContentProps): React.ReactElement {
   const classes = cn({ "dimmer-content": true }, className);
   return <div className={classes}>{children}</div>;
 }

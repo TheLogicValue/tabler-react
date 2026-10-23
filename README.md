@@ -317,6 +317,10 @@ AGGridPagination evita accesos a una API o unos tamaños todavía ausentes, perm
 
 Los gráficos comprueban la opción generada contra EChartsOption y reutilizan los tipos de sus series y callbacks. BarChart conserva el contrato heredado de apilado, LineChart recibe un array en el tooltip y RadarChart recibe los valores del perfil. Las propiedades públicas conservan su alcance: no se añade reenvío de opciones que el wrapper no utilizaba. Las pruebas comprueban la frontera con ReactECharts y representan las cinco variantes en SVG con el motor real de ECharts. `src/echarts-react-jsx.d.ts` aporta únicamente el alias JSX.Element que aún referencia echarts-for-react 3 durante la comprobación con los tipos de React 19; no añade código de ejecución y mantiene skipLibCheck=false.
 
+colors, Tooltip, Tag con List/AddOn, Stamp, Progress con Bar, Loader/LoaderZone/LoaderNoData y Dimmer con Content también utilizan TypeScript. Los eventos y referencias de Tag describen la raíz real; Tooltip conserva las referencias y los eventos del disparador con React 18 y 19. Se mantienen las 97 entradas de la paleta y su mutabilidad.
+
+En este bloque se corrige Tag para renderizar el RootComponent recibido en vez de la clase base React.Component. LoaderZone admite alturas numéricas y fraccionarias sin fallar ni alterar sus unidades; mantiene el ajuste heredado de 0.313 y pasa expresiones CSS sin interpretarlas. Las pruebas cubren las variantes de Tag, sus referencias y retirada interna o delegada, los loaders y la composición de Progress/Dimmer. Las fichas muestran las APIs migradas, sin ampliar artificialmente la cobertura visual.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck

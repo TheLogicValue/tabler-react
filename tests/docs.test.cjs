@@ -131,6 +131,21 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('Table').childApis.length, 5)
   assert.ok(document('Table').childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
   for (const name of ['TableLoader', 'BarChartLoader', 'PieChartLoader']) assert.ok(document(name).props.find(prop => prop.name === 'width').type)
+  for (const name of ['Tooltip', 'Tag', 'Stamp', 'Progress', 'Loader', 'Dimmer']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/components/${name}/${name}.react.tsx`)
+    assert.ok(doc.props.every(prop => prop.type), name + ': todas las propiedades deben tener tipo')
+    assert.ok(doc.childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  }
+  assert.equal(document('colors').implementation, 'src/colors.ts')
+  assert.equal(document('LoaderZone').implementation, 'src/components/Loader/LoaderZone.tsx')
+  assert.equal(document('LoaderZone').props.find(prop => prop.name === 'height').type, 'string | number')
+  assert.equal(document('LoaderZone').props.find(prop => prop.name === 'height').optional, false)
+  assert.equal(document('LoaderNoData').implementation, 'src/components/Loader/LoaderNodata.tsx')
+  assert.equal(document('LoaderNoData').props.find(prop => prop.name === 'title').type, 'React.ReactNode')
+  assert.equal(document('Tag').childApis.length, 2)
+  assert.equal(document('Tag').props.find(prop => prop.name === 'rootRef').type, 'React.Ref<T>')
+  assert.equal(document('Tooltip').props.find(prop => prop.name === 'children').type, 'React.ReactElement<TooltipTriggerProps>')
 })
 
 function walk(node, visit) {

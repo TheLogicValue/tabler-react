@@ -1,13 +1,13 @@
 {
   "name": "Stamp",
   "kind": "Componente",
-  "source": "src/components/Stamp/index.js",
-  "implementation": "src/components/Stamp/Stamp.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Icon } from \"../\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +size?: \"sm\" | \"md\",\n  +icon?: string,\n  +color?: string,\n|};\n\nfunction Stamp({\n  children,\n  className,\n  size = \"md\",\n  icon,\n  color = \"\",\n}: Props): React.Node {\n  const classes = cn(\n    { stamp: true, [`stamp-${size}`]: size, [`bg-${color}`]: color },\n    className\n  );\n  return (\n    <span className={classes}>\n      {icon && <Icon name={icon} />}\n      {children}\n    </span>\n  );\n}\n\nStamp.displayName = \"Stamp\";\n\nexport default Stamp;\n",
+  "source": "src/components/Stamp/index.ts",
+  "implementation": "src/components/Stamp/Stamp.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Icon from \"../Icon\";\n\nexport type StampProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly size?: \"sm\" | \"md\";\n  readonly icon?: string;\n  readonly color?: string;\n};\n\nfunction Stamp({\n  children,\n  className,\n  size = \"md\",\n  icon,\n  color = \"\",\n}: StampProps): React.ReactElement {\n  const classes = cn(\n    { stamp: true, [`stamp-${size}`]: size, [`bg-${color}`]: color },\n    className\n  );\n  return (\n    <span className={classes}>\n      {icon && <Icon name={icon} />}\n      {children}\n    </span>\n  );\n}\n\nStamp.displayName = \"Stamp\";\n\nexport default Stamp;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },

@@ -1,13 +1,13 @@
 {
   "name": "Tag",
   "kind": "Componente",
-  "source": "src/components/Tag/index.js",
-  "implementation": "src/components/Tag/Tag.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport TagList from \"./TagList.react\";\nimport TagAddOn from \"./TagAddOn.react\";\n\nimport type { MouseEvents, PointerEvents, FocusEvents } from \"../../\";\n\ntype PropsForAll = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  ...FocusEvents,\n  +rootRef?: (?HTMLElement) => void,\n  +\"aria-describedby\"?: string,\n  +children?: React.Node,\n  +className?: string,\n  +rounded?: boolean,\n  +color?: string,\n  +avatar?: string,\n  +remove?: boolean,\n  +onRemoveClick?: Function,\n  +addOn?: React.Node,\n  +addOnIcon?: string,\n  +addOnColor?: string,\n  +onAddOnClick?: Function,\n|};\n\ntype DefaultProps = {|\n  ...PropsForAll,\n|};\n\ntype LinkComponentProps = {|\n  ...PropsForAll,\n  +link: true,\n  +href: string,\n|};\n\ntype ReactRouterProps = {|\n  ...PropsForAll,\n  +RootComponent: React.ElementType,\n  +to: string,\n|};\n\ntype Props = DefaultProps | LinkComponentProps | ReactRouterProps;\n\ntype State = {|\n  isDeleted: boolean,\n|};\n\nclass Tag extends React.Component<Props, State> {\n  state = {\n    isDeleted: false,\n  };\n\n  static List = TagList;\n  static AddOn = TagAddOn;\n\n  handleOnRemoveClick = (): void => {\n    this.setState(s => ({\n      isDeleted: true,\n    }));\n  };\n\n  render(): React.Node {\n    const {\n      children,\n      className,\n      rounded,\n      color = \"\",\n      avatar,\n      remove,\n      addOn,\n      addOnIcon,\n      addOnColor,\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n      onFocus,\n      onBlur,\n      onRemoveClick,\n      onAddOnClick,\n    } = this.props;\n\n    const classes = cn(\n      {\n        tag: true,\n        expanded: true,\n        \"tag-rounded\": rounded,\n        [`tag-${color}`]: color,\n      },\n      className\n    );\n\n    const eventProps = {\n      ref: this.props.rootRef,\n      \"aria-describedby\": this.props[\"aria-describedby\"],\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n      onFocus,\n      onBlur,\n    };\n\n    if (this.state.isDeleted) {\n      return null;\n    }\n\n    const childrenForAll = (\n      <React.Fragment>\n        {avatar && (\n          <span\n            className=\"tag-avatar avatar\"\n            style={{ backgroundImage: `url(${avatar})` }}\n          />\n        )}\n        {children}\n        {(addOn || addOnIcon) && (\n          <TagAddOn icon={addOnIcon} color={addOnColor} onClick={onAddOnClick}>\n            {addOn}\n          </TagAddOn>\n        )}\n        {remove && onRemoveClick ? (\n          <TagAddOn onClick={onRemoveClick} link icon=\"x\" />\n        ) : (\n          remove && (\n            <TagAddOn onClick={this.handleOnRemoveClick} link icon=\"x\" />\n          )\n        )}\n      </React.Fragment>\n    );\n\n    if (this.props.RootComponent) {\n      const { to } = this.props;\n      return (\n        <React.Component className={classes} to={to} {...eventProps}>\n          {childrenForAll}\n        </React.Component>\n      );\n    }\n\n    if (this.props.link) {\n      const { href } = this.props;\n      return (\n        <a className={classes} href={href} {...eventProps}>\n          {childrenForAll}\n        </a>\n      );\n    }\n\n    return (\n      <span className={classes} {...eventProps}>\n        {childrenForAll}\n      </span>\n    );\n  }\n}\n\nexport default Tag;\n",
+  "source": "src/components/Tag/index.ts",
+  "implementation": "src/components/Tag/Tag.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport TagList from \"./TagList.react\";\nimport TagAddOn from \"./TagAddOn.react\";\n\nexport type TagCommonProps<T extends HTMLElement = HTMLElement> = {\n  readonly rootRef?: React.Ref<T>;\n  readonly \"aria-describedby\"?: string;\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly rounded?: boolean;\n  readonly color?: string;\n  readonly avatar?: string;\n  readonly remove?: boolean;\n  readonly onRemoveClick?: React.MouseEventHandler<HTMLElement>;\n  readonly addOn?: React.ReactNode;\n  readonly addOnIcon?: string;\n  readonly addOnColor?: string;\n  readonly onAddOnClick?: React.MouseEventHandler<HTMLElement>;\n  readonly onClick?: React.MouseEventHandler<T>;\n  readonly onMouseEnter?: React.MouseEventHandler<T>;\n  readonly onMouseLeave?: React.MouseEventHandler<T>;\n  readonly onPointerEnter?: React.PointerEventHandler<T>;\n  readonly onPointerLeave?: React.PointerEventHandler<T>;\n  readonly onFocus?: React.FocusEventHandler<T>;\n  readonly onBlur?: React.FocusEventHandler<T>;\n};\n\nexport type TagSpanProps = TagCommonProps<HTMLSpanElement> & {\n  readonly link?: false;\n  readonly href?: never;\n  readonly RootComponent?: never;\n  readonly to?: never;\n};\nexport type TagAnchorProps = TagCommonProps<HTMLAnchorElement> & {\n  readonly link: true;\n  readonly href: string;\n  readonly RootComponent?: never;\n  readonly to?: never;\n};\nexport type TagCustomProps = TagCommonProps & {\n  readonly RootComponent: React.ElementType;\n  readonly to: string;\n  readonly link?: boolean;\n  readonly href?: never;\n};\nexport type TagProps = TagSpanProps | TagAnchorProps | TagCustomProps;\n\ntype TagState = { isDeleted: boolean };\n\nfunction eventProps<T extends HTMLElement>(props: TagCommonProps<T>) {\n  return {\n    ref: props.rootRef,\n    \"aria-describedby\": props[\"aria-describedby\"],\n    onClick: props.onClick,\n    onMouseEnter: props.onMouseEnter,\n    onMouseLeave: props.onMouseLeave,\n    onPointerEnter: props.onPointerEnter,\n    onPointerLeave: props.onPointerLeave,\n    onFocus: props.onFocus,\n    onBlur: props.onBlur,\n  };\n}\n\nclass Tag extends React.Component<TagProps, TagState> {\n  state = {\n    isDeleted: false,\n  };\n\n  static List = TagList;\n  static AddOn = TagAddOn;\n\n  handleOnRemoveClick = (): void => {\n    this.setState(s => ({\n      isDeleted: true,\n    }));\n  };\n\n  render(): React.ReactElement | null {\n    const {\n      children,\n      className,\n      rounded,\n      color = \"\",\n      avatar,\n      remove,\n      addOn,\n      addOnIcon,\n      addOnColor,\n      onRemoveClick,\n      onAddOnClick,\n    } = this.props;\n\n    const classes = cn(\n      {\n        tag: true,\n        expanded: true,\n        \"tag-rounded\": rounded,\n        [`tag-${color}`]: color,\n      },\n      className\n    );\n\n    if (this.state.isDeleted) {\n      return null;\n    }\n\n    const childrenForAll = (\n      <React.Fragment>\n        {avatar && (\n          <span\n            className=\"tag-avatar avatar\"\n            style={{ backgroundImage: `url(${avatar})` }}\n          />\n        )}\n        {children}\n        {(addOn || addOnIcon) && (\n          <TagAddOn icon={addOnIcon} color={addOnColor} onClick={onAddOnClick}>\n            {addOn}\n          </TagAddOn>\n        )}\n        {remove && onRemoveClick ? (\n          <TagAddOn onClick={onRemoveClick} link icon=\"x\" />\n        ) : (\n          remove && (\n            <TagAddOn onClick={this.handleOnRemoveClick} link icon=\"x\" />\n          )\n        )}\n      </React.Fragment>\n    );\n\n    if (this.props.RootComponent) {\n      const { RootComponent: Component, to } = this.props;\n      return (\n        <Component className={classes} to={to} {...eventProps(this.props)}>\n          {childrenForAll}\n        </Component>\n      );\n    }\n\n    if (this.props.link) {\n      const { href } = this.props;\n      return (\n        <a className={classes} href={href} {...eventProps(this.props)}>\n          {childrenForAll}\n        </a>\n      );\n    }\n\n    return (\n      <span className={classes} {...eventProps(this.props)}>\n        {childrenForAll}\n      </span>\n    );\n  }\n}\n\nexport default Tag;\n",
   "props": [
     {
       "name": "rootRef",
-      "type": "(?HTMLElement) => void",
+      "type": "React.Ref<T>",
       "optional": true,
       "description": ""
     },
@@ -19,7 +19,7 @@
     },
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -56,13 +56,13 @@
     },
     {
       "name": "onRemoveClick",
-      "type": "Function",
+      "type": "React.MouseEventHandler<HTMLElement>",
       "optional": true,
       "description": ""
     },
     {
       "name": "addOn",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -80,54 +80,75 @@
     },
     {
       "name": "onAddOnClick",
-      "type": "Function",
+      "type": "React.MouseEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onMouseEnter",
+      "type": "React.MouseEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onMouseLeave",
+      "type": "React.MouseEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onPointerEnter",
+      "type": "React.PointerEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onPointerLeave",
+      "type": "React.PointerEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onFocus",
+      "type": "React.FocusEventHandler<T>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<T>",
       "optional": true,
       "description": ""
     },
     {
       "name": "link",
-      "type": "true",
-      "optional": false,
+      "type": "false | true | boolean",
+      "optional": true,
       "description": ""
     },
     {
       "name": "href",
       "type": "string",
-      "optional": false,
+      "optional": true,
       "description": ""
     },
     {
       "name": "RootComponent",
       "type": "React.ElementType",
-      "optional": false,
+      "optional": true,
       "description": ""
     },
     {
       "name": "to",
       "type": "string",
-      "optional": false,
+      "optional": true,
       "description": ""
-    },
-    {
-      "name": "onClick"
-    },
-    {
-      "name": "onMouseEnter"
-    },
-    {
-      "name": "onMouseLeave"
-    },
-    {
-      "name": "onPointerEnter"
-    },
-    {
-      "name": "onPointerLeave"
-    },
-    {
-      "name": "onFocus"
-    },
-    {
-      "name": "onBlur"
     }
   ],
   "subcomponents": [
@@ -139,11 +160,11 @@
   "childApis": [
     {
       "name": "List",
-      "source": "src/components/Tag/TagList.react.js",
+      "source": "src/components/Tag/TagList.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -160,11 +181,11 @@
     },
     {
       "name": "AddOn",
-      "source": "src/components/Tag/TagAddOn.react.js",
+      "source": "src/components/Tag/TagAddOn.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -188,9 +209,51 @@
           "default": "\"\""
         },
         {
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
           "name": "link",
-          "type": "true",
-          "optional": false,
+          "type": "false | true | false",
+          "optional": true,
           "description": ""
         },
         {
@@ -202,35 +265,14 @@
         {
           "name": "RootComponent",
           "type": "React.ElementType",
-          "optional": false,
+          "optional": true,
           "description": ""
         },
         {
           "name": "to",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "description": ""
-        },
-        {
-          "name": "onClick"
-        },
-        {
-          "name": "onMouseEnter"
-        },
-        {
-          "name": "onMouseLeave"
-        },
-        {
-          "name": "onPointerEnter"
-        },
-        {
-          "name": "onPointerLeave"
-        },
-        {
-          "name": "onFocus"
-        },
-        {
-          "name": "onBlur"
         }
       ],
       "subcomponents": [],
@@ -259,9 +301,10 @@
   "guide": {
     "summary": "Etiqueta con avatar, complementos y acción de retirada.",
     "behavior": [
-      "Puede utilizarse como texto o enlace según RootComponent/link/href.",
-      "remove añade un control; onRemoveClick comunica la acción y el consumidor retira el elemento.",
-      "addOn y sus callbacks permiten una zona adicional dentro de la etiqueta."
+      "La raíz predeterminada es span. link=true utiliza un enlace con href; RootComponent tiene prioridad y recibe to, className, children, rootRef como ref, aria-describedby y los siete callbacks de interacción ya existentes.",
+      "remove añade un control. Sin onRemoveClick, Tag se oculta mediante su estado interno; con onRemoveClick, el consumidor decide cuándo retirarlo. onAddOnClick recibe el clic de la zona adicional.",
+      "Tag.List agrupa etiquetas y Tag.AddOn admite texto, icono o enlace. Su RootComponent recibe to, children y eventos; mantiene la limitación heredada de no reenviar className ni color a esa raíz personalizada.",
+      "Los eventos y rootRef se tipan según la raíz span o a. No se añade reenvío de atributos HTML que la implementación no utilizaba."
     ],
     "example": "<Tag color=\"blue\" remove onRemoveClick={() => console.log(\"Retirar etiqueta\")}>Pendiente</Tag>"
   }

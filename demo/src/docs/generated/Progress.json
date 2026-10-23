@@ -1,13 +1,13 @@
 {
   "name": "Progress",
   "kind": "Componente",
-  "source": "src/components/Progress/index.js",
-  "implementation": "src/components/Progress/Progress.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport ProgressBar from \"./ProgressBar.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +size?: string,\n|};\n\nfunction Progress({ className, children, size = \"\" }: Props): React.Node {\n  const classes = cn(`progress`, { [`progress-${size}`]: !!size }, className);\n  return <div className={classes}>{children}</div>;\n}\n\nProgress.Bar = ProgressBar;\n\nexport default Progress;\n",
+  "source": "src/components/Progress/index.ts",
+  "implementation": "src/components/Progress/Progress.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport ProgressBar from \"./ProgressBar.react\";\n\nexport type ProgressProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly size?: string;\n};\n\nfunction Progress({ className, children, size = \"\" }: ProgressProps): React.ReactElement {\n  const classes = cn(`progress`, { [`progress-${size}`]: !!size }, className);\n  return <div className={classes}>{children}</div>;\n}\n\nProgress.Bar = ProgressBar;\n\nexport default Progress;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -33,7 +33,7 @@
   "childApis": [
     {
       "name": "Bar",
-      "source": "src/components/Progress/ProgressBar.react.js",
+      "source": "src/components/Progress/ProgressBar.react.tsx",
       "props": [
         {
           "name": "className",

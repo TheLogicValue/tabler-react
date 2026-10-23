@@ -1424,6 +1424,24 @@
           "type": "React.FocusEventHandler<HTMLInputElement>",
           "optional": true,
           "description": ""
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],

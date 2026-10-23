@@ -1,38 +1,27 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { Icon } from "../";
+import Icon from "../Icon";
 
-import type { MouseEvents, PointerEvents, FocusEvents } from "../../";
+export type TagAddOnCommonProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly icon?: string;
+  readonly color?: string;
+  readonly onClick?: React.MouseEventHandler<HTMLElement>;
+  readonly onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  readonly onMouseLeave?: React.MouseEventHandler<HTMLElement>;
+  readonly onPointerEnter?: React.PointerEventHandler<HTMLElement>;
+  readonly onPointerLeave?: React.PointerEventHandler<HTMLElement>;
+  readonly onFocus?: React.FocusEventHandler<HTMLElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLElement>;
+};
+export type TagAddOnProps = TagAddOnCommonProps & (
+  | { readonly link?: false; readonly href?: never; readonly RootComponent?: never; readonly to?: never }
+  | { readonly link: true; readonly href?: string; readonly RootComponent?: never; readonly to?: never }
+  | { readonly RootComponent: React.ElementType; readonly to: string; readonly link?: false; readonly href?: never }
+);
 
-type PropsForAll = {|
-  ...MouseEvents,
-  ...PointerEvents,
-  ...FocusEvents,
-  +children?: React.Node,
-  +className?: string,
-  +icon?: string,
-  +color?: string,
-|};
-
-type DefaultProps = {| ...PropsForAll |};
-
-type PropsForLink = {|
-  ...PropsForAll,
-  link: true,
-  +href?: string,
-|};
-
-type PropsForReactRouter = {|
-  ...PropsForAll,
-  +RootComponent: React.ElementType,
-  +to: string,
-|};
-
-type Props = DefaultProps | PropsForLink | PropsForReactRouter;
-
-function TagAddOn(props: Props): React.Node {
+function TagAddOn(props: TagAddOnProps): React.ReactElement {
   const {
     children,
     className,

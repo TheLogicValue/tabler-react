@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type LoaderProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function Loader({ className, children }: Props): React.Node {
+function Loader({ className, children }: LoaderProps): React.ReactElement {
   const classes = cn({ loader: true }, className);
   return <div className={classes}>{children}</div>;
 }

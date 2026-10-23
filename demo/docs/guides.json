@@ -459,10 +459,11 @@
     "summary": "Paleta de colores de Tabler exportada como un objeto JavaScript.",
     "behavior": [
       "Las claves incluyen colores y variantes como blue, blue-dark y blue-light.",
-      "Se puede utilizar como color de un estilo o de un gráfico. No representa un componente React."
+      "Se puede utilizar como color de un estilo o de un gráfico. No representa un componente React.",
+      "La migración conserva las 97 entradas y sus valores. El objeto sigue siendo mutable y admite claves de color del consumidor."
     ],
     "example": "const primary = colors.blue;\n<div style={{ color: primary }}>Texto con la paleta</div>",
-    "parameters": "colors: { [nombre: string]: string }"
+    "parameters": "colors: TablerColors = Record<string, string>"
   },
   "Comment": {
     "summary": "Comentario con autor, fecha, avatar, texto y respuestas.",
@@ -822,15 +823,17 @@
     "summary": "Zona que comunica la ausencia de datos.",
     "behavior": [
       "Configura title, height y backgroundColor para adaptar su apariencia.",
-      "El consumidor decide cuándo está realmente vacía la información."
+      "El consumidor decide cuándo está realmente vacía la información.",
+      "height utiliza un tamaño CSS y title admite texto o un nodo React. Solo se reenvían estas propiedades y backgroundColor."
     ],
     "example": "<LoaderNoData title=\"No hay registros\" height=\"240px\" />"
   },
   "LoaderZone": {
     "summary": "Esqueleto de carga de una zona de contenido.",
     "behavior": [
-      "Utiliza react-content-loader; width, height y colores ajustan el SVG.",
-      "Representa un estado visual, no inicia ni cancela la carga de datos."
+      "Utiliza react-content-loader. height es obligatorio y admite un número o una cadena con unidades; width es opcional. También reenvía title, speed, backgroundColor y foregroundColor.",
+      "Conserva el ajuste heredado de 0.313 en la altura del rectángulo, en la unidad recibida. Las alturas numéricas y fraccionarias se calculan correctamente. Las expresiones calc()/var() se pasan sin interpretar.",
+      "Representa un estado visual, no inicia ni cancela la carga de datos. No reenvía otras propiedades de react-content-loader."
     ],
     "example": "<LoaderZone width={600} height={240} title=\"Cargando información\" />"
   },
@@ -1170,9 +1173,10 @@
   "Tag": {
     "summary": "Etiqueta con avatar, complementos y acción de retirada.",
     "behavior": [
-      "Puede utilizarse como texto o enlace según RootComponent/link/href.",
-      "remove añade un control; onRemoveClick comunica la acción y el consumidor retira el elemento.",
-      "addOn y sus callbacks permiten una zona adicional dentro de la etiqueta."
+      "La raíz predeterminada es span. link=true utiliza un enlace con href; RootComponent tiene prioridad y recibe to, className, children, rootRef como ref, aria-describedby y los siete callbacks de interacción ya existentes.",
+      "remove añade un control. Sin onRemoveClick, Tag se oculta mediante su estado interno; con onRemoveClick, el consumidor decide cuándo retirarlo. onAddOnClick recibe el clic de la zona adicional.",
+      "Tag.List agrupa etiquetas y Tag.AddOn admite texto, icono o enlace. Su RootComponent recibe to, children y eventos; mantiene la limitación heredada de no reenviar className ni color a esa raíz personalizada.",
+      "Los eventos y rootRef se tipan según la raíz span o a. No se añade reenvío de atributos HTML que la implementación no utilizaba."
     ],
     "example": "<Tag color=\"blue\" remove onRemoveClick={() => console.log(\"Retirar etiqueta\")}>Pendiente</Tag>"
   },

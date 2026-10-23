@@ -74,7 +74,7 @@
     {
       "name": "colors",
       "kind": "Utilidad",
-      "source": "src/colors.js"
+      "source": "src/colors.ts"
     },
     {
       "name": "Comment",
@@ -109,7 +109,7 @@
     {
       "name": "Dimmer",
       "kind": "Componente",
-      "source": "src/components/Dimmer/index.js"
+      "source": "src/components/Dimmer/index.ts"
     },
     {
       "name": "DoubleCard",
@@ -219,17 +219,17 @@
     {
       "name": "Loader",
       "kind": "Componente",
-      "source": "src/components/Loader/index.js"
+      "source": "src/components/Loader/index.ts"
     },
     {
       "name": "LoaderNoData",
       "kind": "Componente",
-      "source": "src/components/Loader/index.js"
+      "source": "src/components/Loader/index.ts"
     },
     {
       "name": "LoaderZone",
       "kind": "Componente",
-      "source": "src/components/Loader/index.js"
+      "source": "src/components/Loader/index.ts"
     },
     {
       "name": "LoginPage",
@@ -304,7 +304,7 @@
     {
       "name": "Progress",
       "kind": "Componente",
-      "source": "src/components/Progress/index.js"
+      "source": "src/components/Progress/index.ts"
     },
     {
       "name": "ProgressCard",
@@ -354,7 +354,7 @@
     {
       "name": "Stamp",
       "kind": "Componente",
-      "source": "src/components/Stamp/index.js"
+      "source": "src/components/Stamp/index.ts"
     },
     {
       "name": "StampCard",
@@ -419,7 +419,7 @@
     {
       "name": "Tag",
       "kind": "Componente",
-      "source": "src/components/Tag/index.js"
+      "source": "src/components/Tag/index.ts"
     },
     {
       "name": "Text",
@@ -434,7 +434,7 @@
     {
       "name": "Tooltip",
       "kind": "Componente",
-      "source": "src/components/Tooltip/index.js"
+      "source": "src/components/Tooltip/index.ts"
     },
     {
       "name": "useModal",

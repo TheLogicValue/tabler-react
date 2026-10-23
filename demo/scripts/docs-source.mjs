@@ -79,7 +79,7 @@ export function extractApi(info) {
   }
   function typeProperties(type, seen = new Set(), owner = info) {
     if (!type) return
-    if (['TypeAnnotation', 'TSTypeAnnotation'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
+    if (['TypeAnnotation', 'TSTypeAnnotation', 'TSParenthesizedType'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
     const reference = type.type === 'GenericTypeAnnotation' ? type.id : type.type === 'TSTypeReference' ? type.typeName : type.type === 'TSExpressionWithTypeArguments' ? type.expression : null
     if (reference?.name === 'Omit' && type.type === 'TSTypeReference') {
       const [source, excluded] = type.typeParameters?.params ?? type.typeArguments?.params ?? []
