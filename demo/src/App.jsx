@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Badge, Button, Card, Grid, Icon, NavBarMenu, Page, Spinner, Text } from 'tabler-react'
 import usage from './usage.json'
+import catalog from './library-exports.json'
 import { testedComponents } from './data.js'
 import { ComponentList, ScenarioBoundary } from './shared.jsx'
 
@@ -43,7 +44,7 @@ function Overview() {
     <Grid.Row className="demo-card-row">
       {[
         [usage.files, 'archivos del consumidor de referencia', 'layers'],
-        [testedComponents.length, 'componentes y hooks cubiertos', 'check-circle'],
+        [`${testedComponents.length} / ${catalog.exports.length}`, 'exports públicos con ejemplo', 'check-circle'],
         ['Community', 'AG Grid sin licencia Enterprise', 'database'],
         ['Sin API', 'datos ficticios y cambios locales', 'shield'],
       ].map(([number, label, icon]) => <Grid.Col key={label} width={12} sm={6} lg={3}>

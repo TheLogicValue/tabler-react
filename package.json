@@ -40,7 +40,9 @@
     "lint:demo": "eslint demo/src demo/vite.config.mjs demo/scripts",
     "test": "npm run build && node --test --test-timeout=30000 tests/*.test.cjs",
     "test:react18": "npm run build && node scripts/test-react18.mjs",
-    "check": "npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
+    "demo:inventory": "node demo/scripts/scan-exports.mjs",
+    "demo:inventory:check": "node demo/scripts/scan-exports.mjs --check",
+    "check": "npm run demo:inventory:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
     "check:all": "npm run check && node scripts/test-react18.mjs"
   },
   "dependencies": {

@@ -15,10 +15,10 @@ export const funds = [
 ]
 
 const exampleComponents = {
-  '/': ['Grid', 'Button', 'Card', 'Page', 'Text', 'Icon', 'NavBarMenu'],
+  '/': ['Grid', 'Button', 'Card', 'Page', 'Text', 'Icon', 'NavBarMenu', 'Badge'],
   '/datos': ['Table', 'AGGridTable'],
   '/formulario': ['Form', 'DatePicker'],
-  '/interacciones': ['Tab', 'Modal', 'Tabs', 'useModal', 'useTabs', 'Dropdown', 'ProtectedRoute', 'Site', 'Tooltip', 'Nav', 'ModalDoc', 'ModalSplash'],
+  '/interacciones': ['Tab', 'Modal', 'Tabs', 'useModal', 'useTabs', 'Dropdown', 'ProtectedRoute', 'Site', 'Tooltip', 'Nav', 'ModalDoc', 'ModalSplash', 'Accordion'],
   '/graficos': ['TableLoader', 'LoaderZone', 'LoaderNoData', 'Spinner', 'BarChart', 'Alert', 'LineChart', 'PieChart', 'DoubleCard', 'PieChartLoader', 'RadarChart'],
 }
 

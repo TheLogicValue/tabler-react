@@ -79,6 +79,7 @@ Los scripts y configuraciones conservados tienen estas funciones:
 - `eslint.config.mjs`: configura el lint de la biblioteca, la demo, las pruebas y los scripts JavaScript.
 - `scripts/test-react18.mjs`: empaqueta la biblioteca y ejecuta las pruebas en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
 - `demo/scripts/scan-usage.mjs`: regenera manualmente el inventario de componentes a partir de un consumidor; su comando se muestra en la sección de la demo.
+- `demo/scripts/scan-exports.mjs`: genera el catálogo completo de exports públicos de la biblioteca para la cobertura de la demo; `--check` comprueba que está actualizado.
 - `scripts/runflow` y `.flowconfig`: soporte opcional de Flow, separado de las comprobaciones habituales. No se considera una validación automática de tipos.
 - `.editorconfig` y `.gitignore`: formato de archivos y exclusiones del repositorio. El `.npmrc` de desarrollo se mantiene versionado deliberadamente.
 
@@ -150,13 +151,24 @@ Las vistas de la demo permiten probar:
 - **Posicionamiento, dentro de Interacciones:** Dropdown, Button.Dropdown, disparador personalizado, Nav horizontal/vertical y Tooltip. Cambia entre las quince posiciones, incluidas `auto`, `auto-start` y `auto-end`; comprueba Escape, clic fuera, scroll y redimensionado. Las ayudas se abren con ratón y foco, conservan `aria-describedby` y orientan la flecha según la posición final.
 - **Documentación y pantalla de carga, dentro de Interacciones:** ModalDoc permite abrir una guía con dos pestañas o una sola sección, confirmar la lectura y cerrar con X o Escape. ModalSplash muestra una imagen local y su animación; prueba el cierre manual, Escape y el cierre automático a los tres segundos. El resultado de cada acción aparece en la página.
 - **Gráficos y estados:** LineChart, BarChart, PieChart y RadarChart. Cambia el periodo para actualizar el perfil de cinco dimensiones y los valores comparados de DoubleCard; prueba las leyendas y tooltips. El estado «Cargando» incluye TableLoader, PieChartLoader, LoaderZone y Spinner; también hay ejemplos de vacío y reintento de error simulado.
-- **Cobertura de componentes:** los 32 componentes y hooks del inventario tienen ejemplos. La tabla incluye enlaces «Ver ejemplo» y un guion para repetir las comprobaciones; indica presencia en la demo, sin certificar todas las variantes de cada componente.
+- **Cobertura de componentes:** el catálogo incluye todos los exports públicos de la biblioteca: componentes, plantillas, proveedor, hooks y utilidades. Cada entrada indica «Con ejemplo» o «Sin cubrir»; puedes buscar por nombre y filtrar por estado. Solo las entradas con una demostración tienen enlace «Ver ejemplo». Los subcomponentes, como Card.Header o Grid.Col, se agrupan bajo el componente principal; su presencia no certifica todas las variantes.
 
 El inventario `demo/src/usage.json` cuenta archivos de producción que importan cada componente en un consumidor de referencia, excluyendo tests; no mide ejecuciones ni frecuencia real de uso. Para regenerarlo desde cualquier consumidor local:
 
 ```sh
 node demo/scripts/scan-usage.mjs <ruta-al-src-del-consumidor>
 ```
+
+Ese inventario de uso es una muestra independiente del catálogo completo. `demo/src/library-exports.json` se genera recorriendo las exportaciones de valor de `src/index.js` y sus barrels; excluye los tipos Flow, que no existen en el paquete JavaScript. Para actualizarlo después de añadir o retirar un export público:
+
+```sh
+npm run demo:inventory
+
+# Comprueba el catálogo sin modificarlo; también se ejecuta en npm run check.
+npm run demo:inventory:check
+```
+
+Los enlaces de ejemplo se mantienen en `demo/src/data.js` únicamente cuando existe una demostración. Añadir un nombre al catálogo no lo marca como cubierto. La columna de archivos de referencia tampoco determina su cobertura.
 
 La cobertura de un componente en la demo no certifica todas sus variantes ni sustituye las pruebas funcionales del consumidor. Los errores reales de renderizado se muestran en pantalla; el error de carga de la vista de gráficos es intencional.
 
@@ -235,8 +247,8 @@ Para compilar y ejecutar las pruebas de regresión de componentes, posicionamien
 Después de instalar las dependencias de la raíz y de la demo como se indica en Setup, puedes ejecutar todas las comprobaciones desde una terminal en la raíz:
 
 ```sh
-# Comprobación habitual: lint de biblioteca y demo, compilación de la
-# biblioteca, pruebas con React 19 y compilación independiente de la demo.
+# Comprobación habitual: catálogo actualizado, lint de biblioteca y demo,
+# compilación de la biblioteca, pruebas con React 19 y compilación de la demo.
 npm run check
 
 # Comprobación completa: lo anterior y pruebas de integración con React 18

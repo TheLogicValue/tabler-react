@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Badge, Table } from 'tabler-react'
 import usage from '../usage.json'
-import { componentExamplePaths, testedComponents } from '../data.js'
+import catalog from '../library-exports.json'
+import { componentExamplePaths } from '../data.js'
 import { Scenario } from '../shared.jsx'
 
 const checks = [
@@ -13,14 +14,28 @@ const checks = [
 ]
 
 export default function CoverageView() {
-  const included = usage.components.filter(({ name }) => testedComponents.includes(name)).length
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState('all')
+  const included = catalog.exports.filter(({ name }) => componentExamplePaths[name]).length
+  const usageCounts = new Map(usage.components.map(({ name, files }) => [name, files]))
+  const rows = catalog.exports.filter(({ name }) => {
+    const covered = Boolean(componentExamplePaths[name])
+    return name.toLowerCase().includes(search.trim().toLowerCase()) &&
+      (status === 'all' || (status === 'covered' ? covered : !covered))
+  })
   return <>
     <Alert type="info">La presencia de un componente en la demo indica cobertura del ejemplo, no que todas sus variantes o todos los flujos de un consumidor estén certificados.</Alert>
-    <p><strong>{included} de {usage.components.length} componentes y hooks del inventario incluidos.</strong> Usa «Ver ejemplo» para abrir la página donde puedes probar cada uno.</p>
-    <Scenario title="Cobertura de componentes" description={`Referencia del ${usage.analyzedOn}: ${usage.files} archivos de un consumidor. Se cuenta cada componente una vez por archivo importador; se excluyen los tests.`} components={['Table', 'Badge']}>
-      <Table responsive striped><Table.Header><Table.Row><Table.ColHeader>Componente / hook</Table.ColHeader><Table.ColHeader>Archivos</Table.ColHeader><Table.ColHeader>En la demo</Table.ColHeader><Table.ColHeader>Ejemplo</Table.ColHeader></Table.Row></Table.Header>
-        <Table.Body>{usage.components.map(({ name, files }) => <Table.Row key={name}><Table.Col><code>{name}</code></Table.Col><Table.Col>{files}</Table.Col><Table.Col><Badge color={testedComponents.includes(name) ? 'success' : 'secondary'}>{testedComponents.includes(name) ? 'Incluido' : 'Pendiente'}</Badge></Table.Col><Table.Col>{componentExamplePaths[name] && <Link to={componentExamplePaths[name]} aria-label={`Ver ejemplo de ${name}`}>Ver ejemplo</Link>}</Table.Col></Table.Row>)}</Table.Body>
+    <p><strong>{included} de {catalog.exports.length} exports públicos con ejemplo · {catalog.exports.length - included} sin cubrir.</strong> Usa «Ver ejemplo» para abrir una demostración existente.</p>
+    <Scenario title="Cobertura de componentes" description="Catálogo completo de las exportaciones de src/index.js: componentes, plantillas, proveedor, hooks y utilidades. Los subcomponentes, como Card.Header o Grid.Col, se agrupan bajo su componente principal. Los exports sin un ejemplo propio se marcan como Sin cubrir." components={['Table', 'Badge']}>
+      <div className="filter-row coverage-filters">
+        <label className="filter-label">Buscar por nombre<input className="form-control" type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Por ejemplo: Avatar" /></label>
+        <label className="filter-label">Estado<select className="form-control" value={status} onChange={event => setStatus(event.target.value)}><option value="all">Todos</option><option value="covered">Con ejemplo</option><option value="pending">Sin cubrir</option></select></label>
+      </div>
+      <p className="muted">Mostrando {rows.length} de {catalog.exports.length} exports. «Archivos de referencia» mide importaciones en {usage.files} archivos de un consumidor, analizados el {usage.analyzedOn}; no determina la cobertura. Un 0 indica que no se observó en esa muestra.</p>
+      <Table responsive striped><Table.Header><Table.Row><Table.ColHeader>Export público</Table.ColHeader><Table.ColHeader>Tipo</Table.ColHeader><Table.ColHeader>Archivos de referencia</Table.ColHeader><Table.ColHeader>En la demo</Table.ColHeader><Table.ColHeader>Ejemplo</Table.ColHeader></Table.Row></Table.Header>
+        <Table.Body>{rows.map(({ name, kind }) => <Table.Row key={name}><Table.Col><code>{name}</code></Table.Col><Table.Col>{kind}</Table.Col><Table.Col>{usageCounts.get(name) ?? 0}</Table.Col><Table.Col><Badge color={componentExamplePaths[name] ? 'success' : 'secondary'}>{componentExamplePaths[name] ? 'Con ejemplo' : 'Sin cubrir'}</Badge></Table.Col><Table.Col>{componentExamplePaths[name] ? <Link to={componentExamplePaths[name]} aria-label={`Ver ejemplo de ${name}`}>Ver ejemplo</Link> : 'Sin ejemplo'}</Table.Col></Table.Row>)}</Table.Body>
       </Table>
+      {rows.length === 0 && <p role="status">No hay exports que coincidan con estos filtros.</p>}
     </Scenario>
       <Scenario title="Guion de comprobación" description="Repite este recorrido después de actualizar dependencias o recompilar la biblioteca." components={[]}>
         <ol className="test-plan">{checks.map(([title, text]) => <li key={title}><strong>{title}</strong><p>{text}</p></li>)}</ol>
