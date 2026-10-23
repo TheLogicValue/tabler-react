@@ -1,0 +1,47 @@
+{
+  "name": "Tabs",
+  "kind": "Componente",
+  "source": "src/components/Tabs/index.js",
+  "implementation": "src/components/Tabs/Tabs.react.js",
+  "implementationCode": "// @flow\nimport React, { forwardRef, useImperativeHandle, useState } from \"react\"\nimport TabbedContainer from \"./TabbedContainer.react\"\nimport TabbedHeader from \"./TabbedHeader.react\"\nimport cn from \"classnames\"\n\nimport \"./Tabs.css\"\n\nconst Tabs = forwardRef(({ children, options, className, modal, initialTab }, ref) => {\n  const [selectedTitle, setTitle] = useState(initialTab)\n  const classes = cn(\"card\", className)\n\n  useImperativeHandle(ref, () => {\n    return {\n      activeTab: selectedTitle,\n    }\n  })\n\n  return (\n    <div className={classes}>\n      <TabbedHeader\n        selectedTitle={selectedTitle}\n        modal={modal}\n        stateCallback={newTitle => setTitle(newTitle)}\n        options={options}\n      >\n        {children}\n      </TabbedHeader>\n      <TabbedContainer selectedTitle={selectedTitle}>\n        {children}\n      </TabbedContainer>\n    </div>\n  )\n})\n\nTabs.displayName = \"Tabs\";\n\nexport default Tabs;\n",
+  "props": [
+    {
+      "name": "children"
+    },
+    {
+      "name": "options"
+    },
+    {
+      "name": "className"
+    },
+    {
+      "name": "modal"
+    },
+    {
+      "name": "initialTab"
+    }
+  ],
+  "subcomponents": [],
+  "members": [
+    "activeTab"
+  ],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Tabs.examples.md",
+      "source": "src/components/Tabs/Tabs.examples.md",
+      "markdown": "```jsx\n<Tabs initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card\n          body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\"\n        />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</Tabs>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Conjunto de pestañas con selección interna y referencia pública.",
+    "behavior": [
+      "initialTab establece la selección inicial y debe coincidir con un title de Tab.",
+      "Cambiar initialTab después del montaje no sustituye el estado interno.",
+      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera."
+    ],
+    "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Datos generales.</Tab><Tab title=\"Histórico\">Evolución.</Tab></Tabs>"
+  }
+}

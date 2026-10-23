@@ -1,0 +1,39 @@
+{
+  "name": "Spinner",
+  "kind": "Componente",
+  "source": "src/components/IconAnimate/index.js",
+  "implementation": "src/components/IconAnimate/Spinner.js",
+  "implementationCode": "import React from 'react';\nimport './IconAnimate.css'\nexport default function Spinner({ height = 26, width = 26 }) {\n    return <svg className=\"svg-container\" height={height} width={width} viewBox=\"0 0 100 100\">\n        <circle className=\"loader-svg loading\" cx=\"50\" cy=\"50\" r=\"45\"></circle>\n        <circle className=\"loader-svg animate\" cx=\"50\" cy=\"50\" r=\"45\"></circle>\n    </svg>\n}",
+  "props": [
+    {
+      "name": "height",
+      "default": "26",
+      "optional": true
+    },
+    {
+      "name": "width",
+      "default": "26",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Spinner.examples.md",
+      "source": "src/components/IconAnimate/Spinner.examples.md",
+      "markdown": "# Spinner example\n## Example how works spinner, when data is true spinner is showing.\n```jsx\n\nconst [data, setData] = UseState(false)\n<Button color=\"primary\" onClick={onclick} className=\"button\">\n    {data ? <Spinner /> : \"Button\"\n</Button>\n\n```"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Indicador SVG animado de carga.",
+    "behavior": [
+      "width y height configuran el tamaño del SVG; sus valores predeterminados son 26.",
+      "La representación es visual. Añade un texto accesible que comunique el estado de la operación."
+    ],
+    "example": "<div role=\"status\"><Spinner width={32} height={32} /> Cargando…</div>"
+  }
+}

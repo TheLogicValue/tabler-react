@@ -1,0 +1,71 @@
+{
+  "name": "FormCheckboxInput",
+  "kind": "Componente",
+  "source": "src/forms/FormCheckboxInput.react.js",
+  "implementation": "src/forms/FormCheckboxInput.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\nimport type { Props as FormCheckboxProps } from \"../components/Form/FormCheckbox.react\";\n\nfunction FormCheckboxInput(props: FormCheckboxProps) {\n  const formCheckboxComponent = React.createElement(Form.Checkbox, props);\n\n  return <Form.Group>{formCheckboxComponent}</Form.Group>;\n}\n\nexport default FormCheckboxInput;\n",
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Wrap the checkbox with a label"
+    },
+    {
+      "name": "value",
+      "type": "string | number | boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isInline",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Checkbox de formulario envuelto en Form.Group.",
+    "behavior": [
+      "Reenvía sus propiedades a Form.Checkbox.",
+      "Para un campo controlado utiliza checked y onChange; el grupo no mantiene ese estado."
+    ],
+    "example": "<FormCheckboxInput label=\"Acepto las condiciones\" name=\"terms\" checked={accepted} onChange={event => setAccepted(event.target.checked)} />"
+  }
+}

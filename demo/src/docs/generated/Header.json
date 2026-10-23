@@ -1,0 +1,218 @@
+{
+  "name": "Header",
+  "kind": "Componente",
+  "source": "src/components/Header/index.js",
+  "implementation": "src/components/Header/Header.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport H1 from \"./H1.react\";\nimport H2 from \"./H2.react\";\nimport H3 from \"./H3.react\";\nimport H4 from \"./H4.react\";\nimport H5 from \"./H5.react\";\nimport H6 from \"./H6.react\";\n\ntype Props = {|\n  /**\n   * A component to use instead of a <div> as the root component\n   */\n  +RootComponent?: React.ElementType,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The size of the header\n   */\n  +size?: 1 | 2 | 3 | 4 | 5 | 6,\n|};\n\n/**\n * A header\n * By default renders a div not a <hX> tag and has no additional spacing classes applied\n */\nfunction Header({\n  RootComponent,\n  className,\n  children,\n  size = 1,\n}: Props): React.Node {\n  const classes = cn(`h${size}`, className);\n  const Component = RootComponent || \"div\";\n  return <Component className={classes}>{children}</Component>;\n}\n\nHeader.H1 = H1;\nHeader.H2 = H2;\nHeader.H3 = H3;\nHeader.H4 = H4;\nHeader.H5 = H5;\nHeader.H6 = H6;\n\nexport default Header;\n",
+  "props": [
+    {
+      "name": "RootComponent",
+      "type": "React.ElementType",
+      "optional": true,
+      "description": "A component to use instead of a <div> as the root component"
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "1 | 2 | 3 | 4 | 5 | 6",
+      "optional": true,
+      "description": "The size of the header",
+      "default": "1"
+    }
+  ],
+  "subcomponents": [
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "H1",
+      "source": "src/components/Header/H1.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "H2",
+      "source": "src/components/Header/H2.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "H3",
+      "source": "src/components/Header/H3.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "H4",
+      "source": "src/components/Header/H4.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "H5",
+      "source": "src/components/Header/H5.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "H6",
+      "source": "src/components/Header/H6.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "H1.examples.md",
+      "source": "src/components/Header/H1.examples.md",
+      "markdown": "```jsx\n<Header.H1>This is an h1</Header.H1>\n```\n"
+    },
+    {
+      "name": "H2.examples.md",
+      "source": "src/components/Header/H2.examples.md",
+      "markdown": "```jsx\n<Header.H2>This is an h2</Header.H2>\n```\n"
+    },
+    {
+      "name": "H3.examples.md",
+      "source": "src/components/Header/H3.examples.md",
+      "markdown": "```jsx\n<Header.H3>This is an h3</Header.H3>\n```\n"
+    },
+    {
+      "name": "H4.examples.md",
+      "source": "src/components/Header/H4.examples.md",
+      "markdown": "```jsx\n<Header.H4>This is an h4</Header.H4>\n```\n"
+    },
+    {
+      "name": "H5.examples.md",
+      "source": "src/components/Header/H5.examples.md",
+      "markdown": "```jsx\n<Header.H5>This is an h5</Header.H5>\n```\n"
+    },
+    {
+      "name": "H6.examples.md",
+      "source": "src/components/Header/H6.examples.md",
+      "markdown": "```jsx\n<Header.H6>This is an h6</Header.H6>\n```\n"
+    },
+    {
+      "name": "Header.examples.md",
+      "source": "src/components/Header/Header.examples.md",
+      "markdown": "```jsx\n<Header size={1}>A div sized like a h1</Header>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Encabezado con nivel semántico configurable.",
+    "behavior": [
+      "size selecciona el nivel y RootComponent permite personalizar el elemento raíz.",
+      "Header.H1 a Header.H6 proporcionan las variantes habituales."
+    ],
+    "example": "<Header size={2}>Título de sección</Header>"
+  }
+}

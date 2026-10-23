@@ -1,0 +1,38 @@
+{
+  "name": "SearchBar",
+  "kind": "Componente",
+  "source": "src/components/SearchBar/index.js",
+  "implementation": "src/components/SearchBar/SearchBar.js",
+  "implementationCode": "import React from \"react\"\nimport cn from \"classnames\"\nimport Form from \"../Form\"\nimport { Button } from \"../Button\"\nimport './SearchBar.css'\n\nexport default function SearchBar({ classes, onKeyUp, onClick, placeholder = \"Search for...\" }) {\n    const className = cn(\"input-search-bar\", classes)\n    return (\n        <Form.Group className={className}>\n            <Form.Input placeholder={placeholder}\n                onKeyUp={(e) => onKeyUp(e)}\n            />\n            <Button color=\"outline\" icon=\"search\" onClick={() => onClick()} />\n        </Form.Group>\n    )\n}",
+  "props": [
+    {
+      "name": "classes"
+    },
+    {
+      "name": "onKeyUp"
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "placeholder",
+      "default": "\"Search for...\"",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Campo de búsqueda con un botón de acción.",
+    "behavior": [
+      "onKeyUp recibe el evento del campo; onClick se ejecuta sin argumentos al pulsar el botón.",
+      "No filtra datos internamente. Puede combinarse con useSearchBar.",
+      "Proporciona ambos callbacks, porque la implementación los invoca directamente."
+    ],
+    "example": "const { filter, handleChangeFilter } = useSearchBar();\n<SearchBar placeholder=\"Buscar...\" onKeyUp={handleChangeFilter} onClick={() => console.log(filter)} />"
+  }
+}

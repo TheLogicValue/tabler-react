@@ -1,0 +1,56 @@
+{
+  "name": "Breadcrumb",
+  "kind": "Componente",
+  "source": "src/components/Breadcrumb/index.js",
+  "implementation": "src/components/Breadcrumb/Breadcrumb.react.js",
+  "implementationCode": "import React from 'react';\nimport {Grid, List} from \"../\"\n\nfunction Breadcrumb(props) {\n\n  function isLast(index) {\n    return index === props.crumbs.length - 1;\n  }\n\n  return (\n    <div className=\"\">\n        <div className=\"container\">\n            <Grid.Row>\n                <List className=\"breadcrumb\">\n                {\n                props.crumbs.map((crumb, ci) => {\n                    const disabled = isLast(ci) ? 'disabled' : '';\n                    return (\n                        <li\n                            key={ci}\n                            className=\"breadcrumb-item align-items-center\"\n                        >\n                            <button className={`btn btn-link ${disabled}`} onClick={()=> props.selected(crumb.path)}>\n                                {crumb.name}\n                            </button>\n                        </li>\n                    );\n                })\n                }\n                </List>\n            </Grid.Row>\n        </div>\n      </div>\n  );\n}\n\nexport default Breadcrumb;",
+  "props": [
+    {
+      "name": "crumbs",
+      "type": "Array<{name: string, path: string}>",
+      "optional": false,
+      "description": "Migas en el orden de navegación."
+    },
+    {
+      "name": "selected",
+      "type": "(path: string) => void",
+      "optional": false,
+      "description": "Recibe el path seleccionado; conecta aquí el router de la aplicación."
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Breadcrumb.examples.md",
+      "source": "src/components/Breadcrumb/Breadcrumb.examples.md",
+      "markdown": "### Root Component\n\nBreadcrumb example\n\n```jsx\n <Breadcrumb crumbs={ [{name:\"Home\", path:\"/\"}, {name:\"Interface\", path:\"/interface\"}, , {name:\"Button\", path:\"/button\"}] }/>\n```"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Ruta de navegación construida a partir de migas.",
+    "behavior": [
+      "crumbs debe ser un array de objetos con name y path.",
+      "selected recibe el path de la miga pulsada; el componente no realiza la navegación.",
+      "La última miga se presenta con apariencia deshabilitada."
+    ],
+    "example": "<Breadcrumb crumbs={[{ name: \"Inicio\", path: \"/\" }, { name: \"Datos\", path: \"/datos\" }]} selected={path => console.log(path)} />",
+    "props": [
+      {
+        "name": "crumbs",
+        "type": "Array<{name: string, path: string}>",
+        "optional": false,
+        "description": "Migas en el orden de navegación."
+      },
+      {
+        "name": "selected",
+        "type": "(path: string) => void",
+        "optional": false,
+        "description": "Recibe el path seleccionado; conecta aquí el router de la aplicación."
+      }
+    ]
+  }
+}

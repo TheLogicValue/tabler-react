@@ -1,0 +1,92 @@
+{
+  "name": "Modal",
+  "kind": "Componente",
+  "source": "src/components/Modal/index.js",
+  "implementation": "src/components/Modal/Modal.js",
+  "implementationCode": "﻿import React from \"react\"\nimport { Button, ButtonModal, Spinner, Error, Success } from \"../..\"\nimport cn from \"classnames\"\nimport './Modal.css'\n//type 1 Only 1 accept button\n//type 2 2 buttons accept and cancel\nexport default function TLVModal({ children, className, body, spin, bodyHeight, title, onClose, onAccept, onCancel, onRemove, noFooter = false, modalLG = false, show = true, type = 1, acceptText = \"Ok\", cancelText = \"Cancel\", removeText = \"Leave Page\"  }) {\n    const classnames = cn(\"modal modal-blur fade\", { show }, className)\n\n    return (\n        <div className={classnames}>\n            <div className={modalLG ? \"modal-dialog modal-lg modal-dialog-centered\" : \"modal-dialog modal-md-plus modal-dialog-centered\"}>\n                <div className=\"modal-content\">\n                    <div className=\"modal-header\">\n                        <h5 className=\"modal-title\">{title}</h5>\n                        {body == \"load\" ? null : <Button type=\"button\" className=\"nodal-header-close\" onClick={onClose}>X</Button>}\n                    </div>\n                    <div className=\"modal-body\" style={{ height: bodyHeight }}>\n                        {getBody(body)}\n                        {children}\n                    </div>\n                    {\n                        noFooter ? null :\n                            <div className=\"modal-footer\">\n                                {body === \"load\" ? null :\n                                    <ButtonModal type=\"button\" onClick={onAccept} color=\"primary\" text={acceptText} spin={spin} />\n                                }\n                                {body === \"load\" ? null : type === 2 ? (\n                                    <ButtonModal type=\"button\" onClick={onCancel} color=\"danger\" text={cancelText} spin={spin} />\n                                ) : null}     \n                                {body === \"load\" ? null : type === 3 ? (\n                                    <>\n                                        <ButtonModal type=\"button\" onClick={onRemove} color=\"danger\" text={removeText} spin={spin} />\n                                        <ButtonModal type=\"button\" onClick={onCancel} color=\"secondary\" text={cancelText} spin={spin} />\n                                    </>\n                                ) : null}     \n                            </div>\n                    }\n                </div>\n            </div>\n        </div>\n    )\n}\n\nfunction getBody(body) {\n    switch (body) {\n        case \"load\": return (<div className=\"modal-load\">\n            <Spinner height={100} width={100} />\n        </div>)\n        case \"error\": return (<div className=\"modal-error\">\n            <Error height={100} width={100} />\n        </div>)\n        case \"ok\": return (<div className=\"modal-ok\">\n            <Success height={100} width={100} />\n        </div>)\n        default: return null\n    }\n}\n",
+  "props": [
+    {
+      "name": "children"
+    },
+    {
+      "name": "className"
+    },
+    {
+      "name": "body"
+    },
+    {
+      "name": "spin"
+    },
+    {
+      "name": "bodyHeight"
+    },
+    {
+      "name": "title"
+    },
+    {
+      "name": "onClose"
+    },
+    {
+      "name": "onAccept"
+    },
+    {
+      "name": "onCancel"
+    },
+    {
+      "name": "onRemove"
+    },
+    {
+      "name": "noFooter",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "modalLG",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "show",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "type",
+      "default": "1",
+      "optional": true
+    },
+    {
+      "name": "acceptText",
+      "default": "\"Ok\"",
+      "optional": true
+    },
+    {
+      "name": "cancelText",
+      "default": "\"Cancel\"",
+      "optional": true
+    },
+    {
+      "name": "removeText",
+      "default": "\"Leave Page\"",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Ventana de confirmación con estados de carga, éxito y error.",
+    "behavior": [
+      "El consumidor monta o desmonta el modal y gestiona sus callbacks. La implementación exportada no crea un portal ni un diálogo nativo.",
+      "show controla una clase CSS; la integración debe aportar el comportamiento y los estilos de visibilidad de .modal.show.",
+      "type=1 muestra aceptar; type=2 añade cancelar; type=3 añade eliminar y cancelar.",
+      "body=\"load\" muestra Spinner y oculta las acciones; error y ok muestran los iconos correspondientes. children se representa además del estado.",
+      "spin sustituye las acciones por indicadores de carga y noFooter elimina el pie.",
+      "La integración gestiona Escape, foco y cierre externo cuando sean necesarios."
+    ],
+    "example": "{open && <Modal show title=\"Confirmar\" type={2}\n  onClose={() => setOpen(false)}\n  onCancel={() => setOpen(false)}\n  onAccept={handleAccept}>\n  <p>Confirma la operación.</p>\n</Modal>}"
+  }
+}

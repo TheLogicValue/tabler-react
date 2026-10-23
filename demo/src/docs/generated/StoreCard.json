@@ -1,0 +1,66 @@
+{
+  "name": "StoreCard",
+  "kind": "Componente",
+  "source": "src/components/StoreCard/index.js",
+  "implementation": "src/components/StoreCard/StoreCard.react.js",
+  "implementationCode": "//@flow\n\nimport * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport Text from \"../Text/Text.react\";\nimport Button from \"../Button/Button.react\";\nimport Icon from \"../Icon/Icon.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +title?: string,\n  +price?: string,\n  +subtitle?: string,\n  +imgUrl?: string,\n  +imgAlt?: string,\n|};\n\nfunction StoreCard({\n  children,\n  title,\n  subtitle,\n  price,\n  imgUrl,\n  imgAlt,\n}: Props): React.Node {\n  return (\n    <Card>\n      <Card.Body>\n        <div className=\"mb-4 text-center\">\n          <img src={imgUrl} alt={imgAlt} />\n        </div>\n        <Card.Title>{title}</Card.Title>\n        <Text className=\"card-subtitle\">{subtitle}</Text>\n\n        <div className=\"mt-5 d-flex align-items-center\">\n          <div className=\"product-price\">\n            <strong>{price}</strong>\n          </div>\n          <div className=\"ml-auto\">\n            <Button color=\"primary\">\n              <Icon prefix=\"fe\" name=\"plus\" />\n              Add to cart\n            </Button>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default StoreCard;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "price",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "imgUrl",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "imgAlt",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "README.md",
+      "source": "src/components/StoreCard/README.md",
+      "markdown": "## Store Component\n\n### Usage\n\n```jsx\nimport { StoreCard} from 'tabler-react'\n\n...\n...\n...\n\n<StoreCard title=\"\" subtitle\"\" price=\"\" imgUrl=\"https://tabler.github.io/tabler/demo/products/apple-iphone7-special.jpg\" imgAlt=\"iPhone\" />\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta visual de un producto con precio e imagen.",
+    "behavior": [
+      "title, subtitle, price e imgUrl configuran la presentación.",
+      "La implementación incluye un botón Add to cart sin callback de compra y no utiliza children para personalizarlo.",
+      "No añade artículos a una cesta ni procesa pedidos; esa integración requeriría adaptar el consumidor o el componente."
+    ],
+    "example": "<StoreCard title=\"Producto de prueba\" subtitle=\"Descripción\" price=\"12 €\" imgUrl=\"/producto-local.svg\" imgAlt=\"Producto\" />"
+  }
+}

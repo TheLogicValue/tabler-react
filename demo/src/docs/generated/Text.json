@@ -1,0 +1,224 @@
+{
+  "name": "Text",
+  "kind": "Componente",
+  "source": "src/components/Text/index.js",
+  "implementation": "src/components/Text/Text.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport TextSmall from \"./TextSmall.react\";\n\ntype AlignProps = {|\n  +align?: \"left\" | \"center\" | \"right\" | \"justify\",\n  +left?: boolean,\n  +center?: boolean,\n  +right?: boolean,\n  +justify?: boolean,\n|};\n\ntype TransformProps = {|\n  +transform?: \"lowercase\" | \"uppercase\" | \"capitalize\",\n  +lowercase?: boolean,\n  +uppercase?: boolean,\n  +capitalize?: boolean,\n|};\n\ntype TrackingProps = {|\n  +tracking?: \"tight\" | \"normal\" | \"wide\",\n  +trackingTight?: boolean,\n  +trackingNormal?: boolean,\n  +trackingWide?: boolean,\n|};\n\ntype LeadingProps = {|\n  +leading?: \"none\" | \"tight\" | \"normal\" | \"loose\",\n  +leadingNone?: boolean,\n  +leadingTight?: boolean,\n  +leadingNormal?: boolean,\n  +leadingLoose?: boolean,\n|};\n\ntype TextProps = {|\n  ...AlignProps,\n  ...TransformProps,\n  ...TrackingProps,\n  ...LeadingProps,\n  +children?: React.Node,\n  +className?: string,\n  +RootComponent?: React.ElementType,\n  +color?: string,\n  +size?: string,\n  +wrap?: boolean,\n  +muted?: boolean,\n|};\n\nconst Text = ({\n  className,\n  children,\n  RootComponent,\n  color = \"\",\n  size = \"\",\n  wrap,\n  muted,\n  ...props\n}: TextProps): React.Node => {\n  const { align: alignFromProps, left, center, right, justify } = props;\n  const align =\n    alignFromProps ||\n    (left && \"left\") ||\n    (center && \"center\") ||\n    (right && \"right\") ||\n    (justify && \"justify\") ||\n    \"\";\n\n  const {\n    transform: transformFromProps,\n    lowercase,\n    uppercase,\n    capitalize,\n  } = props;\n  const transform =\n    transformFromProps ||\n    (lowercase && \"lowercase\") ||\n    (uppercase && \"uppercase\") ||\n    (capitalize && \"capitalize\") ||\n    \"\";\n\n  const {\n    tracking: trackingFromProps,\n    trackingTight,\n    trackingNormal,\n    trackingWide,\n  } = props;\n  const tracking =\n    trackingFromProps ||\n    (trackingTight && \"tight\") ||\n    (trackingNormal && \"normal\") ||\n    (trackingWide && \"wide\") ||\n    \"\";\n\n  const {\n    leading: leadingFromProps,\n    leadingNone,\n    leadingTight,\n    leadingNormal,\n    leadingLoose,\n  } = props;\n  const leading =\n    leadingFromProps ||\n    (leadingNone && \"none\") ||\n    (leadingTight && \"tight\") ||\n    (leadingNormal && \"normal\") ||\n    (leadingLoose && \"loose\") ||\n    \"\";\n\n  const classes = cn(\n    {\n      [`text-wrap p-lg-6`]: wrap,\n      [`text-${color}`]: color,\n      [`${size}`]: size,\n      \"text-muted\": muted,\n      [`text-${align}`]: align,\n      [`text-${transform}`]: transform,\n      [`tracking-${tracking}`]: tracking,\n      [`leading-${leading}`]: leading,\n    },\n    className\n  );\n  const Component = RootComponent || \"div\";\n  return (\n    <Component className={classes} {...props}>\n      {children}\n    </Component>\n  );\n};\n\nText.displayName = \"Text\";\n\nText.Small = TextSmall;\n\n/** @component */\nexport default Text;\n",
+  "props": [
+    {
+      "name": "align",
+      "type": "\"left\" | \"center\" | \"right\" | \"justify\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "left",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "center",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "right",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "justify",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "transform",
+      "type": "\"lowercase\" | \"uppercase\" | \"capitalize\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "lowercase",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "uppercase",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "capitalize",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "tracking",
+      "type": "\"tight\" | \"normal\" | \"wide\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "trackingTight",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "trackingNormal",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "trackingWide",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "leading",
+      "type": "\"none\" | \"tight\" | \"normal\" | \"loose\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "leadingNone",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "leadingTight",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "leadingNormal",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "leadingLoose",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "RootComponent",
+      "type": "React.ElementType",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "wrap",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "muted",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Small"
+  ],
+  "members": [],
+  "rest": true,
+  "childApis": [
+    {
+      "name": "Small",
+      "source": "src/components/Text/TextSmall.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "wrap",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "muted",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Text.examples.broken.md",
+      "source": "src/components/Text/Text.examples.broken.md",
+      "markdown": "### Text Alignment\n\nEasily realign text to components with text alignment classes.\n\n```jsx\n  <Text left>Left aligned text on all viewport sizes.</Text>\n  <Text center>Center aligned text on all viewport sizes.</Text>\n  <Text right>Right aligned text on all viewport sizes.</Text>\n  <Text justify>\n    Both aligned text on all viewport sizes. Ambitioni dedisse\n    scripsisse iudicaretur. Cras mattis iudicium purus sit amet\n    fermentum. Donec sed odio operae, eu vulputate felis rhoncus.\n  </Text>\n```\n\n### Text Transform\n\nTransform text in components with text capitalization classes.\n\n```jsx\n  <Text lowercase>lowercased text.</Text>\n  <Text uppercase>Uppercased text.</Text>\n  <Text capitalize>Capitalized text.</Text>\n```\n\n### Text Spacing\n\nProps for controlling the tracking (letter spacing).\n\n```jsx\n  <Text trackingTight>\n    Lorem ipsum dolor sit amet. Tight letter spacing.\n  </Text>\n  <Text trackingNormal>\n    Lorem ipsum dolor sit amet. Normal letter spacing.\n  </Text>\n  <Text trackingWide>\n    Lorem ipsum dolor sit amet. Wide letter spacing.\n  </Text>\n```\n\n### Line Height\n\nProps for controlling the leading (line height).\n\n```jsx\n  <Text leadingNone>\n    Lorem ipsum dolor sit amet.<br />Dolor sit amet.\n  </Text>\n  <Text leadingTight>\n    Lorem ipsum dolor sit amet.<br />Dolor sit amet.\n  </Text>\n  <Text leadingNormal>\n    Lorem ipsum dolor sit amet.<br />Dolor sit amet.\n  </Text>\n  <Text leadingLoose>\n    Lorem ipsum dolor sit amet.<br />Dolor sit amet.\n  </Text>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Texto con utilidades de color, tamaño y alineación.",
+    "behavior": [
+      "RootComponent permite adaptar el elemento raíz a su uso semántico.",
+      "Las opciones de transformación, espaciado y altura aplican clases; no modifican el contenido original."
+    ],
+    "example": "<Text color=\"muted\" size=\"sm\">Información complementaria.</Text>"
+  }
+}

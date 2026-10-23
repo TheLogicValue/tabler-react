@@ -1,0 +1,57 @@
+{
+  "name": "TabbedHeader",
+  "kind": "Componente",
+  "source": "src/components/Tabs/index.js",
+  "implementation": "src/components/Tabs/TabbedHeader.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport Tab from \"./Tab.react\";\nimport Nav from \"../Nav/Nav.react\";\nimport Card from \"../Card/index\";\nimport cn from \"classnames\";\n\ntype Props = {|\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n  +selectedTitle: string,\n  +options: React.Node,\n  +stateCallback: (selectedTitle: string) => void,\n|};\n\nfunction TabbedHeader(props: Props): React.Node {\n  const { children, stateCallback, options, modal } = props;\n  const tabs = React.Children.toArray(children);\n  const classes = cn(\"tab-header\", {\"modal-header\": modal});\n\n  return (\n    <Card.Header className={classes}>\n      <ul className=\"nav nav-tabs Tab_header_tabs\">\n        {tabs.map((tab, index) => {\n          const title = tab.props.title;\n          return (\n            <Nav.Item\n              key={index}\n              value={title}\n              onClick={() => stateCallback(title)}\n              active={title === props.selectedTitle}\n            />\n          );\n        })}\n      </ul>\n      <Card.Options>\n          {options}\n      </Card.Options>\n    </Card.Header>\n  );\n}\n\nexport default TabbedHeader;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "selectedTitle",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "options",
+      "type": "React.Node",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "stateCallback",
+      "type": "(selectedTitle: string) => void",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "modal"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Tabs.examples.md",
+      "source": "src/components/Tabs/Tabs.examples.md",
+      "markdown": "```jsx\n<Tabs initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card\n          body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\"\n        />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</Tabs>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Cabecera de pestañas controlada por el consumidor.",
+    "behavior": [
+      "Construye los disparadores a partir del title de cada hijo Tab.",
+      "stateCallback recibe el título seleccionado; selectedTitle define cuál aparece activo.",
+      "options incorpora controles adicionales; se combina con TabbedContainer para mostrar los paneles."
+    ],
+    "example": "<TabbedHeader selectedTitle={active} stateCallback={setActive}><Tab title=\"Uno\">Primer panel</Tab><Tab title=\"Dos\">Segundo panel</Tab></TabbedHeader>"
+  }
+}

@@ -3,6 +3,7 @@ import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Badge, Button, Card, Grid, Icon, NavBarMenu, Page, Spinner, Text } from 'tabler-react'
 import usage from './usage.json'
 import catalog from './library-exports.json'
+import documentationDates from '../docs/metadata.json'
 import { testedComponents } from './data.js'
 import { ComponentList, ScenarioBoundary } from './shared.jsx'
 
@@ -11,6 +12,7 @@ const FormView = lazy(() => import('./views/FormView.jsx'))
 const InteractionView = lazy(() => import('./views/InteractionView.jsx'))
 const ChartView = lazy(() => import('./views/ChartView.jsx'))
 const CoverageView = lazy(() => import('./views/CoverageView.jsx'))
+const DocumentationView = lazy(() => import('./views/DocumentationView.jsx'))
 
 const pages = [
   { to: '/', value: 'Resumen', icon: 'grid', description: 'Los componentes de Tabler, en un entorno de prueba independiente.' },
@@ -18,6 +20,7 @@ const pages = [
   { to: '/formulario', value: 'Formularios y fechas', icon: 'edit-3', description: 'Campos controlados, react-select, calendario y validación.' },
   { to: '/interacciones', value: 'Interacciones', icon: 'sliders', description: 'Modales, pestañas, menús y permisos de navegación.' },
   { to: '/graficos', value: 'Gráficos y estados', icon: 'bar-chart-2', description: 'ECharts, carga, ausencia de datos y recuperación de errores.' },
+  { to: '/documentacion', value: 'Documentación', icon: 'book-open', description: 'Guías de uso, propiedades, callbacks y código de los componentes.' },
   { to: '/cobertura', value: 'Cobertura de componentes', icon: 'check-square', description: 'Qué componentes se incluyen y cómo repetir las comprobaciones.' },
 ]
 
@@ -79,13 +82,15 @@ function Overview() {
 export default function App() {
   const { pathname } = useLocation()
   const current = pages.find(page => page.to === pathname || (page.to !== '/' && pathname.startsWith(`${page.to}/`))) || pages[0]
+  const updatedOn = current.to === '/documentacion' ? documentationDates.documentationUpdatedOn
+    : current.to === '/cobertura' ? documentationDates.coverageUpdatedOn : null
   return <Page className="demo-shell">
     <header className="demo-header"><div className="demo-container demo-header-inner">
       <Link to="/" className="brand"><span className="brand-mark">t.</span><span>tabler<span className="brand-divider">/</span><strong>laboratorio tabler</strong></span></Link>
       <div className="build-tags"><span className="local-dot" />Biblioteca {__LIBRARY_VERSION__}<Badge color="secondary">Vite {__DEMO_VITE_VERSION__}</Badge></div>
     </div></header>
     <nav className="demo-nav" aria-label="Ejemplos de componentes"><div className="demo-container"><NavBarMenu items={navigationItems} /></div></nav>
-    <main><Page.Content title={current.value} subTitle={current.description}>
+    <main><Page.Content title={current.value} subTitle={current.description} options={updatedOn && <span className="demo-updated-on">Última actualización: <time dateTime={updatedOn}>{updatedOn.split('-').reverse().join('/')}</time></span>}>
       <ScenarioBoundary key={current.to}>
         <Suspense fallback={<div className="route-loading"><Spinner /> Preparando ejemplo…</div>}>
           <Routes>
@@ -95,6 +100,8 @@ export default function App() {
             <Route path="/interacciones/*" element={<InteractionView />} />
             <Route path="/graficos" element={<ChartView />} />
             <Route path="/cobertura" element={<CoverageView />} />
+            <Route path="/documentacion" element={<DocumentationView />} />
+            <Route path="/documentacion/:name" element={<DocumentationView />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

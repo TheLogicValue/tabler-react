@@ -1,0 +1,185 @@
+{
+  "name": "List",
+  "kind": "Componente",
+  "source": "src/components/List/index.js",
+  "implementation": "src/components/List/List.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport ListItem from \"./ListItem.react\";\nimport ListGroup from \"./ListGroup.react\";\nimport ListGroupItem from \"./ListGroupItem.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +unstyled?: boolean,\n  +seperated?: boolean,\n  +inline?: boolean,\n|};\n\nfunction List({\n  className,\n  children,\n  unstyled,\n  seperated,\n  inline,\n}: Props): React.Node {\n  const classes = cn(\n    {\n      list: !unstyled,\n      \"list-unstyled\": unstyled,\n      \"list-seperated\": seperated,\n      \"list-inline\": inline,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nList.Item = ListItem;\nList.Group = ListGroup;\nList.GroupItem = ListGroupItem;\n\nexport default List;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "unstyled",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "seperated",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Item",
+    "Group",
+    "GroupItem"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Item",
+      "source": "src/components/List/ListItem.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "inline",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Group",
+      "source": "src/components/List/ListGroup.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "transparent",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isCardBody",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "GroupItem",
+      "source": "src/components/List/ListGroupItem.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "action",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "List.examples.md",
+      "source": "src/components/List/List.examples.md",
+      "markdown": "```jsx\n<List>\n  <List.Item>An Item</List.Item>\n  <List.Item>Another Item</List.Item>\n  <List.Item>A third item</List.Item>\n</List>\n```\n\n#### Unstyled\n\n```jsx\n<List unstyled>\n  <List.Item>An Item</List.Item>\n  <List.Item>Another Item</List.Item>\n  <List.Item>A third item</List.Item>\n</List>\n```\n"
+    },
+    {
+      "name": "ListGroup.examples.md",
+      "source": "src/components/List/ListGroup.examples.md",
+      "markdown": "```jsx\n<List.Group>\n  <List.GroupItem>An Item</List.GroupItem>\n  <List.GroupItem>Another Item</List.GroupItem>\n  <List.GroupItem>A third item</List.GroupItem>\n</List.Group>\n```\n"
+    },
+    {
+      "name": "ListGroupItem.examples.md",
+      "source": "src/components/List/ListGroupItem.examples.md",
+      "markdown": "```jsx\n<List.Group>\n  <List.GroupItem action active>\n    Already Active\n  </List.GroupItem>\n  <List.GroupItem action>Another Item</List.GroupItem>\n  <List.GroupItem action icon=\"globe\">\n    With an icon!\n  </List.GroupItem>\n</List.Group>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Lista con variantes de presentación.",
+    "behavior": [
+      "List.Item compone cada entrada; inline y unstyled cambian las clases visuales.",
+      "La propiedad histórica seperated se escribe así en esta API."
+    ],
+    "example": "<List unstyled><List.Item>Primera entrada</List.Item><List.Item>Segunda entrada</List.Item></List>"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Error403Page",
+  "kind": "Plantilla",
+  "source": "src/page_templates/errors/Error403Page.react.js",
+  "implementation": "src/page_templates/errors/Error403Page.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport DefaultErrorPage from \"./DefaultErrorPage.react\";\nimport type { Props as DefaultErrorProps } from \"./DefaultErrorPage.react\";\n\nfunction Error403Page({\n  title = \"403\",\n  subtitle = \"Oops... You just found an error page...\",\n  details = \"We are sorry but you do not have permission to access this page...\",\n  action,\n}: DefaultErrorProps): React.Node {\n  return (\n    <DefaultErrorPage\n      title={title}\n      subtitle={subtitle}\n      details={details}\n      action={action}\n    />\n  );\n}\n\nexport default Error403Page;\n",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"403\""
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Oops... You just found an error page...\""
+    },
+    {
+      "name": "details",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"We are sorry but you do not have permission to access this page...\""
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Plantilla visual para presentar un error 403.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error403Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  }
+}

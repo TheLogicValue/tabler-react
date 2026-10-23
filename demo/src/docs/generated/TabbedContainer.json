@@ -1,0 +1,41 @@
+{
+  "name": "TabbedContainer",
+  "kind": "Componente",
+  "source": "src/components/Tabs/index.js",
+  "implementation": "src/components/Tabs/TabbedContainer.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Tab from \"./Tab.react\";\n\ntype Props = {|\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n  +selectedTitle: string,\n|};\n\nfunction TabbedContainer(props: Props): React.Node {\n  const tabs = React.Children.toArray(props.children);\n  return tabs.filter(tab => tab.props.title === props.selectedTitle);\n}\n\n/** @component */\nexport default TabbedContainer;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "selectedTitle",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Tabs.examples.md",
+      "source": "src/components/Tabs/Tabs.examples.md",
+      "markdown": "```jsx\n<Tabs initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card\n          body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\"\n        />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</Tabs>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenedor de paneles cuyo título coincide con una selección.",
+    "behavior": [
+      "selectedTitle lo controla el consumidor o un contenedor de pestañas.",
+      "Recibe hijos Tab; no dibuja por sí mismo la cabecera de selección."
+    ],
+    "example": "<TabbedContainer selectedTitle=\"Resumen\"><Tab title=\"Resumen\">Panel seleccionado.</Tab><Tab title=\"Detalle\">Otro panel.</Tab></TabbedContainer>"
+  }
+}

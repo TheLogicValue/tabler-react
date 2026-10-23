@@ -1,0 +1,462 @@
+{
+  "name": "Button",
+  "kind": "Componente",
+  "source": "src/components/Button/index.js",
+  "implementation": "src/components/Button/Button.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Icon } from \"../\";\nimport ButtonList from \"./ButtonList.react\";\nimport ButtonDropdown from \"./ButtonDropdown.react\";\n\nimport type { MouseEvents, PointerEvents, FocusEvents } from \"../../\";\n\ntype PropsForAll = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  ...FocusEvents,\n  +\"aria-describedby\"?: string,\n  +\"aria-expanded\"?: boolean,\n  +\"aria-haspopup\"?: string,\n  +size?: \"sm\" | \"lg\",\n  +outline?: boolean,\n  +link?: boolean,\n  +block?: boolean,\n  +className?: string,\n  +children?: React.Node,\n  +disabled?: boolean,\n  +color?: string,\n  +square?: boolean,\n  +pill?: boolean,\n  +icon?: string,\n  +social?: string,\n  +loading?: boolean,\n  +tabIndex?: number,\n  +isDropdownToggle?: boolean,\n  +to?: string,\n  +isOption?: boolean,\n  +rootRef?: (?HTMLElement) => void,\n|};\n\ntype DefaultButtonComponent = {|\n  ...PropsForAll,\n  +RootComponent?: \"button\",\n  +type?: \"button\" | \"submit\" | \"reset\",\n  +value?: string,\n|};\n\ntype BtnAComponent = {|\n  ...PropsForAll,\n  +RootComponent: \"a\",\n  +href?: string,\n  +target?: string,\n  +rel?: string,\n  +download?: string,\n|};\n\ntype BtnInputComponent = {|\n  ...PropsForAll,\n  +RootComponent: \"input\",\n  +type?: \"button\" | \"submit\" | \"reset\",\n  +value?: string,\n|};\n\nexport type Props = DefaultButtonComponent | BtnAComponent | BtnInputComponent;\n\nconst Button = (props: Props): React.Node => {\n  const {\n    size = \"\",\n    outline,\n    link,\n    block,\n    className,\n    children,\n    disabled,\n    color = \"\",\n    square,\n    pill,\n    icon,\n    social = \"\",\n    loading,\n    tabIndex,\n    isDropdownToggle,\n    isOption,\n    rootRef,\n    to,\n    onClick,\n    onMouseEnter,\n    onMouseLeave,\n    onPointerEnter,\n    onPointerLeave,\n    onFocus,\n    onBlur,\n  } = props;\n\n  const classes = cn(\n    {\n      btn: true,\n      [`btn-${size}`]: !!size,\n      [`btn-block`]: block,\n      [`btn-outline-${color}`]: outline && !!color,\n      [`btn-link`]: link,\n      disabled: disabled,\n      [`btn-${color}`]: !!color && !outline,\n      [`btn-${social}`]: !!social,\n      \"btn-square\": square,\n      \"btn-pill\": pill,\n      \"btn-icon\": !children,\n      \"btn-loading\": loading,\n      \"dropdown-toggle\": isDropdownToggle,\n      \"btn-option\": isOption,\n    },\n    className\n  );\n\n  const propsForAll = {\n    className: classes,\n    disabled: disabled,\n    onClick: onClick,\n    onMouseEnter: onMouseEnter,\n    onMouseLeave: onMouseLeave,\n    onPointerEnter: onPointerEnter,\n    onPointerLeave: onPointerLeave,\n    tabIndex: tabIndex,\n    onFocus,\n    onBlur,\n    \"aria-describedby\": props[\"aria-describedby\"],\n    \"aria-expanded\": props[\"aria-expanded\"],\n    \"aria-haspopup\": props[\"aria-haspopup\"],\n  };\n\n  const childrenForAll = (\n    <React.Fragment>\n      {social ? (\n        <Icon name={social} prefix=\"fa\" className={children ? \"mr-2\" : \"\"} />\n      ) : icon ? (\n        <Icon name={icon} className={children ? \"mr-2\" : \"\"} />\n      ) : null}\n      {children}\n    </React.Fragment>\n  );\n\n  if (!props.RootComponent || props.RootComponent === \"button\") {\n    const { type, value } = props;\n    return (\n      <button {...propsForAll} type={type} value={value} ref={rootRef}>\n        {childrenForAll}\n      </button>\n    );\n  } else if (props.RootComponent === \"input\") {\n    const { type, value } = props;\n    return <input {...propsForAll} type={type} value={value} ref={rootRef} />;\n  } else if (props.RootComponent === \"a\") {\n    const { href, target, rel, download } = props;\n    return (\n      <a {...propsForAll} href={href} target={target} ref={rootRef} rel={rel} download={download}>\n        {childrenForAll}\n      </a>\n    );\n  } else {\n    const Component: React.ElementType = props.RootComponent;\n    return (\n      <Component {...propsForAll} to={to}>\n        {childrenForAll}\n      </Component>\n    );\n  }\n};\n\nButton.List = ButtonList;\nButton.Dropdown = ButtonDropdown;\n\nButton.displayName = \"Button\";\n\nexport default Button;\n",
+  "props": [
+    {
+      "name": "aria-describedby",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "aria-expanded",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "aria-haspopup",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"lg\"",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "outline",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "link",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "block",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "square",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "pill",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "social",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Añade la clase visual de carga; configura disabled si también necesitas impedir la interacción."
+    },
+    {
+      "name": "tabIndex",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isDropdownToggle",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isOption",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "rootRef",
+      "type": "(?HTMLElement) => void",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "RootComponent",
+      "type": "\"input\"",
+      "optional": true,
+      "description": "Por defecto se representa como button; con a utiliza href y con un componente de router utiliza to."
+    },
+    {
+      "name": "type",
+      "type": "\"button\" | \"submit\" | \"reset\"",
+      "optional": true,
+      "description": "Tipo del botón o input. Sin un valor explícito, un botón dentro de un formulario utiliza el comportamiento nativo de envío."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "target",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "rel",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "download",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "onMouseEnter"
+    },
+    {
+      "name": "onMouseLeave"
+    },
+    {
+      "name": "onPointerEnter"
+    },
+    {
+      "name": "onPointerLeave"
+    },
+    {
+      "name": "onFocus"
+    },
+    {
+      "name": "onBlur"
+    }
+  ],
+  "subcomponents": [
+    "List",
+    "Dropdown"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "List",
+      "source": "src/components/Button/ButtonList.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "align",
+          "type": "\"\" | \"left\" | \"center\" | \"right\"",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": true
+    },
+    {
+      "name": "Dropdown",
+      "source": "src/components/Button/ButtonDropdown.react.js",
+      "props": [
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "aria-expanded",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "aria-haspopup",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"lg\"",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "outline",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "link",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "block",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "square",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "social",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "tabIndex",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isDropdownToggle",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isOption",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "rootRef",
+          "type": "(?HTMLElement) => void",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "\"input\"",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\"",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "rel",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "download",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "dropdownProps",
+          "type": "DropdownMenuProps",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": true
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Button.examples.md",
+      "source": "src/components/Button/Button.examples.md",
+      "markdown": "### Root Component\n\nBy default a Button will render a <button>, you can change this with the RootComponent prop\n\n```jsx\n<Button.List>\n  <Button color=\"primary\">Button</Button>\n  <Button color=\"primary\" RootComponent=\"a\" href=\"#\">\n    Link\n  </Button>\n</Button.List>\n```\n\n### Button Variations\n\n```jsx\n<Button.List>\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n  <Button color=\"success\">color='success'</Button>\n  <Button color=\"info\">color='info'</Button>\n  <Button color=\"warning\">color='warning'</Button>\n  <Button color=\"danger\">color='danger'</Button>\n  <Button link>Link</Button>\n</Button.List>\n```\n\n### Disabled Buttons\n\n```jsx\n<Button.List>\n  <Button color=\"primary\" disabled>\n    Button\n  </Button>\n  <Button color=\"success\" disabled RootComponent=\"a\" href=\"#\">\n    Link\n  </Button>\n  <Button\n    color=\"info\"\n    disabled\n    RootComponent=\"input\"\n    type=\"button\"\n    value=\"Input\"\n  />\n</Button.List>\n```\n\n### Button Colors\n\n```jsx\n<Button.List>\n  <Button color=\"blue\">Blue</Button>\n  <Button color=\"azure\">Azure</Button>\n  <Button color=\"indigo\">Indigo</Button>\n  <Button color=\"purple\">Purple</Button>\n  <Button color=\"pink\">Pink</Button>\n  <Button color=\"red\">Red</Button>\n  <Button color=\"orange\">Orange</Button>\n  <Button color=\"yellow\">Yellow</Button>\n  <Button color=\"lime\">Lime</Button>\n  <Button color=\"green\">Green</Button>\n  <Button color=\"teal\">Teal</Button>\n  <Button color=\"cyan\">Cyan</Button>\n  <Button color=\"gray\">Gray</Button>\n  <Button color=\"gray-dark\">Dark gray</Button>\n</Button.List>\n```\n\n### Square Buttons\n\n```jsx\n<Button.List>\n  <Button square color=\"primary\">\n    color='primary'\n  </Button>\n  <Button square color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button square color=\"success\">\n    color='success'\n  </Button>\n  <Button square color=\"info\">\n    color='info'\n  </Button>\n  <Button square color=\"warning\">\n    color='warning'\n  </Button>\n  <Button square color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Pill Buttons\n\n```jsx\n<Button.List>\n  <Button pill color=\"primary\">\n    color='primary'\n  </Button>\n  <Button pill color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button pill color=\"success\">\n    color='success'\n  </Button>\n  <Button pill color=\"info\">\n    color='info'\n  </Button>\n  <Button pill color=\"warning\">\n    color='warning'\n  </Button>\n  <Button pill color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Outline Buttons\n\n```jsx\n<Button.List>\n  <Button outline color=\"primary\">\n    color='primary'\n  </Button>\n  <Button outline color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button outline color=\"success\">\n    color='success'\n  </Button>\n  <Button outline color=\"info\">\n    color='info'\n  </Button>\n  <Button outline color=\"warning\">\n    color='warning'\n  </Button>\n  <Button outline color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Button Size\n\n```jsx\n<Button.List>\n  <Button size=\"sm\">Small</Button>\n  <Button>Default</Button>\n  <Button size=\"lg\">Button</Button>\n</Button.List>\n```\n\n### Block Level button\n\n```jsx\n<Button.List>\n  <Button block color=\"primary\">\n    Block level button\n  </Button>\n  <Button block color=\"secondary\">\n    Block level button\n  </Button>\n</Button.List>\n```\n\n### Button with icon\n\n```jsx\n<Button.List>\n  <Button color=\"dark\" icon=\"upload\">\n    Upload\n  </Button>\n  <Button icon=\"heart\" color=\"warning\">\n    I Like\n  </Button>\n  <Button icon=\"check\" color=\"success\">\n    I agree\n  </Button>\n  <Button icon=\"plus\" color=\"primary\" outline>\n    More\n  </Button>\n  <Button icon=\"link\" color=\"danger\">\n    Link\n  </Button>\n  <Button icon=\"message-circle\" color=\"info\">\n    Comment\n  </Button>\n</Button.List>\n```\n\n### Social Buttons\n\n```jsx\n<Button.List>\n  <Button social=\"facebook\">Facebook</Button>\n  <Button social=\"twitter\">Twitter</Button>\n  <Button social=\"google\">Google</Button>\n  <Button social=\"youtube\">Youtube</Button>\n  <Button social=\"vimeo\">Vimeo</Button>\n  <Button social=\"dribbble\">Dribbble</Button>\n  <Button social=\"github\">Github</Button>\n  <Button social=\"instagram\">Instagram</Button>\n  <Button social=\"pinterest\">Pinterest</Button>\n  <Button social=\"vk\">VKontakte</Button>\n  <Button social=\"rss\">RSS</Button>\n  <Button social=\"flickr\">Flickr</Button>\n  <Button social=\"bitbucket\">Bitbucket</Button>\n</Button.List>\n```\n\n### Icon Buttons\n\n```jsx\n<Button.List>\n  <Button social=\"facebook\" />\n  <Button social=\"github\" />\n  <Button color=\"primary\" icon=\"activity\" />\n  <Button color=\"success\" icon=\"bell\" />\n  <Button color=\"warning\" icon=\"star\" />\n  <Button color=\"danger\" icon=\"trash\" />\n  <Button color=\"purple\" icon=\"bar-chart\" />\n  <Button color=\"secondary\" icon=\"git-merge\" />\n</Button.List>\n```\n\n### Button Dropdown\n\n```jsx\n<Button.List>\n  <Dropdown\n    type=\"button\"\n    toggle\n    color=\"secondary\"\n    icon=\"calendar\"\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n  <Dropdown\n    value=\"Show Calendar\"\n    color=\"secondary\"\n    icon=\"calendar\"\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n  <Dropdown\n    value=\"Show Calendar\"\n    color=\"primary\"\n    toggle\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n</Button.List>\n```\n\n### Loading Buttons\n\n```jsx\n<Button.List>\n  <Button loading color=\"primary\">\n    Button text\n  </Button>\n  <Button loading color=\"success\" icon=\"check\" />\n  <Button loading color=\"warning\" size=\"sm\">\n    Button text\n  </Button>\n  <Button loading color=\"danger\" size=\"lg\">\n    Button text\n  </Button>\n  <Button loading color=\"secondary\" block>\n    Button text\n  </Button>\n</Button.List>\n```\n"
+    },
+    {
+      "name": "ButtonDropdown.examples.md",
+      "source": "src/components/Button/ButtonDropdown.examples.md",
+      "markdown": "```jsx\n<Button.Dropdown value=\"A Button\">\n  <Dropdown.Item>News</Dropdown.Item>\n  <Dropdown.Item>Messages</Dropdown.Item>\n  <Dropdown.ItemDivider />\n  <Dropdown.Item>Edit Profile</Dropdown.Item>\n</Button.Dropdown>\n```\n"
+    },
+    {
+      "name": "ButtonList.examples.md",
+      "source": "src/components/Button/ButtonList.examples.md",
+      "markdown": "```jsx\n<Button.List>\n  <Button color=\"success\">Save changes</Button>\n  <Button color=\"secondary\">Save and continue</Button>\n  <Button color=\"danger\">Cancel</Button>\n</Button.List>\n```\n\nIf the list is very long, it will automatically wrap on multiple lines,\nwhile keeping all buttons evenly spaced.\n\n```jsx\n<Button.List>\n  <Button color=\"secondary\">One</Button>\n  <Button color=\"secondary\">Two</Button>\n  <Button color=\"secondary\">Three</Button>\n  <Button color=\"secondary\">Four</Button>\n  <Button color=\"secondary\">Five</Button>\n  <Button color=\"secondary\">Six</Button>\n  <Button color=\"secondary\">Seven</Button>\n  <Button color=\"secondary\">Eight</Button>\n  <Button color=\"secondary\">Nine</Button>\n  <Button color=\"secondary\">Ten</Button>\n  <Button color=\"secondary\">Eleven</Button>\n  <Button color=\"secondary\">Twelve</Button>\n  <Button color=\"secondary\">Thirteen</Button>\n  <Button color=\"secondary\">Fourteen</Button>\n  <Button color=\"secondary\">Fifteen</Button>\n  <Button color=\"secondary\">Sixteen</Button>\n  <Button color=\"secondary\">Seventeen</Button>\n  <Button color=\"secondary\">Eighteen</Button>\n  <Button color=\"secondary\">Nineteen</Button>\n</Button.List>\n```\n\n### List Buttons Alignment\n\n```jsx\n<Button.List align=\"center\">\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n</Button.List>\n```\n\n```jsx\n<Button.List align=\"right\">\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n</Button.List>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Acción con las variantes visuales de botones de Tabler.",
+    "behavior": [
+      "Establece type=\"button\" para una acción dentro de un formulario; utiliza type=\"submit\" cuando quieras enviarlo.",
+      "RootComponent permite usar button, a, input o un componente de enlace. Los atributos admitidos dependen de esa variante.",
+      "loading modifica la apariencia; disabled es la propiedad que deshabilita el botón nativo.",
+      "Button.List agrupa acciones y Button.Dropdown combina un botón con un menú. rootRef permite acceder al elemento DOM."
+    ],
+    "example": "<Button type=\"button\" color=\"primary\" icon=\"check\" onClick={() => console.log(\"Confirmado\")}>Confirmar</Button>",
+    "props": [
+      {
+        "name": "type",
+        "description": "Tipo del botón o input. Sin un valor explícito, un botón dentro de un formulario utiliza el comportamiento nativo de envío."
+      },
+      {
+        "name": "loading",
+        "description": "Añade la clase visual de carga; configura disabled si también necesitas impedir la interacción."
+      },
+      {
+        "name": "RootComponent",
+        "description": "Por defecto se representa como button; con a utiliza href y con un componente de router utiliza to."
+      }
+    ]
+  }
+}

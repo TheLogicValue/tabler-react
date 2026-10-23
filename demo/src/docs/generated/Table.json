@@ -1,0 +1,242 @@
+{
+  "name": "Table",
+  "kind": "Componente",
+  "source": "src/components/Table/index.js",
+  "implementation": "src/components/Table/Table.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport TableHeader from \"./TableHeader.react\";\nimport TableBody from \"./TableBody.react\";\nimport TableRow from \"./TableRow.react\";\nimport TableCol from \"./TableCol.react\";\nimport TableColHeader from \"./TableColHeader.react\";\n\ntype BodyItem = {|\n  key: string | number,\n  item: Array<{\n    +content?: React.Node,\n    +className?: string,\n    +alignContent?: \"left\" | \"center\" | \"right\",\n  }>\n|};\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * Should this Table be optimized to contain Cards\n   */\n  +cards?: boolean,\n  /**\n   * Give the table striped rows\n   */\n  +striped?: boolean,\n  /**\n   * Make the table responsive\n   */\n  +responsive?: boolean,\n  +highlightRowOnHover?: boolean,\n  +hasOutline?: boolean,\n  +verticalAlign?: \"center\",\n  +headeritems?: Array<{ +content?: React.Node, +className?: string }>,\n  +bodyitems?: Array<BodyItem>,\n|};\n\nfunction Table({\n  className,\n  children,\n  cards = false,\n  striped = false,\n  responsive = false,\n  highlightRowOnHover,\n  hasOutline,\n  verticalAlign,\n  ...props\n}: Props): React.Node {\n  const classes = cn(\n    \"table\",\n    {\n      \"card-table\": cards,\n      \"table-striped\": striped,\n      \"table-hover\": highlightRowOnHover,\n      \"table-outline\": hasOutline,\n      \"table-vcenter\": verticalAlign === \"center\",\n    },\n    className\n  );\n\n  const header = props.headeritems && (\n    <Table.Header>\n      <Table.Row>\n        {props.headeritems.map((item, i) => (\n          <Table.ColHeader key={i} className={item.className}>\n            {item.content}\n          </Table.ColHeader>\n        ))}\n      </Table.Row>\n    </Table.Header>\n  );\n\n  const body = props.bodyitems && (\n    <Table.Body>\n      {props.bodyitems.map((row, i) => (\n        <Table.Row key={row.key}>\n          {row.item.map((col, i) => (\n            <Table.Col\n              className={col.className}\n              alignContent={col.alignContent}\n              key={i}\n            >\n              {col.content}\n            </Table.Col>\n          ))}\n        </Table.Row>\n      ))}\n    </Table.Body>\n  );\n\n  const table = (\n    <table className={classes} {...props}>\n      {header}\n      {body || children}\n    </table>\n  );\n\n  return !responsive ? table : <div className=\"table-responsive\">{table}</div>;\n}\n\nTable.Header = TableHeader;\nTable.Body = TableBody;\nTable.Row = TableRow;\nTable.Col = TableCol;\nTable.ColHeader = TableColHeader;\n\n/** @component */\nexport default Table;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "cards",
+      "type": "boolean",
+      "optional": true,
+      "description": "Should this Table be optimized to contain Cards",
+      "default": "false"
+    },
+    {
+      "name": "striped",
+      "type": "boolean",
+      "optional": true,
+      "description": "Give the table striped rows",
+      "default": "false"
+    },
+    {
+      "name": "responsive",
+      "type": "boolean",
+      "optional": true,
+      "description": "Make the table responsive",
+      "default": "false"
+    },
+    {
+      "name": "highlightRowOnHover",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "hasOutline",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "verticalAlign",
+      "type": "\"center\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "headeritems",
+      "type": "Array<{ +content?: React.Node, +className?: string }>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "bodyitems",
+      "type": "Array<BodyItem>",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Header",
+    "Body",
+    "Row",
+    "Col",
+    "ColHeader"
+  ],
+  "members": [],
+  "rest": true,
+  "childApis": [
+    {
+      "name": "Header",
+      "source": "src/components/Table/TableHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": true
+    },
+    {
+      "name": "Body",
+      "source": "src/components/Table/TableBody.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": true
+    },
+    {
+      "name": "Row",
+      "source": "src/components/Table/TableRow.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": true
+    },
+    {
+      "name": "Col",
+      "source": "src/components/Table/TableCol.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "colSpan",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "alignContent",
+          "type": "\"left\" | \"center\" | \"right\"",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ColHeader",
+      "source": "src/components/Table/TableColHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "colSpan",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "alignContent",
+          "type": "\"left\" | \"center\" | \"right\"",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Table.examples.md",
+      "source": "src/components/Table/Table.examples.md",
+      "markdown": "```jsx\n<Table>\n  <Table.Header>\n    <Table.ColHeader>ID</Table.ColHeader>\n    <Table.ColHeader>Name</Table.ColHeader>\n    <Table.ColHeader>Action</Table.ColHeader>\n  </Table.Header>\n  <Table.Body>\n    <Table.Row>\n      <Table.Col>1</Table.Col>\n      <Table.Col>Jon</Table.Col>\n      <Table.Col>\n        <Button color=\"primary\">Edit</Button>\n      </Table.Col>\n    </Table.Row>\n  </Table.Body>\n</Table>\n```\n"
+    },
+    {
+      "name": "TableBody.examples.md",
+      "source": "src/components/Table/TableBody.examples.md",
+      "markdown": "```jsx\n<Table>\n  <Table.Body>\n    <Table.Row>\n      <Table.Col>1</Table.Col>\n      <Table.Col>Jon</Table.Col>\n      <Table.Col>\n        <Button color=\"primary\">Edit</Button>\n      </Table.Col>\n    </Table.Row>\n  </Table.Body>\n</Table>\n```\n\n### Build body from Table props\n\n```jsx\n<Table\n  bodyitems={[\n    {\n      key: 1,\n      item: [\n        { content: \"1\" },\n        { content: \"Jon\" },\n        { content: <Button color=\"primary\">Edit</Button> },\n      ],\n    },\n  ]}\n>\n  <Table.Header>\n    <Table.ColHeader>ID</Table.ColHeader>\n    <Table.ColHeader>Name</Table.ColHeader>\n    <Table.ColHeader>Action</Table.ColHeader>\n  </Table.Header>\n</Table>\n```\n"
+    },
+    {
+      "name": "TableHeader.examples.md",
+      "source": "src/components/Table/TableHeader.examples.md",
+      "markdown": "```jsx\n<Table>\n  <Table.Header>\n    <Table.Row>\n      <Table.ColHeader>ID</Table.ColHeader>\n      <Table.ColHeader>Name</Table.ColHeader>\n      <Table.ColHeader>Action</Table.ColHeader>\n    </Table.Row>\n  </Table.Header>\n</Table>\n```\n\n### Build header from Table props\n\n```jsx\n<Table\n  headeritems={[{ content: \"ID\" }, { content: \"Name\" }, { content: \"Action\" }]}\n/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tabla HTML con estilos y subcomponentes de composición.",
+    "behavior": [
+      "Puedes componer Header, Body, Row, ColHeader y Col, o usar headeritems/bodyitems.",
+      "responsive añade un contenedor con desplazamiento horizontal local.",
+      "No incorpora búsqueda, ordenación ni paginación; esas funciones pertenecen al consumidor o a AGGridTable.",
+      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content."
+    ],
+    "example": "<Table responsive striped>\n  <Table.Header><Table.Row><Table.ColHeader>Nombre</Table.ColHeader></Table.Row></Table.Header>\n  <Table.Body><Table.Row><Table.Col>Atlas</Table.Col></Table.Row></Table.Body>\n</Table>"
+  }
+}

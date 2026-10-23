@@ -1,0 +1,142 @@
+{
+  "name": "DatePicker",
+  "kind": "Componente",
+  "source": "src/components/DatePicker/index.js",
+  "implementation": "src/components/DatePicker/DatePicker.react.js",
+  "implementationCode": "import React, { useRef, useState, forwardRef, useImperativeHandle, useMemo, useEffect, useId } from 'react';\n\nimport { Icon } from \"../\"\nimport { addDays, format, isValid, parse, startOfDay } from 'date-fns';\nimport { DayPicker, dateMatchModifiers } from 'react-day-picker';\nimport { usePositioning } from '../../helpers/Floating.react';\nimport FocusTrap from 'focus-trap-react';\n\nimport { es } from 'date-fns/locale/es';\nimport 'react-day-picker/style.css';\nimport './DatePicker.css';\n\nconst DayPickerTLV = forwardRef((props, ref) => {\n    const {\n        date, dateIni, toMonth, fromMonth, lastDate, today,\n        previousDay = null, isHistoric = true, disabled = false,\n        ...calendarProps\n    } = props\n\n    const [currentDay, setCurrentDay] = useState(() => startOfDay(new Date()));\n    const inputRef = useRef(null);\n    const errorId = useId();\n    const defaultFromMonth = new Date(currentDay.getFullYear() - 5, 0);\n    const defaultToMonth = new Date(currentDay.getFullYear(), 11);\n\n    // Advance at local midnight, including days affected by daylight saving.\n    useEffect(() => {\n        const timeout = setTimeout(() => setCurrentDay(startOfDay(new Date())),\n            Math.max(1, addDays(currentDay, 1).getTime() - Date.now()));\n        return () => clearTimeout(timeout);\n    }, [currentDay]);\n\n    const dateIniData = useMemo(() => {\n        const valueDate = new Date(dateIni != undefined ? dateIni : currentDay)\n        if (!today) {\n            valueDate.setDate(valueDate.getDate() - (previousDay ?? 1))\n        }\n\n        return valueDate\n    }, [dateIni, today, previousDay, currentDay])\n    const dateData = date != undefined ? new Date(date) : dateIniData\n\n    const [inputValue, setInputValue] = useState(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));\n    const [isCalendarOpen, setIsCalendarOpen] = useState(false);\n\n    // Preserve explicit disabled matchers and future mode; history defaults to today.\n    const getDisabledDays = (referenceDay = currentDay) => disabled || (isHistoric\n        ? { after: lastDate ?? referenceDay }\n        : lastDate ? { before: lastDate } : false);\n    const isAllowedDate = (value, referenceDay = currentDay) =>\n        isValid(value) && !dateMatchModifiers(value, getDisabledDays(referenceDay));\n    const parsedValue = parse(inputValue, 'dd/MM/y', currentDay);\n    const selected = isAllowedDate(parsedValue) ? parsedValue : undefined;\n    let inputError = '';\n    if (inputValue && !isValid(parsedValue)) {\n        inputError = 'Introduce una fecha válida con el formato dd/mm/aaaa.';\n    } else if (inputValue && !isAllowedDate(parsedValue)) {\n        inputError = disabled ? 'Esta fecha no está permitida.' : isHistoric\n            ? 'La fecha no puede ser posterior al ' + format(lastDate ?? currentDay, 'dd/MM/y') + '.'\n            : 'La fecha no puede ser anterior al ' + format(lastDate, 'dd/MM/y') + '.';\n    }\n    useEffect(() => {\n        inputRef.current?.setCustomValidity(inputError);\n    }, [inputError]);\n\n    const [referenceElement, setReferenceElement] = useState(null);\n    const buttonRef = useRef(null);\n    const floating = usePositioning({\n        reference: referenceElement,\n        open: isCalendarOpen,\n        placement: 'bottom-start'\n    });\n\n    useImperativeHandle(ref, () => {\n        return { \n            get value() {\n                const referenceDay = startOfDay(new Date());\n                const value = parse(inputValue, 'dd/MM/y', referenceDay);\n                return isAllowedDate(value, referenceDay) ? value : new Date(NaN);\n            },\n            reset: () => {\n                setInputValue(format(new Date(dateData.getFullYear(), dateData.getMonth(), dateData.getDate()), 'dd/MM/y'));\n            }\n        }\n    })\n\n    const closeCalendar = () => {\n        setIsCalendarOpen(false);\n        buttonRef.current?.focus();\n    };\n\n    const handleInputChange = (e) => {\n        setInputValue(e.currentTarget.value);\n    };\n\n    const handleButtonClick = () => {\n        setIsCalendarOpen(true);\n    };\n\n    const handleDaySelect = (date) => {\n        if (date && !isAllowedDate(date)) return;\n        if (date) {\n            setInputValue(format(date, 'dd/MM/y'));\n            closeCalendar();\n        } else {\n            setInputValue('');\n        }\n    };\n\n    return (\n        <div>\n            <div ref={setReferenceElement} className={inputError ? \"DayPicker DayPicker--invalid\" : \"DayPicker\"}>\n                <input\n                    ref={inputRef}\n                    type=\"text\"\n                    aria-invalid={inputError ? true : undefined}\n                    aria-describedby={inputError ? errorId : undefined}\n                    placeholder={format(currentDay, 'dd/MM/y')}\n                    value={inputValue}\n                    onChange={handleInputChange}\n                    className=\"input-reset pa2 ma2 bg-white black ba\"\n                />\n                <button\n                    ref={buttonRef}\n                    type=\"button\"\n                    aria-label=\"Pick a date\"\n                    onClick={handleButtonClick}\n                >\n                    <Icon prefix=\"fe\" name=\"calendar\" />\n                </button>\n            </div>\n            {inputError && <div id={errorId} className=\"datepicker-error\" role=\"alert\">{inputError}</div>}\n            {isCalendarOpen && (\n                <FocusTrap\n                    active\n                    focusTrapOptions={{\n                        initialFocus: false,\n                        fallbackFocus: () => floating.refs.floating.current,\n                        allowOutsideClick: true,\n                        clickOutsideDeactivates: true,\n                        onDeactivate: closeCalendar\n                    }}\n                >\n                    <div\n                        tabIndex={-1}\n                        style={floating.floatingStyles}\n                        className=\"dialog-sheet\"\n                        data-placement={floating.placement}\n                        ref={floating.refs.setFloating}\n                        role=\"dialog\"\n                    >\n                        <DayPicker\n                            {...calendarProps}\n                            className={[\"tabler-datepicker-calendar\", calendarProps.className].filter(Boolean).join(\" \")}\n                            autoFocus={isCalendarOpen}\n                            mode=\"single\"\n                            defaultMonth={isValid(selected) ? selected : dateIniData}\n                            selected={selected}\n                            onSelect={handleDaySelect}\n                            disabled={getDisabledDays()}\n                            today={currentDay}\n                            startMonth={fromMonth || calendarProps.startMonth || defaultFromMonth}\n                            endMonth={toMonth || calendarProps.endMonth || defaultToMonth}\n                            locale={es}\n                            captionLayout=\"label\"\n                        />\n                    </div>\n                </FocusTrap>\n            )}\n        </div>\n    );\n})\n\nDayPickerTLV.displayName = \"DatePicker\"\n\nexport default DayPickerTLV\n",
+  "props": [
+    {
+      "name": "date",
+      "type": "Date | string | number",
+      "optional": true,
+      "description": "Fecha inicial explícita; tiene prioridad sobre dateIni."
+    },
+    {
+      "name": "dateIni",
+      "type": "Date | string | number",
+      "optional": true,
+      "description": "Día base para calcular la fecha inicial."
+    },
+    {
+      "name": "toMonth",
+      "type": "Date",
+      "optional": true,
+      "description": "Mes final de navegación; se traduce a endMonth."
+    },
+    {
+      "name": "fromMonth",
+      "type": "Date",
+      "optional": true,
+      "description": "Mes inicial de navegación; se traduce a startMonth."
+    },
+    {
+      "name": "lastDate",
+      "type": "Date",
+      "optional": true,
+      "description": "Límite inclusivo: máximo en histórico y mínimo en modo futuro."
+    },
+    {
+      "name": "today",
+      "type": "boolean",
+      "optional": true,
+      "description": "Conserva el día base de dateIni o de hoy al calcular la fecha inicial. No modifica el límite histórico."
+    },
+    {
+      "name": "previousDay",
+      "default": "null",
+      "optional": true,
+      "description": "Desplazamiento de la fecha inicial cuando today es falso. null/undefined equivale a un día; 0 conserva el día base."
+    },
+    {
+      "name": "isHistoric",
+      "default": "true",
+      "optional": true,
+      "description": "true limita hasta lastDate u hoy. false solo establece un mínimo si hay lastDate."
+    },
+    {
+      "name": "disabled",
+      "default": "false",
+      "optional": true,
+      "description": "Booleano o matchers de DayPicker. Un valor truthy explícito reemplaza la restricción calculada."
+    }
+  ],
+  "subcomponents": [],
+  "members": [
+    "value",
+    "reset"
+  ],
+  "rest": true,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "DatePicker.example.md",
+      "source": "src/components/DatePicker/DatePicker.example.md",
+      "markdown": ""
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Campo de fecha con calendario, validación y referencia pública.",
+    "behavior": [
+      "El texto utiliza dd/MM/yyyy y trabaja con fechas locales. Escribir y seleccionar comparten la misma validación.",
+      "En modo histórico el máximo predeterminado es hoy, inclusive, y se actualiza al pasar la medianoche; lastDate establece otro límite.",
+      "date tiene prioridad para el valor inicial. En su ausencia se parte de dateIni o del día actual; sin today se restan previousDay o un día por defecto.",
+      "El estado del campo es interno: cambiar date no lo convierte en un control continuo. reset() aplica otra vez la fecha inicial calculada.",
+      "ref.current.value devuelve un Date permitido o Invalid Date. Comprueba Number.isNaN(value.getTime()) antes de utilizarlo.",
+      "disabled=true bloquea todos los días; los matchers explícitos tienen prioridad sobre los límites histórico/futuro.",
+      "fromMonth y toMonth limitan la navegación del calendario, no sustituyen los matchers de selección.",
+      "Las propiedades adicionales del calendario se recogen, pero mode, selected, onSelect, disabled, locale y otras opciones del wrapper tienen prioridad. El onSelect externo no es un callback público de cambio del campo."
+    ],
+    "example": "function FechaDeReferencia() {\n  const dateRef = useRef(null);\n  return <>\n    <DatePicker ref={dateRef} today previousDay={0} />\n    <Button type=\"button\" onClick={() => {\n      const value = dateRef.current.value;\n      if (!Number.isNaN(value.getTime())) console.log(value);\n    }}>Leer fecha</Button>\n  </>;\n}",
+    "props": [
+      {
+        "name": "previousDay",
+        "description": "Desplazamiento de la fecha inicial cuando today es falso. null/undefined equivale a un día; 0 conserva el día base."
+      },
+      {
+        "name": "today",
+        "type": "boolean",
+        "optional": true,
+        "description": "Conserva el día base de dateIni o de hoy al calcular la fecha inicial. No modifica el límite histórico."
+      },
+      {
+        "name": "lastDate",
+        "type": "Date",
+        "optional": true,
+        "description": "Límite inclusivo: máximo en histórico y mínimo en modo futuro."
+      },
+      {
+        "name": "isHistoric",
+        "description": "true limita hasta lastDate u hoy. false solo establece un mínimo si hay lastDate."
+      },
+      {
+        "name": "date",
+        "type": "Date | string | number",
+        "optional": true,
+        "description": "Fecha inicial explícita; tiene prioridad sobre dateIni."
+      },
+      {
+        "name": "dateIni",
+        "type": "Date | string | number",
+        "optional": true,
+        "description": "Día base para calcular la fecha inicial."
+      },
+      {
+        "name": "disabled",
+        "description": "Booleano o matchers de DayPicker. Un valor truthy explícito reemplaza la restricción calculada."
+      },
+      {
+        "name": "fromMonth",
+        "type": "Date",
+        "optional": true,
+        "description": "Mes inicial de navegación; se traduce a startMonth."
+      },
+      {
+        "name": "toMonth",
+        "type": "Date",
+        "optional": true,
+        "description": "Mes final de navegación; se traduce a endMonth."
+      }
+    ]
+  }
+}

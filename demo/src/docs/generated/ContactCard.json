@@ -1,0 +1,108 @@
+{
+  "name": "ContactCard",
+  "kind": "Componente",
+  "source": "src/components/ContactCard/index.js",
+  "implementation": "src/components/ContactCard/ContactCard.react.js",
+  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Card, Media, Grid, Header } from \"../\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The Card title\n   */\n  +cardTitle?: string,\n  /**\n   * Render a map at the top of the Card\n   */\n  +map?: React.Node,\n  /**\n   * Render a map placeholder at the top of the Card\n   */\n  +mapPlaceholder?: string,\n  /**\n   * Add rounded corners to the Media.Object rendered by objectURL\n   */\n  +rounded?: boolean,\n  /**\n   * Display an Avatar in place of the Media.Object rendered by objectURL\n   */\n  +avatar?: boolean,\n  /**\n   * The URL of a contact image to displayed alongside thier name\n   */\n  +objectURL?: string,\n  /**\n   * The alt value for the objectURL image\n   */\n  +alt?: string,\n  /**\n   * The contacts name\n   */\n  +name?: string,\n  /**\n   * The contacts address\n   */\n  +address?: {| +line1?: string, +line2?: string |},\n  /**\n   * An array of contacts details displayed in a 2 column Grid\n   */\n  +details?: Array<{| +title: string, +content?: React.Node |}>,\n  /**\n   * An additional block of text below the details\n   */\n  +description?: string | {| +title: string, +content?: string |},\n|};\n\n/**\n * Renders a Card designed for displaying details of a person or business\n */\nfunction ContactCard({\n  children,\n  className,\n  cardTitle,\n  map,\n  mapPlaceholder,\n  rounded,\n  avatar,\n  objectURL,\n  alt,\n  name,\n  address,\n  details,\n  description,\n}: Props) {\n  const cardClassName = cn(className);\n  return (\n    <Card className={cardClassName} title={cardTitle}>\n      {(mapPlaceholder || map) && (\n        <Card.Map placeholder={mapPlaceholder}>{map}</Card.Map>\n      )}\n      <Card.Body>\n        <Media className=\"mb-5\">\n          <Media.Object\n            size=\"md\"\n            className=\"mr-4\"\n            avatar={avatar}\n            rounded={rounded}\n            objectURL={objectURL}\n            alt={alt}\n          />\n\n          <Media.Body>\n            {name && <Header.H5>{name}</Header.H5>}\n            {address && (\n              <address className=\"text-muted small\">\n                {address.line1}\n                {address.line2 && <br />}\n                {address.line2}\n              </address>\n            )}\n          </Media.Body>\n        </Media>\n        {details && (\n          <Grid.Row>\n            {details.map((d, i) => (\n              <Grid.Col width={6} key={i}>\n                <Header.H6>{d.title}</Header.H6>\n                <p>{d.content}</p>\n              </Grid.Col>\n            ))}\n          </Grid.Row>\n        )}\n        {description && (\n          <React.Fragment>\n            <Header.H6>\n              {typeof description === \"string\"\n                ? \"Description\"\n                : description.title}\n            </Header.H6>\n            <p>\n              {typeof description === \"string\"\n                ? description\n                : description.content}\n            </p>\n          </React.Fragment>\n        )}\n        {children}\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default ContactCard;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "cardTitle",
+      "type": "string",
+      "optional": true,
+      "description": "The Card title"
+    },
+    {
+      "name": "map",
+      "type": "React.Node",
+      "optional": true,
+      "description": "Render a map at the top of the Card"
+    },
+    {
+      "name": "mapPlaceholder",
+      "type": "string",
+      "optional": true,
+      "description": "Render a map placeholder at the top of the Card"
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "optional": true,
+      "description": "Add rounded corners to the Media.Object rendered by objectURL"
+    },
+    {
+      "name": "avatar",
+      "type": "boolean",
+      "optional": true,
+      "description": "Display an Avatar in place of the Media.Object rendered by objectURL"
+    },
+    {
+      "name": "objectURL",
+      "type": "string",
+      "optional": true,
+      "description": "The URL of a contact image to displayed alongside thier name"
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "optional": true,
+      "description": "The alt value for the objectURL image"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": "The contacts name"
+    },
+    {
+      "name": "address",
+      "type": "{| +line1?: string, +line2?: string |}",
+      "optional": true,
+      "description": "The contacts address"
+    },
+    {
+      "name": "details",
+      "type": "Array<{| +title: string, +content?: React.Node |}>",
+      "optional": true,
+      "description": "An array of contacts details displayed in a 2 column Grid"
+    },
+    {
+      "name": "description",
+      "type": "string | {| +title: string, +content?: string |}",
+      "optional": true,
+      "description": "An additional block of text below the details"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "ContactCard.examples.md",
+      "source": "src/components/ContactCard/ContactCard.examples.md",
+      "markdown": "```jsx\n<ContactCard\n  cardTitle=\"Client card\"\n  mapPlaceholder=\"./demo/staticmap.png\"\n  rounded\n  objectURL={`data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15ec911398e%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15ec911398e%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2213.84375%22%20y%3D%2236.65%22%3E64x64%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E`}\n  alt=\"Generic placeholder image\"\n  name={\"Axa Global Group\"}\n  address={{\n    line1: \"1290 Avenua of The Americas\",\n    line2: \"New York, NY 101040105\",\n  }}\n  details={[\n    { title: \"Relationship\", content: \"Client\" },\n    { title: \"Business Type\", content: \"Insurance Company\" },\n    {\n      title: \"Website\",\n      content: <a href=\"http://www.axa.com\">http://www.axa.com</a>,\n    },\n    { title: \"Office Phone\", content: \"+123456789\" },\n  ]}\n  description={`Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n   Consectetur dignissimos doloribus eum fugiat itaque\n  laboriosam maiores nisi nostrum perspiciatis vero.`}\n/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
+    "behavior": [
+      "details es una lista de objetos title/content; address utiliza line1 y line2.",
+      "map admite contenido y mapPlaceholder permite una cabecera de mapa visual.",
+      "Las imágenes y los datos deben proporcionarse desde el consumidor."
+    ],
+    "example": "<ContactCard cardTitle=\"Contacto\" name=\"Equipo de soporte\" address={{ line1: \"Oficina de prueba\" }} details={[{ title: \"Horario\", content: \"9:00–18:00\" }]} />"
+  }
+}

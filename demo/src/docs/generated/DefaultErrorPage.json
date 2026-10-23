@@ -1,0 +1,50 @@
+{
+  "name": "DefaultErrorPage",
+  "kind": "Plantilla",
+  "source": "src/page_templates/errors/DefaultErrorPage.react.js",
+  "implementation": "src/page_templates/errors/DefaultErrorPage.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Container from \"../../components/Container.react\";\nimport Page from \"../../components/Page/Page.react\";\nimport Header from \"../../components/Header/Header.react\";\nimport Icon from \"../../components/Icon/Icon.react\";\nimport Button from \"../../components/Button/Button.react\";\n\nexport type Props = {|\n  +title?: string,\n  +subtitle?: string,\n  +details?: string,\n  +action?: string,\n|};\n\nfunction DefaultErrorPage(props: Props): React.Node {\n  const _onBackClick = (\n    event: SyntheticMouseEvent<HTMLInputElement>\n  ): boolean => {\n    window.history.back();\n    event.preventDefault();\n    return true;\n  };\n\n  const {\n    title = \"Error\",\n    subtitle = \"Sorry an unkown error occurred\",\n    details,\n    action = \"Go back\",\n  } = props;\n  return (\n    <Page className=\"text-center\">\n      <Container>\n        <Header.H1 className=\"display-1 text-muted mb-5\">{title}</Header.H1>\n        <Header.H2>{subtitle}</Header.H2>\n        {details && (\n          <Header.H4 className=\"text-muted font-weight-normal mb-7\">\n            {details}\n          </Header.H4>\n        )}\n        <Button onClick={_onBackClick} className=\"btn-primary\">\n          <Icon className=\"mr-2\" name=\"arrow-left\" />\n          {action}\n        </Button>\n      </Container>\n    </Page>\n  );\n}\n\nexport default DefaultErrorPage;\n",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Error\""
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Sorry an unkown error occurred\""
+    },
+    {
+      "name": "details",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Go back\""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Plantilla visual genérica de error.",
+    "behavior": [
+      "Representa título, subtítulo, detalles y una acción.",
+      "No cambia el estado HTTP ni intercepta errores de JavaScript; la aplicación decide cuándo mostrarla."
+    ],
+    "example": "<DefaultErrorPage title=\"No disponible\" subtitle=\"No se pudo cargar la información\" details=\"Vuelve a intentarlo.\" action={<a href=\"/\">Volver</a>} />"
+  }
+}

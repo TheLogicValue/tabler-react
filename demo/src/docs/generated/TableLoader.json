@@ -1,0 +1,28 @@
+{
+  "name": "TableLoader",
+  "kind": "Componente",
+  "source": "src/components/ContentLoader/index.js",
+  "implementation": "src/components/ContentLoader/TableLoader.react.js",
+  "implementationCode": "import React from \"react\"\nimport ContentLoader from \"react-content-loader\"\n\nconst TableLoader = props => {\n  return (\n    <ContentLoader\n    width={1200}\n    height={400}\n    viewBox=\"0 0 1200 400\"\n    backgroundColor=\"#f3f3f3\"\n    foregroundColor=\"#ecebeb\"\n    {...props}\n  >\n    <rect x=\"27\" y=\"139\" rx=\"4\" ry=\"4\" width=\"20\" height=\"20\" />\n    <rect x=\"67\" y=\"140\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"188\" y=\"141\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"402\" y=\"140\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"523\" y=\"141\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"731\" y=\"139\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"852\" y=\"138\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n\n    <rect x=\"26\" y=\"196\" rx=\"4\" ry=\"4\" width=\"20\" height=\"20\" />\n    <rect x=\"66\" y=\"197\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"187\" y=\"198\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"401\" y=\"197\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"522\" y=\"198\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"730\" y=\"196\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"851\" y=\"195\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n\n    <rect x=\"26\" y=\"258\" rx=\"4\" ry=\"4\" width=\"20\" height=\"20\" />\n    <rect x=\"66\" y=\"259\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"187\" y=\"260\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"401\" y=\"259\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"522\" y=\"260\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"730\" y=\"258\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"851\" y=\"257\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n\n    <rect x=\"26\" y=\"316\" rx=\"4\" ry=\"4\" width=\"20\" height=\"20\" />\n    <rect x=\"66\" y=\"317\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"187\" y=\"318\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"401\" y=\"317\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"522\" y=\"318\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"730\" y=\"316\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"851\" y=\"315\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n\n    <rect x=\"26\" y=\"379\" rx=\"4\" ry=\"4\" width=\"20\" height=\"20\" />\n    <rect x=\"66\" y=\"380\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"187\" y=\"381\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"401\" y=\"380\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"522\" y=\"381\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"730\" y=\"379\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n    <rect x=\"851\" y=\"378\" rx=\"10\" ry=\"10\" width=\"85\" height=\"19\" />\n\n    <rect x=\"978\" y=\"138\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"977\" y=\"195\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"977\" y=\"257\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"977\" y=\"315\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n    <rect x=\"977\" y=\"378\" rx=\"10\" ry=\"10\" width=\"169\" height=\"19\" />\n\n    <circle cx=\"37\" cy=\"97\" r=\"11\" />\n    <rect x=\"26\" y=\"23\" rx=\"5\" ry=\"5\" width=\"153\" height=\"30\" />\n    <circle cx=\"77\" cy=\"96\" r=\"11\" />\n  </ContentLoader>\n  )\n}\n\nexport default TableLoader",
+  "props": [],
+  "subcomponents": [],
+  "members": [],
+  "rest": true,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "BarChartLoader.examples.md",
+      "source": "src/components/ContentLoader/BarChartLoader.examples.md",
+      "markdown": "Render a bar chart loader\n\n```jsx\n<BarChartLoader/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Esqueleto SVG con forma de tabla.",
+    "behavior": [
+      "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+    ],
+    "example": "<TableLoader width={600} height={250} speed={2} />"
+  }
+}

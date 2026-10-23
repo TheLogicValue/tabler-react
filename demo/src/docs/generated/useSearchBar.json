@@ -1,0 +1,28 @@
+{
+  "name": "useSearchBar",
+  "kind": "Hook",
+  "source": "src/components/SearchBar/index.js",
+  "implementation": "src/components/SearchBar/useSearchBar.js",
+  "implementationCode": "﻿import { useCallback, useState } from 'react'\n\nexport default function useSearchBar() {\n    const [filter, setFilter] = useState(undefined)\n\n    const handleChangeFilter = useCallback((e) => {        \n        setFilter(e.target.value.trim().length > 0 ? e.target.value.trim() : undefined)\n    }, [setFilter])\n\n    return {\n        filter,\n        setFilter,\n        handleChangeFilter\n    }\n} ",
+  "props": [],
+  "subcomponents": [],
+  "members": [
+    "filter",
+    "setFilter",
+    "handleChangeFilter"
+  ],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Hook que almacena un filtro de texto normalizado.",
+    "behavior": [
+      "handleChangeFilter recibe un evento con target.value y elimina los espacios exteriores.",
+      "Una cadena vacía se convierte en undefined; setFilter permite cambiarlo directamente.",
+      "No consulta servidores ni filtra arrays por sí mismo."
+    ],
+    "example": "const { filter, handleChangeFilter, setFilter } = useSearchBar();\n<>\n  <input onChange={handleChangeFilter} placeholder=\"Buscar\" />\n  <Button type=\"button\" onClick={() => setFilter(undefined)}>Restablecer</Button>\n</>",
+    "parameters": "useSearchBar(): { filter, setFilter, handleChangeFilter }"
+  }
+}

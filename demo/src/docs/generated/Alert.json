@@ -1,0 +1,128 @@
+{
+  "name": "Alert",
+  "kind": "Componente",
+  "source": "src/components/Alert/index.js",
+  "implementation": "src/components/Alert/Alert.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Icon, Avatar } from \"../\";\nimport { Button } from \"../Button\";\nimport AlertLink from \"./AlertLink.react\";\n\nimport type { MouseEvents, PointerEvents } from \"../../\";\n\ntype AlertType =\n  | \"primary\"\n  | \"secondary\"\n  | \"success\"\n  | \"info\"\n  | \"warning\"\n  | \"danger\";\n\ntype Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The type of this Alert, changes it's color\n   */\n  +type: AlertType,\n  /**\n   * An Icon to be displayed on the right hand side of the Alert\n   */\n  +icon?: string,\n  /**\n   * Add extra space above and below the alert\n   */\n  +hasExtraSpace?: boolean,\n  /**\n   * Adds an 'X' to the left side of the Alert that dismisses the Alert\n   */\n  +isDismissible?: boolean,\n  /**\n   * Display an Avatar on the left hand side of this Alert\n   */\n  +avatar?: string,\n  /**\n   * Handle the dismissing of the Alert yourself\n   */\n  +onDismissClick?: () => void,\n|};\n\ntype State = {\n  isDismissed: boolean,\n};\n\nclass Alert extends React.Component<Props, State> {\n  state = {\n    isDismissed: false,\n  };\n\n  _handleOnDismissClick = (): void => {\n    if (this.props.onDismissClick) this.props.onDismissClick();\n    this.setState({ isDismissed: true });\n  };\n\n  static Link = AlertLink;\n\n  render(): React.Node {\n    const { isDismissed } = this.state;\n    const {\n      className,\n      children,\n      type,\n      icon,\n      hasExtraSpace,\n      isDismissible,\n      avatar,\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n    }: Props = this.props;\n    const classes = cn(\n      \"alert\",\n      `alert-${type}`,\n      {\n        \"alert-icon\": !!icon,\n        \"mt-5 mb-6\": hasExtraSpace,\n        \"alert-dismissible\": isDismissible,\n        \"alert-avatar\": !!avatar,\n      },\n      className\n    );\n\n    const events = {\n      onClick: onClick,\n      onMouseEnter: onMouseEnter,\n      onMouseLeave: onMouseLeave,\n      onPointerEnter: onPointerEnter,\n      onPointerLeave: onPointerLeave,\n    };\n\n    return (\n      !isDismissed && (\n        <div {...events} className={classes} role=\"alert\">\n          {isDismissible && (\n            <Button className=\"close\" onClick={this._handleOnDismissClick} />\n          )}\n          {avatar && <Avatar imageURL={avatar} />}\n          {icon && <Icon name={icon} className=\"mr-2\" isAriaHidden={true} />}\n          {children}\n        </div>\n      )\n    );\n  }\n}\n\nexport default Alert;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "type",
+      "type": "AlertType",
+      "optional": false,
+      "description": "The type of this Alert, changes it's color"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": "An Icon to be displayed on the right hand side of the Alert"
+    },
+    {
+      "name": "hasExtraSpace",
+      "type": "boolean",
+      "optional": true,
+      "description": "Add extra space above and below the alert"
+    },
+    {
+      "name": "isDismissible",
+      "type": "boolean",
+      "optional": true,
+      "description": "Adds an 'X' to the left side of the Alert that dismisses the Alert"
+    },
+    {
+      "name": "avatar",
+      "type": "string",
+      "optional": true,
+      "description": "Display an Avatar on the left hand side of this Alert"
+    },
+    {
+      "name": "onDismissClick",
+      "type": "() => void",
+      "optional": true,
+      "description": "Handle the dismissing of the Alert yourself"
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "onMouseEnter"
+    },
+    {
+      "name": "onMouseLeave"
+    },
+    {
+      "name": "onPointerEnter"
+    },
+    {
+      "name": "onPointerLeave"
+    }
+  ],
+  "subcomponents": [
+    "Link"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Link",
+      "source": "src/components/Alert/AlertLink.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Alert.examples.md",
+      "source": "src/components/Alert/Alert.examples.md",
+      "markdown": "```jsx\n<Alert type=\"primary\" hasExtraSpace>\n  <strong>Work in progress!</strong> More detailed documentation is coming soon.\n</Alert>\n```\n\n### Alert Types\n\n```jsx\n<Alert type=\"primary\">\n  This is a <strong>primary</strong> alert—check it out!\n</Alert>\n<Alert type=\"secondary\">\n  This is a <strong>secondary</strong> alert—check it out!\n</Alert>\n<Alert type=\"success\">\n  This is a <strong>success</strong> alert—check it out!\n</Alert>\n<Alert type=\"info\">\n  This is a <strong>info</strong> alert—check it out!\n</Alert>\n<Alert type=\"warning\">\n  This is a <strong>warning</strong> alert—check it out!\n</Alert>\n<Alert type=\"danger\">\n  This is a <strong>danger</strong> alert—check it out!\n</Alert>\n```\n\n### Alert With Icon\n\n```jsx\n<Alert type=\"primary\" icon=\"bell\">\n  You have done 5 actions.\n</Alert>\n<Alert type=\"success\" icon=\"check\">\n  The page has been added.\n</Alert>\n<Alert type=\"danger\" icon=\"alert-triangle\">\n  The daily report has failed. Lorem ipsum dolor sit amet, consectetur\n  adipisicing elit. Lorem ipsum dolor sit amet, consectetur\n  adipisicing elit. Lorem ipsum dolor sit amet, consectetur\n  adipisicing elit.\n</Alert>\n```\n\n### Alert isDismissible\n\n```jsx\n<Alert type=\"warning\" isDismissible>\n  Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n</Alert>\n```\n\n### Alert with avatar\n\n```jsx\n<Alert type=\"primary\" avatar=\"./demo/faces/male/4.jpg\">\n  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor\n  sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,\n  consectetur adipisicing elit.\n</Alert>\n```\n\n### Alert with buttons\n\n```jsx\n<Alert type=\"primary\" isDismissible>\n  <Header.H4>Some Message</Header.H4>\n  <p>\n    Lorem ipsum Minim ad pariatur eiusmod ea ut nulla aliqua est quis id dolore\n    minim voluptate.\n  </p>\n  <Button.List>\n    <Button color=\"success\" RootComponent=\"button\">\n      Okay\n    </Button>\n    <Button color=\"secondary\" RootComponent=\"button\">\n      No, thanks\n    </Button>\n  </Button.List>\n</Alert>\n```\n\n### Alert with extra space\n\n```jsx\n<span>Content Above</span>\n<Alert type=\"primary\" hasExtraSpace>\n  Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n</Alert>\n<span>Content Below</span>\n```\n"
+    },
+    {
+      "name": "AlertLink.examples.md",
+      "source": "src/components/Alert/AlertLink.examples.md",
+      "markdown": "```jsx\n<Alert type=\"success\" hasExtraSpace>\n  <a>A normal link</a> <Alert.Link>An Alert.Link</Alert.Link>\n</Alert>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Mensaje contextual de información, éxito, aviso o error.",
+    "behavior": [
+      "type selecciona las clases visuales, por ejemplo info, success, warning o danger.",
+      "isDismissible muestra un control de cierre; onDismissClick permite al consumidor retirar el mensaje.",
+      "No modifica por sí mismo los datos ni el estado de un formulario."
+    ],
+    "example": "<Alert type=\"info\" icon=\"info\">Datos de demostración.</Alert>"
+  }
+}

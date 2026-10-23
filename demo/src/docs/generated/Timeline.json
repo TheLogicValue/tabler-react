@@ -1,0 +1,190 @@
+{
+  "name": "Timeline",
+  "kind": "Componente",
+  "source": "src/components/Timeline/index.js",
+  "implementation": "src/components/Timeline/Timeline.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport TimelineItem from \"./TimelineItem.react\";\nimport TimelineItemTime from \"./TimelineItemTime.react\";\nimport TimelineItemBadge from \"./TimelineItemBadge.react\";\nimport TimelineItemTitle from \"./TimelineItemTitle.react\";\nimport TimelineItemDescription from \"./TimelineItemDescription.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Timeline({ className, children }: Props): React.Node {\n  const classes = cn(\n    {\n      timeline: true,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nTimeline.Item = TimelineItem;\nTimeline.ItemTime = TimelineItemTime;\nTimeline.ItemBadge = TimelineItemBadge;\nTimeline.ItemTitle = TimelineItemTitle;\nTimeline.ItemDescription = TimelineItemDescription;\n\nexport default Timeline;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Item",
+    "ItemTime",
+    "ItemBadge",
+    "ItemTitle",
+    "ItemDescription"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Item",
+      "source": "src/components/Timeline/TimelineItem.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "badge",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "badgeColor",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ItemTime",
+      "source": "src/components/Timeline/TimelineItemTime.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ItemBadge",
+      "source": "src/components/Timeline/TimelineItemBadge.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ItemTitle",
+      "source": "src/components/Timeline/TimelineItemTitle.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ItemDescription",
+      "source": "src/components/Timeline/TimelineItemDescription.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Lista cronológica de eventos.",
+    "behavior": [
+      "Timeline.Item admite título, descripción, hora e insignia.",
+      "El consumidor ordena y proporciona los eventos; no existe carga automática ni cálculo de fechas."
+    ],
+    "example": "<Timeline><Timeline.Item title=\"Informe creado\" description=\"Datos disponibles\" time=\"10:30\" badgeColor=\"green\" /></Timeline>"
+  }
+}

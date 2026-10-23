@@ -1,0 +1,34 @@
+{
+  "name": "StandaloneFormPage",
+  "kind": "Plantilla",
+  "source": "src/page_templates/StandaloneFormPage.react.js",
+  "implementation": "src/page_templates/StandaloneFormPage.react.js",
+  "implementationCode": "// @flow\nimport * as React from \"react\"\nexport default function StandaloneFormPage({children, imageURL, page = \"\"}) {\n  return (\n    <div className={\"page \" + page}>\n      <div className=\"page-single\">\n        <div className=\"container\">\n          <div className=\"row\">\n            <div className=\"col col-login mx-auto\">\n              <div className=\"text-center mb-6\">\n                <img src={imageURL} className=\"h-6\" alt=\"logo\" />\n              </div>\n              {children}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  )\n}",
+  "props": [
+    {
+      "name": "children"
+    },
+    {
+      "name": "imageURL"
+    },
+    {
+      "name": "page",
+      "default": "\"\"",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenedor de página para formularios de cuenta.",
+    "behavior": [
+      "Envuelve children con el layout de formulario independiente.",
+      "imageURL y page personalizan la presentación; no realiza operaciones de cuenta."
+    ],
+    "example": "<StandaloneFormPage imageURL=\"/logo-local.svg\" page=\"login\"><FormCard title=\"Acceso\" buttonText=\"Entrar\"><FormTextInput name=\"email\" label=\"Email\" /></FormCard></StandaloneFormPage>"
+  }
+}

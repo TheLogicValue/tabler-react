@@ -1,0 +1,67 @@
+{
+  "name": "SocialNetworksList",
+  "kind": "Componente",
+  "source": "src/components/SocialNetworksList/index.js",
+  "implementation": "src/components/SocialNetworksList/SocialNetworksList.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { List, Icon, Button } from \"../\";\n\ntype itemObject = {|\n  name: string,\n  label?: string,\n  to?: string,\n  tooltip?: string,\n  color?: string,\n|};\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +asButtons?: boolean,\n  +prefix?: string,\n  +itemsObjects?: Array<itemObject>,\n  +items?: Array<React.Node>,\n|};\n\nfunction listItemFromObjectFactory(\n  asButtons: boolean = false,\n  iconPrefix: string\n) {\n  return function SocialNetworkListItem(item: itemObject, index: number) {\n    const itemContent = asButtons ? (\n      <Button to={item.to} social={item.name} color={item.color} size=\"sm\">\n        {item.label}\n      </Button>\n    ) : (\n      <a href={item.to} data-original-title={item.tooltip}>\n        <Icon prefix={iconPrefix} name={item.name} />\n      </a>\n    );\n    return <List.Item key={index} inline>{itemContent}</List.Item>;\n  };\n}\n\nfunction SocialNetworksList(props: Props): React.Node {\n  const {\n    children,\n    className,\n    asButtons,\n    prefix = \"fe\",\n    items,\n    itemsObjects,\n  } = props;\n  const classes = cn(\"social-links\", className);\n\n  const getObjectListItem = listItemFromObjectFactory(asButtons, prefix);\n\n  const contents =\n    (itemsObjects && itemsObjects.map(getObjectListItem)) ||\n    (items && items.map((item, index) => <List.Item key={index} inline>{item}</List.Item>)) ||\n    children;\n\n  return (\n    <List inline className={classes}>\n      {contents}\n    </List>\n  );\n}\n\nSocialNetworksList.displayName = \"SocialNetworksList\";\n\nexport default SocialNetworksList;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "asButtons",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "prefix",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"fe\""
+    },
+    {
+      "name": "itemsObjects",
+      "type": "Array<itemObject>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "items",
+      "type": "Array<React.Node>",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "SocialNetworksList.examples.md",
+      "source": "src/components/SocialNetworksList/SocialNetworksList.examples.md",
+      "markdown": "```jsx\n<SocialNetworksList\n  itemsObjects={[\n    { name: \"twitter\", to: \"http://www.twitter.com\" },\n    { name: \"linkedin\", to: \"http://www.linkedin.com\" },\n  ]}\n/>\n```\n\n#### As buttons\n\n```jsx\n<SocialNetworksList\n  itemsObjects={[\n    { name: \"twitter\", label: \"Follow\", to: \"http://www.twitter.com\"},\n    { name: \"linkedin\", label: \"Connect\", color: \"blue\", to: \"http://www.linkedin.com\" },\n  ]}\n  prefix=\"fa\"\n  asButtons\n/>\n```\n\n#### Items as components\n\n```jsx\n<SocialNetworksList\n  items={[\n    <a href=\"http://www.twitter.com\">\n      <Icon prefix=\"fa\" name=\"twitter\" />\n    </a>,\n    <a href=\"http://www.facebook.com\">\n      <Icon prefix=\"fa\" name=\"facebook\" />\n    </a>,\n  ]}\n/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Lista de enlaces o acciones sociales.",
+    "behavior": [
+      "itemsObjects configura name, to, label, color y tooltip; items/children permiten composición manual.",
+      "prefix selecciona la familia de iconos disponible.",
+      "En la variante asButtons revisa cómo se enlazan los botones en tu aplicación; el componente no gestiona cuentas sociales."
+    ],
+    "example": "<SocialNetworksList prefix=\"fe\" itemsObjects={[{ name: \"mail\", to: \"mailto:equipo@example.com\", tooltip: \"Contacto\" }]} />"
+  }
+}

@@ -1,0 +1,722 @@
+{
+  "Accordion": {
+    "name": "Accordion",
+    "kind": "Componente",
+    "summary": "Contenido desplegable con un botón de cabecera.",
+    "status": "documented",
+    "properties": 3,
+    "examples": 0
+  },
+  "AccountDropdown": {
+    "name": "AccountDropdown",
+    "kind": "Componente",
+    "summary": "Menú de cuenta con nombre, avatar y acciones.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 1
+  },
+  "AGGridPagination": {
+    "name": "AGGridPagination",
+    "kind": "Componente",
+    "summary": "Paginador externo que utiliza la API de una tabla AG Grid.",
+    "status": "documented",
+    "properties": 7,
+    "examples": 1
+  },
+  "AGGridTable": {
+    "name": "AGGridTable",
+    "kind": "Componente",
+    "summary": "Wrapper de AG Grid: la aplicación aporta el motor, los datos y las reglas de negocio.",
+    "status": "documented",
+    "properties": 32,
+    "examples": 1
+  },
+  "Alert": {
+    "name": "Alert",
+    "kind": "Componente",
+    "summary": "Mensaje contextual de información, éxito, aviso o error.",
+    "status": "documented",
+    "properties": 13,
+    "examples": 2
+  },
+  "Avatar": {
+    "name": "Avatar",
+    "kind": "Componente",
+    "summary": "Avatar circular con imagen, iniciales, icono o estado.",
+    "status": "documented",
+    "properties": 14,
+    "examples": 2
+  },
+  "Badge": {
+    "name": "Badge",
+    "kind": "Componente",
+    "summary": "Etiqueta breve para estados y categorías.",
+    "status": "documented",
+    "properties": 3,
+    "examples": 1
+  },
+  "BarChart": {
+    "name": "BarChart",
+    "kind": "Componente",
+    "summary": "Gráfico de barras construido sobre ECharts.",
+    "status": "documented",
+    "properties": 24,
+    "examples": 0
+  },
+  "BarChartLoader": {
+    "name": "BarChartLoader",
+    "kind": "Componente",
+    "summary": "Esqueleto SVG con forma de gráfico de barras.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 1
+  },
+  "BlogCard": {
+    "name": "BlogCard",
+    "kind": "Componente",
+    "summary": "Tarjeta de publicación con imagen, autor y descripción.",
+    "status": "documented",
+    "properties": 16,
+    "examples": 1
+  },
+  "Breadcrumb": {
+    "name": "Breadcrumb",
+    "kind": "Componente",
+    "summary": "Ruta de navegación construida a partir de migas.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "Button": {
+    "name": "Button",
+    "kind": "Componente",
+    "summary": "Acción con las variantes visuales de botones de Tabler.",
+    "status": "documented",
+    "properties": 35,
+    "examples": 3
+  },
+  "ButtonModal": {
+    "name": "ButtonModal",
+    "kind": "Componente",
+    "summary": "Acción de un modal que se sustituye por un spinner al cargar.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 3
+  },
+  "Card": {
+    "name": "Card",
+    "kind": "Componente",
+    "summary": "Contenedor de información con cabecera, cuerpo, pie y controles opcionales.",
+    "status": "documented",
+    "properties": 17,
+    "examples": 2
+  },
+  "colors": {
+    "name": "colors",
+    "kind": "Utilidad",
+    "summary": "Paleta de colores de Tabler exportada como un objeto JavaScript.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 0
+  },
+  "Comment": {
+    "name": "Comment",
+    "kind": "Componente",
+    "summary": "Comentario con autor, fecha, avatar, texto y respuestas.",
+    "status": "documented",
+    "properties": 7,
+    "examples": 0
+  },
+  "CommentsCard": {
+    "name": "CommentsCard",
+    "kind": "Componente",
+    "summary": "Tarjeta que agrupa comentarios.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "ContactCard": {
+    "name": "ContactCard",
+    "kind": "Componente",
+    "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
+    "status": "documented",
+    "properties": 13,
+    "examples": 1
+  },
+  "Container": {
+    "name": "Container",
+    "kind": "Componente",
+    "summary": "Contenedor de anchura y márgenes de la hoja de estilos.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "DatePicker": {
+    "name": "DatePicker",
+    "kind": "Componente",
+    "summary": "Campo de fecha con calendario, validación y referencia pública.",
+    "status": "documented",
+    "properties": 9,
+    "examples": 1
+  },
+  "DefaultErrorPage": {
+    "name": "DefaultErrorPage",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual genérica de error.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Dimmer": {
+    "name": "Dimmer",
+    "kind": "Componente",
+    "summary": "Atenuación visual de un bloque con un indicador opcional.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "DoubleCard": {
+    "name": "DoubleCard",
+    "kind": "Componente",
+    "summary": "Tarjeta que compara dos valores y sus etiquetas.",
+    "status": "documented",
+    "properties": 8,
+    "examples": 1
+  },
+  "DoughnutChart": {
+    "name": "DoughnutChart",
+    "kind": "Componente",
+    "summary": "Gráfico de anillo con valores y nombres preparados por el consumidor.",
+    "status": "documented",
+    "properties": 13,
+    "examples": 0
+  },
+  "Dropdown": {
+    "name": "Dropdown",
+    "kind": "Componente",
+    "summary": "Menú desplegable con disparador, elementos y posicionamiento flotante.",
+    "status": "documented",
+    "properties": 20,
+    "examples": 4
+  },
+  "Error": {
+    "name": "Error",
+    "kind": "Componente",
+    "summary": "Icono SVG de error.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "Error400Page": {
+    "name": "Error400Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 400.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Error401Page": {
+    "name": "Error401Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 401.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Error403Page": {
+    "name": "Error403Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 403.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Error404Page": {
+    "name": "Error404Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 404.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Error500Page": {
+    "name": "Error500Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 500.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Error503Page": {
+    "name": "Error503Page",
+    "kind": "Plantilla",
+    "summary": "Plantilla visual para presentar un error 503.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "ForgotPasswordPage": {
+    "name": "ForgotPasswordPage",
+    "kind": "Plantilla",
+    "summary": "Plantilla de formulario para solicitar una recuperación de contraseña.",
+    "status": "documented",
+    "properties": 10,
+    "examples": 1
+  },
+  "Form": {
+    "name": "Form",
+    "kind": "Componente",
+    "summary": "Formulario y familia de campos de entrada.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 12
+  },
+  "FormCard": {
+    "name": "FormCard",
+    "kind": "Componente",
+    "summary": "Formulario dentro de una tarjeta con título y acción principal.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 0
+  },
+  "FormCheckboxInput": {
+    "name": "FormCheckboxInput",
+    "kind": "Componente",
+    "summary": "Checkbox de formulario envuelto en Form.Group.",
+    "status": "documented",
+    "properties": 8,
+    "examples": 0
+  },
+  "FormTextInput": {
+    "name": "FormTextInput",
+    "kind": "Componente",
+    "summary": "Campo de texto con grupo y etiqueta.",
+    "status": "documented",
+    "properties": 26,
+    "examples": 0
+  },
+  "GalleryCard": {
+    "name": "GalleryCard",
+    "kind": "Componente",
+    "summary": "Tarjeta para componer imágenes y detalles de una galería.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "Grid": {
+    "name": "Grid",
+    "kind": "Componente",
+    "summary": "Familia de filas y columnas para distribuir contenido.",
+    "status": "documented",
+    "properties": 1,
+    "examples": 3
+  },
+  "Header": {
+    "name": "Header",
+    "kind": "Componente",
+    "summary": "Encabezado con nivel semántico configurable.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 7
+  },
+  "Icon": {
+    "name": "Icon",
+    "kind": "Componente",
+    "summary": "Iconos de fuente y variantes de banderas o pagos.",
+    "status": "documented",
+    "properties": 17,
+    "examples": 1
+  },
+  "LineChart": {
+    "name": "LineChart",
+    "kind": "Componente",
+    "summary": "Gráfico de líneas con categorías y formato configurados por el consumidor.",
+    "status": "documented",
+    "properties": 21,
+    "examples": 0
+  },
+  "List": {
+    "name": "List",
+    "kind": "Componente",
+    "summary": "Lista con variantes de presentación.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 3
+  },
+  "Loader": {
+    "name": "Loader",
+    "kind": "Componente",
+    "summary": "Indicador de carga basado en los estilos de Tabler.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "LoaderNoData": {
+    "name": "LoaderNoData",
+    "kind": "Componente",
+    "summary": "Zona que comunica la ausencia de datos.",
+    "status": "documented",
+    "properties": 3,
+    "examples": 0
+  },
+  "LoaderZone": {
+    "name": "LoaderZone",
+    "kind": "Componente",
+    "summary": "Esqueleto de carga de una zona de contenido.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 0
+  },
+  "LoginPage": {
+    "name": "LoginPage",
+    "kind": "Plantilla",
+    "summary": "Plantilla de acceso con campos email y password.",
+    "status": "documented",
+    "properties": 10,
+    "examples": 1
+  },
+  "Media": {
+    "name": "Media",
+    "kind": "Componente",
+    "summary": "Composición de una imagen u objeto junto a un cuerpo de contenido.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "Modal": {
+    "name": "Modal",
+    "kind": "Componente",
+    "summary": "Ventana de confirmación con estados de carga, éxito y error.",
+    "status": "documented",
+    "properties": 17,
+    "examples": 0
+  },
+  "ModalDoc": {
+    "name": "ModalDoc",
+    "kind": "Componente",
+    "summary": "Modal con una o varias secciones de documentación.",
+    "status": "documented",
+    "properties": 10,
+    "examples": 0
+  },
+  "ModalSplash": {
+    "name": "ModalSplash",
+    "kind": "Componente",
+    "summary": "Pantalla visual con imagen y animación de carga.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "Nav": {
+    "name": "Nav",
+    "kind": "Componente",
+    "summary": "Navegación horizontal o vertical con elementos y submenús.",
+    "status": "documented",
+    "properties": 7,
+    "examples": 2
+  },
+  "NavBarMenu": {
+    "name": "NavBarMenu",
+    "kind": "Componente",
+    "summary": "Menú principal con enlaces, estado activo y submenús.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "Notification": {
+    "name": "Notification",
+    "kind": "Componente",
+    "summary": "Contenido de una notificación con avatar, mensaje y hora.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 2
+  },
+  "OverlayLoading": {
+    "name": "OverlayLoading",
+    "kind": "Utilidad",
+    "summary": "Utilidad que devuelve el HTML de un mensaje de carga para AG Grid.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 1
+  },
+  "Page": {
+    "name": "Page",
+    "kind": "Componente",
+    "summary": "Estructura general de página y familia de bloques de contenido.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "PieChart": {
+    "name": "PieChart",
+    "kind": "Componente",
+    "summary": "Gráfico circular con valores y nombres preparados por el consumidor.",
+    "status": "documented",
+    "properties": 14,
+    "examples": 0
+  },
+  "PieChartLoader": {
+    "name": "PieChartLoader",
+    "kind": "Componente",
+    "summary": "Esqueleto SVG con forma de gráfico circular.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 1
+  },
+  "PricingCard": {
+    "name": "PricingCard",
+    "kind": "Componente",
+    "summary": "Tarjeta de presentación de un plan o tarifa.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 1
+  },
+  "Profile": {
+    "name": "Profile",
+    "kind": "Componente",
+    "summary": "Tarjeta de perfil con imagen, biografía y enlaces sociales.",
+    "status": "documented",
+    "properties": 7,
+    "examples": 0
+  },
+  "Progress": {
+    "name": "Progress",
+    "kind": "Componente",
+    "summary": "Contenedor de barras de progreso.",
+    "status": "documented",
+    "properties": 3,
+    "examples": 0
+  },
+  "ProgressCard": {
+    "name": "ProgressCard",
+    "kind": "Componente",
+    "summary": "Tarjeta con un valor y una barra de progreso.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 0
+  },
+  "ProtectedRoute": {
+    "name": "ProtectedRoute",
+    "kind": "Componente",
+    "summary": "Protección visual de rutas mediante React Router.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "RadarChart": {
+    "name": "RadarChart",
+    "kind": "Componente",
+    "summary": "Gráfico radial para comparar varias dimensiones.",
+    "status": "documented",
+    "properties": 12,
+    "examples": 0
+  },
+  "RegisterPage": {
+    "name": "RegisterPage",
+    "kind": "Plantilla",
+    "summary": "Plantilla de formulario para registrar una cuenta.",
+    "status": "documented",
+    "properties": 10,
+    "examples": 1
+  },
+  "RouterContextProvider": {
+    "name": "RouterContextProvider",
+    "kind": "Proveedor",
+    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "SearchBar": {
+    "name": "SearchBar",
+    "kind": "Componente",
+    "summary": "Campo de búsqueda con un botón de acción.",
+    "status": "documented",
+    "properties": 4,
+    "examples": 0
+  },
+  "Site": {
+    "name": "Site",
+    "kind": "Componente",
+    "summary": "Familia de estructura global del sitio.",
+    "status": "documented",
+    "properties": 1,
+    "examples": 0
+  },
+  "SocialNetworksList": {
+    "name": "SocialNetworksList",
+    "kind": "Componente",
+    "summary": "Lista de enlaces o acciones sociales.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 1
+  },
+  "Spinner": {
+    "name": "Spinner",
+    "kind": "Componente",
+    "summary": "Indicador SVG animado de carga.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "Stamp": {
+    "name": "Stamp",
+    "kind": "Componente",
+    "summary": "Insignia visual con icono o contenido.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 1
+  },
+  "StampCard": {
+    "name": "StampCard",
+    "kind": "Componente",
+    "summary": "Tarjeta breve con insignia, cabecera y pie.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 1
+  },
+  "StandaloneFormPage": {
+    "name": "StandaloneFormPage",
+    "kind": "Plantilla",
+    "summary": "Contenedor de página para formularios de cuenta.",
+    "status": "documented",
+    "properties": 3,
+    "examples": 0
+  },
+  "StatsCard": {
+    "name": "StatsCard",
+    "kind": "Componente",
+    "summary": "Tarjeta de una cifra con variación porcentual.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 1
+  },
+  "StoreCard": {
+    "name": "StoreCard",
+    "kind": "Componente",
+    "summary": "Tarjeta visual de un producto con precio e imagen.",
+    "status": "documented",
+    "properties": 6,
+    "examples": 1
+  },
+  "Success": {
+    "name": "Success",
+    "kind": "Componente",
+    "summary": "Icono SVG de operación correcta.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "Tab": {
+    "name": "Tab",
+    "kind": "Componente",
+    "summary": "Panel de contenido identificado por un título.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "TabbedCard": {
+    "name": "TabbedCard",
+    "kind": "Componente",
+    "summary": "Tarjeta con cabeceras de pestaña y estado interno.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "TabbedContainer": {
+    "name": "TabbedContainer",
+    "kind": "Componente",
+    "summary": "Contenedor de paneles cuyo título coincide con una selección.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 1
+  },
+  "TabbedHeader": {
+    "name": "TabbedHeader",
+    "kind": "Componente",
+    "summary": "Cabecera de pestañas controlada por el consumidor.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 1
+  },
+  "Table": {
+    "name": "Table",
+    "kind": "Componente",
+    "summary": "Tabla HTML con estilos y subcomponentes de composición.",
+    "status": "documented",
+    "properties": 10,
+    "examples": 3
+  },
+  "TableLoader": {
+    "name": "TableLoader",
+    "kind": "Componente",
+    "summary": "Esqueleto SVG con forma de tabla.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 1
+  },
+  "Tabs": {
+    "name": "Tabs",
+    "kind": "Componente",
+    "summary": "Conjunto de pestañas con selección interna y referencia pública.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 1
+  },
+  "Tag": {
+    "name": "Tag",
+    "kind": "Componente",
+    "summary": "Etiqueta con avatar, complementos y acción de retirada.",
+    "status": "documented",
+    "properties": 24,
+    "examples": 3
+  },
+  "Text": {
+    "name": "Text",
+    "kind": "Componente",
+    "summary": "Texto con utilidades de color, tamaño y alineación.",
+    "status": "documented",
+    "properties": 25,
+    "examples": 1
+  },
+  "Timeline": {
+    "name": "Timeline",
+    "kind": "Componente",
+    "summary": "Lista cronológica de eventos.",
+    "status": "documented",
+    "properties": 2,
+    "examples": 0
+  },
+  "Tooltip": {
+    "name": "Tooltip",
+    "kind": "Componente",
+    "summary": "Ayuda flotante asociada a un elemento que admite referencia y eventos.",
+    "status": "documented",
+    "properties": 5,
+    "examples": 1
+  },
+  "useModal": {
+    "name": "useModal",
+    "kind": "Hook",
+    "summary": "Hook que mantiene la apertura y el estado visual de un modal.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 0
+  },
+  "useSearchBar": {
+    "name": "useSearchBar",
+    "kind": "Hook",
+    "summary": "Hook que almacena un filtro de texto normalizado.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 0
+  },
+  "useTabs": {
+    "name": "useTabs",
+    "kind": "Hook",
+    "summary": "Hook que devuelve un componente de pestañas y su selección.",
+    "status": "documented",
+    "properties": 0,
+    "examples": 1
+  }
+}

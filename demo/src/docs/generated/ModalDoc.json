@@ -1,0 +1,59 @@
+{
+  "name": "ModalDoc",
+  "kind": "Componente",
+  "source": "src/components/Modal/index.js",
+  "implementation": "src/components/Modal/ModalDoc.js",
+  "implementationCode": "import \"./ModalDoc.css\"\nimport * as React from \"react\"\nimport { Tab, Tabs } from \"../Tabs\"\nimport { Button, ButtonModal } from \"../Button\"\nimport cn from \"classnames\"\n\nexport default function ModalDoc({ \n    items, \n    initialTab, \n    className, \n    spin, \n    bodyHeight, \n    onClose, \n    onAccept, \n    show = true, \n    acceptText = \"Ok\",\n    pathname, \n}) {\n    const classnames = cn(\"modal modal-blur fade\", { show }, className)\n    const tabs = pathname == \"/\" ? items : items.filter(tab => tab.value != \"features\");\n\n    return (\n        <div className={classnames}>\n            <div className={\"modal-dialog modal-lg modal-dialog-centered\"}>\n                <div className=\"modal-content\">\n                    {tabs.length > 1 ? <Tabs\n                        initialTab={initialTab}\n                        modal={true}\n                        options={<Button type=\"button\" className=\"nodal-header-close\" onClick={onClose}>X</Button>}\n                    >\n                        {tabs.map(item =>\n                            <Tab key={item.title} title={item.title} style={{ padding: 0 }}>\n                                <div className=\"modal-body\" style={{ height: bodyHeight }}>\n                                    {item.children}\n                                </div>\n                            </Tab>\n                        )}\n                    </Tabs> : <>\n                        <div className=\"modal-header\">\n                            <h5 className=\"modal-title\">{tabs[0].title}</h5>\n                            <Button type=\"button\" className=\"nodal-header-close\" onClick={onClose}>X</Button>\n                        </div>\n                        <div className=\"modal-body\" style={{ height: bodyHeight }}>\n                            {tabs[0].children}\n                        </div>\n                    </>}\n                    <div className=\"modal-footer\">\n                        <ButtonModal onClick={onAccept} color=\"primary\" text={acceptText} spin={spin} />\n                    </div>\n                </div>\n            </div>\n        </div>\n    )\n}",
+  "props": [
+    {
+      "name": "items"
+    },
+    {
+      "name": "initialTab"
+    },
+    {
+      "name": "className"
+    },
+    {
+      "name": "spin"
+    },
+    {
+      "name": "bodyHeight"
+    },
+    {
+      "name": "onClose"
+    },
+    {
+      "name": "onAccept"
+    },
+    {
+      "name": "show",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "acceptText",
+      "default": "\"Ok\"",
+      "optional": true
+    },
+    {
+      "name": "pathname"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Modal con una o varias secciones de documentación.",
+    "behavior": [
+      "items debe contener secciones con title, value y children.",
+      "pathname distinto de / excluye la sección cuyo value es features; debe quedar al menos una sección.",
+      "Con varias secciones utiliza Tabs; con una muestra una cabecera simple.",
+      "La integración decide el montaje, la visibilidad, el foco y el cierre mediante onClose/onAccept."
+    ],
+    "example": "<ModalDoc show pathname=\"/\" initialTab=\"Guía\" items={[{ title: \"Guía\", value: \"guide\", children: <p>Instrucciones.</p> }]} onClose={handleClose} onAccept={handleAccept} />"
+  }
+}

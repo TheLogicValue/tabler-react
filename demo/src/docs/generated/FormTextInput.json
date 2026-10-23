@@ -1,0 +1,179 @@
+{
+  "name": "FormTextInput",
+  "kind": "Componente",
+  "source": "src/forms/FormTextInput.react.js",
+  "implementation": "src/forms/FormTextInput.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\n\nimport type { Props as FormInputProps } from \"../components/Form/FormInput.react\";\n\ntype Props = {|\n  ...FormInputProps,\n  +label?: string,\n|};\n\nfunction FormTextInput(props: Props): React.Node {\n  const { label, ...propsForInput } = props;\n\n  const formInputComponent = React.createElement(Form.Input, propsForInput);\n\n  return <Form.Group label={label}>{formInputComponent}</Form.Group>;\n}\n\nexport default FormTextInput;\n",
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "position",
+      "type": "\"append\" | \"prepend\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "valid",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "tick",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "cross",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "feedback",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "type",
+      "type": "\"checkbox\" | \"radio\" | \"text\" | \"email\" | \"password\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "value",
+      "type": "string | number | boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "min",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "max",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "step",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "minLength",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "maxLength",
+      "type": "string | number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "autoFocus",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Wraps the input in Form.Group and adds a label"
+    },
+    {
+      "name": "autoComplete",
+      "type": "\"on\" | \"off\"",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": true,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Campo de texto con grupo y etiqueta.",
+    "behavior": [
+      "label se aplica al Form.Group y el resto de propiedades se entrega a Form.Input.",
+      "El consumidor proporciona value, onChange y los mensajes de validación."
+    ],
+    "example": "<FormTextInput label=\"Nombre\" name=\"name\" value={name} onChange={event => setName(event.target.value)} />"
+  }
+}

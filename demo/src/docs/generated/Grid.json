@@ -1,0 +1,352 @@
+{
+  "name": "Grid",
+  "kind": "Componente",
+  "source": "src/components/Grid/index.js",
+  "implementation": "src/components/Grid/Grid.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport GridRow from \"./GridRow.react\";\nimport GridCol from \"./GridCol.react\";\n\ntype Props = {|\n  +children: React.Node,\n|};\n\nfunction Grid(props: Props): React.Node {\n  return props.children;\n}\n\nGrid.Row = GridRow;\nGrid.Col = GridCol;\n\nGrid.displayName = \"Grid\";\n\n/** @component */\nexport default Grid;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Row",
+    "Col"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Row",
+      "source": "src/components/Grid/GridRow.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "cards",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "deck",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "gutters",
+          "type": "\"xs\" | \"sm\" | \"md\" | \"lg\"",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "alignItems",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "justifyContent",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Col",
+      "source": "src/components/Grid/GridCol.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xs",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xsAuto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "sm",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "smAuto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "md",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "mdAuto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "lg",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "lgAuto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xlAuto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl2",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xl2Auto",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl3",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xl3Auto",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl4",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xl4Auto",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl6",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xl6Auto",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "xl8",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "xl8Auto",
+          "type": "number",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "auto",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXs",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetSm",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetMd",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetLg",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl2",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl3",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl4",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl6",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "offsetXl8",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        },
+        {
+          "name": "ignoreCol",
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Grid.examples.md",
+      "source": "src/components/Grid/Grid.examples.md",
+      "markdown": "```jsx\n<Grid.Row>\n  <Grid.Col>A</Grid.Col>\n  <Grid.Col>B</Grid.Col>\n  <Grid.Col>C</Grid.Col>\n</Grid.Row>\n```\n"
+    },
+    {
+      "name": "GridCol.examples.md",
+      "source": "src/components/Grid/GridCol.examples.md",
+      "markdown": "```jsx\n<Grid.Row>\n  <Grid.Col>1</Grid.Col>\n  <Grid.Col>2</Grid.Col>\n  <Grid.Col>3</Grid.Col>\n  <Grid.Col>4</Grid.Col>\n  <Grid.Col>5</Grid.Col>\n  <Grid.Col>6</Grid.Col>\n  <Grid.Col>7</Grid.Col>\n  <Grid.Col>8</Grid.Col>\n  <Grid.Col>9</Grid.Col>\n  <Grid.Col>10</Grid.Col>\n  <Grid.Col>11</Grid.Col>\n  <Grid.Col>12</Grid.Col>\n</Grid.Row>\n```\n\n### Column Width\n\n```jsx\n<Grid.Row>\n  <Grid.Col width={2}>1</Grid.Col>\n  <Grid.Col width={4}>2</Grid.Col>\n  <Grid.Col width={6}>3</Grid.Col>\n</Grid.Row>\n```\n\n### Responsive Column Width\n\n```jsx\n<Grid.Row>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    1\n  </Grid.Col>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    2\n  </Grid.Col>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    3\n  </Grid.Col>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    4\n  </Grid.Col>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    5\n  </Grid.Col>\n  <Grid.Col xl={1} lg={2} md={4} sm={6} xs={12}>\n    6\n  </Grid.Col>\n</Grid.Row>\n```\n\n### Column Offset\n\n```jsx\n<Grid.Row>\n  <Grid.Col width={6} offset={3}>\n    2\n  </Grid.Col>\n  <Grid.Col md={6} offsetMd={3}>\n    4\n  </Grid.Col>\n</Grid.Row>\n```\n"
+    },
+    {
+      "name": "GridRow.examples.md",
+      "source": "src/components/Grid/GridRow.examples.md",
+      "markdown": "### Row gutters\n\n```jsx\n<Grid.Row gutters=\"xs\">\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >A</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >B</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >C</div>\n  </Grid.Col>\n</Grid.Row>\n\n<Grid.Row gutters=\"sm\">\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >A</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >B</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >C</div>\n  </Grid.Col>\n</Grid.Row>\n<Grid.Row gutters=\"md\">\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >A</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >B</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >C</div>\n  </Grid.Col>\n</Grid.Row>\n<Grid.Row gutters=\"lg\">\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >A</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >B</div>\n  </Grid.Col>\n  <Grid.Col>\n    <div\n      style={{\n        width: \"100%\",\n        height: \"100%\",\n        border: \"1px grey solid\",\n      }}\n    >C</div>\n  </Grid.Col>\n</Grid.Row>\n```\n\n### Rows of Cards\n\n```jsx\n<Grid.Row cards>\n  <Grid.Col>\n    <Card title=\"Title\" body=\"A\" />\n  </Grid.Col>\n  <Grid.Col>\n    <Card\n      title=\"Title\"\n      body={`orem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam\n  deleniti fugit incidunt.`}\n    />\n  </Grid.Col>\n  <Grid.Col>\n    <Card title=\"Title\" body=\"C\" />\n  </Grid.Col>\n</Grid.Row>\n<Grid.Row cards deck>\n  <Grid.Col>\n    <Card title=\"Title\" body=\"A\" />\n  </Grid.Col>\n  <Grid.Col>\n    <Card\n      title=\"Title\"\n      body={`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam\n    deleniti fugit incidunt.`}\n    />\n  </Grid.Col>\n  <Grid.Col>\n    <Card title=\"Title\" body=\"C\" />\n  </Grid.Col>\n</Grid.Row>\n```\n\n### Row Alignment\n\n```jsx\n<Grid.Row cards alignItems=\"center\">\n  <Grid.Col>\n    <Card title=\"Title\" body=\"A\" />\n  </Grid.Col>\n  <Grid.Col>\n    <Card\n      title=\"Title\"\n      body={`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam\n  deleniti fugit incidunt.`}\n    />\n  </Grid.Col>\n  <Grid.Col>\n    <Card title=\"Title\" body=\"C\" />\n  </Grid.Col>\n</Grid.Row>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Familia de filas y columnas para distribuir contenido.",
+    "behavior": [
+      "Compone Grid.Row y Grid.Col con children.",
+      "Grid.Col utiliza width y tamaños sm/md/lg/xl para establecer columnas en una cuadrícula de 12 unidades.",
+      "Grid.Row admite cards, deck y gutters para agrupar tarjetas y configurar la distribución; la apariencia final depende del CSS."
+    ],
+    "example": "<Grid.Row><Grid.Col width={12} lg={6}>Primera columna</Grid.Col><Grid.Col width={12} lg={6}>Segunda columna</Grid.Col></Grid.Row>"
+  }
+}

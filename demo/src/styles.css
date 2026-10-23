@@ -43,6 +43,8 @@ a { color: #2f6fbd; }
 .demo-shell .page-header { margin-bottom: 25px; }
 .demo-shell .page-title { color: #192f49; font-size: 26px; font-weight: 650; letter-spacing: -.6px; }
 .demo-shell .page-subtitle { color: #7b8796; font-size: 13px; }
+.demo-updated-on { color: #738399; font-size: 12px; white-space: nowrap; }
+@media (max-width: 768px) { .demo-shell .page-options:has(> .demo-updated-on) { width: 100%; justify-content: flex-end; } }
 .demo-shell .card { border: 1px solid #e0e6ef; border-radius: 9px; box-shadow: 0 2px 4px #182d4703; margin-bottom: var(--demo-space); }
 /* Stretch only the sibling cards of a demo row, keeping nested examples intact. */
 .demo-shell .demo-card-row > .col { display: flex; min-width: 0; }
@@ -96,6 +98,40 @@ a { color: #2f6fbd; }
 .coverage-filters { justify-content: flex-start; flex-wrap: wrap; }
 .coverage-filters .filter-label { min-width: min(100%, 220px); }
 .coverage-filters input { margin-top: 6px; }
+.coverage-doc-link { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.docs-navigation { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 24px; font-size: 13px; }
+.docs-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.docs-index-count { margin-top: 18px; }
+.docs-integration { margin-top: 24px; }
+.docs-index-entry { display: flex; flex-direction: column; gap: 9px; padding: 18px; border: 1px solid #dce5ef; border-radius: 7px; color: #263b53; }
+.docs-index-entry:hover { background: #f1f6fc; text-decoration: none; border-color: #82a6d1; }
+.docs-index-entry strong { color: #2f6fbd; overflow-wrap: anywhere; }
+.docs-index-entry span { font-size: 13px; line-height: 1.6; }
+.docs-index-entry small { margin-top: auto; padding-top: 6px; color: #74869c; }
+.component-documentation .scenario { min-width: 0; }
+.component-documentation h3 { margin: 26px 0 16px; font-size: 18px; color: #233e5b; }
+.component-documentation .table code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+.component-documentation .table td { min-width: 105px; max-width: 330px; vertical-align: top; }
+.docs-behavior { padding-left: 20px; font-size: 14px; line-height: 1.8; }
+.docs-behavior li + li { margin-top: 9px; }
+.docs-code { margin: 20px 0; max-width: 100%; border: 1px solid #d8e3ef; border-radius: 7px; overflow: hidden; background: #152b42; }
+.docs-code-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 14px; background: #eaf1f9; color: #536f8f; font-size: 12px; }
+.docs-code-toolbar button { background: #fff; color: #2f6fbd; border: 1px solid #bdcee3; border-radius: 4px; padding: 5px 9px; cursor: pointer; }
+.docs-code pre { margin: 0; padding: 20px; color: #e2ebf5; background: transparent; overflow: auto; max-height: 600px; font-size: 12px; line-height: 1.7; }
+.docs-code pre code { color: inherit; background: transparent; padding: 0; font-size: inherit; white-space: pre; }
+.docs-copy-status { display: block; color: #d5e9fa; font-size: 12px; padding: 0 20px; }
+.docs-copy-status:not(:empty) { padding-bottom: 12px; }
+.docs-details { margin-top: 14px; border: 1px solid #dce5ef; border-radius: 6px; padding: 14px; min-width: 0; }
+.docs-details summary { cursor: pointer; font-size: 14px; font-weight: 600; color: #355f8a; overflow-wrap: anywhere; }
+.docs-details[open] summary { margin-bottom: 20px; }
+.docs-members { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+.docs-controls { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.docs-controls label { font-size: 13px; min-width: min(100%, 180px); max-width: 100%; }
+.docs-controls .form-control { margin-top: 6px; }
+.docs-preview { border: 1px dashed #b9cde3; border-radius: 7px; padding: 28px; background: #f4f8fd; }
+.docs-preview .action-row { margin-top: 18px; }
+.docs-preview p { margin: 18px 0 0; font-size: 13px; color: #426284; }
+.docs-markdown { overflow-wrap: anywhere; line-height: 1.7; }
 .field-label { width: 100%; color: #465d77; font-size: 13px; }
 .field-label > input, .field-label > div { margin-top: 8px; }
 .demo-shell .form-control { border: 1px solid #d6dfeb; border-radius: 5px; min-height: 39px; }

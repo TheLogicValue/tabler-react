@@ -1,0 +1,71 @@
+{
+  "name": "Dimmer",
+  "kind": "Componente",
+  "source": "src/components/Dimmer/index.js",
+  "implementation": "src/components/Dimmer/Dimmer.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Loader } from \"../Loader\";\nimport DimmerContent from \"./DimmerContent.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +active?: boolean,\n  +loader?: boolean,\n|};\n\nfunction Dimmer({ className, children, active, loader }: Props): React.Node {\n  const classes = cn({ dimmer: true, active: active }, className);\n  return (\n    <div className={classes}>\n      <React.Fragment>\n        {loader && <Loader />}\n        <DimmerContent>{children}</DimmerContent>\n      </React.Fragment>\n    </div>\n  );\n}\n\nDimmer.displayName = \"Dimmer\";\nDimmer.Content = DimmerContent;\nexport default Dimmer;",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "loader",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Content"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Content",
+      "source": "src/components/Dimmer/DimmerContent.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Atenuación visual de un bloque con un indicador opcional.",
+    "behavior": [
+      "active activa la apariencia atenuada y loader incorpora Loader.",
+      "El contenido continúa siendo children; no implementa por sí mismo cancelación ni bloqueo accesible de todas las interacciones."
+    ],
+    "example": "<Dimmer active loader><p>Contenido que se está actualizando.</p></Dimmer>"
+  }
+}

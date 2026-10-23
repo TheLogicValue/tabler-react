@@ -1,0 +1,239 @@
+{
+  "name": "Media",
+  "kind": "Componente",
+  "source": "src/components/Media/index.js",
+  "implementation": "src/components/Media/Media.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport MediaBody from \"./MediaBody.react\";\nimport MediaHeading from \"./MediaHeading.react\";\nimport MediaList from \"./MediaList.react\";\nimport MediaObject from \"./MediaObject.react\";\nimport MediaBodySocial from \"./MediaBodySocial.react\";\nimport MediaListItem from \"./MediaListItem.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Media({ className, children }: Props): React.Node {\n  const classes = cn(\"media\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nMedia.Body = MediaBody;\nMedia.BodySocial = MediaBodySocial;\nMedia.Heading = MediaHeading;\nMedia.List = MediaList;\nMedia.ListItem = MediaListItem;\nMedia.Object = MediaObject;\n\nexport default Media;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Body",
+    "BodySocial",
+    "Heading",
+    "List",
+    "ListItem",
+    "Object"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Body",
+      "source": "src/components/Media/MediaBody.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "BodySocial",
+      "source": "src/components/Media/MediaBodySocial.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "workTitle",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "facebook",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "twitter",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "phone",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "skype",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Heading",
+      "source": "src/components/Media/MediaHeading.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "List",
+      "source": "src/components/Media/MediaList.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ListItem",
+      "source": "src/components/Media/MediaListItem.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Object",
+      "source": "src/components/Media/MediaObject.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "avatar",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "objectURL",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "rounded",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Composición de una imagen u objeto junto a un cuerpo de contenido.",
+    "behavior": [
+      "Media.Object representa el elemento visual y Media.Body el contenido.",
+      "Media.Heading, List y ListItem proporcionan partes adicionales."
+    ],
+    "example": "<Media><Media.Object objectURL=\"/avatar-local.svg\" alt=\"Perfil\" /><Media.Body><Media.Heading>Equipo</Media.Heading>Descripción.</Media.Body></Media>"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Profile",
+  "kind": "Componente",
+  "source": "src/components/Profile/index.js",
+  "implementation": "src/components/Profile/Profile.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport { Card, Header, SocialNetworksList } from \"../../components\";\n\nimport ProfileImage from \"./ProfileImage.react\";\n\nexport type Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +name: string,\n  +avatarURL?: string,\n  +twitterURL?: string,\n  +backgroundURL?: string,\n  +bio?: string,\n|};\n\nfunction Profile({\n  className,\n  children,\n  name,\n  avatarURL = \"\",\n  twitterURL = \"\",\n  backgroundURL = \"\",\n  bio,\n}: Props): React.Node {\n  const classes = cn(\"card-profile\", className);\n  return (\n    <Card className={classes}>\n      <Card.Header backgroundURL={backgroundURL} />\n      <Card.Body className=\"text-center\">\n        <ProfileImage avatarURL={avatarURL} />\n        <Header.H3 className=\"mb-3\">{name}</Header.H3>\n        <p className=\"mb-4\">{bio || children}</p>\n        <SocialNetworksList\n          itemsObjects={[{ name: \"twitter\", label: \"Follow\" }]}\n          prefix=\"fa\"\n          asButtons\n        />\n      </Card.Body>\n    </Card>\n  );\n}\n\nProfile.Image = ProfileImage;\n\nexport default Profile;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "avatarURL",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "twitterURL",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "backgroundURL",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "bio",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Image"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Image",
+      "source": "src/components/Profile/ProfileImage.react.js",
+      "props": [
+        {
+          "name": "avatarURL",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta de perfil con imagen, biografía y enlaces sociales.",
+    "behavior": [
+      "name, avatarURL, backgroundURL y bio configuran el contenido principal; children sirve como alternativa a bio.",
+      "La implementación incluye una acción social fija; twitterURL figura en la API pero no se utiliza para personalizar ese destino.",
+      "No carga ni modifica la cuenta."
+    ],
+    "example": "<Profile name=\"Equipo de prueba\" avatarURL=\"/avatar-local.svg\" bio=\"Perfil de demostración.\" />"
+  }
+}

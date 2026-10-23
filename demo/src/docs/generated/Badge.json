@@ -1,0 +1,48 @@
+{
+  "name": "Badge",
+  "kind": "Componente",
+  "source": "src/components/Badge/index.js",
+  "implementation": "src/components/Badge/Badge.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +color?: string,\n|};\n\n/**\n * A small colored rectangle with rounded corners.\n */\nfunction Badge({ className, children, color = \"primary\" }: Props): React.Node {\n  const classes = cn(\n    {\n      badge: true,\n      [`badge-${color}`]: color,\n    },\n    className\n  );\n  return <span className={classes}>{children}</span>;\n}\n\nexport default Badge;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"primary\""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Badge.examples.md",
+      "source": "src/components/Badge/Badge.examples.md",
+      "markdown": "```jsx\n  <Badge color=\"primary\" className=\"mr-1\">\n    primary\n  </Badge>\n  <Badge color=\"secondary\" className=\"mr-1\">\n    secondary\n  </Badge>\n  <Badge color=\"info\" className=\"mr-1\">\n    info\n  </Badge>\n  <Badge color=\"warning\" className=\"mr-1\">\n    warning\n  </Badge>\n  <Badge color=\"success\" className=\"mr-1\">\n    success\n  </Badge>\n  <Badge color=\"danger\" className=\"mr-1\">\n    danger\n  </Badge>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Etiqueta breve para estados y categorías.",
+    "behavior": [
+      "children es el texto y color elige la variante visual de Tabler.",
+      "Es un elemento informativo, no un control interactivo."
+    ],
+    "example": "<Badge color=\"success\">Disponible</Badge>"
+  }
+}

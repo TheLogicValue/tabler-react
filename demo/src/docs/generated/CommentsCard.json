@@ -1,0 +1,35 @@
+{
+  "name": "CommentsCard",
+  "kind": "Componente",
+  "source": "src/components/CommentsCard/index.js",
+  "implementation": "src/components/CommentsCard/CommentsCard.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport FormWithSingleInputAndButton from \"../../forms/FormWithSingleInputAndButton.react\";\nimport Card from \"../Card\";\nimport Comment from \"../Comment\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction CommentsCard({ className, children }: Props): React.Node {\n  const classes = cn(className);\n  return (\n    <Card className={classes}>\n      <Card.Header>\n        <FormWithSingleInputAndButton\n          inputProps={{ placeholder: \"Message\" }}\n          buttonProps={{ icon: \"camera\", color: \"secondary\" }}\n        />\n        <Comment>{children}</Comment>\n      </Card.Header>\n    </Card>\n  );\n}\n\nexport default CommentsCard;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta que agrupa comentarios.",
+    "behavior": [
+      "Compone el contenido recibido mediante children.",
+      "Utiliza Comment para cada entrada; la gestión y la carga de mensajes quedan fuera de la tarjeta."
+    ],
+    "example": "<CommentsCard><Comment name=\"Equipo\" text=\"Comentario de prueba.\" /></CommentsCard>"
+  }
+}

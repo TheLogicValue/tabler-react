@@ -1,0 +1,129 @@
+{
+  "name": "LineChart",
+  "kind": "Componente",
+  "source": "src/components/Chart/index.js",
+  "implementation": "src/components/Chart/LineChart.js",
+  "implementationCode": "import React from \"react\";\nimport ReactECharts from \"echarts-for-react\";\n\nexport default function LineChartTabler({\n    lines,\n    height,\n    selectedOptions,\n    getLegend,\n    tooltipFormatter,\n    xAxisData,\n    yAxisMinInterval,\n    yAxisFormatter,\n    yAxisMinMax,\n    complete = false,\n    name = \"Export\",\n    title = \"\",\n    top = null,\n    right = null,\n    left = null,\n    bottom = null,\n    download = false,\n    onExpand = null,\n    toolboxTop = 0,\n    toolboxRight = 10,\n    toolboxBottom = 10,\n}) {\n    const option = {\n        tooltip: {\n            trigger: \"axis\",\n            axisPointer: { animation: false },\n            confine: false,\n            appendToBody: true,\n            formatter: (item) => tooltipFormatter(item),\n        },\n        toolbox: {\n            top: toolboxTop,\n            right: toolboxRight,\n            bottom: toolboxBottom,\n            itemSize: onExpand != null ? 8 : 15,\n            feature: {\n                saveAsImage: { name: name, title: title, show: download },\n                myTool2: {\n                    show: onExpand != null,\n                    title: \"\",\n                    icon: \"path://M15,3 L21,3 L21,9 M9,21 L3,21 L3,15 M21,3 L14,10 M3,21 L10,14\",\n                    onclick: onExpand,\n                },\n            },\n        },\n        legend: {\n            data: selectedOptions,\n            selected: getLegend,\n            show: complete,\n            bottom: \"0rem\",\n            symbol: null,\n        },\n        xAxis: {\n            type: \"category\",\n            boundaryGap: false,\n            show: complete,\n            data: xAxisData,\n            axisLabel: { rotate: 10, verticalAlign: \"top\", fontSize: 9 },\n        },\n        grid: {\n            top: top || (download ? 30 : 10),\n            bottom: bottom || (complete ? 70 : 0),\n            left: left || (complete ? 60 : 0),\n            right: right || (complete ? 60 : 0),\n        },\n        yAxis: {\n            show: complete,\n            type: \"value\",\n            splitNumber: 4,\n            axisPointer: { snap: true },\n            minorSplitLine: { show: true },\n            minInterval: yAxisMinInterval,\n            axisLabel: { formatter: (item) => yAxisFormatter(item) },\n            max: (value) => yAxisMinMax(value, \"max\"),\n            min: (value) => yAxisMinMax(value, \"min\"),\n        },\n        series: lines?.map((item) => ({\n            data: item.data,\n            color: item.color,\n            name: item.name,\n            type: \"line\",\n            smooth: false,\n            showSymbol: true,\n            sampling: \"lttb\",\n            animation: false,\n            lineStyle: { width: 2, animation: false, type: \"solid\" },\n        })),\n    };\n\n    return (\n        <ReactECharts\n            className={\"charts-complete-\" + complete}\n            option={option}\n            style={{ height: height }}\n        />\n    );\n}\n",
+  "props": [
+    {
+      "name": "lines"
+    },
+    {
+      "name": "height"
+    },
+    {
+      "name": "selectedOptions"
+    },
+    {
+      "name": "getLegend"
+    },
+    {
+      "name": "tooltipFormatter"
+    },
+    {
+      "name": "xAxisData"
+    },
+    {
+      "name": "yAxisMinInterval"
+    },
+    {
+      "name": "yAxisFormatter"
+    },
+    {
+      "name": "yAxisMinMax"
+    },
+    {
+      "name": "complete",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "name",
+      "default": "\"Export\"",
+      "optional": true
+    },
+    {
+      "name": "title",
+      "default": "\"\"",
+      "optional": true
+    },
+    {
+      "name": "top",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "right",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "left",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "bottom",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "download",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "onExpand",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "toolboxTop",
+      "default": "0",
+      "optional": true
+    },
+    {
+      "name": "toolboxRight",
+      "default": "10",
+      "optional": true
+    },
+    {
+      "name": "toolboxBottom",
+      "default": "10",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [
+    {
+      "name": "echarts",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^6.0.0",
+      "libraryVersion": "6.1.0",
+      "demoVersion": "6.1.0",
+      "demoRange": "6.1.0"
+    },
+    {
+      "name": "echarts-for-react",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^3.0.2",
+      "libraryVersion": "3.0.6",
+      "demoVersion": "3.0.6",
+      "demoRange": "3.0.6"
+    }
+  ],
+  "guide": {
+    "summary": "Gráfico de líneas con categorías y formato configurados por el consumidor.",
+    "behavior": [
+      "lines es una lista de objetos name/data/color.",
+      "La implementación llama tooltipFormatter, yAxisFormatter y yAxisMinMax: proporciona esas funciones.",
+      "complete muestra ejes y leyenda. selectedOptions/getLegend describen las series visibles.",
+      "La carga de datos y los cambios de periodo corresponden al consumidor."
+    ],
+    "example": "<LineChart lines={[{ name: \"Cartera\", data: [10, 20], color: \"#3676c8\" }]}\n  height=\"280px\" complete xAxisData={[\"Ene\", \"Feb\"]}\n  selectedOptions={[\"Cartera\"]} getLegend={{ Cartera: true }}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={items => items.map(item => item.seriesName + \": \" + item.value).join(\"<br/>\")} />"
+  }
+}

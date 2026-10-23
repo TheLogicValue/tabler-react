@@ -1,0 +1,87 @@
+{
+  "name": "AGGridPagination",
+  "kind": "Componente",
+  "source": "src/components/AGGridTable/index.js",
+  "implementation": "src/components/AGGridTable/AGGridPagination.js",
+  "implementationCode": "import React, { forwardRef, useImperativeHandle } from 'react'\nimport usePagination from './Hooks/usePagination'\nimport cn from \"classnames\"\nimport \"./AGGridPagination.css\"\n\nconst AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {\n    const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()\n    const previousClasses = cn(\"ag-paging-button\", { \"ag-disabled\": page <= 1 })\n    const nextClasses = cn(\"ag-paging-button\", {\n        \"ag-disabled\": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page\n    })\n\n    const defaultStrings = {\n        \"to\": \"to\",\n        \"page\": \"Page\",\n        \"of\": 'de'\n    }\n\n    const handleFirstPage = () => {\n        controles.current.api.paginationGoToPage(0)\n        goToFirstPage()\n    }\n\n    const handleNextPage = () => {\n        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {\n            controles.current.api.paginationGoToNextPage()\n            nextPage({ pageSize })\n        }\n    }\n\n    const handleLastPage = () => {\n        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {\n            controles.current.api.paginationGoToPage(totalPages - 1)\n            goToLastPage({ page: totalPages, pageSize })\n        }\n    }\n\n    const handlePreviousPage = () => {\n        if (page > 1) {\n            controles.current.api.paginationGoToPreviousPage()\n            previousPage({ pageSize })\n        }\n    }\n\n    useImperativeHandle(ref, () => {\n        return {\n            page: page,\n            noData: () => handlePreviousPage({ pageSize }),\n            firstPage: () => goToFirstPage()\n        }\n    })\n\n    return <div className=\"ag-paging-panel ag-unselectable ag-panel-custom\" >\n        {pagesSizes && <span className=\"ag-paging-row-summary-panel\" role=\"status\">\n            <span className=\"ag-paging-row-summary-panel-number\">{numRows + 1}</span>\n            <span> {strings.to || defaultStrings.to} </span>\n            <span className=\"ag-paging-row-summary-panel-number\">{numRows + ((pagesSizes && pagesSizes[page - 1]) || pageSize)}</span>\n            <span> {strings.of || defaultStrings.of} </span>\n            <span className=\"ag-paging-row-summary-panel-number\">{totalElements}</span>\n        </span>}\n        <span className=\"ag-paging-page-summary-panel\" role=\"presentation\">\n            <div className={previousClasses} role=\"button\" aria-label=\"First Page\" onClick={handleFirstPage}>\n                <span className=\"ag-icon ag-icon-first\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <div className={previousClasses} role=\"button\" aria-label=\"Previous Page\" onClick={handlePreviousPage} tabIndex=\"0\" disabled={page == 1}>\n                <span className=\"ag-icon ag-icon-previous\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <span className=\"ag-paging-description\" role=\"status\">\n                <span> {strings.page || defaultStrings.page} </span>\n                <span className=\"ag-paging-number\">{page}</span>\n                <span> {strings.of || defaultStrings.of} </span>\n                <span className=\"ag-paging-row-summary-panel-number\">{totalPages}</span>\n            </span>\n            <div className={nextClasses} role=\"button\" aria-label=\"Next Page\" onClick={handleNextPage} tabIndex=\"0\">\n                <span className=\"ag-icon ag-icon-next\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <div className={nextClasses} role=\"button\" aria-label=\"Last Page\" onClick={handleLastPage} tabIndex=\"0\">\n                <span className=\"ag-icon ag-icon-last\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n        </span>\n    </div>\n})\n\n\n\nAGGridPagination.displayName = \"AGGridPagination\"\n\nexport default AGGridPagination\n",
+  "props": [
+    {
+      "name": "controles"
+    },
+    {
+      "name": "lastPage"
+    },
+    {
+      "name": "totalElements"
+    },
+    {
+      "name": "totalPages"
+    },
+    {
+      "name": "pagesSizes",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "strings",
+      "default": "{}",
+      "optional": true
+    },
+    {
+      "name": "pageSize",
+      "default": "20",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [
+    "page",
+    "noData",
+    "firstPage"
+  ],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "AGGridTable.examples.md",
+      "source": "src/components/AGGridTable/AGGridTable.examples.md",
+      "markdown": "# DataTable example\n```jsx\n\n  const addMilesSeparatorAndRound = (value, decimals = 2, locale = \"de-DE\") => {\n    if (value != null) {\n      value = parseFloat(value);\n      var result = value.toLocaleString(locale, { maximumFractionDigits: decimals, minimumFractionDigits: decimals });\n      return result;\n    } else {\n        return \"-\";\n    }\n  }\n  \n  const iconValueFormatter = (params) => {\n    switch (params.value) {\n        case true:\n            return <Icon name=\"check\" className=\"text-success\" />\n        case false:\n            return <Icon name=\"x\" className=\"text-danger\" />\n        case null:\n            return \"No aplica\"\n    }\n}\n\n  const dataRow = () =>{\n    return [\n      {id:1, date:\"31-12-2020\", name:\"Jaques\", city:\"Granada\", pass:null, budget: 123},\n      {id:2, date:\"22-02-2021\", name:\"Atenea\", city:\"Pireo\", pass:true,budget: 222},\n      {id:3, date:\"11-05-2021\", name:\"John\", city:\"Leon\", pass:false, budget: 179.50},\n      {id:4, date:\"31-12-2020\", name:\"Marie\", city:\"Vigo\", pass:null, budget: 55},\n      {id:5, date:\"22-02-2021\", name:\"Mark\", city:\"Reus\", pass:true,budget: 1045.07},\n      {id:6, date:\"11-05-2021\", name:\"Claudia\", city:\"Ibiza\", pass:false, budget: 543.50},\n    ]\n  }\n  \n  const dataColumn = () =>{\n    return [\n      {header:\"Id\", item:\"id\", sort:\"\", valueFormatter:null, type:\"\"},\n      {header:\"Date\", item:\"date\", sort:\"\", valueFormatter: null, type:\"\"},\n      {header:\"Location\", \n       \"subItems\": [\n          {header:\"Name\", item:\"name\", sort:\"asc\", valueFormatter:null, type:\"\"},\n          {header:\"City\", item:\"city\", sort:\"\", valueFormatter:null, type:\"\"},\n        ]  \n      },\n      {header:\"Pass\", item:\"pass\", renderIcon: iconValueFormatter},\n      {header:\"Budget\", item:\"budget\", sort:\"\", valueFormatter: params => addMilesSeparatorAndRound(params.value) + \" €\", type:\"rightAligned\"}\n    ]\n  }\n\n  const dataTotal = () =>{\n    let total = 0;\n    dataRow().forEach((data)=>{\n      total += data.budget\n    })\n    return [\n      {budget: total + \" €\"},\n    ]\n  }\n  const columnTotal = () =>{\n    return [\n      {header:\"Id\", item:\"id\", valueFormatter:null, type:\"\"},\n      {header:\"Date\", item:\"date\",  valueFormatter: null, type:\"\"},\n      {header:\"Name\", item:\"name\",  valueFormatter:null, type:\"\"},\n      {header:\"City\", item:\"city\",  valueFormatter:null, type:\"\"},\n      {header:\"Pass\", item:\"pass\",  valueFormatter:null, type:\"\"},\n      {header:\"TotalBudget\", item:\"budget\",  valueFormatter: params => addMilesSeparatorAndRound(params.value), type:\"rightAligned\"}\n    ]\n  }\n\n  const rowClick = (row) =>{\n    alert(\"This is \"+row.name+\" from \"+row.city) \n  }\n\n  <AGGridTable \n    dataColumn={dataColumn()} \n    dataRow={dataRow()} \n    // columnTotal={columnTotal()}\n    // dataTotal={dataTotal()}\n    onRowClick={rowClick}\n    pageSize={3}\n    search={true}/>\n\n```"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "ag-grid-community",
+      "role": "Peer: lo aporta el consumidor",
+      "libraryRange": "^32.3.9",
+      "libraryVersion": "32.3.9",
+      "demoVersion": "32.3.9",
+      "demoRange": "32.3.9"
+    },
+    {
+      "name": "ag-grid-react",
+      "role": "Peer: lo aporta el consumidor",
+      "libraryRange": "^32.3.9",
+      "libraryVersion": "32.3.9",
+      "demoVersion": "32.3.9",
+      "demoRange": "32.3.9"
+    },
+    {
+      "name": "ag-grid-enterprise",
+      "role": "Peer opcional",
+      "libraryRange": "^32.3.9",
+      "libraryVersion": "32.3.9",
+      "demoVersion": null,
+      "demoRange": null
+    }
+  ],
+  "guide": {
+    "summary": "Paginador externo que utiliza la API de una tabla AG Grid.",
+    "behavior": [
+      "controles debe ser una referencia con current.api y los métodos de paginación de AG Grid.",
+      "Mantiene una página interna; las páginas de AG Grid son base 0 y las mostradas son base 1.",
+      "Proporciona pagesSizes cuando utilices los controles de avance: la implementación los consulta sin comprobar que existan en cada callback.",
+      "La referencia pública expone page, firstPage() y noData(); noData() retrocede una página."
+    ],
+    "example": "<AGGridPagination controles={gridRef} pagesSizes={[20, 8]} totalElements={28} totalPages={2} pageSize={20} />"
+  }
+}

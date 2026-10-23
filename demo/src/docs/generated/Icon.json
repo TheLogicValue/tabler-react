@@ -1,0 +1,109 @@
+{
+  "name": "Icon",
+  "kind": "Componente",
+  "source": "src/components/Icon/index.js",
+  "implementation": "src/components/Icon/Icon.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport type { MouseEvents, PointerEvents, FocusEvents } from \"../../\";\n\ntype Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  ...FocusEvents,\n  +className?: string,\n  /**\n   * Should this icon be rendered within an <a> tag\n   */\n  +link?: boolean,\n  /**\n   * The icon prefix\n   */\n  +prefix?: string,\n  /**\n   * The icon name\n   */\n  +name: string,\n  +isAriaHidden?: boolean,\n  /**\n   * Use the built-in payment icon set\n   */\n  +payment?: boolean,\n  /**\n   * Use the built-in flag icon set\n   */\n  +flag?: boolean,\n  /**\n   * Icon color (primary | secondary | tertiary)\n   */\n  +color?: string,\n  /**\n   * Icon size (large | medium | big)\n   */\n   +size?: string,\n|};\n\n/**\n * Display an icon.\n * Uses the included feathers icon set by default but you can add your own\n */\nfunction Icon({\n  prefix: prefixFromProps = \"fe\",\n  name,\n  title,\n  className,\n  link,\n  isAriaHidden,\n  payment,\n  flag,\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n  onFocus,\n  onBlur,\n  color,\n  size\n}: Props): React.Node {\n  const prefix = (payment && \"payment\") || (flag && \"flag\") || prefixFromProps;\n  const isColor = color;\n  const isSize = size;\n  const classes = cn(\n    {\n      [prefix]: true,\n      [`${prefix}-${name}`]: true,\n      [\"color-\"+color]: isColor,\n      [\"icon-size-\" + size]: isSize,\n    },\n    className\n  );\n\n  const extraProps = isAriaHidden\n    ? {\n        \"aria-hidden\": \"true\",\n      }\n    : null;\n\n  const eventProps = {\n    onClick,\n    onMouseEnter,\n    onMouseLeave,\n    onPointerEnter,\n    onPointerLeave,\n    onFocus,\n    onBlur,\n  };\n\n  return !link ? (\n    <i className={classes} {...eventProps} title={title}/>\n  ) : (\n    <a className=\"icon\" {...extraProps} {...eventProps} title={title}>\n      <i className={classes} />\n    </a>\n  );\n}\n\nIcon.displayName = \"Icon\";\n\n/** @component */\nexport default Icon;\n",
+  "props": [
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "link",
+      "type": "boolean",
+      "optional": true,
+      "description": "Should this icon be rendered within an <a> tag"
+    },
+    {
+      "name": "prefix",
+      "type": "string",
+      "optional": true,
+      "description": "The icon prefix",
+      "default": "\"fe\""
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "optional": false,
+      "description": "The icon name"
+    },
+    {
+      "name": "isAriaHidden",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "payment",
+      "type": "boolean",
+      "optional": true,
+      "description": "Use the built-in payment icon set"
+    },
+    {
+      "name": "flag",
+      "type": "boolean",
+      "optional": true,
+      "description": "Use the built-in flag icon set"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "Icon color (primary | secondary | tertiary)"
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "optional": true,
+      "description": "Icon size (large | medium | big)"
+    },
+    {
+      "name": "title"
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "onMouseEnter"
+    },
+    {
+      "name": "onMouseLeave"
+    },
+    {
+      "name": "onPointerEnter"
+    },
+    {
+      "name": "onPointerLeave"
+    },
+    {
+      "name": "onFocus"
+    },
+    {
+      "name": "onBlur"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Icon.examples.md",
+      "source": "src/components/Icon/Icon.examples.md",
+      "markdown": "```jsx\n<Icon name=\"user\" />\n```\n\n#### Changing the prefix to use fontawesome\n\nFirst you need to add font awesome to your project.\n\nIn your HTML <head>:\n\n```html\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">\n```\n\nThen use the Icon `prefix` prop\n\n```jsx\n<Icon prefix=\"fa\" name=\"user\" />\n```\n\n#### Rendering a flag\n\n```jsx\n<Icon flag name=\"gb\" />\n```\n\n#### Rendering a payment icon\n\n```jsx\n<Icon payment name=\"visa\" />\n```\n\n#### Size and color icon\n\n```jsx\n<Icon color=\"secondary\" size=\"big\" name=\"alert-circle\"/>\n```\n\n\n        \n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Iconos de fuente y variantes de banderas o pagos.",
+    "behavior": [
+      "prefix=\"fe\" utiliza los iconos Feather incluidos en los estilos de la biblioteca.",
+      "name se combina con el prefijo para formar la clase; payment y flag seleccionan otras familias.",
+      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene."
+    ],
+    "example": "<Button type=\"button\" color=\"secondary\"><Icon name=\"download\" /> Descargar</Button>"
+  }
+}

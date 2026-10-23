@@ -1,0 +1,35 @@
+{
+  "name": "Loader",
+  "kind": "Componente",
+  "source": "src/components/Loader/index.js",
+  "implementation": "src/components/Loader/Loader.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Loader({ className, children }: Props): React.Node {\n  const classes = cn({ loader: true }, className);\n  return <div className={classes}>{children}</div>;\n}\n\nLoader.displayName = \"Loader\";\n\nexport default Loader;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Indicador de carga basado en los estilos de Tabler.",
+    "behavior": [
+      "Añade la clase loader y admite contenido y clases adicionales.",
+      "No consulta el progreso ni gestiona peticiones."
+    ],
+    "example": "<Loader />"
+  }
+}

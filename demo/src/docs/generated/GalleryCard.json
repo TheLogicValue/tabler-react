@@ -1,0 +1,226 @@
+{
+  "name": "GalleryCard",
+  "kind": "Componente",
+  "source": "src/components/GalleryCard/index.js",
+  "implementation": "src/components/GalleryCard/GalleryCard.react.js",
+  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card\";\n\nimport GalleryCardDetails from \"./GalleryCardDetails.react\";\nimport GalleryCardFooter from \"./GalleryCardFooter.react\";\nimport GalleryCardIconGroup from \"./GalleryCardIconGroup.react\";\nimport GalleryCardIconItem from \"./GalleryCardIconItem.react\";\nimport GalleryCardImage from \"./GalleryCardImage.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction GalleryCard({ children, className }: Props) {\n  const cardClassName = cn(\"p-3\", className);\n  return <Card className={cardClassName}>{children}</Card>;\n}\n\nGalleryCard.Details = GalleryCardDetails;\nGalleryCard.Footer = GalleryCardFooter;\nGalleryCard.IconGroup = GalleryCardIconGroup;\nGalleryCard.IconItem = GalleryCardIconItem;\nGalleryCard.Image = GalleryCardImage;\n\nexport default GalleryCard;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Details",
+    "Footer",
+    "IconGroup",
+    "IconItem",
+    "Image"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Details",
+      "source": "src/components/GalleryCard/GalleryCardDetails.react.js",
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "avatarURL",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "fullName",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "dateString",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Footer",
+      "source": "src/components/GalleryCard/GalleryCardFooter.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "IconGroup",
+      "source": "src/components/GalleryCard/GalleryCardIconGroup.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "IconItem",
+      "source": "src/components/GalleryCard/GalleryCardIconItem.react.js",
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "right",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Image",
+      "source": "src/components/GalleryCard/GalleryCardImage.react.js",
+      "props": [
+        {
+          "name": "src",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "rounded",
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "README.md",
+      "source": "src/components/GalleryCard/README.md",
+      "markdown": "## Gallery Card Component\n\n### Usage\n\n```jsx\nimport { GalleryCard } from 'tabler-react'\n...\n...\n\n<GalleryCard>\n    <GalleryCard.Image src=\"https://tabler.github.io/tabler/demo/photos/grant-ritchie-338179-500.jpg\" />\n    <GalleryCard.Footer>\n        <GalleryCard.Details\n            avatarURL=\"https://tabler.github.io/tabler/demo/faces/male/41.jpg\"\n            fullName=\"Nathar Guerrero\"\n            dateString=\"12 days ago\"\n        />\n        <GalleryCard.IconGroup>\n            <GalleryCard.IconItem name=\"eye\" label=\"112\" />\n            <GalleryCard.IconItem\n                name=\"heart\"\n                label=\"42\"\n                right\n            />\n        </GalleryCard.IconGroup>\n    </GalleryCard.Footer>\n</GalleryCard>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta para componer imágenes y detalles de una galería.",
+    "behavior": [
+      "GalleryCard.Image, Details y Footer permiten componer las partes.",
+      "No carga una colección ni implementa por sí misma un visor de imágenes."
+    ],
+    "example": "<GalleryCard><GalleryCard.Image src=\"/imagen-local.svg\" alt=\"Ilustración\" /><GalleryCard.Footer>Imagen de prueba</GalleryCard.Footer></GalleryCard>"
+  }
+}

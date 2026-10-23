@@ -1,0 +1,268 @@
+{
+  "name": "Page",
+  "kind": "Componente",
+  "source": "src/components/Page/index.js",
+  "implementation": "src/components/Page/Page.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport PageMain from \"./PageMain.react\";\nimport PageContent from \"./PageContent.react\";\nimport PageHeader from \"./PageHeader.react\";\nimport PageContentWithSidebar from \"./PageContentWithSidebar.react\";\nimport PageCard from \"./PageCard.react\";\nimport PageTitle from \"./PageTitle.react\";\nimport PageMapHeader from \"./PageMapHeader.react\";\nimport PageSideBar from \"./PageSideBar.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Page({ className, children }: Props): React.Node {\n  const classes = cn(\"page\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nPage.Main = PageMain;\nPage.Content = PageContent;\nPage.Header = PageHeader;\nPage.ContentWithSidebar = PageContentWithSidebar;\nPage.Card = PageCard;\nPage.Title = PageTitle;\nPage.MapHeader = PageMapHeader;\nPage.Sidebar = PageSideBar;\n\nexport default Page;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Main",
+    "Content",
+    "Header",
+    "ContentWithSidebar",
+    "Card",
+    "Title",
+    "MapHeader",
+    "Sidebar"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Main",
+      "source": "src/components/Page/PageMain.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Content",
+      "source": "src/components/Page/PageContent.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "subTitle",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "options",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "back",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Header",
+      "source": "src/components/Page/PageHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "subTitle",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "options",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "back",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "ContentWithSidebar",
+      "source": "src/components/Page/PageContentWithSidebar.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "header",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "sidebar",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Card",
+      "source": "src/components/Page/PageCard.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "header",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Title",
+      "source": "src/components/Page/PageTitle.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "MapHeader",
+      "source": "src/components/Page/PageMapHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Sidebar",
+      "source": "src/components/Page/PageSideBar.react.js",
+      "props": [
+        {
+          "name": "nav",
+          "type": "React.Node",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "headerProps",
+          "type": "SiteHeaderProps",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Estructura general de página y familia de bloques de contenido.",
+    "behavior": [
+      "Page añade el contenedor .page; Page.Content ofrece título, subtítulo y zona de contenido.",
+      "La alineación, la altura y la barra lateral dependen de las clases de la hoja de estilos.",
+      "La demo utiliza sus propias reglas de layout para mantener la cabecera arriba."
+    ],
+    "example": "<Page><Page.Content title=\"Panel\" subTitle=\"Información de prueba\"><Card body=\"Contenido\" /></Page.Content></Page>"
+  }
+}

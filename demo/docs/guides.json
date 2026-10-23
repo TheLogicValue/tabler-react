@@ -1,0 +1,949 @@
+{
+  "Accordion": {
+    "summary": "Contenido desplegable con un botón de cabecera.",
+    "behavior": [
+      "accordionButton define el texto del disparador y children el contenido.",
+      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial."
+    ],
+    "example": "<Accordion accordionButton=\"Ver detalles\"><p>Contenido ampliado.</p></Accordion>"
+  },
+  "AccountDropdown": {
+    "summary": "Menú de cuenta con nombre, avatar y acciones.",
+    "behavior": [
+      "Compone Avatar y Dropdown; no realiza autenticación ni cierra una sesión por sí mismo.",
+      "options admite nombres predefinidos como profile/settings/logout o elementos personalizados con value, to y onClick.",
+      "Las rutas y las acciones deben corresponder a la aplicación consumidora."
+    ],
+    "example": "<AccountDropdown name=\"Usuario de prueba\" description=\"Cuenta local\" options={[{ value: \"Mi perfil\", to: \"/perfil\" }]} />"
+  },
+  "AGGridPagination": {
+    "summary": "Paginador externo que utiliza la API de una tabla AG Grid.",
+    "behavior": [
+      "controles debe ser una referencia con current.api y los métodos de paginación de AG Grid.",
+      "Mantiene una página interna; las páginas de AG Grid son base 0 y las mostradas son base 1.",
+      "Proporciona pagesSizes cuando utilices los controles de avance: la implementación los consulta sin comprobar que existan en cada callback.",
+      "La referencia pública expone page, firstPage() y noData(); noData() retrocede una página."
+    ],
+    "example": "<AGGridPagination controles={gridRef} pagesSizes={[20, 8]} totalElements={28} totalPages={2} pageSize={20} />"
+  },
+  "AGGridTable": {
+    "summary": "Wrapper de AG Grid: la aplicación aporta el motor, los datos y las reglas de negocio.",
+    "behavior": [
+      "Instala versiones compatibles de ag-grid-react y ag-grid-community y pasa AgGridReact. El consumidor registra módulos y licencia Enterprise si los necesita.",
+      "dataColumn traduce header → headerName, item → field, key → colId y subItems → children; conserva las demás opciones de columna.",
+      "Las opciones nativas restantes se reenvían a AG Grid. Las columnas explícitas tienen prioridad sobre defaultColDef y sobre sortable/resizable/suppressMovable del wrapper.",
+      "onRowClick recibe los datos de la fila; onCellClick recibe el evento. Si también se configuran onRowClicked/onCellClicked, se ejecutan ambos callbacks.",
+      "Cada instancia mantiene su búsqueda y su limpieza. Los identificadores searcher y clearDataTables se conservan por compatibilidad; limita las consultas DOM al contenedor de una tabla.",
+      "La referencia expone api, getDisplayedRowAtIndex(index) y flashCells(options). api estará disponible después de inicializar la tabla.",
+      "autosize y dataTotal se recogen por compatibilidad, pero la implementación actual no los utiliza para cambiar el comportamiento."
+    ],
+    "example": "import { AgGridReact } from \"ag-grid-react\";\nimport \"ag-grid-community/styles/ag-grid.css\";\nimport \"ag-grid-community/styles/ag-theme-balham.css\";\n\n<AGGridTable AgGridReact={AgGridReact}\n  dataColumn={[{ header: \"Nombre\", item: \"name\" }]}\n  dataRow={[{ id: \"1\", name: \"Atlas\" }]}\n  search pageSize={5} paginationPageSizeSelector={[5, 10]}\n  defaultColDef={{ filter: true, resizable: true }}\n  getRowId={params => params.data.id}\n  onRowClick={row => console.log(row.name)} />",
+    "props": [
+      {
+        "name": "AgGridReact",
+        "type": "React.ComponentType",
+        "optional": false,
+        "description": "Componente AgGridReact aportado por el consumidor; no se importa dentro del wrapper."
+      },
+      {
+        "name": "dataColumn",
+        "description": "Definiciones con header, item, key y subItems; el resto de campos se conserva en la columna de AG Grid."
+      },
+      {
+        "name": "dataRow",
+        "description": "Filas del consumidor. Los cálculos, carga de datos y actualizaciones corresponden a la aplicación."
+      },
+      {
+        "name": "pinnedTopRowData",
+        "type": "Array<Object>",
+        "optional": true,
+        "description": "Filas fijadas arriba, por ejemplo totales calculados por el consumidor."
+      },
+      {
+        "name": "onRowClick",
+        "description": "Recibe e.data, no el evento completo de AG Grid."
+      },
+      {
+        "name": "onCellClick",
+        "description": "Recibe el evento completo de la celda."
+      },
+      {
+        "name": "onGridReady",
+        "type": "function",
+        "optional": true,
+        "description": "Evento nativo de tabla preparada; se conserva junto con el alias onGrid."
+      },
+      {
+        "name": "onHandleChangeFilter",
+        "description": "Sustituye la búsqueda interna por la lógica del consumidor y recibe el evento del campo."
+      },
+      {
+        "name": "quickFilterText",
+        "type": "string",
+        "optional": true,
+        "description": "Filtro controlado por el consumidor. Debe actualizarlo también cuando quiera restablecerlo."
+      },
+      {
+        "name": "autosize",
+        "description": "Propiedad heredada sin efecto en la implementación actual."
+      },
+      {
+        "name": "dataTotal",
+        "description": "Propiedad heredada sin efecto; utiliza pinnedTopRowData para filas fijadas."
+      }
+    ]
+  },
+  "Alert": {
+    "summary": "Mensaje contextual de información, éxito, aviso o error.",
+    "behavior": [
+      "type selecciona las clases visuales, por ejemplo info, success, warning o danger.",
+      "isDismissible muestra un control de cierre; onDismissClick permite al consumidor retirar el mensaje.",
+      "No modifica por sí mismo los datos ni el estado de un formulario."
+    ],
+    "example": "<Alert type=\"info\" icon=\"info\">Datos de demostración.</Alert>"
+  },
+  "Avatar": {
+    "summary": "Avatar circular con imagen, iniciales, icono o estado.",
+    "behavior": [
+      "imageURL establece una imagen de fondo; children puede mostrar iniciales.",
+      "status añade un indicador de color. placeholder/icon permiten representar un avatar sin imagen.",
+      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo."
+    ],
+    "example": "<Avatar color=\"blue\" size=\"lg\" status=\"green\">AB</Avatar>"
+  },
+  "Badge": {
+    "summary": "Etiqueta breve para estados y categorías.",
+    "behavior": [
+      "children es el texto y color elige la variante visual de Tabler.",
+      "Es un elemento informativo, no un control interactivo."
+    ],
+    "example": "<Badge color=\"success\">Disponible</Badge>"
+  },
+  "BarChart": {
+    "summary": "Gráfico de barras construido sobre ECharts.",
+    "behavior": [
+      "series contiene un array de valores por serie y seriesName los nombres en el mismo orden; colors debe cubrir las series.",
+      "type determina si se utilizan las categorías en el eje horizontal o vertical.",
+      "Proporciona los formatters y funciones de límites que llama la implementación; el consumidor prepara las unidades y las escalas.",
+      "El ejemplo ilustra barras sin stack. Con stack cambia la interpretación de series y seriesName; consulta la implementación antes de activarlo."
+    ],
+    "example": "<BarChart series={[[12, 18, 24]]} seriesName={[\"Cartera\"]}\n  colors={[\"#3676c8\"]} xAxisData={[\"Ene\", \"Feb\", \"Mar\"]}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={item => item.name + \": \" + item.value}\n  height=\"300px\" />"
+  },
+  "BlogCard": {
+    "summary": "Tarjeta de publicación con imagen, autor y descripción.",
+    "behavior": [
+      "Combina encabezado, cuerpo, avatar y enlaces de publicación y perfil.",
+      "Usa imgSrc/avatarImgSrc para las imágenes de la implementación; algunas anotaciones conservan nombres antiguos.",
+      "La carga del contenido y la navegación corresponden al consumidor."
+    ],
+    "example": "<BlogCard title=\"Novedades\" description=\"Resumen de la publicación.\" authorName=\"Equipo\" imgSrc=\"/imagen-local.svg\" imgAlt=\"Ilustración\" postHref=\"/noticias\" />"
+  },
+  "Breadcrumb": {
+    "summary": "Ruta de navegación construida a partir de migas.",
+    "behavior": [
+      "crumbs debe ser un array de objetos con name y path.",
+      "selected recibe el path de la miga pulsada; el componente no realiza la navegación.",
+      "La última miga se presenta con apariencia deshabilitada."
+    ],
+    "example": "<Breadcrumb crumbs={[{ name: \"Inicio\", path: \"/\" }, { name: \"Datos\", path: \"/datos\" }]} selected={path => console.log(path)} />",
+    "props": [
+      {
+        "name": "crumbs",
+        "type": "Array<{name: string, path: string}>",
+        "optional": false,
+        "description": "Migas en el orden de navegación."
+      },
+      {
+        "name": "selected",
+        "type": "(path: string) => void",
+        "optional": false,
+        "description": "Recibe el path seleccionado; conecta aquí el router de la aplicación."
+      }
+    ]
+  },
+  "Button": {
+    "summary": "Acción con las variantes visuales de botones de Tabler.",
+    "behavior": [
+      "Establece type=\"button\" para una acción dentro de un formulario; utiliza type=\"submit\" cuando quieras enviarlo.",
+      "RootComponent permite usar button, a, input o un componente de enlace. Los atributos admitidos dependen de esa variante.",
+      "loading modifica la apariencia; disabled es la propiedad que deshabilita el botón nativo.",
+      "Button.List agrupa acciones y Button.Dropdown combina un botón con un menú. rootRef permite acceder al elemento DOM."
+    ],
+    "example": "<Button type=\"button\" color=\"primary\" icon=\"check\" onClick={() => console.log(\"Confirmado\")}>Confirmar</Button>",
+    "props": [
+      {
+        "name": "type",
+        "description": "Tipo del botón o input. Sin un valor explícito, un botón dentro de un formulario utiliza el comportamiento nativo de envío."
+      },
+      {
+        "name": "loading",
+        "description": "Añade la clase visual de carga; configura disabled si también necesitas impedir la interacción."
+      },
+      {
+        "name": "RootComponent",
+        "description": "Por defecto se representa como button; con a utiliza href y con un componente de router utiliza to."
+      }
+    ]
+  },
+  "ButtonModal": {
+    "summary": "Acción de un modal que se sustituye por un spinner al cargar.",
+    "behavior": [
+      "text es el contenido del botón y onClick la acción.",
+      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner."
+    ],
+    "example": "<ButtonModal text=\"Guardar\" color=\"primary\" spin={false} onClick={() => console.log(\"Guardar\")} />"
+  },
+  "Card": {
+    "summary": "Contenedor de información con cabecera, cuerpo, pie y controles opcionales.",
+    "behavior": [
+      "Puedes componer Card.Header, Card.Body y Card.Footer, o utilizar title, body y footer.",
+      "El cuerpo recibido en body tiene prioridad sobre children cuando es truthy.",
+      "Plegar, cerrar y maximizar se gestionan en el estado interno de la tarjeta. isCollapsed/isClosed se leen al inicializar; no son controles externos continuos.",
+      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key."
+    ],
+    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+  },
+  "colors": {
+    "summary": "Paleta de colores de Tabler exportada como un objeto JavaScript.",
+    "behavior": [
+      "Las claves incluyen colores y variantes como blue, blue-dark y blue-light.",
+      "Se puede utilizar como color de un estilo o de un gráfico. No representa un componente React."
+    ],
+    "example": "const primary = colors.blue;\n<div style={{ color: primary }}>Texto con la paleta</div>",
+    "parameters": "colors: { [nombre: string]: string }"
+  },
+  "Comment": {
+    "summary": "Comentario con autor, fecha, avatar, texto y respuestas.",
+    "behavior": [
+      "text contiene el comentario principal y replies permite incorporar respuestas.",
+      "No persiste mensajes ni resuelve usuarios; esos datos proceden del consumidor."
+    ],
+    "example": "<Comment name=\"Equipo\" date=\"Ahora\" text=\"Revisión completada.\" />"
+  },
+  "CommentsCard": {
+    "summary": "Tarjeta que agrupa comentarios.",
+    "behavior": [
+      "Compone el contenido recibido mediante children.",
+      "Utiliza Comment para cada entrada; la gestión y la carga de mensajes quedan fuera de la tarjeta."
+    ],
+    "example": "<CommentsCard><Comment name=\"Equipo\" text=\"Comentario de prueba.\" /></CommentsCard>"
+  },
+  "ContactCard": {
+    "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
+    "behavior": [
+      "details es una lista de objetos title/content; address utiliza line1 y line2.",
+      "map admite contenido y mapPlaceholder permite una cabecera de mapa visual.",
+      "Las imágenes y los datos deben proporcionarse desde el consumidor."
+    ],
+    "example": "<ContactCard cardTitle=\"Contacto\" name=\"Equipo de soporte\" address={{ line1: \"Oficina de prueba\" }} details={[{ title: \"Horario\", content: \"9:00–18:00\" }]} />"
+  },
+  "Container": {
+    "summary": "Contenedor de anchura y márgenes de la hoja de estilos.",
+    "behavior": [
+      "Añade la clase container y las clases adicionales recibidas.",
+      "No incluye lógica de distribución; combina su contenido con Grid cuando necesites columnas."
+    ],
+    "example": "<Container><p>Contenido centrado en el área disponible.</p></Container>"
+  },
+  "DatePicker": {
+    "summary": "Campo de fecha con calendario, validación y referencia pública.",
+    "behavior": [
+      "El texto utiliza dd/MM/yyyy y trabaja con fechas locales. Escribir y seleccionar comparten la misma validación.",
+      "En modo histórico el máximo predeterminado es hoy, inclusive, y se actualiza al pasar la medianoche; lastDate establece otro límite.",
+      "date tiene prioridad para el valor inicial. En su ausencia se parte de dateIni o del día actual; sin today se restan previousDay o un día por defecto.",
+      "El estado del campo es interno: cambiar date no lo convierte en un control continuo. reset() aplica otra vez la fecha inicial calculada.",
+      "ref.current.value devuelve un Date permitido o Invalid Date. Comprueba Number.isNaN(value.getTime()) antes de utilizarlo.",
+      "disabled=true bloquea todos los días; los matchers explícitos tienen prioridad sobre los límites histórico/futuro.",
+      "fromMonth y toMonth limitan la navegación del calendario, no sustituyen los matchers de selección.",
+      "Las propiedades adicionales del calendario se recogen, pero mode, selected, onSelect, disabled, locale y otras opciones del wrapper tienen prioridad. El onSelect externo no es un callback público de cambio del campo."
+    ],
+    "example": "function FechaDeReferencia() {\n  const dateRef = useRef(null);\n  return <>\n    <DatePicker ref={dateRef} today previousDay={0} />\n    <Button type=\"button\" onClick={() => {\n      const value = dateRef.current.value;\n      if (!Number.isNaN(value.getTime())) console.log(value);\n    }}>Leer fecha</Button>\n  </>;\n}",
+    "props": [
+      {
+        "name": "previousDay",
+        "description": "Desplazamiento de la fecha inicial cuando today es falso. null/undefined equivale a un día; 0 conserva el día base."
+      },
+      {
+        "name": "today",
+        "type": "boolean",
+        "optional": true,
+        "description": "Conserva el día base de dateIni o de hoy al calcular la fecha inicial. No modifica el límite histórico."
+      },
+      {
+        "name": "lastDate",
+        "type": "Date",
+        "optional": true,
+        "description": "Límite inclusivo: máximo en histórico y mínimo en modo futuro."
+      },
+      {
+        "name": "isHistoric",
+        "description": "true limita hasta lastDate u hoy. false solo establece un mínimo si hay lastDate."
+      },
+      {
+        "name": "date",
+        "type": "Date | string | number",
+        "optional": true,
+        "description": "Fecha inicial explícita; tiene prioridad sobre dateIni."
+      },
+      {
+        "name": "dateIni",
+        "type": "Date | string | number",
+        "optional": true,
+        "description": "Día base para calcular la fecha inicial."
+      },
+      {
+        "name": "disabled",
+        "description": "Booleano o matchers de DayPicker. Un valor truthy explícito reemplaza la restricción calculada."
+      },
+      {
+        "name": "fromMonth",
+        "type": "Date",
+        "optional": true,
+        "description": "Mes inicial de navegación; se traduce a startMonth."
+      },
+      {
+        "name": "toMonth",
+        "type": "Date",
+        "optional": true,
+        "description": "Mes final de navegación; se traduce a endMonth."
+      }
+    ]
+  },
+  "DefaultErrorPage": {
+    "summary": "Plantilla visual genérica de error.",
+    "behavior": [
+      "Representa título, subtítulo, detalles y una acción.",
+      "No cambia el estado HTTP ni intercepta errores de JavaScript; la aplicación decide cuándo mostrarla."
+    ],
+    "example": "<DefaultErrorPage title=\"No disponible\" subtitle=\"No se pudo cargar la información\" details=\"Vuelve a intentarlo.\" action={<a href=\"/\">Volver</a>} />"
+  },
+  "Dimmer": {
+    "summary": "Atenuación visual de un bloque con un indicador opcional.",
+    "behavior": [
+      "active activa la apariencia atenuada y loader incorpora Loader.",
+      "El contenido continúa siendo children; no implementa por sí mismo cancelación ni bloqueo accesible de todas las interacciones."
+    ],
+    "example": "<Dimmer active loader><p>Contenido que se está actualizando.</p></Dimmer>"
+  },
+  "DoubleCard": {
+    "summary": "Tarjeta que compara dos valores y sus etiquetas.",
+    "behavior": [
+      "Los valores ya llegan formateados desde el consumidor.",
+      "firstlabel y secondlabel respetan esa capitalización de la API; children añade información complementaria."
+    ],
+    "example": "<DoubleCard title=\"Cobertura\" firstValue=\"94%\" firstlabel=\"Cartera\" secondValue=\"80%\" secondlabel=\"Referencia\" classColorValue=\"success\" />"
+  },
+  "Dropdown": {
+    "summary": "Menú desplegable con disparador, elementos y posicionamiento flotante.",
+    "behavior": [
+      "Puedes proporcionar itemsObject, elementos en items, un trigger personalizado o componer Dropdown.Trigger y Dropdown.Menu.",
+      "El menú mantiene su estado y cierra por selección, Escape o clic fuera según la composición.",
+      "position admite las posiciones cardinales, sus variantes start/end y auto; Floating UI ajusta el menú al espacio disponible.",
+      "Los callbacks de los elementos pertenecen al consumidor. onClick de un elemento recibe el evento; to define el destino del enlace."
+    ],
+    "example": "<Dropdown type=\"button\" triggerContent=\"Acciones\" position=\"bottom-start\"\n  itemsObject={[{ value: \"Revisar\", onClick: event => {\n    event.preventDefault();\n    console.log(\"Revisado\");\n  } }]} />"
+  },
+  "ForgotPasswordPage": {
+    "summary": "Plantilla de formulario para solicitar una recuperación de contraseña.",
+    "behavior": [
+      "Muestra el campo email y textos personalizables mediante strings.",
+      "Recibe values, errors y touched desde la lógica del consumidor; el helper heredado filtra errores según campos tocados.",
+      "No envía correos ni implementa recuperación de cuentas. onSubmit conecta con la aplicación."
+    ],
+    "example": "<ForgotPasswordPage values={{ email: \"\" }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+  },
+  "Form": {
+    "summary": "Formulario y familia de campos de entrada.",
+    "behavior": [
+      "La raíz representa un form nativo; el consumidor mantiene valores, validación y envío.",
+      "Form.Input/Checkbox/Select utilizan eventos del campo. Form.SelectReact se basa en react-select y devuelve el valor seleccionado en su onChange.",
+      "Form.Group puede agrupar una etiqueta y sus campos; utiliza identificadores adecuados para asociarlos.",
+      "autoComplete=\"off\" se conserva como defaultProps heredado; establece el atributo explícitamente si necesitas garantizarlo en React 19.",
+      "Consulta la API de cada subcomponente, especialmente Form.SelectReact, que tiene opciones diferentes de un select nativo."
+    ],
+    "example": "<Form autoComplete=\"off\" onSubmit={event => event.preventDefault()}>\n  <Form.Group label=\"Nombre\">\n    <Form.Input name=\"name\" value={name} onChange={event => setName(event.target.value)} />\n  </Form.Group>\n  <Button type=\"submit\" color=\"primary\">Guardar</Button>\n</Form>"
+  },
+  "FormCard": {
+    "summary": "Formulario dentro de una tarjeta con título y acción principal.",
+    "behavior": [
+      "Recibe action, method y onSubmit para el formulario.",
+      "children define los campos; buttonText es el texto del envío.",
+      "No mantiene los valores ni realiza validación de negocio."
+    ],
+    "example": "<FormCard title=\"Configuración\" buttonText=\"Guardar\" onSubmit={event => event.preventDefault()}><FormTextInput label=\"Nombre\" name=\"name\" /></FormCard>"
+  },
+  "FormCheckboxInput": {
+    "summary": "Checkbox de formulario envuelto en Form.Group.",
+    "behavior": [
+      "Reenvía sus propiedades a Form.Checkbox.",
+      "Para un campo controlado utiliza checked y onChange; el grupo no mantiene ese estado."
+    ],
+    "example": "<FormCheckboxInput label=\"Acepto las condiciones\" name=\"terms\" checked={accepted} onChange={event => setAccepted(event.target.checked)} />"
+  },
+  "FormTextInput": {
+    "summary": "Campo de texto con grupo y etiqueta.",
+    "behavior": [
+      "label se aplica al Form.Group y el resto de propiedades se entrega a Form.Input.",
+      "El consumidor proporciona value, onChange y los mensajes de validación."
+    ],
+    "example": "<FormTextInput label=\"Nombre\" name=\"name\" value={name} onChange={event => setName(event.target.value)} />"
+  },
+  "GalleryCard": {
+    "summary": "Tarjeta para componer imágenes y detalles de una galería.",
+    "behavior": [
+      "GalleryCard.Image, Details y Footer permiten componer las partes.",
+      "No carga una colección ni implementa por sí misma un visor de imágenes."
+    ],
+    "example": "<GalleryCard><GalleryCard.Image src=\"/imagen-local.svg\" alt=\"Ilustración\" /><GalleryCard.Footer>Imagen de prueba</GalleryCard.Footer></GalleryCard>"
+  },
+  "Grid": {
+    "summary": "Familia de filas y columnas para distribuir contenido.",
+    "behavior": [
+      "Compone Grid.Row y Grid.Col con children.",
+      "Grid.Col utiliza width y tamaños sm/md/lg/xl para establecer columnas en una cuadrícula de 12 unidades.",
+      "Grid.Row admite cards, deck y gutters para agrupar tarjetas y configurar la distribución; la apariencia final depende del CSS."
+    ],
+    "example": "<Grid.Row><Grid.Col width={12} lg={6}>Primera columna</Grid.Col><Grid.Col width={12} lg={6}>Segunda columna</Grid.Col></Grid.Row>"
+  },
+  "Header": {
+    "summary": "Encabezado con nivel semántico configurable.",
+    "behavior": [
+      "size selecciona el nivel y RootComponent permite personalizar el elemento raíz.",
+      "Header.H1 a Header.H6 proporcionan las variantes habituales."
+    ],
+    "example": "<Header size={2}>Título de sección</Header>"
+  },
+  "Icon": {
+    "summary": "Iconos de fuente y variantes de banderas o pagos.",
+    "behavior": [
+      "prefix=\"fe\" utiliza los iconos Feather incluidos en los estilos de la biblioteca.",
+      "name se combina con el prefijo para formar la clase; payment y flag seleccionan otras familias.",
+      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene."
+    ],
+    "example": "<Button type=\"button\" color=\"secondary\"><Icon name=\"download\" /> Descargar</Button>"
+  },
+  "LineChart": {
+    "summary": "Gráfico de líneas con categorías y formato configurados por el consumidor.",
+    "behavior": [
+      "lines es una lista de objetos name/data/color.",
+      "La implementación llama tooltipFormatter, yAxisFormatter y yAxisMinMax: proporciona esas funciones.",
+      "complete muestra ejes y leyenda. selectedOptions/getLegend describen las series visibles.",
+      "La carga de datos y los cambios de periodo corresponden al consumidor."
+    ],
+    "example": "<LineChart lines={[{ name: \"Cartera\", data: [10, 20], color: \"#3676c8\" }]}\n  height=\"280px\" complete xAxisData={[\"Ene\", \"Feb\"]}\n  selectedOptions={[\"Cartera\"]} getLegend={{ Cartera: true }}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={items => items.map(item => item.seriesName + \": \" + item.value).join(\"<br/>\")} />"
+  },
+  "List": {
+    "summary": "Lista con variantes de presentación.",
+    "behavior": [
+      "List.Item compone cada entrada; inline y unstyled cambian las clases visuales.",
+      "La propiedad histórica seperated se escribe así en esta API."
+    ],
+    "example": "<List unstyled><List.Item>Primera entrada</List.Item><List.Item>Segunda entrada</List.Item></List>"
+  },
+  "Loader": {
+    "summary": "Indicador de carga basado en los estilos de Tabler.",
+    "behavior": [
+      "Añade la clase loader y admite contenido y clases adicionales.",
+      "No consulta el progreso ni gestiona peticiones."
+    ],
+    "example": "<Loader />"
+  },
+  "LoaderNoData": {
+    "summary": "Zona que comunica la ausencia de datos.",
+    "behavior": [
+      "Configura title, height y backgroundColor para adaptar su apariencia.",
+      "El consumidor decide cuándo está realmente vacía la información."
+    ],
+    "example": "<LoaderNoData title=\"No hay registros\" height=\"240px\" />"
+  },
+  "LoaderZone": {
+    "summary": "Esqueleto de carga de una zona de contenido.",
+    "behavior": [
+      "Utiliza react-content-loader; width, height y colores ajustan el SVG.",
+      "Representa un estado visual, no inicia ni cancela la carga de datos."
+    ],
+    "example": "<LoaderZone width={600} height={240} title=\"Cargando información\" />"
+  },
+  "LoginPage": {
+    "summary": "Plantilla de acceso con campos email y password.",
+    "behavior": [
+      "Recibe values/errors y callbacks onChange, onBlur y onSubmit; strings personaliza los textos.",
+      "No autentica, almacena credenciales ni realiza llamadas a un servidor.",
+      "imageURL configura la imagen de la página contenedora."
+    ],
+    "example": "<LoginPage values={{ email: \"\", password: \"\" }} errors={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+  },
+  "Media": {
+    "summary": "Composición de una imagen u objeto junto a un cuerpo de contenido.",
+    "behavior": [
+      "Media.Object representa el elemento visual y Media.Body el contenido.",
+      "Media.Heading, List y ListItem proporcionan partes adicionales."
+    ],
+    "example": "<Media><Media.Object objectURL=\"/avatar-local.svg\" alt=\"Perfil\" /><Media.Body><Media.Heading>Equipo</Media.Heading>Descripción.</Media.Body></Media>"
+  },
+  "Modal": {
+    "summary": "Ventana de confirmación con estados de carga, éxito y error.",
+    "behavior": [
+      "El consumidor monta o desmonta el modal y gestiona sus callbacks. La implementación exportada no crea un portal ni un diálogo nativo.",
+      "show controla una clase CSS; la integración debe aportar el comportamiento y los estilos de visibilidad de .modal.show.",
+      "type=1 muestra aceptar; type=2 añade cancelar; type=3 añade eliminar y cancelar.",
+      "body=\"load\" muestra Spinner y oculta las acciones; error y ok muestran los iconos correspondientes. children se representa además del estado.",
+      "spin sustituye las acciones por indicadores de carga y noFooter elimina el pie.",
+      "La integración gestiona Escape, foco y cierre externo cuando sean necesarios."
+    ],
+    "example": "{open && <Modal show title=\"Confirmar\" type={2}\n  onClose={() => setOpen(false)}\n  onCancel={() => setOpen(false)}\n  onAccept={handleAccept}>\n  <p>Confirma la operación.</p>\n</Modal>}"
+  },
+  "ModalDoc": {
+    "summary": "Modal con una o varias secciones de documentación.",
+    "behavior": [
+      "items debe contener secciones con title, value y children.",
+      "pathname distinto de / excluye la sección cuyo value es features; debe quedar al menos una sección.",
+      "Con varias secciones utiliza Tabs; con una muestra una cabecera simple.",
+      "La integración decide el montaje, la visibilidad, el foco y el cierre mediante onClose/onAccept."
+    ],
+    "example": "<ModalDoc show pathname=\"/\" initialTab=\"Guía\" items={[{ title: \"Guía\", value: \"guide\", children: <p>Instrucciones.</p> }]} onClose={handleClose} onAccept={handleAccept} />"
+  },
+  "ModalSplash": {
+    "summary": "Pantalla visual con imagen y animación de carga.",
+    "behavior": [
+      "image define la imagen y alt su texto alternativo.",
+      "No contiene temporizador ni callback de cierre: la demo implementa esas acciones en su propio contenedor.",
+      "El consumidor decide cuándo montarla y retirarla."
+    ],
+    "example": "{loading && <ModalSplash image=\"/splash-local.svg\" alt=\"Cargando aplicación\" />}"
+  },
+  "Nav": {
+    "summary": "Navegación horizontal o vertical con elementos y submenús.",
+    "behavior": [
+      "Se puede componer con Nav.Item o construir desde itemsObjects.",
+      "Los submenús horizontales utilizan posicionamiento flotante; los verticales permanecen en el flujo.",
+      "Los destinos y el router pertenecen al consumidor; consulta los campos de Nav.Item para la composición elegida."
+    ],
+    "example": "<Nav vertical itemsObjects={[{ value: \"Datos\", to: \"#/datos\" }, { value: \"Más\", subItems: [{ value: \"Formulario\", to: \"#/formulario\" }] }]} />"
+  },
+  "NavBarMenu": {
+    "summary": "Menú principal con enlaces, estado activo y submenús.",
+    "behavior": [
+      "Requiere el contexto de React Router para determinar la ruta activa.",
+      "items contiene value, to, icon y opcionalmente subItems. LinkComponent=true utiliza el enlace del router.",
+      "rootIndex elige el segmento de ruta usado por la lógica de activación.",
+      "Los submenús se abren con el disparador y cierran por selección, Escape o clic fuera."
+    ],
+    "example": "<NavBarMenu items={[{ value: \"Inicio\", to: \"/\", icon: \"grid\", LinkComponent: true }, { value: \"Componentes\", icon: \"layers\", subItems: [{ value: \"Datos\", to: \"/datos\", LinkComponent: true }] }]} />"
+  },
+  "Notification": {
+    "summary": "Contenido de una notificación con avatar, mensaje y hora.",
+    "behavior": [
+      "message es el contenido principal y time un texto ya formateado.",
+      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación."
+    ],
+    "example": "<Notification message=\"Informe preparado\" time=\"Hace un momento\" />"
+  },
+  "OverlayLoading": {
+    "summary": "Utilidad que devuelve el HTML de un mensaje de carga para AG Grid.",
+    "behavior": [
+      "Devuelve una cadena HTML, no un nodo React.",
+      "El texto se concatena sin escapar: utiliza un mensaje controlado, no contenido HTML de usuarios.",
+      "Se puede pasar como overlayLoadingTemplate al wrapper."
+    ],
+    "example": "const template = OverlayLoading(\"Cargando datos...\");\n<AGGridTable AgGridReact={AgGridReact} overlayLoadingTemplate={template} dataColumn={columns} dataRow={rows} />",
+    "parameters": "OverlayLoading(text: string): string"
+  },
+  "Page": {
+    "summary": "Estructura general de página y familia de bloques de contenido.",
+    "behavior": [
+      "Page añade el contenedor .page; Page.Content ofrece título, subtítulo y zona de contenido.",
+      "La alineación, la altura y la barra lateral dependen de las clases de la hoja de estilos.",
+      "La demo utiliza sus propias reglas de layout para mantener la cabecera arriba."
+    ],
+    "example": "<Page><Page.Content title=\"Panel\" subTitle=\"Información de prueba\"><Card body=\"Contenido\" /></Page.Content></Page>"
+  },
+  "PricingCard": {
+    "summary": "Tarjeta de presentación de un plan o tarifa.",
+    "behavior": [
+      "category muestra el nombre y active añade un indicador visual.",
+      "Compone Price, AttributeList, AttributeItem y Button mediante children.",
+      "No calcula precios, procesa pagos ni realiza una contratación."
+    ],
+    "example": "<PricingCard category=\"Plan básico\" active><PricingCard.Price>10 €</PricingCard.Price><PricingCard.AttributeList><PricingCard.AttributeItem>Una característica</PricingCard.AttributeItem></PricingCard.AttributeList></PricingCard>"
+  },
+  "Profile": {
+    "summary": "Tarjeta de perfil con imagen, biografía y enlaces sociales.",
+    "behavior": [
+      "name, avatarURL, backgroundURL y bio configuran el contenido principal; children sirve como alternativa a bio.",
+      "La implementación incluye una acción social fija; twitterURL figura en la API pero no se utiliza para personalizar ese destino.",
+      "No carga ni modifica la cuenta."
+    ],
+    "example": "<Profile name=\"Equipo de prueba\" avatarURL=\"/avatar-local.svg\" bio=\"Perfil de demostración.\" />"
+  },
+  "Progress": {
+    "summary": "Contenedor de barras de progreso.",
+    "behavior": [
+      "Progress.Bar recibe width como porcentaje y color como variante visual.",
+      "El porcentaje debe calcularlo el consumidor; no se valida ni limita automáticamente a 0–100.",
+      "size modifica la altura mediante clases."
+    ],
+    "example": "<Progress size=\"sm\"><Progress.Bar width={65} color=\"green\" /></Progress>"
+  },
+  "ProgressCard": {
+    "summary": "Tarjeta con un valor y una barra de progreso.",
+    "behavior": [
+      "header y content muestran la información textual.",
+      "progressWidth es un porcentaje y progressColor el color de la barra.",
+      "El consumidor calcula y actualiza los valores."
+    ],
+    "example": "<ProgressCard header=\"Cobertura\" content=\"65%\" progressWidth={65} progressColor=\"green\" />"
+  },
+  "ProtectedRoute": {
+    "summary": "Protección visual de rutas mediante React Router.",
+    "behavior": [
+      "Si isAllowed es falso devuelve Navigate a redirectTo; replace decide si sustituye la entrada del historial.",
+      "Cuando se permite el acceso, representa children o un Outlet.",
+      "No sustituye la autorización en el servidor ni valida una sesión por sí mismo."
+    ],
+    "example": "<Route element={<ProtectedRoute isAllowed={canRead} redirectTo=\"/sin-acceso\" />}><Route path=\"datos\" element={<DataPage />} /></Route>"
+  },
+  "RegisterPage": {
+    "summary": "Plantilla de formulario para registrar una cuenta.",
+    "behavior": [
+      "Incluye nombre, email, contraseña y aceptación de condiciones.",
+      "El consumidor proporciona values, errors, touched y callbacks de formulario; strings personaliza los textos.",
+      "El helper heredado gestiona qué errores mostrar, pero no crea una cuenta ni realiza llamadas de red."
+    ],
+    "example": "<RegisterPage values={{ name: \"\", email: \"\", password: \"\", terms: false }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+  },
+  "RouterContextProvider": {
+    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "behavior": [
+      "Recibe location y llama callback(location) en componentDidMount.",
+      "Devuelve null: no dibuja contenido ni crea por sí mismo el contexto de un router.",
+      "No notifica automáticamente todos los cambios de ruta; si necesitas ese comportamiento, gestiona actualizaciones o el montaje desde el consumidor."
+    ],
+    "example": "<RouterContextProvider location={location} callback={current => console.log(current.pathname)} />"
+  },
+  "SearchBar": {
+    "summary": "Campo de búsqueda con un botón de acción.",
+    "behavior": [
+      "onKeyUp recibe el evento del campo; onClick se ejecuta sin argumentos al pulsar el botón.",
+      "No filtra datos internamente. Puede combinarse con useSearchBar.",
+      "Proporciona ambos callbacks, porque la implementación los invoca directamente."
+    ],
+    "example": "const { filter, handleChangeFilter } = useSearchBar();\n<SearchBar placeholder=\"Buscar...\" onKeyUp={handleChangeFilter} onClick={() => console.log(filter)} />"
+  },
+  "Site": {
+    "summary": "Familia de estructura global del sitio.",
+    "behavior": [
+      "Compone Site.Header, Site.Nav, Site.Wrapper y Site.Footer.",
+      "La cabecera puede incluir el control de navegación; onMenuToggleClick comunica el cambio al consumidor.",
+      "No define rutas ni decide por sí mismo qué usuario tiene acceso."
+    ],
+    "example": "<Site><Site.Header href=\"/\" imageURL=\"/logo-local.svg\" alt=\"Mi aplicación\" onMenuToggleClick={handleToggle} /><Site.Wrapper>Contenido del sitio.</Site.Wrapper></Site>"
+  },
+  "SocialNetworksList": {
+    "summary": "Lista de enlaces o acciones sociales.",
+    "behavior": [
+      "itemsObjects configura name, to, label, color y tooltip; items/children permiten composición manual.",
+      "prefix selecciona la familia de iconos disponible.",
+      "En la variante asButtons revisa cómo se enlazan los botones en tu aplicación; el componente no gestiona cuentas sociales."
+    ],
+    "example": "<SocialNetworksList prefix=\"fe\" itemsObjects={[{ name: \"mail\", to: \"mailto:equipo@example.com\", tooltip: \"Contacto\" }]} />"
+  },
+  "Stamp": {
+    "summary": "Insignia visual con icono o contenido.",
+    "behavior": [
+      "color y size seleccionan las clases visuales.",
+      "Se utiliza para destacar una cifra o una categoría; no contiene lógica de interacción."
+    ],
+    "example": "<Stamp color=\"blue\" icon=\"check\" size=\"md\" />"
+  },
+  "StampCard": {
+    "summary": "Tarjeta breve con insignia, cabecera y pie.",
+    "behavior": [
+      "icon/color configuran la insignia; header/footer muestran los textos.",
+      "children permite contenido adicional."
+    ],
+    "example": "<StampCard icon=\"file\" color=\"blue\" header=\"12 informes\" footer=\"Disponibles\" />"
+  },
+  "StandaloneFormPage": {
+    "summary": "Contenedor de página para formularios de cuenta.",
+    "behavior": [
+      "Envuelve children con el layout de formulario independiente.",
+      "imageURL y page personalizan la presentación; no realiza operaciones de cuenta."
+    ],
+    "example": "<StandaloneFormPage imageURL=\"/logo-local.svg\" page=\"login\"><FormCard title=\"Acceso\" buttonText=\"Entrar\"><FormTextInput name=\"email\" label=\"Email\" /></FormCard></StandaloneFormPage>"
+  },
+  "StatsCard": {
+    "summary": "Tarjeta de una cifra con variación porcentual.",
+    "behavior": [
+      "movement es una variación numérica; la implementación determina signo, icono y color.",
+      "total y label son textos ya preparados.",
+      "layout=2 permite incorporar chart en el fondo de la tarjeta."
+    ],
+    "example": "<StatsCard movement={4.2} total=\"1.200\" label=\"Registros\" layout={1} />"
+  },
+  "StoreCard": {
+    "summary": "Tarjeta visual de un producto con precio e imagen.",
+    "behavior": [
+      "title, subtitle, price e imgUrl configuran la presentación.",
+      "La implementación incluye un botón Add to cart sin callback de compra y no utiliza children para personalizarlo.",
+      "No añade artículos a una cesta ni procesa pedidos; esa integración requeriría adaptar el consumidor o el componente."
+    ],
+    "example": "<StoreCard title=\"Producto de prueba\" subtitle=\"Descripción\" price=\"12 €\" imgUrl=\"/producto-local.svg\" imgAlt=\"Producto\" />"
+  },
+  "Tab": {
+    "summary": "Panel de contenido identificado por un título.",
+    "behavior": [
+      "Se utiliza como hijo de Tabs o TabbedCard.",
+      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado."
+    ],
+    "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Contenido inicial.</Tab><Tab title=\"Detalle\">Contenido adicional.</Tab></Tabs>"
+  },
+  "TabbedCard": {
+    "summary": "Tarjeta con cabeceras de pestaña y estado interno.",
+    "behavior": [
+      "initialTab debe coincidir con el title de uno de sus hijos Tab.",
+      "Mantiene la selección dentro de una clase React y representa el panel correspondiente.",
+      "Es una alternativa de composición a Tabs."
+    ],
+    "example": "<TabbedCard initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel.</Tab><Tab title=\"Dos\">Segundo panel.</Tab></TabbedCard>"
+  },
+  "TabbedContainer": {
+    "summary": "Contenedor de paneles cuyo título coincide con una selección.",
+    "behavior": [
+      "selectedTitle lo controla el consumidor o un contenedor de pestañas.",
+      "Recibe hijos Tab; no dibuja por sí mismo la cabecera de selección."
+    ],
+    "example": "<TabbedContainer selectedTitle=\"Resumen\"><Tab title=\"Resumen\">Panel seleccionado.</Tab><Tab title=\"Detalle\">Otro panel.</Tab></TabbedContainer>"
+  },
+  "TabbedHeader": {
+    "summary": "Cabecera de pestañas controlada por el consumidor.",
+    "behavior": [
+      "Construye los disparadores a partir del title de cada hijo Tab.",
+      "stateCallback recibe el título seleccionado; selectedTitle define cuál aparece activo.",
+      "options incorpora controles adicionales; se combina con TabbedContainer para mostrar los paneles."
+    ],
+    "example": "<TabbedHeader selectedTitle={active} stateCallback={setActive}><Tab title=\"Uno\">Primer panel</Tab><Tab title=\"Dos\">Segundo panel</Tab></TabbedHeader>"
+  },
+  "Table": {
+    "summary": "Tabla HTML con estilos y subcomponentes de composición.",
+    "behavior": [
+      "Puedes componer Header, Body, Row, ColHeader y Col, o usar headeritems/bodyitems.",
+      "responsive añade un contenedor con desplazamiento horizontal local.",
+      "No incorpora búsqueda, ordenación ni paginación; esas funciones pertenecen al consumidor o a AGGridTable.",
+      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content."
+    ],
+    "example": "<Table responsive striped>\n  <Table.Header><Table.Row><Table.ColHeader>Nombre</Table.ColHeader></Table.Row></Table.Header>\n  <Table.Body><Table.Row><Table.Col>Atlas</Table.Col></Table.Row></Table.Body>\n</Table>"
+  },
+  "Tabs": {
+    "summary": "Conjunto de pestañas con selección interna y referencia pública.",
+    "behavior": [
+      "initialTab establece la selección inicial y debe coincidir con un title de Tab.",
+      "Cambiar initialTab después del montaje no sustituye el estado interno.",
+      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera."
+    ],
+    "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Datos generales.</Tab><Tab title=\"Histórico\">Evolución.</Tab></Tabs>"
+  },
+  "Tag": {
+    "summary": "Etiqueta con avatar, complementos y acción de retirada.",
+    "behavior": [
+      "Puede utilizarse como texto o enlace según RootComponent/link/href.",
+      "remove añade un control; onRemoveClick comunica la acción y el consumidor retira el elemento.",
+      "addOn y sus callbacks permiten una zona adicional dentro de la etiqueta."
+    ],
+    "example": "<Tag color=\"blue\" remove onRemoveClick={() => console.log(\"Retirar etiqueta\")}>Pendiente</Tag>"
+  },
+  "Text": {
+    "summary": "Texto con utilidades de color, tamaño y alineación.",
+    "behavior": [
+      "RootComponent permite adaptar el elemento raíz a su uso semántico.",
+      "Las opciones de transformación, espaciado y altura aplican clases; no modifican el contenido original."
+    ],
+    "example": "<Text color=\"muted\" size=\"sm\">Información complementaria.</Text>"
+  },
+  "Timeline": {
+    "summary": "Lista cronológica de eventos.",
+    "behavior": [
+      "Timeline.Item admite título, descripción, hora e insignia.",
+      "El consumidor ordena y proporciona los eventos; no existe carga automática ni cálculo de fechas."
+    ],
+    "example": "<Timeline><Timeline.Item title=\"Informe creado\" description=\"Datos disponibles\" time=\"10:30\" badgeColor=\"green\" /></Timeline>"
+  },
+  "Tooltip": {
+    "summary": "Ayuda flotante asociada a un elemento que admite referencia y eventos.",
+    "behavior": [
+      "children debe ser un único elemento capaz de recibir ref o rootRef y los eventos de interacción.",
+      "Se abre al pasar el ratón o recibir foco y se cierra con Escape o al perder esa interacción.",
+      "placement configura la posición preferida; Floating UI ajusta el resultado a los bordes y orienta la flecha.",
+      "content es el texto de ayuda. No debe contener información imprescindible que solo pueda conocerse al pasar el ratón.",
+      "La propiedad type aparece en las anotaciones heredadas, pero no se utiliza en la implementación actual."
+    ],
+    "example": "<Tooltip content=\"Descarga los datos visibles\" placement=\"top\"><Button type=\"button\" color=\"secondary\">Descargar</Button></Tooltip>",
+    "props": [
+      {
+        "name": "children",
+        "description": "Un único elemento React que permita conectar referencia y handlers de ratón/foco."
+      },
+      {
+        "name": "placement",
+        "description": "Posición preferida: top/bottom/left/right con start/end, o auto/auto-start/auto-end."
+      },
+      {
+        "name": "type",
+        "description": "Propiedad heredada sin efecto en la implementación actual."
+      }
+    ]
+  },
+  "useModal": {
+    "summary": "Hook que mantiene la apertura y el estado visual de un modal.",
+    "behavior": [
+      "Devuelve showModal y las funciones openModal/closeModal para controlar el montaje.",
+      "stateBody empieza en load y changeModal(value) lo modifica.",
+      "No renderiza el modal ni implementa un temporizador, una petición o una confirmación."
+    ],
+    "example": "const modal = useModal();\n<>\n  <Button type=\"button\" onClick={() => {\n    modal.changeModal(\"ready\");\n    modal.openModal();\n  }}>Abrir</Button>\n  {modal.showModal && <Modal show body={modal.stateBody}\n    onClose={modal.closeModal} onAccept={modal.closeModal}>\n    Contenido del modal.\n  </Modal>}\n</>",
+    "parameters": "useModal(): { showModal, stateBody, changeModal, openModal, closeModal }"
+  },
+  "useSearchBar": {
+    "summary": "Hook que almacena un filtro de texto normalizado.",
+    "behavior": [
+      "handleChangeFilter recibe un evento con target.value y elimina los espacios exteriores.",
+      "Una cadena vacía se convierte en undefined; setFilter permite cambiarlo directamente.",
+      "No consulta servidores ni filtra arrays por sí mismo."
+    ],
+    "example": "const { filter, handleChangeFilter, setFilter } = useSearchBar();\n<>\n  <input onChange={handleChangeFilter} placeholder=\"Buscar\" />\n  <Button type=\"button\" onClick={() => setFilter(undefined)}>Restablecer</Button>\n</>",
+    "parameters": "useSearchBar(): { filter, setFilter, handleChangeFilter }"
+  },
+  "useTabs": {
+    "summary": "Hook que devuelve un componente de pestañas y su selección.",
+    "behavior": [
+      "Devuelve Tabs y selectedTitle; al inicio selectedTitle es null y el contenedor utiliza initialTab.",
+      "Utiliza títulos únicos en los hijos Tab.",
+      "La identidad del componente devuelto depende de selectedTitle; evita asumir que conservará el estado interno de todos sus descendientes al cambiar de pestaña."
+    ],
+    "example": "const { Tabs: HookTabs, selectedTitle } = useTabs();\n<>\n  <HookTabs initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel</Tab><Tab title=\"Dos\">Segundo panel</Tab></HookTabs>\n  <p>Pestaña activa: {selectedTitle ?? \"Uno\"}</p>\n</>",
+    "parameters": "useTabs(): { Tabs, selectedTitle }"
+  },
+  "BarChartLoader": {
+    "summary": "Esqueleto SVG con forma de gráfico de barras.",
+    "behavior": [
+      "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+    ],
+    "example": "<BarChartLoader width={600} height={250} speed={2} />"
+  },
+  "PieChartLoader": {
+    "summary": "Esqueleto SVG con forma de gráfico circular.",
+    "behavior": [
+      "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+    ],
+    "example": "<PieChartLoader width={600} height={250} speed={2} />"
+  },
+  "TableLoader": {
+    "summary": "Esqueleto SVG con forma de tabla.",
+    "behavior": [
+      "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+    ],
+    "example": "<TableLoader width={600} height={250} speed={2} />"
+  },
+  "Spinner": {
+    "summary": "Indicador SVG animado de carga.",
+    "behavior": [
+      "width y height configuran el tamaño del SVG; sus valores predeterminados son 26.",
+      "La representación es visual. Añade un texto accesible que comunique el estado de la operación."
+    ],
+    "example": "<div role=\"status\"><Spinner width={32} height={32} /> Cargando…</div>"
+  },
+  "Success": {
+    "summary": "Icono SVG de operación correcta.",
+    "behavior": [
+      "width y height configuran el tamaño del SVG; sus valores predeterminados son 26.",
+      "La representación es visual. Añade un texto accesible que comunique el estado de la operación."
+    ],
+    "example": "<div role=\"status\"><Success width={32} height={32} /> Operación completada.</div>"
+  },
+  "Error": {
+    "summary": "Icono SVG de error.",
+    "behavior": [
+      "width y height configuran el tamaño del SVG; sus valores predeterminados son 26.",
+      "La representación es visual. Añade un texto accesible que comunique el estado de la operación."
+    ],
+    "example": "<div role=\"status\"><Error width={32} height={32} /> No se pudo completar la operación.</div>"
+  },
+  "Error400Page": {
+    "summary": "Plantilla visual para presentar un error 400.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error400Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "Error401Page": {
+    "summary": "Plantilla visual para presentar un error 401.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error401Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "Error403Page": {
+    "summary": "Plantilla visual para presentar un error 403.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error403Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "Error404Page": {
+    "summary": "Plantilla visual para presentar un error 404.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error404Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "Error500Page": {
+    "summary": "Plantilla visual para presentar un error 500.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error500Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "Error503Page": {
+    "summary": "Plantilla visual para presentar un error 503.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error503Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  },
+  "PieChart": {
+    "summary": "Gráfico circular con valores y nombres preparados por el consumidor.",
+    "behavior": [
+      "series contiene valores numéricos; seriesDataName y colors utilizan el mismo orden.",
+      "tooltipFormatter recibe los parámetros de ECharts. La leyenda y la descarga se configuran mediante las propiedades del wrapper.",
+      "La preparación de datos y la configuración modular del motor corresponden al consumidor."
+    ],
+    "example": "<PieChart series={[60, 40]} seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]} height=\"300px\" tooltipFormatter={item => item.name + \": \" + item.value} />"
+  },
+  "DoughnutChart": {
+    "summary": "Gráfico de anillo con valores y nombres preparados por el consumidor.",
+    "behavior": [
+      "series contiene valores numéricos; seriesDataName y colors utilizan el mismo orden.",
+      "tooltipFormatter recibe los parámetros de ECharts. La leyenda y la descarga se configuran mediante las propiedades del wrapper.",
+      "La preparación de datos y la configuración modular del motor corresponden al consumidor."
+    ],
+    "example": "<DoughnutChart series={[60, 40]} seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]} height=\"300px\" tooltipFormatter={item => item.name + \": \" + item.value} />"
+  },
+  "RadarChart": {
+    "summary": "Gráfico radial para comparar varias dimensiones.",
+    "behavior": [
+      "indicator contiene nombres y máximos de las dimensiones.",
+      "series es una lista de arrays de valores; cada array sigue el orden de indicator.",
+      "seriesDataName y colors identifican cada perfil; tooltipFormatter recibe los parámetros de ECharts."
+    ],
+    "example": "<RadarChart indicator={[{ name: \"Ambiental\", max: 100 }, { name: \"Social\", max: 100 }, { name: \"Gobierno\", max: 100 }]} series={[[80, 70, 90]]} seriesDataName={[\"Cartera\"]} colors={[\"#3676c8\"]} height=\"300px\" tooltipFormatter={item => item.name} />"
+  }
+}

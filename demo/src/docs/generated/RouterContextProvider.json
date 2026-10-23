@@ -1,0 +1,36 @@
+{
+  "name": "RouterContextProvider",
+  "kind": "Proveedor",
+  "source": "src/helpers/RouterContextProvider.react.js",
+  "implementation": "src/helpers/RouterContextProvider.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\ntype Props = {|\n  +location: Object,\n  +callback: (location: { pathname: string }) => void,\n|};\ntype State = {||};\n\nclass RouterContextProvider extends React.Component<Props, State> {\n  componentDidMount(): void {\n    const { callback, location } = this.props;\n    callback(location);\n  }\n\n  render(): React.Node {\n    return null;\n  }\n}\n\nexport default RouterContextProvider;\n",
+  "props": [
+    {
+      "name": "location",
+      "type": "Object",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "callback",
+      "type": "(location: { pathname: string }) => void",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "behavior": [
+      "Recibe location y llama callback(location) en componentDidMount.",
+      "Devuelve null: no dibuja contenido ni crea por sí mismo el contexto de un router.",
+      "No notifica automáticamente todos los cambios de ruta; si necesitas ese comportamiento, gestiona actualizaciones o el montaje desde el consumidor."
+    ],
+    "example": "<RouterContextProvider location={location} callback={current => console.log(current.pathname)} />"
+  }
+}

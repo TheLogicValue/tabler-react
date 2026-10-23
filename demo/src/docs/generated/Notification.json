@@ -1,0 +1,94 @@
+{
+  "name": "Notification",
+  "kind": "Componente",
+  "source": "src/components/Notification/index.js",
+  "implementation": "src/components/Notification/Notification.react.js",
+  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport { Avatar, Text } from \"../\";\nimport NotificationTray from \"./NotificationTray.react\";\n\nexport type Props = {|\n  /**\n   * The  avatar image URL\n   */\n  +avatarURL?: string,\n  /**\n   * The message displayed within the Notification\n   */\n  +message: React.Node,\n  /**\n   * The time displayed within the Notification\n   */\n  +time?: string,\n  /**\n   * Indicate the notification as unread\n   */\n  +unread?: boolean,\n|};\n\n/**\n * An individual Notification made up of an Avatar alongside some text and the time\n */\nfunction Notification({ avatarURL, message, time, unread }: Props): React.Node {\n  return (\n    <React.Fragment>\n      {avatarURL && (\n        <Avatar className=\"mr-3 align-self-center\" imageURL={avatarURL} />\n      )}\n      <div>\n        {message}\n        {time && (\n          <Text color=\"muted\" size=\"small\">\n            {time}\n          </Text>\n        )}\n      </div>\n    </React.Fragment>\n  );\n}\n\nNotification.Tray = NotificationTray;\n\nexport default Notification;\n",
+  "props": [
+    {
+      "name": "avatarURL",
+      "type": "string",
+      "optional": true,
+      "description": "The  avatar image URL"
+    },
+    {
+      "name": "message",
+      "type": "React.Node",
+      "optional": false,
+      "description": "The message displayed within the Notification"
+    },
+    {
+      "name": "time",
+      "type": "string",
+      "optional": true,
+      "description": "The time displayed within the Notification"
+    },
+    {
+      "name": "unread",
+      "type": "boolean",
+      "optional": true,
+      "description": "Indicate the notification as unread"
+    }
+  ],
+  "subcomponents": [
+    "Tray"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Tray",
+      "source": "src/components/Notification/NotificationTray.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ChildrenArray<React.Element<typeof Notification>>",
+          "optional": true,
+          "description": "Notification components"
+        },
+        {
+          "name": "notificationsObjects",
+          "type": "Array<NotificationProps>",
+          "optional": true,
+          "description": "An array containing objects of notification data"
+        },
+        {
+          "name": "unread",
+          "type": "boolean",
+          "optional": true,
+          "description": "Display a small red circle to symbolize that there are unread notifications"
+        },
+        {
+          "name": "markAllAsRead",
+          "type": "() => void",
+          "optional": true,
+          "description": "Action to run when the 'Mark All As Read' button is activated"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Notification.examples.md",
+      "source": "src/components/Notification/Notification.examples.md",
+      "markdown": "```jsx\n<div className=\"d-flex\">\n  <Notification\n    avatarURL=\"demo/faces/female/1.jpg\"\n    message={\n      <React.Fragment>\n        <strong>Alice</strong> started new task: Tabler UI design.\n      </React.Fragment>\n    }\n    time=\"1 hour ago\"\n  />\n</div>\n```\n"
+    },
+    {
+      "name": "NotificationTray.examples.md",
+      "source": "src/components/Notification/NotificationTray.examples.md",
+      "markdown": "```jsx\n<NotificationTray\n  notificationsObjects={[\n    {\n      avatarURL: \"demo/faces/male/41.jpg\",\n      message: (\n        <React.Fragment>\n          <strong>Nathan</strong> pushed new commit: Fix page load performance\n          issue.\n        </React.Fragment>\n      ),\n      time: \"10 minutes ago\",\n    },\n    {\n      avatarURL: \"demo/faces/female/1.jpg\",\n      message: (\n        <React.Fragment>\n          <strong>Alice</strong> started new task: Tabler UI design.\n        </React.Fragment>\n      ),\n      time: \"1 hour ago\",\n    },\n    {\n      avatarURL: \"demo/faces/female/18.jpg\",\n      message: (\n        <React.Fragment>\n          <strong>Rose</strong> deployed new version of NodeJS REST Api // V3\n        </React.Fragment>\n      ),\n      time: \"2 hours ago\",\n    },\n  ]}\n/>\n```\n\n```jsx\n<NotificationTray unread={true}>\n  <Notification\n    avatarURL=\"demo/faces/male/41.jpg\"\n    message={\n      <React.Fragment>\n        <strong>Nathan</strong> pushed new commit: Fix page load performance\n        issue.\n      </React.Fragment>\n    }\n    time=\"10 minutes ago\"\n  />\n  <Notification\n    avatarURL=\"demo/faces/female/1.jpg\"\n    message={\n      <React.Fragment>\n        <strong>Alice</strong> started new task: Tabler UI design.\n      </React.Fragment>\n    }\n    time=\"1 hour ago\"\n  />\n  <Notification\n    avatarURL=\"demo/faces/female/18.jpg\"\n    message={\n      <React.Fragment>\n        <strong>Rose</strong> deployed new version of NodeJS REST Api // V3\n      </React.Fragment>\n    }\n    time=\"2 hours ago\"\n  />\n</NotificationTray>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenido de una notificación con avatar, mensaje y hora.",
+    "behavior": [
+      "message es el contenido principal y time un texto ya formateado.",
+      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación."
+    ],
+    "example": "<Notification message=\"Informe preparado\" time=\"Hace un momento\" />"
+  }
+}

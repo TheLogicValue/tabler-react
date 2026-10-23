@@ -1,0 +1,59 @@
+{
+  "name": "ButtonModal",
+  "kind": "Componente",
+  "source": "src/components/Button/index.js",
+  "implementation": "src/components/Button/ButtonModal.js",
+  "implementationCode": "import * as React from \"react\"\nimport { Button, Spinner } from \"../\"\n\nconst ButtonModal = ({ text, onClick, color, spin = false, width, height }) => {\n    return spin ? <Spinner height={height} width={width} /> : <Button type=\"button\" onClick={onClick} square size=\"lg\" color={color}>\n        {text}\n    </Button>\n}\n\nexport default ButtonModal",
+  "props": [
+    {
+      "name": "text"
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "color"
+    },
+    {
+      "name": "spin",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "width"
+    },
+    {
+      "name": "height"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Button.examples.md",
+      "source": "src/components/Button/Button.examples.md",
+      "markdown": "### Root Component\n\nBy default a Button will render a <button>, you can change this with the RootComponent prop\n\n```jsx\n<Button.List>\n  <Button color=\"primary\">Button</Button>\n  <Button color=\"primary\" RootComponent=\"a\" href=\"#\">\n    Link\n  </Button>\n</Button.List>\n```\n\n### Button Variations\n\n```jsx\n<Button.List>\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n  <Button color=\"success\">color='success'</Button>\n  <Button color=\"info\">color='info'</Button>\n  <Button color=\"warning\">color='warning'</Button>\n  <Button color=\"danger\">color='danger'</Button>\n  <Button link>Link</Button>\n</Button.List>\n```\n\n### Disabled Buttons\n\n```jsx\n<Button.List>\n  <Button color=\"primary\" disabled>\n    Button\n  </Button>\n  <Button color=\"success\" disabled RootComponent=\"a\" href=\"#\">\n    Link\n  </Button>\n  <Button\n    color=\"info\"\n    disabled\n    RootComponent=\"input\"\n    type=\"button\"\n    value=\"Input\"\n  />\n</Button.List>\n```\n\n### Button Colors\n\n```jsx\n<Button.List>\n  <Button color=\"blue\">Blue</Button>\n  <Button color=\"azure\">Azure</Button>\n  <Button color=\"indigo\">Indigo</Button>\n  <Button color=\"purple\">Purple</Button>\n  <Button color=\"pink\">Pink</Button>\n  <Button color=\"red\">Red</Button>\n  <Button color=\"orange\">Orange</Button>\n  <Button color=\"yellow\">Yellow</Button>\n  <Button color=\"lime\">Lime</Button>\n  <Button color=\"green\">Green</Button>\n  <Button color=\"teal\">Teal</Button>\n  <Button color=\"cyan\">Cyan</Button>\n  <Button color=\"gray\">Gray</Button>\n  <Button color=\"gray-dark\">Dark gray</Button>\n</Button.List>\n```\n\n### Square Buttons\n\n```jsx\n<Button.List>\n  <Button square color=\"primary\">\n    color='primary'\n  </Button>\n  <Button square color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button square color=\"success\">\n    color='success'\n  </Button>\n  <Button square color=\"info\">\n    color='info'\n  </Button>\n  <Button square color=\"warning\">\n    color='warning'\n  </Button>\n  <Button square color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Pill Buttons\n\n```jsx\n<Button.List>\n  <Button pill color=\"primary\">\n    color='primary'\n  </Button>\n  <Button pill color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button pill color=\"success\">\n    color='success'\n  </Button>\n  <Button pill color=\"info\">\n    color='info'\n  </Button>\n  <Button pill color=\"warning\">\n    color='warning'\n  </Button>\n  <Button pill color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Outline Buttons\n\n```jsx\n<Button.List>\n  <Button outline color=\"primary\">\n    color='primary'\n  </Button>\n  <Button outline color=\"secondary\">\n    color='secondary'\n  </Button>\n  <Button outline color=\"success\">\n    color='success'\n  </Button>\n  <Button outline color=\"info\">\n    color='info'\n  </Button>\n  <Button outline color=\"warning\">\n    color='warning'\n  </Button>\n  <Button outline color=\"danger\">\n    color='danger'\n  </Button>\n</Button.List>\n```\n\n### Button Size\n\n```jsx\n<Button.List>\n  <Button size=\"sm\">Small</Button>\n  <Button>Default</Button>\n  <Button size=\"lg\">Button</Button>\n</Button.List>\n```\n\n### Block Level button\n\n```jsx\n<Button.List>\n  <Button block color=\"primary\">\n    Block level button\n  </Button>\n  <Button block color=\"secondary\">\n    Block level button\n  </Button>\n</Button.List>\n```\n\n### Button with icon\n\n```jsx\n<Button.List>\n  <Button color=\"dark\" icon=\"upload\">\n    Upload\n  </Button>\n  <Button icon=\"heart\" color=\"warning\">\n    I Like\n  </Button>\n  <Button icon=\"check\" color=\"success\">\n    I agree\n  </Button>\n  <Button icon=\"plus\" color=\"primary\" outline>\n    More\n  </Button>\n  <Button icon=\"link\" color=\"danger\">\n    Link\n  </Button>\n  <Button icon=\"message-circle\" color=\"info\">\n    Comment\n  </Button>\n</Button.List>\n```\n\n### Social Buttons\n\n```jsx\n<Button.List>\n  <Button social=\"facebook\">Facebook</Button>\n  <Button social=\"twitter\">Twitter</Button>\n  <Button social=\"google\">Google</Button>\n  <Button social=\"youtube\">Youtube</Button>\n  <Button social=\"vimeo\">Vimeo</Button>\n  <Button social=\"dribbble\">Dribbble</Button>\n  <Button social=\"github\">Github</Button>\n  <Button social=\"instagram\">Instagram</Button>\n  <Button social=\"pinterest\">Pinterest</Button>\n  <Button social=\"vk\">VKontakte</Button>\n  <Button social=\"rss\">RSS</Button>\n  <Button social=\"flickr\">Flickr</Button>\n  <Button social=\"bitbucket\">Bitbucket</Button>\n</Button.List>\n```\n\n### Icon Buttons\n\n```jsx\n<Button.List>\n  <Button social=\"facebook\" />\n  <Button social=\"github\" />\n  <Button color=\"primary\" icon=\"activity\" />\n  <Button color=\"success\" icon=\"bell\" />\n  <Button color=\"warning\" icon=\"star\" />\n  <Button color=\"danger\" icon=\"trash\" />\n  <Button color=\"purple\" icon=\"bar-chart\" />\n  <Button color=\"secondary\" icon=\"git-merge\" />\n</Button.List>\n```\n\n### Button Dropdown\n\n```jsx\n<Button.List>\n  <Dropdown\n    type=\"button\"\n    toggle\n    color=\"secondary\"\n    icon=\"calendar\"\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n  <Dropdown\n    value=\"Show Calendar\"\n    color=\"secondary\"\n    icon=\"calendar\"\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n  <Dropdown\n    value=\"Show Calendar\"\n    color=\"primary\"\n    toggle\n    items={[\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n      <Dropdown.Item>Dropdown Link</Dropdown.Item>,\n    ]}\n  />\n</Button.List>\n```\n\n### Loading Buttons\n\n```jsx\n<Button.List>\n  <Button loading color=\"primary\">\n    Button text\n  </Button>\n  <Button loading color=\"success\" icon=\"check\" />\n  <Button loading color=\"warning\" size=\"sm\">\n    Button text\n  </Button>\n  <Button loading color=\"danger\" size=\"lg\">\n    Button text\n  </Button>\n  <Button loading color=\"secondary\" block>\n    Button text\n  </Button>\n</Button.List>\n```\n"
+    },
+    {
+      "name": "ButtonDropdown.examples.md",
+      "source": "src/components/Button/ButtonDropdown.examples.md",
+      "markdown": "```jsx\n<Button.Dropdown value=\"A Button\">\n  <Dropdown.Item>News</Dropdown.Item>\n  <Dropdown.Item>Messages</Dropdown.Item>\n  <Dropdown.ItemDivider />\n  <Dropdown.Item>Edit Profile</Dropdown.Item>\n</Button.Dropdown>\n```\n"
+    },
+    {
+      "name": "ButtonList.examples.md",
+      "source": "src/components/Button/ButtonList.examples.md",
+      "markdown": "```jsx\n<Button.List>\n  <Button color=\"success\">Save changes</Button>\n  <Button color=\"secondary\">Save and continue</Button>\n  <Button color=\"danger\">Cancel</Button>\n</Button.List>\n```\n\nIf the list is very long, it will automatically wrap on multiple lines,\nwhile keeping all buttons evenly spaced.\n\n```jsx\n<Button.List>\n  <Button color=\"secondary\">One</Button>\n  <Button color=\"secondary\">Two</Button>\n  <Button color=\"secondary\">Three</Button>\n  <Button color=\"secondary\">Four</Button>\n  <Button color=\"secondary\">Five</Button>\n  <Button color=\"secondary\">Six</Button>\n  <Button color=\"secondary\">Seven</Button>\n  <Button color=\"secondary\">Eight</Button>\n  <Button color=\"secondary\">Nine</Button>\n  <Button color=\"secondary\">Ten</Button>\n  <Button color=\"secondary\">Eleven</Button>\n  <Button color=\"secondary\">Twelve</Button>\n  <Button color=\"secondary\">Thirteen</Button>\n  <Button color=\"secondary\">Fourteen</Button>\n  <Button color=\"secondary\">Fifteen</Button>\n  <Button color=\"secondary\">Sixteen</Button>\n  <Button color=\"secondary\">Seventeen</Button>\n  <Button color=\"secondary\">Eighteen</Button>\n  <Button color=\"secondary\">Nineteen</Button>\n</Button.List>\n```\n\n### List Buttons Alignment\n\n```jsx\n<Button.List align=\"center\">\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n</Button.List>\n```\n\n```jsx\n<Button.List align=\"right\">\n  <Button color=\"primary\">color='primary'</Button>\n  <Button color=\"secondary\">color='secondary'</Button>\n</Button.List>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Acción de un modal que se sustituye por un spinner al cargar.",
+    "behavior": [
+      "text es el contenido del botón y onClick la acción.",
+      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner."
+    ],
+    "example": "<ButtonModal text=\"Guardar\" color=\"primary\" spin={false} onClick={() => console.log(\"Guardar\")} />"
+  }
+}

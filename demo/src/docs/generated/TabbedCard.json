@@ -1,0 +1,42 @@
+{
+  "name": "TabbedCard",
+  "kind": "Componente",
+  "source": "src/components/TabbedCard/index.js",
+  "implementation": "src/components/TabbedCard/TabbedCard.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport { TabbedContainer, TabbedHeader, Tab } from \"../Tabs\";\n\ntype Props = {|\n  +initialTab: string,\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n|};\n\ntype State = {|\n  selectedTitle: string,\n|};\n\nclass TabbedCard extends React.PureComponent<Props, State> {\n  state = {\n    selectedTitle: this.props.initialTab,\n  };\n\n  render(): React.Node {\n    const { children } = this.props;\n    const { selectedTitle } = this.state;\n    return (\n      <Card>\n        <Card.Header>\n          <TabbedHeader\n            selectedTitle={selectedTitle}\n            stateCallback={newTitle =>\n              this.setState({ selectedTitle: newTitle })\n            }\n          >\n            {children}\n          </TabbedHeader>\n        </Card.Header>\n        <Card.Body>\n          <TabbedContainer selectedTitle={selectedTitle}>\n            {children}\n          </TabbedContainer>\n        </Card.Body>\n      </Card>\n    );\n  }\n}\n\nexport default TabbedCard;\n",
+  "props": [
+    {
+      "name": "initialTab",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "TabbedCard.examples.md",
+      "source": "src/components/TabbedCard/TabbedCard.examples.md",
+      "markdown": "```jsx\n<TabbedCard initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</TabbedCard>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta con cabeceras de pestaña y estado interno.",
+    "behavior": [
+      "initialTab debe coincidir con el title de uno de sus hijos Tab.",
+      "Mantiene la selección dentro de una clase React y representa el panel correspondiente.",
+      "Es una alternativa de composición a Tabs."
+    ],
+    "example": "<TabbedCard initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel.</Tab><Tab title=\"Dos\">Segundo panel.</Tab></TabbedCard>"
+  }
+}

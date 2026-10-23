@@ -1,0 +1,268 @@
+{
+  "name": "Tag",
+  "kind": "Componente",
+  "source": "src/components/Tag/index.js",
+  "implementation": "src/components/Tag/Tag.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport TagList from \"./TagList.react\";\nimport TagAddOn from \"./TagAddOn.react\";\n\nimport type { MouseEvents, PointerEvents, FocusEvents } from \"../../\";\n\ntype PropsForAll = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  ...FocusEvents,\n  +rootRef?: (?HTMLElement) => void,\n  +\"aria-describedby\"?: string,\n  +children?: React.Node,\n  +className?: string,\n  +rounded?: boolean,\n  +color?: string,\n  +avatar?: string,\n  +remove?: boolean,\n  +onRemoveClick?: Function,\n  +addOn?: React.Node,\n  +addOnIcon?: string,\n  +addOnColor?: string,\n  +onAddOnClick?: Function,\n|};\n\ntype DefaultProps = {|\n  ...PropsForAll,\n|};\n\ntype LinkComponentProps = {|\n  ...PropsForAll,\n  +link: true,\n  +href: string,\n|};\n\ntype ReactRouterProps = {|\n  ...PropsForAll,\n  +RootComponent: React.ElementType,\n  +to: string,\n|};\n\ntype Props = DefaultProps | LinkComponentProps | ReactRouterProps;\n\ntype State = {|\n  isDeleted: boolean,\n|};\n\nclass Tag extends React.Component<Props, State> {\n  state = {\n    isDeleted: false,\n  };\n\n  static List = TagList;\n  static AddOn = TagAddOn;\n\n  handleOnRemoveClick = (): void => {\n    this.setState(s => ({\n      isDeleted: true,\n    }));\n  };\n\n  render(): React.Node {\n    const {\n      children,\n      className,\n      rounded,\n      color = \"\",\n      avatar,\n      remove,\n      addOn,\n      addOnIcon,\n      addOnColor,\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n      onFocus,\n      onBlur,\n      onRemoveClick,\n      onAddOnClick,\n    } = this.props;\n\n    const classes = cn(\n      {\n        tag: true,\n        expanded: true,\n        \"tag-rounded\": rounded,\n        [`tag-${color}`]: color,\n      },\n      className\n    );\n\n    const eventProps = {\n      ref: this.props.rootRef,\n      \"aria-describedby\": this.props[\"aria-describedby\"],\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n      onFocus,\n      onBlur,\n    };\n\n    if (this.state.isDeleted) {\n      return null;\n    }\n\n    const childrenForAll = (\n      <React.Fragment>\n        {avatar && (\n          <span\n            className=\"tag-avatar avatar\"\n            style={{ backgroundImage: `url(${avatar})` }}\n          />\n        )}\n        {children}\n        {(addOn || addOnIcon) && (\n          <TagAddOn icon={addOnIcon} color={addOnColor} onClick={onAddOnClick}>\n            {addOn}\n          </TagAddOn>\n        )}\n        {remove && onRemoveClick ? (\n          <TagAddOn onClick={onRemoveClick} link icon=\"x\" />\n        ) : (\n          remove && (\n            <TagAddOn onClick={this.handleOnRemoveClick} link icon=\"x\" />\n          )\n        )}\n      </React.Fragment>\n    );\n\n    if (this.props.RootComponent) {\n      const { to } = this.props;\n      return (\n        <React.Component className={classes} to={to} {...eventProps}>\n          {childrenForAll}\n        </React.Component>\n      );\n    }\n\n    if (this.props.link) {\n      const { href } = this.props;\n      return (\n        <a className={classes} href={href} {...eventProps}>\n          {childrenForAll}\n        </a>\n      );\n    }\n\n    return (\n      <span className={classes} {...eventProps}>\n        {childrenForAll}\n      </span>\n    );\n  }\n}\n\nexport default Tag;\n",
+  "props": [
+    {
+      "name": "rootRef",
+      "type": "(?HTMLElement) => void",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "aria-describedby",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "avatar",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "remove",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onRemoveClick",
+      "type": "Function",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "addOn",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "addOnIcon",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "addOnColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onAddOnClick",
+      "type": "Function",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "link",
+      "type": "true",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "RootComponent",
+      "type": "React.ElementType",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "to",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "onMouseEnter"
+    },
+    {
+      "name": "onMouseLeave"
+    },
+    {
+      "name": "onPointerEnter"
+    },
+    {
+      "name": "onPointerLeave"
+    },
+    {
+      "name": "onFocus"
+    },
+    {
+      "name": "onBlur"
+    }
+  ],
+  "subcomponents": [
+    "List",
+    "AddOn"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "List",
+      "source": "src/components/Tag/TagList.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "AddOn",
+      "source": "src/components/Tag/TagAddOn.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "link",
+          "type": "true",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "onClick"
+        },
+        {
+          "name": "onMouseEnter"
+        },
+        {
+          "name": "onMouseLeave"
+        },
+        {
+          "name": "onPointerEnter"
+        },
+        {
+          "name": "onPointerLeave"
+        },
+        {
+          "name": "onFocus"
+        },
+        {
+          "name": "onBlur"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Tag.examples.md",
+      "source": "src/components/Tag/Tag.examples.md",
+      "markdown": "```jsx\n<Tag.List>\n  <Tag>First tag</Tag>\n  <Tag>Second tag</Tag>\n  <Tag>Third tag</Tag>\n</Tag.List>\n```\n\n### Link tag\n\n```jsx\n<Tag.List>\n  <Tag link href=\"\">\n    First tag\n  </Tag>\n  <Tag link href=\"\">\n    Second tag\n  </Tag>\n  <Tag link href=\"\">\n    Third tag\n  </Tag>\n</Tag.List>\n```\n\n### Rounded tag\n\n```jsx\n<Tag.List>\n  <Tag rounded>First tag</Tag>\n  <Tag rounded>Second tag</Tag>\n  <Tag rounded>Third tag</Tag>\n</Tag.List>\n```\n\n### Color tag\n\n```jsx\n<Tag.List>\n  <Tag color=\"blue\">Blue</Tag>\n  <Tag color=\"azure\">Azure</Tag>\n  <Tag color=\"indigo\">Indigo</Tag>\n  <Tag color=\"purple\">Purple</Tag>\n  <Tag color=\"pink\">Pink</Tag>\n  <Tag color=\"red\">red</Tag>\n  <Tag color=\"orange\">Orange</Tag>\n  <Tag color=\"yellow\">Yellow</Tag>\n  <Tag color=\"lime\">Lime</Tag>\n</Tag.List>\n```\n\n### Avatar tag\n\n```jsx\n<Tag.List>\n  <Tag avatar=\"/demo/faces/female/16.jpg\">Victoria</Tag>\n  <Tag avatar=\"/demo/faces/male/41.jpg\">Nathan</Tag>\n  <Tag avatar=\"/demo/faces/female/1.jpg\">Alice</Tag>\n  <Tag avatar=\"/demo/faces/female/18.jpg\">Rose</Tag>\n  <Tag avatar=\"/demo/faces/male/16.jpg\">Peter</Tag>\n  <Tag avatar=\"/demo/faces/male/26.jpg\">Wayne</Tag>\n  <Tag avatar=\"/demo/faces/female/7.jpg\">Michelle</Tag>\n  <Tag avatar=\"/demo/faces/female/17.jpg\">Debra</Tag>\n</Tag.List>\n```\n\n### Tag remove\n\nAdds an 'x' onthe right side of the Tag\n\n```jsx\n<Tag.List>\n  <Tag remove>First tag</Tag>\n  <Tag remove>Second tag</Tag>\n  <Tag remove>Third tag</Tag>\n  <Tag remove>Fourth tag</Tag>\n</Tag.List>\n```\n"
+    },
+    {
+      "name": "TagAddOn.examples.md",
+      "source": "src/components/Tag/TagAddOn.examples.md",
+      "markdown": "```jsx\n<Tag.List>\n  <Tag addOn={<Icon name=\"user\" />}>A User</Tag>\n  <Tag color=\"danger\" addOnIcon=\"activity\">\n    NPM\n  </Tag>\n  <Tag addOn=\"passing\" addOnColor=\"success\">\n    tests\n  </Tag>\n  <Tag color=\"dark\" addOn=\"1kb\" addOnColor=\"warning\">\n    CSS gzip size\n  </Tag>\n</Tag.List>\n```\n"
+    },
+    {
+      "name": "TagList.examples.md",
+      "source": "src/components/Tag/TagList.examples.md",
+      "markdown": "```jsx\n<Tag.List>\n  <Tag>First tag</Tag>\n  <Tag>Second tag</Tag>\n  <Tag>Third tag</Tag>\n</Tag.List>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Etiqueta con avatar, complementos y acción de retirada.",
+    "behavior": [
+      "Puede utilizarse como texto o enlace según RootComponent/link/href.",
+      "remove añade un control; onRemoveClick comunica la acción y el consumidor retira el elemento.",
+      "addOn y sus callbacks permiten una zona adicional dentro de la etiqueta."
+    ],
+    "example": "<Tag color=\"blue\" remove onRemoveClick={() => console.log(\"Retirar etiqueta\")}>Pendiente</Tag>"
+  }
+}

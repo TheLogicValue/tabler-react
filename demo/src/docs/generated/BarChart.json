@@ -1,0 +1,138 @@
+{
+  "name": "BarChart",
+  "kind": "Componente",
+  "source": "src/components/Chart/index.js",
+  "implementation": "src/components/Chart/BarChart.js",
+  "implementationCode": "import React from 'react'\nimport ReactECharts from 'echarts-for-react'\n\nexport default function BarChart ({\n    title = \"\",\n    type = \"vertical\",\n    height = \"18.75rem\",\n    paddingBottom = null,\n    legend = true,\n    colors,\n    complete,\n    rotateX,\n    //series\n    series,\n    seriesName,\n    //download\n    downloadName = \"Export\",\n    downloadTitle = \"\",\n    download = false,\n    //Methods    \n    tooltipFormatter,\n    yAxisFormatter,\n    xAxisFormatter,\n    yAxisMinMax,\n    xAxisMinMax,\n    //data Axis\n    xAxisData,\n    yAxisData,\n    //config series\n    stack = null,\n    decal = null,\n    seriesShowBackground = true,\n    backgroundStyleColor = 'rgba(180, 180, 180, 0.2)'\n}) {\n\n    const xAxis = () => {\n        let xAxis = {\n            type: type === \"vertical\" ? \"category\" : \"value\",\n            data: xAxisData\n        }\n        if (type === \"vertical\") {\n            xAxis.axisLabel = { rotate: rotateX, verticalAlign: \"top\", fontSize: 9, interval: 0 }\n        }\n        if (type !== \"vertical\") {\n            xAxis.boundaryGap = [0, 0.01]\n            xAxis.axisLabel = { formatter: (item) => xAxisFormatter(item) }\n            xAxis.max = (value) => xAxisMinMax(value, \"max\")\n            xAxis.min = (value) => xAxisMinMax(value, \"min\")\n        }\n        return xAxis\n    }\n\n    const yAxis = () => {\n        let yAxis = {\n            type: type === \"vertical\" ? \"value\" : \"category\",\n            data: yAxisData\n        }\n        if (type === \"vertical\") {\n            yAxis.show = complete\n            yAxis.axisLabel = { formatter: (item) => yAxisFormatter(item) }\n            yAxis.max = (value) => yAxisMinMax(value, \"max\")\n            yAxis.min = (value) => yAxisMinMax(value, \"min\")\n        }\n        return yAxis\n    }\n\n    const grid = () => {\n        let verticalGrid = {\n            top: complete == true ? 30 : 10,\n            bottom: complete == true ? 70 : 0,\n            left: complete == true ? 60 : 0,\n            right: complete == true ? 60 : 0,\n        }\n        let horizontalGrid = {\n            left: '3%',\n            right: '4%',\n            top: '5%',\n            bottom: '25%',\n            containLabel: true\n        }\n        return type === \"vertical\" ? verticalGrid : horizontalGrid\n    }\n\n    const serie = () => {\n        return series.map((item, i) => {\n\n            let ser = {\n                type: 'bar',\n                color: colors[i],\n                name: (!stack) ? seriesName[i] : item,\n                data: (!stack) ? item : seriesName[i],\n                stack: stack,\n                showBackground: seriesShowBackground,\n                backgoundStyle: { color: backgroundStyleColor },\n              \n            }\n\n            if(decal) {\n                ser.itemStyle = {\n                    decal: {\n                        show: seriesName[i] != \"Fondo\",\n                        color: 'white',\n                        rotation: 0.5,\n                        dashArrayX: [1, 0],\n                        dashArrayY: [2, 5],\n                        symbolSize: 0.5\n                    }\n                }\n                if(seriesName[i] == \"Fondo\") ser.itemStyle.decal.symbol = \"none\"\n            }\n\n            return ser\n        })\n    }\n\n    const option = {\n        title: { text: title, left: 'center' },\n        toolbox: {\n            feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }\n        },\n        legend: { show: legend, bottom: \"0rem\", symbol: null },\n        tooltip: {\n            trigger: 'item',\n            axisPointer: { type: 'shadow' },\n            formatter: (item) => tooltipFormatter(item)\n        },\n        xAxis: xAxis(),\n        yAxis: yAxis(),\n        grid: grid(),\n        series: serie()\n    }\n\n    const style = () => {\n        let style = { height: height }\n        if (paddingBottom) style.paddingBottom = paddingBottom\n        return style\n    }\n\n    return <ReactECharts className={'charts-complete-' + complete} option={option} style={style()} />\n}\n",
+  "props": [
+    {
+      "name": "title",
+      "default": "\"\"",
+      "optional": true
+    },
+    {
+      "name": "type",
+      "default": "\"vertical\"",
+      "optional": true
+    },
+    {
+      "name": "height",
+      "default": "\"18.75rem\"",
+      "optional": true
+    },
+    {
+      "name": "paddingBottom",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "legend",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "colors"
+    },
+    {
+      "name": "complete"
+    },
+    {
+      "name": "rotateX"
+    },
+    {
+      "name": "series"
+    },
+    {
+      "name": "seriesName"
+    },
+    {
+      "name": "downloadName",
+      "default": "\"Export\"",
+      "optional": true
+    },
+    {
+      "name": "downloadTitle",
+      "default": "\"\"",
+      "optional": true
+    },
+    {
+      "name": "download",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "tooltipFormatter"
+    },
+    {
+      "name": "yAxisFormatter"
+    },
+    {
+      "name": "xAxisFormatter"
+    },
+    {
+      "name": "yAxisMinMax"
+    },
+    {
+      "name": "xAxisMinMax"
+    },
+    {
+      "name": "xAxisData"
+    },
+    {
+      "name": "yAxisData"
+    },
+    {
+      "name": "stack",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "decal",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "seriesShowBackground",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "backgroundStyleColor",
+      "default": "'rgba(180, 180, 180, 0.2)'",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [
+    {
+      "name": "echarts",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^6.0.0",
+      "libraryVersion": "6.1.0",
+      "demoVersion": "6.1.0",
+      "demoRange": "6.1.0"
+    },
+    {
+      "name": "echarts-for-react",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^3.0.2",
+      "libraryVersion": "3.0.6",
+      "demoVersion": "3.0.6",
+      "demoRange": "3.0.6"
+    }
+  ],
+  "guide": {
+    "summary": "Gráfico de barras construido sobre ECharts.",
+    "behavior": [
+      "series contiene un array de valores por serie y seriesName los nombres en el mismo orden; colors debe cubrir las series.",
+      "type determina si se utilizan las categorías en el eje horizontal o vertical.",
+      "Proporciona los formatters y funciones de límites que llama la implementación; el consumidor prepara las unidades y las escalas.",
+      "El ejemplo ilustra barras sin stack. Con stack cambia la interpretación de series y seriesName; consulta la implementación antes de activarlo."
+    ],
+    "example": "<BarChart series={[[12, 18, 24]]} seriesName={[\"Cartera\"]}\n  colors={[\"#3676c8\"]} xAxisData={[\"Ene\", \"Feb\", \"Mar\"]}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={item => item.name + \": \" + item.value}\n  height=\"300px\" />"
+  }
+}

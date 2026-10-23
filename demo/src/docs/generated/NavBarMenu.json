@@ -1,0 +1,33 @@
+{
+  "name": "NavBarMenu",
+  "kind": "Componente",
+  "source": "src/components/NavBar/index.js",
+  "implementation": "src/components/NavBar/NavBarMenu.js",
+  "implementationCode": "import React from \"react\"\nimport Icon from \"../Icon\"\nimport NavBarItem from \"./NavBarItem\"\nimport NavBarDropDown from \"./NavBarDropDown\"\nimport cn from \"classnames\"\n\nexport default function NavBarMenu({ items, rootIndex = 0 }) {\n    return (\n        <ul className=\"nav nav-tabs border-0 flex-column flex-lg-row\">\n            {items.map(item => {\n                const classes = cn(\"nav-item\", item.className)\n                return (\n                    <li className={classes} key={item.value}>\n                        {item.subItems ? <NavBarDropDown submenus={item.subItems} value={item.value} icon={item.icon}/>\n                            : <NavBarItem\n                                rootIndex={rootIndex}\n                                LinkComponent={item.LinkComponent}\n                                className={item.className}\n                                to={item.to}\n                                menuItem={true}\n                                onClick={item.onClick}\n                            >\n                                <Icon name={item.icon} />{item.value}\n                            </NavBarItem>\n                        }\n                    </li>\n                )\n            })}\n        </ul>\n    )\n}",
+  "props": [
+    {
+      "name": "items"
+    },
+    {
+      "name": "rootIndex",
+      "default": "0",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Menú principal con enlaces, estado activo y submenús.",
+    "behavior": [
+      "Requiere el contexto de React Router para determinar la ruta activa.",
+      "items contiene value, to, icon y opcionalmente subItems. LinkComponent=true utiliza el enlace del router.",
+      "rootIndex elige el segmento de ruta usado por la lógica de activación.",
+      "Los submenús se abren con el disparador y cierran por selección, Escape o clic fuera."
+    ],
+    "example": "<NavBarMenu items={[{ value: \"Inicio\", to: \"/\", icon: \"grid\", LinkComponent: true }, { value: \"Componentes\", icon: \"layers\", subItems: [{ value: \"Datos\", to: \"/datos\", LinkComponent: true }] }]} />"
+  }
+}

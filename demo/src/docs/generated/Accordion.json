@@ -1,0 +1,34 @@
+{
+  "name": "Accordion",
+  "kind": "Componente",
+  "source": "src/components/Accordion/index.js",
+  "implementation": "src/components/Accordion/Accordion.react.js",
+  "implementationCode": "import React, {  useState  } from 'react';\nimport \"./Accordion.css\";\n\nexport default function Accordion({children, accordionButton, collapseDefault = true}) {    \n    const [collapse, setCollapse] = useState(collapseDefault);\n\n    return (\n        <div className=\"accordion-item\">\n            <h2 className=\"accordion-header\">\n                <button type=\"button\" className={collapse ? \"accordion-button\" : \"accordion-button collapseBtn\"} onClick={() => setCollapse((collapse) ? false : true)}>{accordionButton}</button>\n            </h2>\n            <div className={collapse ? \"accordion-collapse collapse\" : \"accordion-collapse collapse show\" }>\n                <div className=\"accordion-body\">{children}</div>\n            </div>\n        </div>\n    )\n}",
+  "props": [
+    {
+      "name": "children"
+    },
+    {
+      "name": "accordionButton"
+    },
+    {
+      "name": "collapseDefault",
+      "default": "true",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenido desplegable con un botón de cabecera.",
+    "behavior": [
+      "accordionButton define el texto del disparador y children el contenido.",
+      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial."
+    ],
+    "example": "<Accordion accordionButton=\"Ver detalles\"><p>Contenido ampliado.</p></Accordion>"
+  }
+}

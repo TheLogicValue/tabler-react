@@ -80,6 +80,7 @@ Los scripts y configuraciones conservados tienen estas funciones:
 - `scripts/test-react18.mjs`: empaqueta la biblioteca y ejecuta las pruebas en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
 - `demo/scripts/scan-usage.mjs`: regenera manualmente el inventario de componentes a partir de un consumidor; su comando se muestra en la sección de la demo.
 - `demo/scripts/scan-exports.mjs`: genera el catálogo completo de exports públicos de la biblioteca para la cobertura de la demo; `--check` comprueba que está actualizado.
+- `demo/scripts/generate-docs.mjs` y `demo/scripts/docs-source.mjs`: generan y comprueban las fichas de documentación a partir de las guías y la API de las fuentes.
 - `scripts/runflow` y `.flowconfig`: soporte opcional de Flow, separado de las comprobaciones habituales. No se considera una validación automática de tipos.
 - `.editorconfig` y `.gitignore`: formato de archivos y exclusiones del repositorio. El `.npmrc` de desarrollo se mantiene versionado deliberadamente.
 
@@ -144,14 +145,15 @@ npm --prefix demo run preview
 Las vistas de la demo permiten probar:
 
 - **Resumen:** Page, Grid, Card, Text, Icon y navegación con NavBarMenu.
-- **Menú principal:** NavBarMenu muestra «Resumen», el desplegable «Componentes» y los enlaces directos «Gráficos y estados» y «Cobertura de componentes». Abre «Componentes» con ratón, Intro o Espacio; selecciona una página y comprueba el enlace activo, Escape y clic fuera. El submenú utiliza el mismo posicionamiento de Floating UI que Dropdown.
+- **Menú principal:** NavBarMenu muestra «Resumen», el desplegable «Componentes» y los enlaces directos «Gráficos y estados», «Documentación» y «Cobertura de componentes». Abre «Componentes» con ratón, Intro o Espacio; selecciona una página y comprueba el enlace activo, Escape y clic fuera. El submenú utiliza el mismo posicionamiento de Floating UI que Dropdown.
 - **Tablas y datos:** AGGridTable con Community: búsqueda, filtros, ordenación, paginación, selección y CSV; comparación con Table. Activa y desactiva «Mostrar ayuda en las cabeceras» y pasa el ratón por un título para comprobar los tooltips sin recargar la tabla. En «Cartera editable y fila de totales», edita los pesos con doble clic e Intro y comprueba el total fijado, las columnas agrupadas, la ordenación opcional y la consulta mediante referencia. Las dos tarjetas de selección permiten buscar y seleccionar varios fondos de forma independiente: limpiar una tabla debe conservar el filtro y la selección de la otra. Prueba también el botón externo con el interno oculto; los envíos del formulario deben permanecer a cero.
 - **Formularios y fechas:** Form, react-select, DatePicker, referencia de fecha, validación y restablecimiento. En «Fecha inicial y días anteriores», cambia el desplazamiento y pulsa «Restablecer fecha»: por defecto muestra 14/10/2026, con 0 días muestra 15/10/2026 y con 3 días muestra 12/10/2026.
 - **Interacciones:** Modal/useModal, Tabs/Tab/useTabs, Dropdown, Accordion y ProtectedRoute con Outlet y redirección. En «Controles de tarjeta y cabecera», prueba plegar, maximizar, cerrar y restaurar la tarjeta; abre el desplegable con Intro o Espacio. Por debajo de 992 px aparece el botón de navegación de Site.Header. Comprueba que todos estos controles mantienen a cero los envíos del formulario.
 - **Posicionamiento, dentro de Interacciones:** Dropdown, Button.Dropdown, disparador personalizado, Nav horizontal/vertical y Tooltip. Cambia entre las quince posiciones, incluidas `auto`, `auto-start` y `auto-end`; comprueba Escape, clic fuera, scroll y redimensionado. Las ayudas se abren con ratón y foco, conservan `aria-describedby` y orientan la flecha según la posición final.
 - **Documentación y pantalla de carga, dentro de Interacciones:** ModalDoc permite abrir una guía con dos pestañas o una sola sección, confirmar la lectura y cerrar con X o Escape. ModalSplash muestra una imagen local y su animación; prueba el cierre manual, Escape y el cierre automático a los tres segundos. El resultado de cada acción aparece en la página.
 - **Gráficos y estados:** LineChart, BarChart, PieChart y RadarChart. Cambia el periodo para actualizar el perfil de cinco dimensiones y los valores comparados de DoubleCard; prueba las leyendas y tooltips. El estado «Cargando» incluye TableLoader, PieChartLoader, LoaderZone y Spinner; también hay ejemplos de vacío y reintento de error simulado.
-- **Cobertura de componentes:** el catálogo incluye todos los exports públicos de la biblioteca: componentes, plantillas, proveedor, hooks y utilidades. Cada entrada indica «Con ejemplo» o «Sin cubrir»; puedes buscar por nombre y filtrar por estado. Solo las entradas con una demostración tienen enlace «Ver ejemplo». Los subcomponentes, como Card.Header o Grid.Col, se agrupan bajo el componente principal; su presencia no certifica todas las variantes.
+- **Documentación:** fichas de uso y API para los 90 exports públicos, con búsqueda por nombre, código copiable y acceso a los ejemplos visuales disponibles. Consulta el detalle en la sección siguiente.
+- **Cobertura de componentes:** el catálogo incluye todos los exports públicos de la biblioteca: componentes, plantillas, proveedor, hooks y utilidades. Cada entrada indica «Con ejemplo» o «Sin cubrir» y, por separado, si tiene guía y API; puedes buscar por nombre y filtrar por ambos estados. «Ver ficha» abre la documentación, mientras que «Ver ejemplo» aparece únicamente cuando existe una demostración. Los subcomponentes, como Card.Header o Grid.Col, se agrupan bajo el componente principal; su presencia no certifica todas las variantes.
 
 El inventario `demo/src/usage.json` cuenta archivos de producción que importan cada componente en un consumidor de referencia, excluyendo tests; no mide ejecuciones ni frecuencia real de uso. Para regenerarlo desde cualquier consumidor local:
 
@@ -177,6 +179,41 @@ La demo configura un motor modular de ECharts para los componentes LineChart, Ba
 La compilación separa React, ECharts y su renderer para permitir su caché independiente. AG Grid 32 se distribuye como un módulo generado grande: queda aislado en `vendor-ag-grid` y se carga al entrar en «Tablas y datos». `demo/scripts/bundle-budget.mjs` hace fallar la compilación si cualquier archivo JavaScript supera 500 kB, con una excepción explícita de 1 MB para ese único vendor. El umbral general de aviso de Vite se ajusta a esa excepción; el resto de archivos sigue sujeto al presupuesto más estricto. La demo descarta únicamente el aviso de directiva `use client` de React Router, que no se aplica a esta SPA de cliente.
 
 El CSS publicado ya no contiene el hack antiguo `*display`. Las rutas de imágenes heredadas de la hoja principal están desactivadas y las fuentes locales se comprueban después de compilar mediante `npm test`.
+
+## Fichas de documentación de componentes
+
+Con la demo arrancada, abre **Documentación** en el menú principal o entra en `http://127.0.0.1:5174/#/documentacion`. También puedes pulsar **Ver ficha** en cualquier fila de «Cobertura de componentes». Cada ficha tiene su propia dirección; por ejemplo, `http://127.0.0.1:5174/#/documentacion/DatePicker`.
+
+Documentación y Cobertura muestran su fecha de última actualización arriba a la derecha. Las fechas de revisión se mantienen por separado en `demo/docs/metadata.json`; actualiza la correspondiente cuando revises las guías o la cobertura. No se utiliza la fecha de apertura de la página ni la del análisis del consumidor de referencia.
+
+Las fichas explican cómo funciona cada componente, hook o utilidad y cómo integrarlo:
+
+- Guía de comportamiento y fragmento de uso con botón para copiar el código.
+- Propiedades, tipos declarados, valores predeterminados y API de los subcomponentes, extraídos de la implementación actual.
+- Explicación de callbacks, referencias y valores devueltos cuando corresponda.
+- Versiones de AG Grid y ECharts en sus fichas: rango declarado por la biblioteca, versión de su lock y versión del lock de la demo. Se distingue el motor aportado por el consumidor y el peer opcional de AG Grid Enterprise, que no se instala en la demo.
+- Código fuente desplegable para consultar cómo se aplican las opciones.
+- Enlace al ejemplo visual, cuando existe. Button, Tooltip y DatePicker incluyen además controles interactivos para modificar algunas propiedades y ver el código resultante.
+
+Actualmente hay **90 fichas con guía y API**. La demostración visual sigue siendo un estado independiente: **36 exports tienen ejemplo y 54 están sin cubrir**. Documentar un componente no lo marca automáticamente como probado ni certifica todas sus variantes. Los fragmentos de integración se comprueban por sintaxis y por existencia de los subcomponentes utilizados; los valores, handlers e imports auxiliares corresponden a la aplicación consumidora.
+
+Se conservan los **73 archivos Markdown heredados** de las familias de componentes como material de consulta, identificados en un apartado separado. Pueden contener propiedades antiguas o ejemplos incompletos; el archivo marcado como `broken` muestra una advertencia adicional. Estos ejemplos se presentan como texto y código, sin ejecutarse. Para integrar un componente, utiliza la guía y contrástala con la API actual. Las anotaciones Flow mostradas son declaraciones de las fuentes y no constituyen archivos de tipos publicados ni una garantía de validación en tiempo de ejecución.
+
+Para mantener esta documentación:
+
+```sh
+# Regenera el catálogo público y todas las fichas después de cambiar la API,
+# los ejemplos Markdown, las guías de uso o los locks de las integraciones.
+npm run demo:docs
+
+# Comprueba que las fichas coinciden con las fuentes, sin modificarlas.
+# También forma parte de npm run check.
+npm run demo:docs:check
+```
+
+Las explicaciones revisadas se mantienen en `demo/docs/guides.json`: cada export tiene `summary`, `behavior` y `example`, y puede añadir descripciones de `props` o una firma en `parameters`. La API se extrae del código de la biblioteca; los comentarios y las descripciones de la guía completan la referencia. No edites a mano `demo/src/component-docs-index.json` ni `demo/src/docs/generated/`: regénéralos y guarda los cambios junto con las fuentes y las guías.
+
+Las fichas se cargan por separado al abrirlas. Toda esta documentación pertenece a `demo/`, utiliza sus dependencias existentes y queda fuera de la compilación y del paquete publicado de la biblioteca.
 
 ## Migración de Popper a Floating UI
 
@@ -247,7 +284,7 @@ Para compilar y ejecutar las pruebas de regresión de componentes, posicionamien
 Después de instalar las dependencias de la raíz y de la demo como se indica en Setup, puedes ejecutar todas las comprobaciones desde una terminal en la raíz:
 
 ```sh
-# Comprobación habitual: catálogo actualizado, lint de biblioteca y demo,
+# Comprobación habitual: catálogo y fichas actualizados, lint de biblioteca y demo,
 # compilación de la biblioteca, pruebas con React 19 y compilación de la demo.
 npm run check
 

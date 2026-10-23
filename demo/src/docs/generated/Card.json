@@ -1,0 +1,399 @@
+{
+  "name": "Card",
+  "kind": "Componente",
+  "source": "src/components/Card/index.js",
+  "implementation": "src/components/Card/Card.react.js",
+  "implementationCode": "// @flow\nimport * as React from \"react\";\n\nimport cn from \"classnames\";\nimport CardHeader from \"./CardHeader.react\";\nimport CardTitle from \"./CardTitle.react\";\nimport CardBody from \"./CardBody.react\";\nimport CardOptions from \"./CardOptions.react\";\nimport CardOptionsItem from \"./CardOptionsItem.react\";\nimport CardStatus from \"./CardStatus.react\";\nimport CardAlert from \"./CardAlert.react\";\nimport CardFooter from \"./CardFooter.react\";\nimport CardMap from \"./CardMap.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +title?: string,\n  +body?: React.Node,\n  +RootComponent?: React.ElementType,\n  +options?: React.Node,\n  +isCollapsible?: boolean,\n  +isCollapsed?: boolean,\n  +isClosable?: boolean,\n  +isClosed?: boolean,\n  +isFullscreenable?: boolean,\n  +statusColor?: string,\n  +statusSide?: boolean,\n  +alert?: React.Node,\n  +alertColor?: string,\n  +footer?: string,\n  +aside?: boolean,\n|};\n\ntype State = {|\n  isClosed: boolean,\n  isCollapsed: boolean,\n  isFullscreen: boolean,\n|};\n\nclass Card extends React.PureComponent<Props, State> {\n  state = {\n    isClosed: this.props.isClosed || false,\n    isCollapsed: this.props.isCollapsed || false,\n    isFullscreen: false,\n  };\n\n  static Header = CardHeader;\n  static Body = CardBody;\n  static Title = CardTitle;\n  static Options = CardOptions;\n  static OptionsItem = CardOptionsItem;\n  static Status = CardStatus;\n  static Alert = CardAlert;\n  static Footer = CardFooter;\n  static Map = CardMap;\n\n  handleCloseOnClick = (): void => {\n    this.setState(s => ({\n      isClosed: !s.isClosed,\n    }));\n  };\n\n  handleCollapseOnClick = (): void => {\n    this.setState(s => ({\n      isCollapsed: !s.isCollapsed,\n    }));\n  };\n\n  handleFullscreenOnClick = (): void => {\n    this.setState(s => ({\n      isFullscreen: !s.isFullscreen,\n    }));\n  };\n\n  render(): React.Node {\n    const {\n      className,\n      children,\n      RootComponent,\n      title,\n      body,\n      options,\n      isCollapsible,\n      isClosable,\n      isFullscreenable,\n      aside,\n      statusColor,\n      statusSide,\n      alert,\n      alertColor,\n      footer,\n    } = this.props;\n    const { isClosed, isCollapsed, isFullscreen } = this.state;\n    if (isClosed) {\n      return null;\n    }\n    const classes = cn(\n      {\n        card: true,\n        aside: aside,\n        \"card-collapsed\": isCollapsed,\n        \"card-fullscreen\": isFullscreen,\n      },\n      className\n    );\n    const Component = RootComponent || \"div\";\n\n    const card_options = (options || isCollapsible || isClosable) && (\n      <Card.Options>\n        {options}\n        {isCollapsible && (\n          <Card.OptionsItem\n            onClick={this.handleCollapseOnClick}\n            type=\"collapse\"\n          />\n        )}\n        {isFullscreenable && (\n          <Card.OptionsItem\n            type=\"fullscreen\"\n            onClick={this.handleFullscreenOnClick}\n          />\n        )}\n        {isClosable && (\n          <Card.OptionsItem type=\"close\" onClick={this.handleCloseOnClick} />\n        )}\n      </Card.Options>\n    );\n\n    const card_status = statusColor && (\n      <Card.Status color={statusColor} side={statusSide} />\n    );\n\n    const card_alert = alert &&\n      alertColor && <Card.Alert color={alertColor}>{alert}</Card.Alert>;\n\n    const card_header = title && (\n      <Card.Header>\n        <Card.Title>{title}</Card.Title>\n        {card_options}\n      </Card.Header>\n    );\n\n    const card_body = body && <Card.Body>{body}</Card.Body>;\n\n    const card_footer = footer && <Card.Footer>{footer}</Card.Footer>;\n\n    if (card_header !== null || card_body !== null) {\n      return (\n        <Component className={classes}>\n          {card_status}\n          {card_header}\n          {card_alert}\n          {card_body || children}\n          {card_footer}\n        </Component>\n      );\n    } else {\n      return <Component className={classes}>{children}</Component>;\n    }\n  }\n}\n\n/** @component */\nexport default Card;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "body",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "RootComponent",
+      "type": "React.ElementType",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "options",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isCollapsible",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isCollapsed",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isClosable",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isClosed",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "isFullscreenable",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "statusColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "statusSide",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "alert",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "alertColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "footer",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "aside",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Header",
+    "Body",
+    "Title",
+    "Options",
+    "OptionsItem",
+    "Status",
+    "Alert",
+    "Footer",
+    "Map"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Header",
+      "source": "src/components/Card/CardHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "backgroundURL",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Body",
+      "source": "src/components/Card/CardBody.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Title",
+      "source": "src/components/Card/CardTitle.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "RootComponent",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Options",
+      "source": "src/components/Card/CardOptions.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "OptionsItem",
+      "source": "src/components/Card/CardOptionsItem.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "type",
+          "type": "\"collapse\" | \"close\" | \"fullscreen\"",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onClick",
+          "type": "() => mixed",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Status",
+      "source": "src/components/Card/CardStatus.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "side",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Alert",
+      "source": "src/components/Card/CardAlert.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Footer",
+      "source": "src/components/Card/CardFooter.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Map",
+      "source": "src/components/Card/CardMap.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Card.examples.md",
+      "source": "src/components/Card/Card.examples.md",
+      "markdown": "```jsx\n<Card\n  title=\"Card title\"\n  body={`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam\n    deleniti fugit incidunt, iste, itaque minima neque pariatur\n    perferendis sed suscipit velit vitae voluptatem. A consequuntur,\n    deserunt eaque error nulla temporibus!`}\n/>\n```\n\n### Advanced Card\n\n```jsx\n<Card>\n  <Card.Header>\n    <Card.Title>Card title</Card.Title>\n    <Card.Options>\n      <Button color=\"primary\" size=\"sm\">\n        Action 1\n      </Button>\n      <Button color=\"secondary\" size=\"sm\" className=\"ml-2\">\n        Action 2\n      </Button>\n    </Card.Options>\n  </Card.Header>\n  <Card.Body>\n    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam deleniti\n    fugit incidunt, iste, itaque minima neque pariatur perferendis sed suscipit\n    velit vitae voluptatem. A consequuntur, deserunt eaque error nulla\n    temporibus!\n  </Card.Body>\n  <Card.Footer>This is standard card footer</Card.Footer>\n</Card>\n```\n\n### Row Deck\n\nUse Grid.Row and the 'cards' and 'deck' props to render same height cards\n\n```jsx\n<Grid.Row cards deck>\n  <Grid.Col md={4}>\n    <Card body=\"Short content\" />\n  </Grid.Col>\n  <Grid.Col md={4}>\n    <Card\n      body={`Extra long content of card. Lorem ipsum dolor sit amet,\n        consetetur sadipscing elitr`}\n    />\n  </Grid.Col>\n  <Grid.Col md={4}>\n    <Card body=\"Short content\" />\n  </Grid.Col>\n</Grid.Row>\n```\n\n### Card with loader\n\n```jsx\n<Card title=\"Card with loader\" isClosable isCollapsible>\n  <Card.Body>\n    <Dimmer active loader>\n      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam deleniti\n      fugit incidunt, iste, itaque minima neque pariatur perferendis sed\n      suscipit velit vitae voluptatem. A consequuntur, deserunt eaque error\n      nulla temporibus!\n    </Dimmer>\n  </Card.Body>\n</Card>\n```\n"
+    },
+    {
+      "name": "CardStatus.examples.md",
+      "source": "src/components/Card/CardStatus.examples.md",
+      "markdown": "```jsx\n<Grid.Row cards deck>\n  <Grid.Col md={6}>\n    <Card\n      statusColor=\"purple\"\n      title=\"Card status\"\n      body={`Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n        Aperiam deleniti fugit incidunt, iste, itaque minima neque pariatur\n        perferendis sed suscipit velit vitae voluptatem. A consequuntur,\n        deserunt eaque error nulla temporibus!`}\n    />\n  </Grid.Col>\n  <Grid.Col md={6}>\n    <Card>\n      <Card.Status color=\"blue\" side />\n      <Card.Header>\n        <Card.Title>Card status left side</Card.Title>\n      </Card.Header>\n      <Card.Body>\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam\n        deleniti fugit incidunt, iste, itaque minima neque pariatur perferendis\n        sed suscipit velit vitae voluptatem. A consequuntur, deserunt eaque\n        error nulla temporibus!\n      </Card.Body>\n    </Card>\n  </Grid.Col>\n</Grid.Row>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenedor de información con cabecera, cuerpo, pie y controles opcionales.",
+    "behavior": [
+      "Puedes componer Card.Header, Card.Body y Card.Footer, o utilizar title, body y footer.",
+      "El cuerpo recibido en body tiene prioridad sobre children cuando es truthy.",
+      "Plegar, cerrar y maximizar se gestionan en el estado interno de la tarjeta. isCollapsed/isClosed se leen al inicializar; no son controles externos continuos.",
+      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key."
+    ],
+    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "BarChartLoader",
+  "kind": "Componente",
+  "source": "src/components/ContentLoader/index.js",
+  "implementation": "src/components/ContentLoader/BarChartLoader.react.js",
+  "implementationCode": "import React from 'react'\nimport ContentLoader from 'react-content-loader'\n\nconst BarChartLoader = props => {\n  return (\n    <ContentLoader width={200} height={200} viewBox=\"0 0 200 200\" {...props}>\n      <rect x=\"0\" y=\"160\" rx=\"0\" ry=\"0\" width=\"25\" height=\"40\" />\n      <rect x=\"30\" y=\"145\" rx=\"0\" ry=\"0\" width=\"25\" height=\"55\" />\n      <rect x=\"60\" y=\"126\" rx=\"0\" ry=\"0\" width=\"25\" height=\"74\" />\n      <rect x=\"90\" y=\"80\" rx=\"0\" ry=\"0\" width=\"25\" height=\"120\" />\n      <rect x=\"120\" y=\"142\" rx=\"0\" ry=\"0\" width=\"25\" height=\"58\" />\n    </ContentLoader>\n  )\n}\n\nexport default BarChartLoader",
+  "props": [],
+  "subcomponents": [],
+  "members": [],
+  "rest": true,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "BarChartLoader.examples.md",
+      "source": "src/components/ContentLoader/BarChartLoader.examples.md",
+      "markdown": "Render a bar chart loader\n\n```jsx\n<BarChartLoader/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Esqueleto SVG con forma de gráfico de barras.",
+    "behavior": [
+      "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+    ],
+    "example": "<BarChartLoader width={600} height={250} speed={2} />"
+  }
+}

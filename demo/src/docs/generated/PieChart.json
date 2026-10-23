@@ -1,0 +1,101 @@
+{
+  "name": "PieChart",
+  "kind": "Componente",
+  "source": "src/components/Chart/index.js",
+  "implementation": "src/components/Chart/PieChart.js",
+  "implementationCode": "import React from 'react'\nimport ReactECharts from 'echarts-for-react'\n\nexport default function PieChart({\n    title = \"\",\n    height = \"18.75rem\",\n    paddingBottom = null,\n    legend = true,\n    legendformatter = '{c}',\n    colors,\n    complete,\n    //series\n    series,\n    seriesDataName,\n    //download\n    downloadName = \"Export\",\n    downloadTitle = \"\",\n    download = false,\n    //Methods    \n    tooltipFormatter,\n    center = ['50%', '50%'],\n}) {\n\n    const option = {\n        title: { text: title },\n        tooltip: { trigger: 'item' },\n        toolbox: {\n            feature: {\n                saveAsImage: {\n                    name: downloadName,\n                    title: downloadTitle,\n                    show: download\n                }\n            }\n        },\n        legend: {\n            show: legend,\n            bottom: \"0rem\",\n        },\n        series: [\n            {\n                type: 'pie',\n                radius: '50%',\n                label: {\n                    show: true\n                },\n                labelLine: {\n                    show: true,\n                    length: 20,\n                    length2: 10\n                },\n                center: center,\n                tooltip: {\n                    formatter: (item) => tooltipFormatter(item),\n                },\n                data: series?.map((item, i) => ({\n                    name: seriesDataName[i],\n                    value: item,\n                    itemStyle: { color: colors[i] }\n                }))\n            }\n        ]\n    }\n\n    const style = () => {\n        let style = { height: height }\n        if (paddingBottom) style.paddingBottom = paddingBottom\n        return style\n    }\n\n    return <ReactECharts className={'charts-complete-' + complete} option={option} style={style()} />\n}",
+  "props": [
+    {
+      "name": "title",
+      "default": "\"\"",
+      "optional": true
+    },
+    {
+      "name": "height",
+      "default": "\"18.75rem\"",
+      "optional": true
+    },
+    {
+      "name": "paddingBottom",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "legend",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "legendformatter",
+      "default": "'{c}'",
+      "optional": true
+    },
+    {
+      "name": "colors"
+    },
+    {
+      "name": "complete"
+    },
+    {
+      "name": "series"
+    },
+    {
+      "name": "seriesDataName"
+    },
+    {
+      "name": "downloadName",
+      "default": "\"Export\"",
+      "optional": true
+    },
+    {
+      "name": "downloadTitle",
+      "default": "\"\"",
+      "optional": true
+    },
+    {
+      "name": "download",
+      "default": "false",
+      "optional": true
+    },
+    {
+      "name": "tooltipFormatter"
+    },
+    {
+      "name": "center",
+      "default": "['50%', '50%']",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [
+    {
+      "name": "echarts",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^6.0.0",
+      "libraryVersion": "6.1.0",
+      "demoVersion": "6.1.0",
+      "demoRange": "6.1.0"
+    },
+    {
+      "name": "echarts-for-react",
+      "role": "Dependencia de la biblioteca",
+      "libraryRange": "^3.0.2",
+      "libraryVersion": "3.0.6",
+      "demoVersion": "3.0.6",
+      "demoRange": "3.0.6"
+    }
+  ],
+  "guide": {
+    "summary": "Gráfico circular con valores y nombres preparados por el consumidor.",
+    "behavior": [
+      "series contiene valores numéricos; seriesDataName y colors utilizan el mismo orden.",
+      "tooltipFormatter recibe los parámetros de ECharts. La leyenda y la descarga se configuran mediante las propiedades del wrapper.",
+      "La preparación de datos y la configuración modular del motor corresponden al consumidor."
+    ],
+    "example": "<PieChart series={[60, 40]} seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]} height=\"300px\" tooltipFormatter={item => item.name + \": \" + item.value} />"
+  }
+}

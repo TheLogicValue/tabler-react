@@ -1,0 +1,66 @@
+{
+  "name": "StampCard",
+  "kind": "Componente",
+  "source": "src/components/StampCard/index.js",
+  "implementation": "src/components/StampCard/StampCard.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Card, Stamp, Header, Text } from \"../\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +icon?: string,\n  +color?: string,\n  +header?: React.Node,\n  +footer?: React.Node,\n|};\n\nfunction StampCard({\n  children,\n  className,\n  icon,\n  color = \"\",\n  header,\n  footer,\n}: Props): React.Node {\n  const classes = cn(\"p-3\", className);\n  return (\n    <Card className={classes}>\n      <div className=\"d-flex align-items-center\">\n        <Stamp color={color} icon={icon} className=\"mr-3\" />\n        <div>\n          {header && (\n            <Header size={4} className=\"m-0\">\n              {header}\n            </Header>\n          )}\n          {children}\n          {footer && <Text.Small muted>{footer}</Text.Small>}\n        </div>\n      </div>\n    </Card>\n  );\n}\n\nStampCard.displayName = \"StampCard\";\n\nexport default StampCard;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "header",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "footer",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "StampCard.examples.md",
+      "source": "src/components/StampCard/StampCard.examples.md",
+      "markdown": "```jsx\n<StampCard header=\"Headline\" footer=\"Something Else\" color=\"yellow\" />\n<StampCard icon=\"check\" color=\"green\">\n  Success!\n</StampCard>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta breve con insignia, cabecera y pie.",
+    "behavior": [
+      "icon/color configuran la insignia; header/footer muestran los textos.",
+      "children permite contenido adicional."
+    ],
+    "example": "<StampCard icon=\"file\" color=\"blue\" header=\"12 informes\" footer=\"Disponibles\" />"
+  }
+}

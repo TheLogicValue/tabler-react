@@ -1,0 +1,60 @@
+{
+  "name": "FormCard",
+  "kind": "Componente",
+  "source": "src/forms/FormCard.react.js",
+  "implementation": "src/forms/FormCard.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\nimport Card from \"../components/Card\";\nimport { Button } from \"../components/Button\";\n\ntype Props = {|\n  +action ?: string,\n  +children ?: React.Node,\n  +method ?: string,\n  +title: string,\n    +buttonText: string,\n      +onSubmit ?: Function,\n|};\n\nfunction FormCard({\n  children,\n  action,\n  method,\n  onSubmit,\n  title,\n  buttonText,\n}: Props): React.Node {\n  return (\n    <Form className=\"card\" onSubmit={onSubmit} action={action} method={method}>\n      <Card.Body className=\"p-6\">\n        <Card.Title RootComponent=\"div\">{title}</Card.Title>\n        {children}\n        <Form.Footer>\n          <Button type=\"submit\" color=\"primary\" block={true}>\n            {buttonText}\n          </Button>\n        </Form.Footer>\n      </Card.Body>\n    </Form>\n  );\n}\n\nexport default FormCard;\n",
+  "props": [
+    {
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "method",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "buttonText",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "onSubmit",
+      "type": "Function",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Formulario dentro de una tarjeta con título y acción principal.",
+    "behavior": [
+      "Recibe action, method y onSubmit para el formulario.",
+      "children define los campos; buttonText es el texto del envío.",
+      "No mantiene los valores ni realiza validación de negocio."
+    ],
+    "example": "<FormCard title=\"Configuración\" buttonText=\"Guardar\" onSubmit={event => event.preventDefault()}><FormTextInput label=\"Nombre\" name=\"name\" /></FormCard>"
+  }
+}

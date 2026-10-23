@@ -1,0 +1,75 @@
+{
+  "name": "Progress",
+  "kind": "Componente",
+  "source": "src/components/Progress/index.js",
+  "implementation": "src/components/Progress/Progress.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport ProgressBar from \"./ProgressBar.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +size?: string,\n|};\n\nfunction Progress({ className, children, size = \"\" }: Props): React.Node {\n  const classes = cn(`progress`, { [`progress-${size}`]: !!size }, className);\n  return <div className={classes}>{children}</div>;\n}\n\nProgress.Bar = ProgressBar;\n\nexport default Progress;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    }
+  ],
+  "subcomponents": [
+    "Bar"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Bar",
+      "source": "src/components/Progress/ProgressBar.react.js",
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": "",
+          "default": "\"\""
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "optional": true,
+          "description": "",
+          "default": "0"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Contenedor de barras de progreso.",
+    "behavior": [
+      "Progress.Bar recibe width como porcentaje y color como variante visual.",
+      "El porcentaje debe calcularlo el consumidor; no se valida ni limita automáticamente a 0–100.",
+      "size modifica la altura mediante clases."
+    ],
+    "example": "<Progress size=\"sm\"><Progress.Bar width={65} color=\"green\" /></Progress>"
+  }
+}

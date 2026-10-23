@@ -42,7 +42,9 @@
     "test:react18": "npm run build && node scripts/test-react18.mjs",
     "demo:inventory": "node demo/scripts/scan-exports.mjs",
     "demo:inventory:check": "node demo/scripts/scan-exports.mjs --check",
-    "check": "npm run demo:inventory:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
+    "demo:docs": "npm run demo:inventory && node demo/scripts/generate-docs.mjs",
+    "demo:docs:check": "node demo/scripts/generate-docs.mjs --check",
+    "check": "npm run demo:inventory:check && npm run demo:docs:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
     "check:all": "npm run check && node scripts/test-react18.mjs"
   },
   "dependencies": {

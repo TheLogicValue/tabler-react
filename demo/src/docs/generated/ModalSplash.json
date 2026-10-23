@@ -1,0 +1,32 @@
+{
+  "name": "ModalSplash",
+  "kind": "Componente",
+  "source": "src/components/Modal/index.js",
+  "implementation": "src/components/Modal/ModalSplash.js",
+  "implementationCode": "import \"./ModalSplash.css\"\nimport React from \"react\"\n\nexport default function ModalSplash({ image, alt=\"splash\" }) {\n    return <div className=\"splash-container\">\n        <div className=\"stage\">\n            <div className=\"dot-pulse\"></div>\n        </div>\n        <img src={image} className=\"splash-image\" alt={alt}></img>\n    </div>\n}",
+  "props": [
+    {
+      "name": "image"
+    },
+    {
+      "name": "alt",
+      "default": "\"splash\"",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Pantalla visual con imagen y animación de carga.",
+    "behavior": [
+      "image define la imagen y alt su texto alternativo.",
+      "No contiene temporizador ni callback de cierre: la demo implementa esas acciones en su propio contenedor.",
+      "El consumidor decide cuándo montarla y retirarla."
+    ],
+    "example": "{loading && <ModalSplash image=\"/splash-local.svg\" alt=\"Cargando aplicación\" />}"
+  }
+}

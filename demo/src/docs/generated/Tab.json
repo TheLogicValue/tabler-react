@@ -1,0 +1,41 @@
+{
+  "name": "Tab",
+  "kind": "Componente",
+  "source": "src/components/Tabs/index.js",
+  "implementation": "src/components/Tabs/Tab.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\ntype Props = {|\n  title: string,\n  children: React.Node,\n|};\n\ntype State = {||};\n\nclass Tab extends React.PureComponent<Props, State> {\n  render(): React.Node {\n    return <div className=\"card-body\">\n              {this.props.children}\n            </div>\n  }\n}\n\nexport default Tab;\n",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "optional": false,
+      "description": ""
+    },
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Tabs.examples.md",
+      "source": "src/components/Tabs/Tabs.examples.md",
+      "markdown": "```jsx\n<Tabs initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card\n          body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\"\n        />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</Tabs>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Panel de contenido identificado por un título.",
+    "behavior": [
+      "Se utiliza como hijo de Tabs o TabbedCard.",
+      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado."
+    ],
+    "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Contenido inicial.</Tab><Tab title=\"Detalle\">Contenido adicional.</Tab></Tabs>"
+  }
+}

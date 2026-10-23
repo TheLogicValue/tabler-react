@@ -1,0 +1,33 @@
+{
+  "name": "useTabs",
+  "kind": "Hook",
+  "source": "src/components/Tabs/index.js",
+  "implementation": "src/components/Tabs/useTabs.js",
+  "implementationCode": "// @flow\nimport React, { useState, useCallback } from \"react\"\nimport TabbedContainer from \"./TabbedContainer.react\"\nimport TabbedHeader from \"./TabbedHeader.react\"\nimport cn from \"classnames\"\nimport \"./Tabs.css\"\n\nexport default function useTabs() {\n    const [selectedTitle, setTitle] = useState(null)\n\n    const Tabs = useCallback(({ children, options, className, modal, initialTab }) => {\n        const classes = cn(\"card\", className)\n        return (\n            <div className={classes}>\n                <TabbedHeader\n                    selectedTitle={selectedTitle ?? initialTab}\n                    modal={modal}\n                    stateCallback={newTitle => setTitle(newTitle)}\n                    options={options}\n                >\n                    {children}\n                </TabbedHeader>\n                <TabbedContainer selectedTitle={selectedTitle ?? initialTab}>\n                    {children}\n                </TabbedContainer>\n            </div>\n        )\n    }, [selectedTitle])\n\n    return { Tabs, selectedTitle }\n}",
+  "props": [],
+  "subcomponents": [],
+  "members": [
+    "Tabs",
+    "selectedTitle"
+  ],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Tabs.examples.md",
+      "source": "src/components/Tabs/Tabs.examples.md",
+      "markdown": "```jsx\n<Tabs initialTab=\"Hello\">\n  <Tab title=\"Hello\">Hello World</Tab>\n  <Tab title=\"Goodbye\">Goodbye</Tab>\n  <Tab title=\"Complex\">\n    <Grid.Row cards deck>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card\n          body=\"Extra long content of card. Lorem ipsum dolor sit amet, consetetur sadipscing elitr\"\n        />\n      </Grid.Col>\n      <Grid.Col md={4}>\n        <Card body=\"Short content\" />\n      </Grid.Col>\n    </Grid.Row>\n  </Tab>\n</Tabs>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Hook que devuelve un componente de pestañas y su selección.",
+    "behavior": [
+      "Devuelve Tabs y selectedTitle; al inicio selectedTitle es null y el contenedor utiliza initialTab.",
+      "Utiliza títulos únicos en los hijos Tab.",
+      "La identidad del componente devuelto depende de selectedTitle; evita asumir que conservará el estado interno de todos sus descendientes al cambiar de pestaña."
+    ],
+    "example": "const { Tabs: HookTabs, selectedTitle } = useTabs();\n<>\n  <HookTabs initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel</Tab><Tab title=\"Dos\">Segundo panel</Tab></HookTabs>\n  <p>Pestaña activa: {selectedTitle ?? \"Uno\"}</p>\n</>",
+    "parameters": "useTabs(): { Tabs, selectedTitle }"
+  }
+}

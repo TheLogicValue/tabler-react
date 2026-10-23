@@ -1,0 +1,40 @@
+{
+  "name": "ProtectedRoute",
+  "kind": "Componente",
+  "source": "src/components/ProtectedRoute/index.js",
+  "implementation": "src/components/ProtectedRoute/ProtectedRoute.js",
+  "implementationCode": "import { Navigate, Outlet } from \"react-router-dom\";\nimport React from 'react';\n\nexport const ProtectedRoute = ({\n  isAllowed,\n  redirectTo = \"/\",\n  replace = true,\n  children,\n}) => {\n  if (!isAllowed) {\n    return <Navigate to={redirectTo} replace={replace} />;\n  }\n\n  return children ? children : <Outlet />;\n};",
+  "props": [
+    {
+      "name": "isAllowed"
+    },
+    {
+      "name": "redirectTo",
+      "default": "\"/\"",
+      "optional": true
+    },
+    {
+      "name": "replace",
+      "default": "true",
+      "optional": true
+    },
+    {
+      "name": "children"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Protección visual de rutas mediante React Router.",
+    "behavior": [
+      "Si isAllowed es falso devuelve Navigate a redirectTo; replace decide si sustituye la entrada del historial.",
+      "Cuando se permite el acceso, representa children o un Outlet.",
+      "No sustituye la autorización en el servidor ni valida una sesión por sí mismo."
+    ],
+    "example": "<Route element={<ProtectedRoute isAllowed={canRead} redirectTo=\"/sin-acceso\" />}><Route path=\"datos\" element={<DataPage />} /></Route>"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "LoginPage",
+  "kind": "Plantilla",
+  "source": "src/page_templates/account/LoginPage/index.js",
+  "implementation": "src/page_templates/account/LoginPage/LoginPageForm.js",
+  "implementationCode": "import React from \"react\"\nimport FormTextInput from \"../../../forms/FormTextInput.react\"\nimport FormCard from \"../../../forms/FormCard.react\"\nimport StandaloneFormPage from \"../../StandaloneFormPage.react\"\n\nexport default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children } = {}) {\n\n    const defaultStrings = {\n        title: \"Login to your Account\",\n        buttonText: \"Login\",\n        emailLabel: \"Email Address\",\n        emailPlaceholder: \"Enter email\",\n        passwordLabel: \"Password\",\n        passwordPlaceholder: \"Password\",\n    }\n\n    return (\n        <StandaloneFormPage\n            imageURL={imageURL}\n            page=\"login\"\n        >\n            <FormCard\n                buttonText={strings.buttonText || defaultStrings.buttonText}\n                title={strings.title || defaultStrings.title}\n                onSubmit={onSubmit}\n                action={action}\n                method={method}\n            >\n                <FormTextInput\n                    name=\"email\"\n                    label={strings.emailLabel || defaultStrings.emailLabel}\n                    placeholder={strings.emailPlaceholder || defaultStrings.emailPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.email}\n                    error={errors && errors.email}\n                />\n                <FormTextInput\n                    name=\"password\"\n                    type=\"password\"\n                    label={strings.passwordLabel || defaultStrings.passwordLabel}\n                    placeholder={strings.passwordPlaceholder || defaultStrings.passwordPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.password}\n                    error={errors && errors.password}\n                />\n            </FormCard>\n            {children}\n        </StandaloneFormPage>\n    )\n}",
+  "props": [
+    {
+      "name": "imageURL"
+    },
+    {
+      "name": "action"
+    },
+    {
+      "name": "method"
+    },
+    {
+      "name": "onSubmit"
+    },
+    {
+      "name": "onChange"
+    },
+    {
+      "name": "onBlur"
+    },
+    {
+      "name": "values"
+    },
+    {
+      "name": "strings",
+      "default": "{}",
+      "optional": true
+    },
+    {
+      "name": "errors"
+    },
+    {
+      "name": "children"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "LoginPage.examples.md",
+      "source": "src/page_templates/account/LoginPage/LoginPage.examples.md",
+      "markdown": "```jsx\n<LoginPage />\n\n//Example strings\nconst strings = {\n  title: \"Login to your Account\",\n  buttonText: \"Login\",\n  emailLabel: \"Email Address\",\n  emailPlaceholder: \"Enter email\",\n  passwordLabel: \"Password\",\n  passwordPlaceholder: \"Password\",\n}\n\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Plantilla de acceso con campos email y password.",
+    "behavior": [
+      "Recibe values/errors y callbacks onChange, onBlur y onSubmit; strings personaliza los textos.",
+      "No autentica, almacena credenciales ni realiza llamadas a un servidor.",
+      "imageURL configura la imagen de la página contenedora."
+    ],
+    "example": "<LoginPage values={{ email: \"\", password: \"\" }} errors={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "name": "Avatar",
+  "kind": "Componente",
+  "source": "src/components/Avatar/index.js",
+  "implementation": "src/components/Avatar/Avatar.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport { Icon } from \"../\";\nimport cn from \"classnames\";\nimport AvatarList from \"./AvatarList.react\";\n\nimport type { MouseEvents, PointerEvents } from \"../../\";\n\nexport type Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The URL of the image to be displayed\n   */\n  +imageURL?: string,\n  +style?: Object,\n  +size?: \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\",\n  /**\n   * Display a colored status dot with the avatar\n   */\n  +status?: \"grey\" | \"red\" | \"yellow\" | \"green\",\n  /**\n   * Displays the user icon as a placeholder\n   */\n  +placeholder?: boolean,\n  /**\n   * Render an icon instead of an imageURL\n   */\n  +icon?: string,\n  /**\n   * The background and font color of the circle\n   */\n  +color?: string,\n|};\n\n/**\n * Renders a single circular avatar\n */\nfunction Avatar({\n  className,\n  children,\n  imageURL,\n  style,\n  size = \"\",\n  status,\n  placeholder,\n  icon,\n  color = \"\",\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n}: Props): React.Node {\n  const classes = cn(\n    {\n      avatar: true,\n      [`avatar-${size}`]: !!size,\n      \"avatar-placeholder\": placeholder,\n      [`avatar-${color}`]: !!color,\n    },\n    className\n  );\n  return (\n    <span\n      className={classes}\n      style={\n        imageURL\n          ? Object.assign(\n              {\n                backgroundImage: `url(${imageURL})`,\n              },\n              style\n            )\n          : style\n      }\n      onClick={onClick}\n      onMouseEnter={onMouseEnter}\n      onMouseLeave={onMouseLeave}\n      onPointerEnter={onPointerEnter}\n      onPointerLeave={onPointerLeave}\n    >\n      {icon && <Icon name={icon} />}\n      {status && <span className={`avatar-status bg-${status}`} />}\n      {children}\n    </span>\n  );\n}\n\nAvatar.List = AvatarList;\n\nexport default Avatar;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "imageURL",
+      "type": "string",
+      "optional": true,
+      "description": "The URL of the image to be displayed"
+    },
+    {
+      "name": "style",
+      "type": "Object",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    },
+    {
+      "name": "status",
+      "type": "\"grey\" | \"red\" | \"yellow\" | \"green\"",
+      "optional": true,
+      "description": "Display a colored status dot with the avatar"
+    },
+    {
+      "name": "placeholder",
+      "type": "boolean",
+      "optional": true,
+      "description": "Displays the user icon as a placeholder"
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": "Render an icon instead of an imageURL"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "The background and font color of the circle",
+      "default": "\"\""
+    },
+    {
+      "name": "onClick"
+    },
+    {
+      "name": "onMouseEnter"
+    },
+    {
+      "name": "onMouseLeave"
+    },
+    {
+      "name": "onPointerEnter"
+    },
+    {
+      "name": "onPointerLeave"
+    }
+  ],
+  "subcomponents": [
+    "List"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "List",
+      "source": "src/components/Avatar/AvatarList.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "stacked",
+          "type": "boolean",
+          "optional": true,
+          "description": "Renders the Avatars to look stacked by slightly overlapping each over"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [
+    {
+      "name": "Avatar.examples.md",
+      "source": "src/components/Avatar/Avatar.examples.md",
+      "markdown": "### Simple Avatar\n\n```jsx\n<Avatar imageURL=\"./demo/faces/male/21.jpg\" />\n```\n\n### Avatar Icon\n\n```jsx\n<Avatar icon=\"users\" />\n```\n\n### Avatar Size\n\n```jsx\n<Avatar.List>\n  <Avatar size=\"sm\" imageURL=\"/demo/faces/male/9.jpg\" />\n  <Avatar imageURL=\"/demo/faces/female/8.jpg\" />\n  <Avatar size=\"md\" imageURL=\"/demo/faces/male/4.jpg\" />\n  <Avatar size=\"lg\" imageURL=\"/demo/faces/male/35.jpg\" />\n  <Avatar size=\"xl\" imageURL=\"/demo/faces/female/29.jpg\" />\n  <Avatar size=\"xxl\" imageURL=\"/demo/faces/male/2.jpg\" />\n</Avatar.List>\n```\n\n### Avatar Status\n\n```jsx\n<Avatar.List>\n  <Avatar imageURL=\"/demo/faces/male/9.jpg\" />\n  <Avatar status=\"grey\" imageURL=\"/demo/faces/female/8.jpg\" />\n  <Avatar status=\"red\" imageURL=\"/demo/faces/male/4.jpg\" />\n  <Avatar status=\"yellow\" imageURL=\"/demo/faces/male/35.jpg\" />\n  <Avatar status=\"green\" imageURL=\"/demo/faces/female/29.jpg\" />\n</Avatar.List>\n```\n\n### Avatar Placeholder\n\n```jsx\n<Avatar.List>\n  <Avatar>RB</Avatar>\n  <Avatar>KH</Avatar>\n  <Avatar>BK</Avatar>\n  <Avatar placeholder />\n</Avatar.List>\n```\n\n### Placeholder Color\n\n```jsx\n<Avatar.List>\n  <Avatar color=\"blue\">NG</Avatar>\n  <Avatar color=\"azure\">AM</Avatar>\n  <Avatar color=\"indigo\">RB</Avatar>\n  <Avatar color=\"purple\">PR</Avatar>\n  <Avatar color=\"pink\">WH</Avatar>\n  <Avatar color=\"red\">MR</Avatar>\n  <Avatar color=\"orange\">DB</Avatar>\n  <Avatar color=\"yellow\">PP</Avatar>\n  <Avatar color=\"lime\">JR</Avatar>\n  <Avatar color=\"green\">RB</Avatar>\n  <Avatar color=\"teal\">KH</Avatar>\n  <Avatar color=\"cyan\">BK</Avatar>\n  <Avatar color=\"gray\">CA</Avatar>\n  <Avatar color=\"gray-dark\">CW</Avatar>\n</Avatar.List>\n```\n"
+    },
+    {
+      "name": "AvatarList.examples.md",
+      "source": "src/components/Avatar/AvatarList.examples.md",
+      "markdown": "### Avatars List\n\n```jsx\n<Avatar.List>\n  <Avatar imageURL=\"/demo/faces/male/9.jpg\" />\n  <Avatar imageURL=\"/demo/faces/female/8.jpg\" />\n  <Avatar imageURL=\"/demo/faces/male/4.jpg\" />\n</Avatar.List>\n```\n\n### Stacked List\n\n```jsx\n<Avatar.List stacked>\n  <Avatar imageURL=\"/demo/faces/male/9.jpg\" />\n  <Avatar imageURL=\"/demo/faces/female/8.jpg\" />\n  <Avatar imageURL=\"/demo/faces/male/4.jpg\" />\n  <Avatar>+8</Avatar>\n</Avatar.List>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Avatar circular con imagen, iniciales, icono o estado.",
+    "behavior": [
+      "imageURL establece una imagen de fondo; children puede mostrar iniciales.",
+      "status añade un indicador de color. placeholder/icon permiten representar un avatar sin imagen.",
+      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo."
+    ],
+    "example": "<Avatar color=\"blue\" size=\"lg\" status=\"green\">AB</Avatar>"
+  }
+}

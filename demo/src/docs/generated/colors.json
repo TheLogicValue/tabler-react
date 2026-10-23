@@ -1,0 +1,23 @@
+{
+  "name": "colors",
+  "kind": "Utilidad",
+  "source": "src/colors.js",
+  "implementation": "src/colors.js",
+  "implementationCode": "// @ flow\nconst colors: { [string]: string } = {\n  blue: \"#467fcf\",\n  \"blue-darkest\": \"#0e1929\",\n  \"blue-darker\": \"#1c3353\",\n  \"blue-dark\": \"#3866a6\",\n  \"blue-light\": \"#7ea5dd\",\n  \"blue-lighter\": \"#c8d9f1\",\n  \"blue-lightest\": \"#edf2fa\",\n  azure: \"#45aaf2\",\n  \"azure-darkest\": \"#0e2230\",\n  \"azure-darker\": \"#1c4461\",\n  \"azure-dark\": \"#3788c2\",\n  \"azure-light\": \"#7dc4f6\",\n  \"azure-lighter\": \"#c7e6fb\",\n  \"azure-lightest\": \"#ecf7fe\",\n  indigo: \"#6574cd\",\n  \"indigo-darkest\": \"#141729\",\n  \"indigo-darker\": \"#282e52\",\n  \"indigo-dark\": \"#515da4\",\n  \"indigo-light\": \"#939edc\",\n  \"indigo-lighter\": \"#d1d5f0\",\n  \"indigo-lightest\": \"#f0f1fa\",\n  purple: \"#a55eea\",\n  \"purple-darkest\": \"#21132f\",\n  \"purple-darker\": \"#42265e\",\n  \"purple-dark\": \"#844bbb\",\n  \"purple-light\": \"#c08ef0\",\n  \"purple-lighter\": \"#e4cff9\",\n  \"purple-lightest\": \"#f6effd\",\n  pink: \"#f66d9b\",\n  \"pink-darkest\": \"#31161f\",\n  \"pink-darker\": \"#622c3e\",\n  \"pink-dark\": \"#c5577c\",\n  \"pink-light\": \"#f999b9\",\n  \"pink-lighter\": \"#fcd3e1\",\n  \"pink-lightest\": \"#fef0f5\",\n  red: \"#e74c3c\",\n  \"red-darkest\": \"#2e0f0c\",\n  \"red-darker\": \"#5c1e18\",\n  \"red-dark\": \"#b93d30\",\n  \"red-light\": \"#ee8277\",\n  \"red-lighter\": \"#f8c9c5\",\n  \"red-lightest\": \"#fdedec\",\n  orange: \"#fd9644\",\n  \"orange-darkest\": \"#331e0e\",\n  \"orange-darker\": \"#653c1b\",\n  \"orange-dark\": \"#ca7836\",\n  \"orange-light\": \"#feb67c\",\n  \"orange-lighter\": \"#fee0c7\",\n  \"orange-lightest\": \"#fff5ec\",\n  yellow: \"#f1c40f\",\n  \"yellow-darkest\": \"#302703\",\n  \"yellow-darker\": \"#604e06\",\n  \"yellow-dark\": \"#c19d0c\",\n  \"yellow-light\": \"#f5d657\",\n  \"yellow-lighter\": \"#fbedb7\",\n  \"yellow-lightest\": \"#fef9e7\",\n  lime: \"#7bd235\",\n  \"lime-darkest\": \"#192a0b\",\n  \"lime-darker\": \"#315415\",\n  \"lime-dark\": \"#62a82a\",\n  \"lime-light\": \"#a3e072\",\n  \"lime-lighter\": \"#d7f2c2\",\n  \"lime-lightest\": \"#f2fbeb\",\n  green: \"#5eba00\",\n  \"green-darkest\": \"#132500\",\n  \"green-darker\": \"#264a00\",\n  \"green-dark\": \"#4b9500\",\n  \"green-light\": \"#8ecf4d\",\n  \"green-lighter\": \"#cfeab3\",\n  \"green-lightest\": \"#eff8e6\",\n  teal: \"#2bcbba\",\n  \"teal-darkest\": \"#092925\",\n  \"teal-darker\": \"#11514a\",\n  \"teal-dark\": \"#22a295\",\n  \"teal-light\": \"#6bdbcf\",\n  \"teal-lighter\": \"#bfefea\",\n  \"teal-lightest\": \"#eafaf8\",\n  cyan: \"#17a2b8\",\n  \"cyan-darkest\": \"#052025\",\n  \"cyan-darker\": \"#09414a\",\n  \"cyan-dark\": \"#128293\",\n  \"cyan-light\": \"#5dbecd\",\n  \"cyan-lighter\": \"#b9e3ea\",\n  \"cyan-lightest\": \"#e8f6f8\",\n  gray: \"#868e96\",\n  \"gray-darkest\": \"#1b1c1e\",\n  \"gray-darker\": \"#36393c\",\n  \"gray-light\": \"#aab0b6\",\n  \"gray-lighter\": \"#dbdde0\",\n  \"gray-lightest\": \"#f3f4f5\",\n  \"gray-dark\": \"#343a40\",\n  \"gray-dark-darkest\": \"#0a0c0d\",\n  \"gray-dark-darker\": \"#15171a\",\n  \"gray-dark-dark\": \"#2a2e33\",\n  \"gray-dark-light\": \"#717579\",\n  \"gray-dark-lighter\": \"#c2c4c6\",\n  \"gray-dark-lightest\": \"#ebebec\",\n};\n\nexport default colors;\n",
+  "props": [],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Paleta de colores de Tabler exportada como un objeto JavaScript.",
+    "behavior": [
+      "Las claves incluyen colores y variantes como blue, blue-dark y blue-light.",
+      "Se puede utilizar como color de un estilo o de un gráfico. No representa un componente React."
+    ],
+    "example": "const primary = colors.blue;\n<div style={{ color: primary }}>Texto con la paleta</div>",
+    "parameters": "colors: { [nombre: string]: string }"
+  }
+}

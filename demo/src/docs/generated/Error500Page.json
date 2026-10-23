@@ -1,0 +1,50 @@
+{
+  "name": "Error500Page",
+  "kind": "Plantilla",
+  "source": "src/page_templates/errors/Error500Page.react.js",
+  "implementation": "src/page_templates/errors/Error500Page.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport DefaultErrorPage from \"./DefaultErrorPage.react\";\nimport type { Props as DefaultErrorProps } from \"./DefaultErrorPage.react\";\n\nfunction Error500Page({\n  title = \"500\",\n  subtitle = \"Oops... You just found an error page...\",\n  details = \"We are sorry but your request contains bad syntax and cannot be fulfilled...\",\n  action,\n}: DefaultErrorProps): React.Node {\n  return (\n    <DefaultErrorPage\n      title={title}\n      subtitle={subtitle}\n      details={details}\n      action={action}\n    />\n  );\n}\n\nexport default Error500Page;\n",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"500\""
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Oops... You just found an error page...\""
+    },
+    {
+      "name": "details",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"We are sorry but your request contains bad syntax and cannot be fulfilled...\""
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Plantilla visual para presentar un error 500.",
+    "behavior": [
+      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+    ],
+    "example": "<Error500Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+  }
+}

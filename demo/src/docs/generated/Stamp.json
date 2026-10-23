@@ -1,0 +1,61 @@
+{
+  "name": "Stamp",
+  "kind": "Componente",
+  "source": "src/components/Stamp/index.js",
+  "implementation": "src/components/Stamp/Stamp.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Icon } from \"../\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +size?: \"sm\" | \"md\",\n  +icon?: string,\n  +color?: string,\n|};\n\nfunction Stamp({\n  children,\n  className,\n  size = \"md\",\n  icon,\n  color = \"\",\n}: Props): React.Node {\n  const classes = cn(\n    { stamp: true, [`stamp-${size}`]: size, [`bg-${color}`]: color },\n    className\n  );\n  return (\n    <span className={classes}>\n      {icon && <Icon name={icon} />}\n      {children}\n    </span>\n  );\n}\n\nStamp.displayName = \"Stamp\";\n\nexport default Stamp;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\"",
+      "optional": true,
+      "description": "",
+      "default": "\"md\""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"\""
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "Stamp.examples.md",
+      "source": "src/components/Stamp/Stamp.examples.md",
+      "markdown": "```jsx\n<Stamp size=\"sm\" className=\"mr-1\">\n  A\n</Stamp>\n<Stamp className=\"mr-1\">B</Stamp>\n<Stamp color=\"primary\" className=\"mr-1\">\n  C\n</Stamp>\n<Stamp color=\"orange\" icon=\"globe\" />\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Insignia visual con icono o contenido.",
+    "behavior": [
+      "color y size seleccionan las clases visuales.",
+      "Se utiliza para destacar una cifra o una categoría; no contiene lógica de interacción."
+    ],
+    "example": "<Stamp color=\"blue\" icon=\"check\" size=\"md\" />"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "LoaderNoData",
+  "kind": "Componente",
+  "source": "src/components/Loader/index.js",
+  "implementation": "src/components/Loader/LoaderNodata.js",
+  "implementationCode": "\nimport React from 'react'\nconst LoaderNoData = ({ height, backgroundColor = \"#fff\", title = \"No data\" }) => {\n    return <div style={\n        {\n            height: height,\n            alignItems: \"center\",\n            display: \"flex\",\n            justifyContent: \"center\",\n            backgroundColor: backgroundColor\n        }\n    }>{title}</div>\n}\nexport default LoaderNoData",
+  "props": [
+    {
+      "name": "height"
+    },
+    {
+      "name": "backgroundColor",
+      "default": "\"#fff\"",
+      "optional": true
+    },
+    {
+      "name": "title",
+      "default": "\"No data\"",
+      "optional": true
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Zona que comunica la ausencia de datos.",
+    "behavior": [
+      "Configura title, height y backgroundColor para adaptar su apariencia.",
+      "El consumidor decide cuándo está realmente vacía la información."
+    ],
+    "example": "<LoaderNoData title=\"No hay registros\" height=\"240px\" />"
+  }
+}

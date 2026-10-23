@@ -1,0 +1,55 @@
+{
+  "name": "DoubleCard",
+  "kind": "Componente",
+  "source": "src/components/DoubleCard/index.js",
+  "implementation": "src/components/DoubleCard/DoubleCard.react.js",
+  "implementationCode": "import * as React from 'react';\nimport cn from \"classnames\";\nimport { Card, Text } from \"../\";\n\nfunction DoubleCard({ className, title, firstValue, firstlabel, secondValue, secondlabel, classColorValue = null, children }) {\n    const classes = cn(className);\n\n    return (\n        <Card className={classes}>\n            <Text className=\"double-card-header\">{title}</Text>\n            <div className=\"double-card-body\">\n                <div className=\"double-card-colum\">\n                    <Text className={`double-card-text ${classColorValue && \"text-\" + classColorValue}`}><b>{firstValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{firstlabel}</Text>\n                </div>\n                <div className=\"double-card-colum\">\n                    <Text className=\"double-card-text\"><b>{secondValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{secondlabel}</Text>\n                </div>\n            </div>\n            {children}\n        </Card>\n    );\n}\n\nexport default DoubleCard;",
+  "props": [
+    {
+      "name": "className"
+    },
+    {
+      "name": "title"
+    },
+    {
+      "name": "firstValue"
+    },
+    {
+      "name": "firstlabel"
+    },
+    {
+      "name": "secondValue"
+    },
+    {
+      "name": "secondlabel"
+    },
+    {
+      "name": "classColorValue",
+      "default": "null",
+      "optional": true
+    },
+    {
+      "name": "children"
+    }
+  ],
+  "subcomponents": [],
+  "members": [],
+  "rest": false,
+  "childApis": [],
+  "legacy": [
+    {
+      "name": "DoubleCard.example.md",
+      "source": "src/components/DoubleCard/DoubleCard.example.md",
+      "markdown": "```jsx\n<DoubleCard\n  title={\"Average\"}\n  firstValue={\"27\"}\n  firstlabel={\"Years\"}\n  secondValue={\"Moderate\"}\n  secondlabel={\"Status\"}\n/>\n```\n"
+    }
+  ],
+  "dependencies": [],
+  "guide": {
+    "summary": "Tarjeta que compara dos valores y sus etiquetas.",
+    "behavior": [
+      "Los valores ya llegan formateados desde el consumidor.",
+      "firstlabel y secondlabel respetan esa capitalización de la API; children añade información complementaria."
+    ],
+    "example": "<DoubleCard title=\"Cobertura\" firstValue=\"94%\" firstlabel=\"Cartera\" secondValue=\"80%\" secondlabel=\"Referencia\" classColorValue=\"success\" />"
+  }
+}

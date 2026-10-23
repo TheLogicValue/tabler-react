@@ -1,0 +1,299 @@
+{
+  "name": "Site",
+  "kind": "Componente",
+  "source": "src/components/Site/index.js",
+  "implementation": "src/components/Site/Site.react.js",
+  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport SiteHeader from \"./SiteHeader.react\";\nimport SiteFooter from \"./SiteFooter.react\";\nimport SiteNav from \"./SiteNav.react\";\nimport SiteLogo from \"./SiteLogo.react\";\nimport SiteWrapper from \"./SiteWrapper.react\";\n\ntype Props = {|\n  +children: React.Node,\n|};\n\n/**\n * Components for building the base of your website, such as a header, footer and nav bar\n */\nfunction Site(props: Props): React.Node {\n  return props.children;\n}\n\nSite.Header = SiteHeader;\nSite.Footer = SiteFooter;\nSite.Nav = SiteNav;\nSite.Logo = SiteLogo;\nSite.Wrapper = SiteWrapper;\n\nSite.displayName = \"Site\";\n\n/** @component */\nexport default Site;\n",
+  "props": [
+    {
+      "name": "children",
+      "type": "React.Node",
+      "optional": false,
+      "description": ""
+    }
+  ],
+  "subcomponents": [
+    "Header",
+    "Footer",
+    "Nav",
+    "Logo",
+    "Wrapper"
+  ],
+  "members": [],
+  "rest": false,
+  "childApis": [
+    {
+      "name": "Header",
+      "source": "src/components/Site/SiteHeader.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "align",
+          "type": "string",
+          "optional": true,
+          "description": "header alignment"
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": "href attribute for the logo"
+        },
+        {
+          "name": "imageURL",
+          "type": "string",
+          "optional": true,
+          "description": "Logo image URL"
+        },
+        {
+          "name": "darkImageURL",
+          "type": "string",
+          "optional": true,
+          "description": "Logo image URL"
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "optional": true,
+          "description": "The logo alt attribute"
+        },
+        {
+          "name": "notificationsTray",
+          "type": "NotificationTrayProps",
+          "optional": true,
+          "description": "Include a notifications tray"
+        },
+        {
+          "name": "accountDropdown",
+          "type": "AccountDropdownProps",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "navItems",
+          "type": "SiteNavProps",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onMenuToggleClick",
+          "type": "() => void",
+          "optional": true,
+          "description": "Handle toggling/collapsing of the mobile menu when the collapse icon is clicked"
+        },
+        {
+          "name": "condensed",
+          "type": "boolean",
+          "optional": false,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Footer",
+      "source": "src/components/Site/SiteFooter.react.js",
+      "props": [
+        {
+          "name": "links",
+          "type": "Array<React.Node>",
+          "optional": true,
+          "description": "An array of the 8 links displayed in the first footer bar"
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "description": "The text block displayed next to the links"
+        },
+        {
+          "name": "copyright",
+          "type": "React.Node",
+          "optional": true,
+          "description": "The content of the very bottom copyright notice space"
+        },
+        {
+          "name": "nav",
+          "type": "React.Node",
+          "optional": true,
+          "description": "The content of the very bottom nav space"
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Nav",
+      "source": "src/components/Site/SiteNav.react.js",
+      "props": [
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "items",
+          "type": "React.ChildrenArray < React.Element < typeof Nav.Item >>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "itemsObjects",
+          "type": "navItems",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "withSearchForm",
+          "type": "boolean",
+          "optional": true,
+          "description": "Display a search form to the right of the nav items",
+          "default": "true"
+        },
+        {
+          "name": "rightColumnComponent",
+          "type": "React.Node",
+          "optional": true,
+          "description": "Provide your own component to replace the search form"
+        },
+        {
+          "name": "collapse",
+          "type": "boolean",
+          "optional": true,
+          "description": "Toggle the collapsed state of the nav",
+          "default": "true"
+        },
+        {
+          "name": "routerContextComponentType",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "vertical",
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
+        },
+        {
+          "name": "navOption",
+          "type": "React.Node",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "stickyTop",
+          "default": "false",
+          "optional": true
+        },
+        {
+          "name": "condensed",
+          "default": "false",
+          "optional": true
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Logo",
+      "source": "src/components/Site/SiteLogo.react.js",
+      "props": [
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    },
+    {
+      "name": "Wrapper",
+      "source": "src/components/Site/SiteWrapper.react.js",
+      "props": [
+        {
+          "name": "headerProps",
+          "type": "SiteHeaderProps",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "navProps",
+          "type": "SiteNavProps",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "footerProps",
+          "type": "SiteFooterProps",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "type": "React.Node",
+          "optional": false,
+          "description": ""
+        },
+        {
+          "name": "routerContextComponentType",
+          "type": "React.ElementType",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "condensed",
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
+        },
+        {
+          "name": "vertical",
+          "default": "false",
+          "optional": true
+        }
+      ],
+      "subcomponents": [],
+      "members": [],
+      "rest": false
+    }
+  ],
+  "legacy": [],
+  "dependencies": [],
+  "guide": {
+    "summary": "Familia de estructura global del sitio.",
+    "behavior": [
+      "Compone Site.Header, Site.Nav, Site.Wrapper y Site.Footer.",
+      "La cabecera puede incluir el control de navegación; onMenuToggleClick comunica el cambio al consumidor.",
+      "No define rutas ni decide por sí mismo qué usuario tiene acceso."
+    ],
+    "example": "<Site><Site.Header href=\"/\" imageURL=\"/logo-local.svg\" alt=\"Mi aplicación\" onMenuToggleClick={handleToggle} /><Site.Wrapper>Contenido del sitio.</Site.Wrapper></Site>"
+  }
+}
