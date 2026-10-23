@@ -84,3 +84,13 @@
   outline: 2px solid var(--primary, #2f6fbd);
   outline-offset: 2px;
 }
+
+.DayPicker--invalid {
+  border-color: var(--danger, #cd201f);
+}
+
+.datepicker-error {
+  margin-top: 0.25rem;
+  color: var(--danger, #cd201f);
+  font-size: 0.875rem;
+}

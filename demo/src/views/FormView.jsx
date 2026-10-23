@@ -9,7 +9,7 @@ export default function FormView() {
   const dateRef = useRef(null)
   const offsetRef = useRef(null)
   const [previousDay, setPreviousDay] = useState('default')
-  const [restriction, setRestriction] = useState('historic')
+  const [restriction, setRestriction] = useState('current')
   const [name, setName] = useState('Cartera de prueba')
   const [category, setCategory] = useState(categoryOptions[1])
   const [enabled, setEnabled] = useState(true)
@@ -29,25 +29,26 @@ export default function FormView() {
     dateRef.current?.reset(); setError(''); setResult(null)
   }
   return <Grid.Row><Grid.Col lg={8}>
-    <Scenario title="Configuración de una cartera" description="Edita los campos, busca una clasificación y selecciona una fecha. Guardar valida el formulario y muestra sus valores; no se envía nada a un servidor." components={['Form', 'DatePicker', 'Button', 'Alert']}>
+    <Scenario title="Configuración de una cartera" description="Edita los campos, busca una clasificación y selecciona una fecha. La fecha admite como máximo hoy, tanto al escribir como al seleccionar. Guardar valida el formulario y muestra sus valores; no se envía nada a un servidor." components={['Form', 'DatePicker', 'Button', 'Alert']}>
       <Form onSubmit={save}>
         <div className="form-group"><label className="field-label">Nombre de la cartera<Form.Input name="portfolioName" value={name} onChange={e => setName(e.target.value)} placeholder="Nombre de prueba" invalid={!!error && !name.trim()} /></label></div>
         <Form.Group label="Clasificación (react-select)"><Form.SelectReact inputId="demo-classification" aria-label="Clasificación de la cartera" value={category} onChange={setCategory} options={categoryOptions} isClearable placeholder="Busca una clasificación…" /></Form.Group>
-        <div className="form-group"><label className="field-label">Fecha de referencia<DatePicker ref={dateRef} date={initialDate} dateIni={initialDate} today lastDate={new Date(2026, 11, 31)} fromMonth={new Date(2025, 0, 1)} toMonth={new Date(2026, 11, 31)} /></label></div>
+        <div className="form-group"><label className="field-label">Fecha de referencia<DatePicker ref={dateRef} date={initialDate} dateIni={initialDate} today fromMonth={new Date(2025, 0, 1)} toMonth={new Date(2026, 11, 31)} /></label></div>
         <Form.Group><Form.Checkbox name="enabled" label="Incluir la cartera en el informe" checked={enabled} onChange={e => setEnabled(e.target.checked)} /></Form.Group>
         {error && <Alert type="danger">{error}</Alert>}
         <div className="action-row"><Button type="submit" color="primary" icon="check">Guardar configuración</Button><Button type="button" color="secondary" onClick={reset}>Restablecer</Button></div>
       </Form>
     </Scenario>
-    <Scenario title="Límites y días deshabilitados" description="Histórico permite elegir hasta el 15/10/2026 y Futuro desde ese día, ambos inclusive. Los otros modos usan un matcher personalizado o deshabilitan todos los días. La navegación está limitada a septiembre-noviembre de 2026." components={['DatePicker', 'Form']}>
+    <Scenario title="Límites y días deshabilitados" description="Por defecto el límite es hoy, también al escribir. Histórico y Futuro usan el 15/10/2026 como límite explícito inclusivo. Los otros modos prueban días deshabilitados. Los ejemplos con límite explícito navegan entre septiembre y noviembre de 2026." components={['DatePicker', 'Form']}>
       <div className="form-group"><label className="field-label">Restricción del calendario<Form.Select value={restriction} onChange={event => setRestriction(event.target.value)}>
+        <option value="current">Hasta hoy (predeterminado)</option>
         <option value="historic">Histórico hasta el 15 de octubre</option>
         <option value="future">Futuro desde el 15 de octubre</option>
         <option value="weekends">Fines de semana deshabilitados</option>
         <option value="all">Todos los días deshabilitados</option>
       </Form.Select></label></div>
-      <label className="field-label">Fecha con restricciones<DatePicker key={restriction} date={initialDate} dateIni={initialDate} today
-        fromMonth={new Date(2026, 8, 1)} toMonth={new Date(2026, 10, 1)} lastDate={initialDate}
+      <label className="field-label">Fecha con restricciones<DatePicker key={restriction} date={restriction === 'current' ? new Date() : initialDate} dateIni={restriction === 'current' ? new Date() : initialDate} today
+        fromMonth={restriction === 'current' ? undefined : new Date(2026, 8, 1)} toMonth={restriction === 'current' ? undefined : new Date(2026, 10, 1)} lastDate={restriction === 'current' ? undefined : initialDate}
         isHistoric={restriction !== 'future'} disabled={restriction === 'all' ? true : restriction === 'weekends' ? { dayOfWeek: [0, 6] } : false} /></label>
     </Scenario>
   </Grid.Col><Grid.Col lg={4}>

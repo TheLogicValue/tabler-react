@@ -170,6 +170,10 @@ DatePicker utiliza `react-day-picker` 10 y `date-fns` 4. Se conservan las propie
 
 El wrapper traduce `fromMonth`/`toMonth` a los límites de navegación nuevos y utiliza el foco automático de DayPicker 10. Las fechas se mantienen en la zona local, como en DayPicker 8; no se fuerza un desfase fijo de UTC. El restablecimiento actualiza el campo y la selección del calendario.
 
+En modo histórico, el límite predeterminado es el día actual en la zona local, inclusive; `dateIni`, `today` y `previousDay` siguen controlando la fecha inicial, sin adelantar ese límite al día anterior. El límite se actualiza al pasar la medianoche con la página abierta. `lastDate` conserva su prioridad para establecer un límite explícito y el modo futuro mantiene su límite inferior. Los matchers `disabled` explícitos conservan su prioridad sobre el modo histórico/futuro.
+
+El calendario, la escritura manual y la referencia pública validan las mismas fechas. Un texto no permitido se mantiene visible para poder corregirlo, muestra un mensaje accesible y activa la validación nativa del campo. En ese caso `ref.current.value` devuelve `Invalid Date`, igual que para una fecha inexistente; el consumidor puede comprobarlo con `Number.isNaN(value.getTime())`. `reset()` restablece la fecha inicial y vuelve a validarla con las restricciones vigentes.
+
 En «Formularios y fechas», el ejemplo «Límites y días deshabilitados» permite probar histórico y futuro con límite inclusivo, fines de semana y todos los días deshabilitados. Las pruebas de interacción se ejecutan también con React 18 y una instalación del paquete sin ignorar los peers.
 
 DayPicker 10 cambia su HTML, las clases internas `.rdp-*` y algunas propiedades avanzadas que antes se pasaban directamente al calendario. Los consumidores que personalicen esos detalles deben revisar la [guía de migración oficial](https://daypicker.dev/upgrading-v8-to-v10). Las propiedades propias de DatePicker indicadas arriba se mantienen.
