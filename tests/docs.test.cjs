@@ -24,7 +24,7 @@ test('Las fichas corresponden al paquete público y sus subcomponentes existen',
 })
 
 test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () => {
-  assert.equal(document('Modal').implementation, 'src/components/Modal/Modal.js')
+  assert.equal(document('Modal').implementation, 'src/components/Modal/Modal.tsx')
   assert.ok(document('RegisterPage').props.some(prop => prop.name === 'values'))
   assert.ok(document('FormTextInput').props.some(prop => prop.name === 'name'))
   assert.ok(document('Grid').childApis.find(child => child.name === 'Col').props.some(prop => prop.name === 'lg'))
@@ -103,6 +103,22 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('RouterContextProvider').implementation, 'src/helpers/RouterContextProvider.react.tsx')
   assert.equal(document('RouterContextProvider').props.find(prop => prop.name === 'location').type, 'RouterLocation')
   assert.equal(button.props.find(prop => prop.name === 'aria-label').type, 'React.AriaAttributes["aria-label"]')
+  const form = document('Form')
+  assert.equal(form.implementation, 'src/components/Form/Form.react.tsx')
+  assert.equal(form.childApis.length, 28)
+  assert.ok(form.childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  assert.equal(form.props.find(prop => prop.name === 'autoComplete').default, '"off"')
+  assert.equal(form.childApis.find(child => child.name === 'Textarea').props.find(prop => prop.name === 'onChange').type, 'React.ChangeEventHandler<HTMLTextAreaElement>')
+  const legacyCalendar = form.childApis.find(child => child.name === 'DatePicker')
+  assert.equal(legacyCalendar.props.find(prop => prop.name === 'minYear').default, '1897')
+  assert.equal(legacyCalendar.props.find(prop => prop.name === 'defaultDate').optional, true)
+  for (const name of ['FormCard', 'FormTextInput', 'FormCheckboxInput']) assert.equal(document(name).implementation, `src/forms/${name}.react.tsx`)
+  assert.equal(document('DatePicker').implementation, 'src/components/DatePicker/DatePicker.react.tsx')
+  assert.equal(document('DatePicker').props.find(prop => prop.name === 'disabled').type, 'Matcher | Matcher[]')
+  assert.ok(document('Tabs').members.includes('activeTab'))
+  assert.equal(document('Tab').implementation, 'src/components/Tabs/Tab.react.tsx')
+  assert.equal(document('useModal').implementation, 'src/components/Modal/Hooks/useModal.ts')
+  assert.equal(document('ModalDoc').props.find(prop => prop.name === 'items').type, 'readonly ModalDocItem[]')
 })
 
 function walk(node, visit) {

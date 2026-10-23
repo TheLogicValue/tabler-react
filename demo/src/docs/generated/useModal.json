@@ -1,9 +1,9 @@
 {
   "name": "useModal",
   "kind": "Hook",
-  "source": "src/components/Modal/index.js",
-  "implementation": "src/components/Modal/Hooks/useModal.js",
-  "implementationCode": "import { useState } from 'react'\n\nexport default function useModal() {\n    const [showModal, setShowModal] = useState(false)\n    const [stateBody, setStateBody] = useState(\"load\")\n    const closeModal = () => { if (showModal) setShowModal(false) }\n    const changeModal = (value) => setStateBody(value)\n    const openModal = () => { if (!showModal) setShowModal(true) }\n\n    return {\n        showModal,\n        stateBody,\n        changeModal,\n        openModal,\n        closeModal\n    }\n} ",
+  "source": "src/components/Modal/index.ts",
+  "implementation": "src/components/Modal/Hooks/useModal.ts",
+  "implementationCode": "import { useState } from 'react';\nexport type UseModalResult = {\n  readonly showModal: boolean;\n  readonly stateBody: string;\n  changeModal: (value: string) => void;\n  openModal: () => void;\n  closeModal: () => void;\n};\nexport default function useModal(): UseModalResult {\n  const [showModal, setShowModal] = useState(false);\n  const [stateBody, setStateBody] = useState(\"load\");\n  const closeModal = () => {\n    if (showModal) setShowModal(false);\n  };\n  const changeModal = (value: string) => setStateBody(value);\n  const openModal = () => {\n    if (!showModal) setShowModal(true);\n  };\n  return {\n    showModal,\n    stateBody,\n    changeModal,\n    openModal,\n    closeModal\n  };\n}\n",
   "props": [],
   "subcomponents": [],
   "members": [
@@ -22,7 +22,8 @@
     "behavior": [
       "Devuelve showModal y las funciones openModal/closeModal para controlar el montaje.",
       "stateBody empieza en load y changeModal(value) lo modifica.",
-      "No renderiza el modal ni implementa un temporizador, una petición o una confirmación."
+      "No renderiza el modal ni implementa un temporizador, una petición o una confirmación.",
+      "stateBody y changeModal utilizan cadenas; load, error y ok activan los estados visuales de Modal. Otros textos dejan solo el contenido de children."
     ],
     "example": "const modal = useModal();\n<>\n  <Button type=\"button\" onClick={() => {\n    modal.changeModal(\"ready\");\n    modal.openModal();\n  }}>Abrir</Button>\n  {modal.showModal && <Modal show body={modal.stateBody}\n    onClose={modal.closeModal} onAccept={modal.closeModal}>\n    Contenido del modal.\n  </Modal>}\n</>",
     "parameters": "useModal(): { showModal, stateBody, changeModal, openModal, closeModal }"

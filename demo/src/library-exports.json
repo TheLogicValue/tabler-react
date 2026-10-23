@@ -99,7 +99,7 @@
     {
       "name": "DatePicker",
       "kind": "Componente",
-      "source": "src/components/DatePicker/index.js"
+      "source": "src/components/DatePicker/index.ts"
     },
     {
       "name": "DefaultErrorPage",
@@ -129,7 +129,7 @@
     {
       "name": "Error",
       "kind": "Componente",
-      "source": "src/components/IconAnimate/index.js"
+      "source": "src/components/IconAnimate/index.ts"
     },
     {
       "name": "Error400Page",
@@ -169,22 +169,22 @@
     {
       "name": "Form",
       "kind": "Componente",
-      "source": "src/components/Form/index.js"
+      "source": "src/components/Form/index.ts"
     },
     {
       "name": "FormCard",
       "kind": "Componente",
-      "source": "src/forms/FormCard.react.js"
+      "source": "src/forms/FormCard.react.tsx"
     },
     {
       "name": "FormCheckboxInput",
       "kind": "Componente",
-      "source": "src/forms/FormCheckboxInput.react.js"
+      "source": "src/forms/FormCheckboxInput.react.tsx"
     },
     {
       "name": "FormTextInput",
       "kind": "Componente",
-      "source": "src/forms/FormTextInput.react.js"
+      "source": "src/forms/FormTextInput.react.tsx"
     },
     {
       "name": "GalleryCard",
@@ -244,17 +244,17 @@
     {
       "name": "Modal",
       "kind": "Componente",
-      "source": "src/components/Modal/index.js"
+      "source": "src/components/Modal/index.ts"
     },
     {
       "name": "ModalDoc",
       "kind": "Componente",
-      "source": "src/components/Modal/index.js"
+      "source": "src/components/Modal/index.ts"
     },
     {
       "name": "ModalSplash",
       "kind": "Componente",
-      "source": "src/components/Modal/index.js"
+      "source": "src/components/Modal/index.ts"
     },
     {
       "name": "Nav",
@@ -349,7 +349,7 @@
     {
       "name": "Spinner",
       "kind": "Componente",
-      "source": "src/components/IconAnimate/index.js"
+      "source": "src/components/IconAnimate/index.ts"
     },
     {
       "name": "Stamp",
@@ -379,12 +379,12 @@
     {
       "name": "Success",
       "kind": "Componente",
-      "source": "src/components/IconAnimate/index.js"
+      "source": "src/components/IconAnimate/index.ts"
     },
     {
       "name": "Tab",
       "kind": "Componente",
-      "source": "src/components/Tabs/index.js"
+      "source": "src/components/Tabs/index.ts"
     },
     {
       "name": "TabbedCard",
@@ -394,12 +394,12 @@
     {
       "name": "TabbedContainer",
       "kind": "Componente",
-      "source": "src/components/Tabs/index.js"
+      "source": "src/components/Tabs/index.ts"
     },
     {
       "name": "TabbedHeader",
       "kind": "Componente",
-      "source": "src/components/Tabs/index.js"
+      "source": "src/components/Tabs/index.ts"
     },
     {
       "name": "Table",
@@ -414,7 +414,7 @@
     {
       "name": "Tabs",
       "kind": "Componente",
-      "source": "src/components/Tabs/index.js"
+      "source": "src/components/Tabs/index.ts"
     },
     {
       "name": "Tag",
@@ -439,7 +439,7 @@
     {
       "name": "useModal",
       "kind": "Hook",
-      "source": "src/components/Modal/index.js"
+      "source": "src/components/Modal/index.ts"
     },
     {
       "name": "useSearchBar",
@@ -449,7 +449,7 @@
     {
       "name": "useTabs",
       "kind": "Hook",
-      "source": "src/components/Tabs/index.js"
+      "source": "src/components/Tabs/index.ts"
     }
   ]
 }

@@ -1,13 +1,13 @@
 {
   "name": "Form",
   "kind": "Componente",
-  "source": "src/components/Form/index.js",
-  "implementation": "src/components/Form/Form.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\n\nimport FormGroup from \"./FormGroup.react\";\nimport FormLabel from \"./FormLabel.react\";\nimport FormInput from \"./FormInput.react\";\nimport FormStaticText from \"./FormStaticText.react\";\nimport FormTextarea from \"./FormTextarea.react\";\nimport FormImageCheck from \"./FormImageCheck.react\";\nimport FormImageCheckItem from \"./FormImageCheckItem.react\";\nimport FormColorCheck from \"./FormColorCheck.react\";\nimport FormColorCheckItem from \"./FormColorCheckItem.react\";\nimport FormInputGroup from \"./FormInputGroup.react\";\nimport FormHelp from \"./FormHelp.react\";\nimport FormSelect from \"./FormSelect.react\";\nimport FormSelectReact from \"./FormSelectReact.react\";\nimport FormFooter from \"./FormFooter.react\";\nimport FormRatio from \"./FormRatio.react\";\nimport FormFieldSet from \"./FormFieldSet.react\";\nimport FormRadio from \"./FormRadio.react\";\nimport FormCheckbox from \"./FormCheckbox.react\";\nimport FormSelectGroup from \"./FormSelectGroup.react\";\nimport FormSelectGroupItem from \"./FormSelectGroupItem.react\";\nimport FormSelectMultiple from \"./FormSelectMultiple.react\";\nimport FormFileInput from \"./FormFileInput.react\";\nimport FormSwitchStack from \"./FormSwitchStack.react\";\nimport FormSwitch from \"./FormSwitch.react\";\nimport FormInputGroupAppend from \"./FormInputGroupAppend.react\";\nimport FormInputGroupPrepend from \"./FormInputGroupPrepend.react\";\nimport FormInputGroupText from \"./FormInputGroupText.react\";\n// import FormMaskedInput from \"./FormMaskedInput.react\";\nimport FormDatePicker from \"./FormDatePicker.react\";\n\nimport type { FormEvents } from \"../../\";\n\nexport type Props = {|\n  ...FormEvents,\n  +children?: React.Node,\n  +className?: string,\n  +action?: string,\n  +method?: string,\n  +autoComplete: \"on\" | \"off\",\n|};\n\nfunction Form({\n  className,\n  children,\n  action,\n  method,\n  onSubmit,\n  autoComplete,\n}: Props): React.Node {\n  return (\n    <form\n      className={className}\n      onSubmit={onSubmit}\n      action={action}\n      method={method}\n      autoComplete={autoComplete}\n    >\n      {children}\n    </form>\n  );\n}\n\nForm.defaultProps = {\n  autoComplete: \"off\",\n};\n\nForm.Group = FormGroup;\nForm.Label = FormLabel;\nForm.Input = FormInput;\nForm.StaticText = FormStaticText;\nForm.Textarea = FormTextarea;\nForm.ImageCheck = FormImageCheck;\nForm.ImageCheckItem = FormImageCheckItem;\nForm.ColorCheck = FormColorCheck;\nForm.ColorCheckItem = FormColorCheckItem;\nForm.InputGroup = FormInputGroup;\nForm.Help = FormHelp;\nForm.Select = FormSelect;\nForm.SelectReact = FormSelectReact;\nForm.Footer = FormFooter;\nForm.Ratio = FormRatio;\nForm.FieldSet = FormFieldSet;\nForm.SelectGroup = FormSelectGroup;\nForm.SelectGroupItem = FormSelectGroupItem;\nForm.SelectMultiple = FormSelectMultiple;\nForm.Radio = FormRadio;\nForm.Checkbox = FormCheckbox;\nForm.FileInput = FormFileInput;\nForm.SwitchStack = FormSwitchStack;\nForm.Switch = FormSwitch;\nForm.InputGroupAppend = FormInputGroupAppend;\nForm.InputGroupPrepend = FormInputGroupPrepend;\nForm.InputGroupText = FormInputGroupText;\n// Form.MaskedInput = FormMaskedInput;\nForm.DatePicker = FormDatePicker;\n\nexport default Form;\n",
+  "source": "src/components/Form/index.ts",
+  "implementation": "src/components/Form/Form.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport FormGroup from \"./FormGroup.react\";\nimport FormLabel from \"./FormLabel.react\";\nimport FormInput from \"./FormInput.react\";\nimport FormStaticText from \"./FormStaticText.react\";\nimport FormTextarea from \"./FormTextarea.react\";\nimport FormImageCheck from \"./FormImageCheck.react\";\nimport FormImageCheckItem from \"./FormImageCheckItem.react\";\nimport FormColorCheck from \"./FormColorCheck.react\";\nimport FormColorCheckItem from \"./FormColorCheckItem.react\";\nimport FormInputGroup from \"./FormInputGroup.react\";\nimport FormHelp from \"./FormHelp.react\";\nimport FormSelect from \"./FormSelect.react\";\nimport FormSelectReact from \"./FormSelectReact.react\";\nimport FormFooter from \"./FormFooter.react\";\nimport FormRatio from \"./FormRatio.react\";\nimport FormFieldSet from \"./FormFieldSet.react\";\nimport FormRadio from \"./FormRadio.react\";\nimport FormCheckbox from \"./FormCheckbox.react\";\nimport FormSelectGroup from \"./FormSelectGroup.react\";\nimport FormSelectGroupItem from \"./FormSelectGroupItem.react\";\nimport FormSelectMultiple from \"./FormSelectMultiple.react\";\nimport FormFileInput from \"./FormFileInput.react\";\nimport FormSwitchStack from \"./FormSwitchStack.react\";\nimport FormSwitch from \"./FormSwitch.react\";\nimport FormInputGroupAppend from \"./FormInputGroupAppend.react\";\nimport FormInputGroupPrepend from \"./FormInputGroupPrepend.react\";\nimport FormInputGroupText from \"./FormInputGroupText.react\";\n// import FormMaskedInput from \"./FormMaskedInput.react\";\nimport FormDatePicker from \"./FormDatePicker.react\";\nexport type FormProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly action?: string;\n  readonly method?: string;\n  readonly autoComplete?: \"on\" | \"off\";\n  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;\n};\nexport type Props = FormProps;\nfunction Form({\n  className,\n  children,\n  action,\n  method,\n  onSubmit,\n  autoComplete = \"off\"\n}: FormProps): React.ReactNode {\n  return <form className={className} onSubmit={onSubmit} action={action} method={method} autoComplete={autoComplete}>\n      {children}\n    </form>;\n}\nForm.Group = FormGroup;\nForm.Label = FormLabel;\nForm.Input = FormInput;\nForm.StaticText = FormStaticText;\nForm.Textarea = FormTextarea;\nForm.ImageCheck = FormImageCheck;\nForm.ImageCheckItem = FormImageCheckItem;\nForm.ColorCheck = FormColorCheck;\nForm.ColorCheckItem = FormColorCheckItem;\nForm.InputGroup = FormInputGroup;\nForm.Help = FormHelp;\nForm.Select = FormSelect;\nForm.SelectReact = FormSelectReact;\nForm.Footer = FormFooter;\nForm.Ratio = FormRatio;\nForm.FieldSet = FormFieldSet;\nForm.SelectGroup = FormSelectGroup;\nForm.SelectGroupItem = FormSelectGroupItem;\nForm.SelectMultiple = FormSelectMultiple;\nForm.Radio = FormRadio;\nForm.Checkbox = FormCheckbox;\nForm.FileInput = FormFileInput;\nForm.SwitchStack = FormSwitchStack;\nForm.Switch = FormSwitch;\nForm.InputGroupAppend = FormInputGroupAppend;\nForm.InputGroupPrepend = FormInputGroupPrepend;\nForm.InputGroupText = FormInputGroupText;\n// Form.MaskedInput = FormMaskedInput;\nForm.DatePicker = FormDatePicker;\nexport default Form;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -37,7 +37,10 @@
       "default": "\"off\""
     },
     {
-      "name": "onSubmit"
+      "name": "onSubmit",
+      "type": "React.FormEventHandler<HTMLFormElement>",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [
@@ -75,11 +78,11 @@
   "childApis": [
     {
       "name": "Group",
-      "source": "src/components/Form/FormGroup.react.js",
+      "source": "src/components/Form/FormGroup.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -91,7 +94,7 @@
         },
         {
           "name": "label",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -120,11 +123,11 @@
     },
     {
       "name": "Label",
-      "source": "src/components/Form/FormLabel.react.js",
+      "source": "src/components/Form/FormLabel.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -141,19 +144,34 @@
           "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLLabelElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLLabelElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLLabelElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLLabelElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLLabelElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -162,7 +180,7 @@
     },
     {
       "name": "Input",
-      "source": "src/components/Form/FormInput.react.js",
+      "source": "src/components/Form/FormInput.react.tsx",
       "props": [
         {
           "name": "className",
@@ -221,7 +239,7 @@
         },
         {
           "name": "type",
-          "type": "\"checkbox\" | \"radio\" | \"text\" | \"email\" | \"password\"",
+          "type": "React.HTMLInputTypeAttribute",
           "optional": true,
           "description": ""
         },
@@ -239,7 +257,7 @@
         },
         {
           "name": "value",
-          "type": "string | number | boolean",
+          "type": "string | number",
           "optional": true,
           "description": ""
         },
@@ -269,13 +287,13 @@
         },
         {
           "name": "minLength",
-          "type": "string | number",
+          "type": "number",
           "optional": true,
           "description": ""
         },
         {
           "name": "maxLength",
-          "type": "string | number",
+          "type": "number",
           "optional": true,
           "description": ""
         },
@@ -313,7 +331,7 @@
           "name": "label",
           "type": "string",
           "optional": true,
-          "description": "Wraps the input in Form.Group and adds a label"
+          "description": ""
         },
         {
           "name": "autoComplete",
@@ -322,46 +340,88 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onKeyPress"
+          "name": "onKeyPress",
+          "type": "React.KeyboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onKeyUp"
+          "name": "onKeyUp",
+          "type": "React.KeyboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onKeyDown"
+          "name": "onKeyDown",
+          "type": "React.KeyboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onCopy"
+          "name": "onCopy",
+          "type": "React.ClipboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onCut"
+          "name": "onCut",
+          "type": "React.ClipboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPaste"
+          "name": "onPaste",
+          "type": "React.ClipboardEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -370,11 +430,11 @@
     },
     {
       "name": "StaticText",
-      "source": "src/components/Form/FormStaticText.react.js",
+      "source": "src/components/Form/FormStaticText.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -385,28 +445,52 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.FormEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -415,7 +499,7 @@
     },
     {
       "name": "Textarea",
-      "source": "src/components/Form/FormTextarea.react.js",
+      "source": "src/components/Form/FormTextarea.react.tsx",
       "props": [
         {
           "name": "className",
@@ -514,28 +598,52 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLTextAreaElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -544,11 +652,11 @@
     },
     {
       "name": "ImageCheck",
-      "source": "src/components/Form/FormImageCheck.react.js",
+      "source": "src/components/Form/FormImageCheck.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -565,7 +673,7 @@
     },
     {
       "name": "ImageCheckItem",
-      "source": "src/components/Form/FormImageCheckItem.react.js",
+      "source": "src/components/Form/FormImageCheckItem.react.tsx",
       "props": [
         {
           "name": "className",
@@ -587,31 +695,52 @@
         },
         {
           "name": "col",
-          "type": "{|\n    +width?: number,\n    +sm?: number,\n    +md?: number,\n    +lg?: number,\n  |}",
+          "type": "{\n    readonly width?: number;\n    readonly sm?: number;\n    readonly md?: number;\n    readonly lg?: number;\n  }",
           "optional": true,
           "description": "",
           "default": "{}"
         },
         {
-          "name": "onClick"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -620,11 +749,11 @@
     },
     {
       "name": "ColorCheck",
-      "source": "src/components/Form/FormColorCheck.react.js",
+      "source": "src/components/Form/FormColorCheck.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -641,7 +770,7 @@
     },
     {
       "name": "ColorCheckItem",
-      "source": "src/components/Form/FormColorCheckItem.react.js",
+      "source": "src/components/Form/FormColorCheckItem.react.tsx",
       "props": [
         {
           "name": "className",
@@ -656,25 +785,46 @@
           "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -683,11 +833,11 @@
     },
     {
       "name": "InputGroup",
-      "source": "src/components/Form/FormInputGroup.react.js",
+      "source": "src/components/Form/FormInputGroup.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -699,13 +849,13 @@
         },
         {
           "name": "append",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "prepend",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -728,11 +878,11 @@
     },
     {
       "name": "Help",
-      "source": "src/components/Form/FormHelp.react.js",
+      "source": "src/components/Form/FormHelp.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -751,7 +901,7 @@
         },
         {
           "name": "message",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -762,11 +912,11 @@
     },
     {
       "name": "Select",
-      "source": "src/components/Form/FormSelect.react.js",
+      "source": "src/components/Form/FormSelect.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -816,7 +966,7 @@
           "name": "label",
           "type": "string",
           "optional": true,
-          "description": "Wraps the select in Form.Group and adds a label"
+          "description": ""
         },
         {
           "name": "name",
@@ -826,7 +976,7 @@
         },
         {
           "name": "value",
-          "type": "string | number",
+          "type": "string | number | readonly string[]",
           "optional": true,
           "description": ""
         },
@@ -849,25 +999,46 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLSelectElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -876,17 +1047,113 @@
     },
     {
       "name": "SelectReact",
-      "source": "src/components/Form/FormSelectReact.react.js",
+      "source": "src/components/Form/FormSelectReact.react.tsx",
       "props": [
         {
-          "name": "children",
-          "type": "React.Node",
+          "name": "options",
+          "type": "SelectProps<Option, IsMulti, Group>[\"options\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "SelectProps<Option, IsMulti, Group>[\"value\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "defaultValue",
+          "type": "SelectProps<Option, IsMulti, Group>[\"defaultValue\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onChange",
+          "type": "SelectProps<Option, IsMulti, Group>[\"onChange\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onBlur",
+          "type": "SelectProps<Option, IsMulti, Group>[\"onBlur\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isMulti",
+          "type": "IsMulti",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isDisabled",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isClearable",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "React.ReactNode",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "menuIsOpen",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "menuPlacement",
+          "type": "SelectProps<Option, IsMulti, Group>[\"menuPlacement\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onMenuOpen",
+          "type": "() => void",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onMenuClose",
+          "type": "() => void",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "closeMenuOnScroll",
+          "type": "SelectProps<Option, IsMulti, Group>[\"closeMenuOnScroll\"]",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "isLoading",
+          "type": "boolean",
           "optional": true,
           "description": ""
         },
         {
           "name": "className",
           "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -930,18 +1197,6 @@
           "name": "label",
           "type": "string",
           "optional": true,
-          "description": "Wraps the select in Form.Group and adds a label"
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "optional": true,
-          "description": ""
-        },
-        {
-          "name": "value",
-          "type": "string | number",
-          "optional": true,
           "description": ""
         },
         {
@@ -950,12 +1205,6 @@
           "optional": true,
           "description": "",
           "default": "\"-\""
-        },
-        {
-          "name": "defaultValue",
-          "type": "string | number",
-          "optional": true,
-          "description": ""
         },
         {
           "name": "disabled",
@@ -982,91 +1231,100 @@
           "description": ""
         },
         {
-          "name": "selectRef"
+          "name": "selectRef",
+          "type": "React.Ref<SelectInstance<Option, IsMulti, Group>>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onChange"
+          "name": "isFixedMenu",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "menuTarget",
+          "type": "HTMLElement | null",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "clearValue"
+          "name": "clearValue",
+          "type": "CommonProps<Option, IsMulti, Group>[\"clearValue\"]",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "getStyles"
+          "name": "getStyles",
+          "type": "CommonProps<Option, IsMulti, Group>[\"getStyles\"]",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "getValue"
+          "name": "getValue",
+          "type": "CommonProps<Option, IsMulti, Group>[\"getValue\"]",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "hasValue"
+          "name": "hasValue",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "isMulti"
+          "name": "selectOption",
+          "type": "CommonProps<Option, IsMulti, Group>[\"selectOption\"]",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "isDisabled"
+          "name": "selectProps",
+          "type": "SelectProps<Option, IsMulti, Group>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "isClearable"
+          "name": "setValue",
+          "type": "CommonProps<Option, IsMulti, Group>[\"setValue\"]",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "menuPlacement"
-        },
-        {
-          "name": "isFixedMenu"
-        },
-        {
-          "name": "menuTarget"
-        },
-        {
-          "name": "menuIsOpen"
-        },
-        {
-          "name": "onMenuOpen"
-        },
-        {
-          "name": "onMenuClose"
-        },
-        {
-          "name": "closeMenuOnScroll"
-        },
-        {
-          "name": "isLoading"
-        },
-        {
-          "name": "options"
-        },
-        {
-          "name": "selectOption"
-        },
-        {
-          "name": "selectProps"
-        },
-        {
-          "name": "setValue"
-        },
-        {
-          "name": "emotion"
-        },
-        {
-          "name": "placeholder"
+          "name": "emotion",
+          "type": "unknown",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1075,11 +1333,11 @@
     },
     {
       "name": "Footer",
-      "source": "src/components/Form/FormFooter.react.js",
+      "source": "src/components/Form/FormFooter.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1096,7 +1354,7 @@
     },
     {
       "name": "Ratio",
-      "source": "src/components/Form/FormRatio.react.js",
+      "source": "src/components/Form/FormRatio.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1126,43 +1384,46 @@
           "default": "0"
         },
         {
-          "name": "value",
-          "type": "number",
-          "optional": false,
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
           "description": ""
         },
         {
-          "name": "onChange",
-          "type": "(SyntheticInputEvent<EventTarget>) => mixed",
-          "optional": false,
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
           "description": ""
         },
         {
-          "name": "defaultValue",
-          "type": "number",
-          "optional": false,
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
           "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
-        },
-        {
-          "name": "onPointerLeave"
-        },
-        {
-          "name": "onFocus"
-        },
-        {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1171,11 +1432,11 @@
     },
     {
       "name": "FieldSet",
-      "source": "src/components/Form/FormFieldSet.react.js",
+      "source": "src/components/Form/FormFieldSet.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1192,11 +1453,11 @@
     },
     {
       "name": "SelectGroup",
-      "source": "src/components/Form/FormSelectGroup.react.js",
+      "source": "src/components/Form/FormSelectGroup.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "Array<React.Element<any>>",
+          "type": "readonly React.ReactElement<FormSelectGroupItemProps>[]",
           "optional": false,
           "description": ""
         },
@@ -1219,28 +1480,52 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.FormEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLDivElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1249,7 +1534,7 @@
     },
     {
       "name": "SelectGroupItem",
-      "source": "src/components/Form/FormSelectGroupItem.react.js",
+      "source": "src/components/Form/FormSelectGroupItem.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1265,7 +1550,7 @@
         },
         {
           "name": "value",
-          "type": "string | number | boolean",
+          "type": "string | number",
           "optional": true,
           "description": ""
         },
@@ -1294,28 +1579,52 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1324,24 +1633,24 @@
     },
     {
       "name": "SelectMultiple",
-      "source": "src/components/Form/FormSelectMultiple.react.js",
+      "source": "src/components/Form/FormSelectMultiple.react.tsx",
       "props": [
         {
-          "name": "children",
-          "type": "React.Node",
-          "optional": true,
+          "name": "value",
+          "type": "readonly Option[]",
+          "optional": false,
           "description": ""
         },
         {
-          "name": "className",
-          "type": "string",
-          "optional": true,
+          "name": "options",
+          "type": "readonly Option[]",
+          "optional": false,
           "description": ""
         },
         {
-          "name": "valid",
-          "type": "boolean",
-          "optional": true,
+          "name": "onChange",
+          "type": "(value: readonly Option[], action: ActionMeta<Option | SelectAllOption>) => void",
+          "optional": false,
           "description": ""
         },
         {
@@ -1369,14 +1678,8 @@
           "description": ""
         },
         {
-          "name": "options",
-          "type": "string",
-          "optional": true,
-          "description": ""
-        },
-        {
-          "name": "value",
-          "type": "Array<Object>",
+          "name": "valid",
+          "type": "boolean",
           "optional": true,
           "description": ""
         },
@@ -1385,9 +1688,6 @@
           "type": "boolean",
           "optional": true,
           "description": ""
-        },
-        {
-          "name": "onChange"
         }
       ],
       "subcomponents": [],
@@ -1396,7 +1696,7 @@
     },
     {
       "name": "Radio",
-      "source": "src/components/Form/FormRadio.react.js",
+      "source": "src/components/Form/FormRadio.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1408,11 +1708,11 @@
           "name": "label",
           "type": "string",
           "optional": true,
-          "description": "Wrap the checkbox with a label"
+          "description": ""
         },
         {
           "name": "value",
-          "type": "string | number | boolean",
+          "type": "string | number",
           "optional": true,
           "description": ""
         },
@@ -1447,28 +1747,52 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1477,7 +1801,7 @@
     },
     {
       "name": "Checkbox",
-      "source": "src/components/Form/FormCheckbox.react.js",
+      "source": "src/components/Form/FormCheckbox.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1489,11 +1813,11 @@
           "name": "label",
           "type": "string",
           "optional": true,
-          "description": "Wrap the checkbox with a label"
+          "description": ""
         },
         {
           "name": "value",
-          "type": "string | number | boolean",
+          "type": "string | number",
           "optional": true,
           "description": ""
         },
@@ -1528,13 +1852,22 @@
           "description": ""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1543,7 +1876,7 @@
     },
     {
       "name": "FileInput",
-      "source": "src/components/Form/FormFileInput.react.js",
+      "source": "src/components/Form/FormFileInput.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1553,7 +1886,7 @@
         },
         {
           "name": "value",
-          "type": "string | number | boolean",
+          "type": "string | number",
           "optional": true,
           "description": ""
         },
@@ -1589,25 +1922,52 @@
           "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerLeave"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1616,11 +1976,11 @@
     },
     {
       "name": "SwitchStack",
-      "source": "src/components/Form/FormSwitchStack.react.js",
+      "source": "src/components/Form/FormSwitchStack.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1637,7 +1997,7 @@
     },
     {
       "name": "Switch",
-      "source": "src/components/Form/FormSwitch.react.js",
+      "source": "src/components/Form/FormSwitch.react.tsx",
       "props": [
         {
           "name": "className",
@@ -1683,31 +2043,52 @@
           "default": "\"checkbox\""
         },
         {
-          "name": "onChange"
+          "name": "onChange",
+          "type": "React.ChangeEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "ref"
+          "name": "onFocus",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onBlur"
+          "name": "onBlur",
+          "type": "React.FocusEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onFocus"
+          "name": "onClick",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onClick"
+          "name": "onMouseEnter",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseEnter"
+          "name": "onMouseLeave",
+          "type": "React.MouseEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onMouseLeave"
+          "name": "onPointerEnter",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         },
         {
-          "name": "onPointerEnter"
-        },
-        {
-          "name": "onPointerLeave"
+          "name": "onPointerLeave",
+          "type": "React.PointerEventHandler<HTMLInputElement>",
+          "optional": true,
+          "description": ""
         }
       ],
       "subcomponents": [],
@@ -1716,11 +2097,11 @@
     },
     {
       "name": "InputGroupAppend",
-      "source": "src/components/Form/FormInputGroupAppend.react.js",
+      "source": "src/components/Form/FormInputGroupAppend.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1737,11 +2118,11 @@
     },
     {
       "name": "InputGroupPrepend",
-      "source": "src/components/Form/FormInputGroupPrepend.react.js",
+      "source": "src/components/Form/FormInputGroupPrepend.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1758,11 +2139,11 @@
     },
     {
       "name": "InputGroupText",
-      "source": "src/components/Form/FormInputGroupText.react.js",
+      "source": "src/components/Form/FormInputGroupText.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1779,11 +2160,11 @@
     },
     {
       "name": "DatePicker",
-      "source": "src/components/Form/FormDatePicker.react.js",
+      "source": "src/components/Form/FormDatePicker.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -1796,36 +2177,41 @@
         {
           "name": "defaultDate",
           "type": "Date",
-          "optional": false,
-          "description": ""
+          "optional": true,
+          "description": "",
+          "default": "new Date()"
         },
         {
           "name": "minYear",
           "type": "number",
-          "optional": false,
-          "description": ""
+          "optional": true,
+          "description": "",
+          "default": "1897"
         },
         {
           "name": "maxYear",
           "type": "number",
-          "optional": false,
-          "description": ""
+          "optional": true,
+          "description": "",
+          "default": "new Date().getFullYear()"
         },
         {
           "name": "format",
           "type": "string",
-          "optional": false,
-          "description": ""
+          "optional": true,
+          "description": "",
+          "default": "\"mm/dd/yyyy\""
         },
         {
           "name": "monthLabels",
-          "type": "Array<string>",
-          "optional": false,
-          "description": ""
+          "type": "readonly string[]",
+          "optional": true,
+          "description": "",
+          "default": "[\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\"]"
         },
         {
           "name": "onChange",
-          "type": "Date => void",
+          "type": "(date: Date) => void",
           "optional": true,
           "description": ""
         }
@@ -1884,7 +2270,7 @@
     {
       "name": "FormSelectMultiple.examples.md",
       "source": "src/components/Form/FormSelectMultiple.examples.md",
-      "markdown": "### Select Multiple with icon\n\n```jsx\n<Form.Group label=\"SelectMultiple\">\n    <Form.SelectMultiple\n        icon=\"grid\"\n        placeholder=\"Seleccionar Columnas\"\n        name=\"Columnas\"\n        value={[{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },\n              { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }]}\n        options={[\n            { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },\n            { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },\n            { value: 'purple', label: 'Purple', color: '#5243AA' },\n            { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },\n            { value: 'orange', label: 'Orange', color: '#FF8B00' },\n            { value: 'yellow', label: 'Yellow', color: '#FFC400' },\n            { value: 'green', label: 'Green', color: '#36B37E' },\n            { value: 'forest', label: 'Forest', color: '#00875A' },\n            { value: 'slate', label: 'Slate', color: '#253858' },\n            { value: 'silver', label: 'Silver', color: '#666666' },\n        ]}\n        onChange={[{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true }]}\n    />\n</Form.Group>\n```"
+      "markdown": "### Select Multiple with icon\n\n```jsx\n<Form.Group label=\"SelectMultiple\">\n    <Form.SelectMultiple\n        icon=\"grid\"\n        placeholder=\"Seleccionar Columnas\"\n        name=\"Columnas\"\n        value={[{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },\n              { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true }]}\n        options={[\n            { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },\n            { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },\n            { value: 'purple', label: 'Purple', color: '#5243AA' },\n            { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },\n            { value: 'orange', label: 'Orange', color: '#FF8B00' },\n            { value: 'yellow', label: 'Yellow', color: '#FFC400' },\n            { value: 'green', label: 'Green', color: '#36B37E' },\n            { value: 'forest', label: 'Forest', color: '#00875A' },\n            { value: 'slate', label: 'Slate', color: '#253858' },\n            { value: 'silver', label: 'Silver', color: '#666666' },\n        ]}\n        onChange={(nextValue, action) => console.log(nextValue, action.action)}\n    />\n</Form.Group>\n```\n"
     },
     {
       "name": "FormSelectReact.example.md",
@@ -1903,10 +2289,25 @@
     "behavior": [
       "La raíz representa un form nativo; el consumidor mantiene valores, validación y envío.",
       "Form.Input/Checkbox/Select utilizan eventos del campo. Form.SelectReact se basa en react-select y devuelve el valor seleccionado en su onChange.",
-      "Form.Group puede agrupar una etiqueta y sus campos; utiliza identificadores adecuados para asociarlos.",
-      "autoComplete=\"off\" se conserva como defaultProps heredado; establece el atributo explícitamente si necesitas garantizarlo en React 19.",
-      "Consulta la API de cada subcomponente, especialmente Form.SelectReact, que tiene opciones diferentes de un select nativo."
+      "Consulta la API de cada subcomponente, especialmente Form.SelectReact, que tiene opciones diferentes de un select nativo.",
+      "autoComplete vale off por defecto tanto en React 18 como en React 19; puede establecerse en on. Se usa un valor por defecto del parámetro, en lugar de defaultProps de una función.",
+      "Form.Group prioriza inputProps sobre children. labelLeft distribuye la etiqueta y el campo en dos columnas. La etiqueta es visual: no crea una asociación htmlFor/id automáticamente.",
+      "Los eventos de los campos se tipan con su elemento real (input, textarea o select). value nativo admite texto o números; para marcar casillas utiliza checked. Form.Input no reenvía atributos arbitrarios como id.",
+      "Form.Ratio admite value y onChange juntos o un defaultValue sin onChange; el número de la derecha refleja el rango. Form.Switch conecta su ref al input con React 18 y 19. Form.FileInput conserva el nombre y vuelve a la etiqueta inicial si recibe una selección vacía.",
+      "Form.Select admite un array de cadenas cuando multiple=true. La propiedad readOnly se conserva en el HTML heredado, pero un select nativo no ofrece ese modo: utiliza disabled si necesitas bloquearlo.",
+      "Form.SelectReact conserva los tipos de opciones de react-select: onChange recibe una opción (o null) en modo simple y un array en modo múltiple, seguido de ActionMeta. selectRef apunta a la instancia de react-select. isDisabled, isClearable e isMulti controlan estos estados; disabled, clearable y multiple son opciones heredadas que no sustituyen a las anteriores.",
+      "Form.SelectReact coloca el menú en menuTarget o document.body y usa isFixedMenu para posicionamiento fijo. Requiere un navegador. Sus styles, components y classNamePrefix están fijados por el wrapper; los que aporte el consumidor no los sustituyen. En modo deshabilitado muestra disabledValue, por defecto -, y deja vacía la selección visual.",
+      "Form.SelectMultiple requiere options, value y onChange. Añade Seleccionar todos y devuelve solo las opciones del consumidor; ActionMeta puede identificar el marcador interno <SELECT_ALL>. Conserva los objetos originales y el estado lo mantiene el consumidor.",
+      "Form.DatePicker es el selector heredado con tres selects, distinto del DatePicker desplegable. defaultDate solo inicializa el estado; format utiliza dd/mm/yyyy en el orden deseado. Conserva las lecturas UTC y los cambios locales de Date, incluidos sus desbordamientos al cambiar de mes. Los selects están controlados sin selected en cada option.",
+      "Form.Textarea mantiene el nombre maxlength y la prioridad value || children heredada. Form.Help solo emite los atributos data del popover: el consumidor aporta su activación."
     ],
-    "example": "<Form autoComplete=\"off\" onSubmit={event => event.preventDefault()}>\n  <Form.Group label=\"Nombre\">\n    <Form.Input name=\"name\" value={name} onChange={event => setName(event.target.value)} />\n  </Form.Group>\n  <Button type=\"submit\" color=\"primary\">Guardar</Button>\n</Form>"
+    "example": "<Form autoComplete=\"off\" onSubmit={event => event.preventDefault()}>\n  <Form.Group label=\"Nombre\">\n    <Form.Input name=\"name\" value={name} onChange={event => setName(event.target.value)} />\n  </Form.Group>\n  <Button type=\"submit\" color=\"primary\">Guardar</Button>\n</Form>",
+    "examples": [
+      {
+        "title": "Selector múltiple con estado del consumidor",
+        "description": "Selecciona entradas individuales, selecciona todas o vacía el conjunto. El valor se mantiene fuera del wrapper.",
+        "code": "function SeleccionMultiple() {\n  const [selected, setSelected] = React.useState([]);\n  const options = [{ value: \"a\", label: \"Alpha\" }, { value: \"b\", label: \"Beta\" }];\n  return <Form.SelectMultiple name=\"elementos\" placeholder=\"Elegir\" options={options}\n    value={selected} onChange={(next, action) => {\n      setSelected(next);\n      console.log(action.action);\n    }} />;\n}"
+      }
+    ]
   }
 }

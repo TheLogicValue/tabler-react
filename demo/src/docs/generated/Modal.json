@@ -1,74 +1,118 @@
 {
   "name": "Modal",
   "kind": "Componente",
-  "source": "src/components/Modal/index.js",
-  "implementation": "src/components/Modal/Modal.js",
-  "implementationCode": "﻿import React from \"react\"\nimport { Button, ButtonModal, Spinner, Error, Success } from \"../..\"\nimport cn from \"classnames\"\nimport './Modal.css'\n//type 1 Only 1 accept button\n//type 2 2 buttons accept and cancel\nexport default function TLVModal({ children, className, body, spin, bodyHeight, title, onClose, onAccept, onCancel, onRemove, noFooter = false, modalLG = false, show = true, type = 1, acceptText = \"Ok\", cancelText = \"Cancel\", removeText = \"Leave Page\"  }) {\n    const classnames = cn(\"modal modal-blur fade\", { show }, className)\n\n    return (\n        <div className={classnames}>\n            <div className={modalLG ? \"modal-dialog modal-lg modal-dialog-centered\" : \"modal-dialog modal-md-plus modal-dialog-centered\"}>\n                <div className=\"modal-content\">\n                    <div className=\"modal-header\">\n                        <h5 className=\"modal-title\">{title}</h5>\n                        {body == \"load\" ? null : <Button type=\"button\" className=\"nodal-header-close\" onClick={onClose}>X</Button>}\n                    </div>\n                    <div className=\"modal-body\" style={{ height: bodyHeight }}>\n                        {getBody(body)}\n                        {children}\n                    </div>\n                    {\n                        noFooter ? null :\n                            <div className=\"modal-footer\">\n                                {body === \"load\" ? null :\n                                    <ButtonModal type=\"button\" onClick={onAccept} color=\"primary\" text={acceptText} spin={spin} />\n                                }\n                                {body === \"load\" ? null : type === 2 ? (\n                                    <ButtonModal type=\"button\" onClick={onCancel} color=\"danger\" text={cancelText} spin={spin} />\n                                ) : null}     \n                                {body === \"load\" ? null : type === 3 ? (\n                                    <>\n                                        <ButtonModal type=\"button\" onClick={onRemove} color=\"danger\" text={removeText} spin={spin} />\n                                        <ButtonModal type=\"button\" onClick={onCancel} color=\"secondary\" text={cancelText} spin={spin} />\n                                    </>\n                                ) : null}     \n                            </div>\n                    }\n                </div>\n            </div>\n        </div>\n    )\n}\n\nfunction getBody(body) {\n    switch (body) {\n        case \"load\": return (<div className=\"modal-load\">\n            <Spinner height={100} width={100} />\n        </div>)\n        case \"error\": return (<div className=\"modal-error\">\n            <Error height={100} width={100} />\n        </div>)\n        case \"ok\": return (<div className=\"modal-ok\">\n            <Success height={100} width={100} />\n        </div>)\n        default: return null\n    }\n}\n",
+  "source": "src/components/Modal/index.ts",
+  "implementation": "src/components/Modal/Modal.tsx",
+  "implementationCode": "import React from \"react\";\nimport { Button, ButtonModal } from \"../Button\";\nimport { Spinner, Error, Success } from \"../IconAnimate\";\nimport type { ButtonNativeProps } from \"../Button\";\nimport cn from \"classnames\";\nimport './Modal.css';\n//type 1 Only 1 accept button\n//type 2 2 buttons accept and cancel\nexport type ModalProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly body?: string;\n  readonly spin?: boolean;\n  readonly bodyHeight?: React.CSSProperties[\"height\"];\n  readonly title?: React.ReactNode;\n  readonly onClose?: ButtonNativeProps[\"onClick\"];\n  readonly onAccept?: ButtonNativeProps[\"onClick\"];\n  readonly onCancel?: ButtonNativeProps[\"onClick\"];\n  readonly onRemove?: ButtonNativeProps[\"onClick\"];\n  readonly noFooter?: boolean;\n  readonly modalLG?: boolean;\n  readonly show?: boolean;\n  readonly type?: 1 | 2 | 3;\n  readonly acceptText?: React.ReactNode;\n  readonly cancelText?: React.ReactNode;\n  readonly removeText?: React.ReactNode;\n};\nexport default function TLVModal({\n  children,\n  className,\n  body,\n  spin,\n  bodyHeight,\n  title,\n  onClose,\n  onAccept,\n  onCancel,\n  onRemove,\n  noFooter = false,\n  modalLG = false,\n  show = true,\n  type = 1,\n  acceptText = \"Ok\",\n  cancelText = \"Cancel\",\n  removeText = \"Leave Page\"\n}: ModalProps): React.ReactElement {\n  const classnames = cn(\"modal modal-blur fade\", {\n    show\n  }, className);\n  return <div className={classnames}>\n            <div className={modalLG ? \"modal-dialog modal-lg modal-dialog-centered\" : \"modal-dialog modal-md-plus modal-dialog-centered\"}>\n                <div className=\"modal-content\">\n                    <div className=\"modal-header\">\n                        <h5 className=\"modal-title\">{title}</h5>\n                        {body == \"load\" ? null : <Button type=\"button\" className=\"nodal-header-close\" onClick={onClose}>X</Button>}\n                    </div>\n                    <div className=\"modal-body\" style={{\n          height: bodyHeight\n        }}>\n                        {getBody(body)}\n                        {children}\n                    </div>\n                    {noFooter ? null : <div className=\"modal-footer\">\n                                {body === \"load\" ? null : <ButtonModal onClick={onAccept} color=\"primary\" text={acceptText} spin={spin} />}\n                                {body === \"load\" ? null : type === 2 ? <ButtonModal onClick={onCancel} color=\"danger\" text={cancelText} spin={spin} /> : null}     \n                                {body === \"load\" ? null : type === 3 ? <>\n                                        <ButtonModal onClick={onRemove} color=\"danger\" text={removeText} spin={spin} />\n                                        <ButtonModal onClick={onCancel} color=\"secondary\" text={cancelText} spin={spin} />\n                                    </> : null}     \n                            </div>}\n                </div>\n            </div>\n        </div>;\n}\nfunction getBody(body?: string): React.ReactNode {\n  switch (body) {\n    case \"load\":\n      return <div className=\"modal-load\">\n            <Spinner height={100} width={100} />\n        </div>;\n    case \"error\":\n      return <div className=\"modal-error\">\n            <Error height={100} width={100} />\n        </div>;\n    case \"ok\":\n      return <div className=\"modal-ok\">\n            <Success height={100} width={100} />\n        </div>;\n    default:\n      return null;\n  }\n}\n",
   "props": [
     {
-      "name": "children"
+      "name": "children",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "className"
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "body"
+      "name": "body",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "spin"
+      "name": "spin",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "bodyHeight"
+      "name": "bodyHeight",
+      "type": "React.CSSProperties[\"height\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "title"
+      "name": "title",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onClose"
+      "name": "onClose",
+      "type": "ButtonNativeProps[\"onClick\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onAccept"
+      "name": "onAccept",
+      "type": "ButtonNativeProps[\"onClick\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onCancel"
+      "name": "onCancel",
+      "type": "ButtonNativeProps[\"onClick\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onRemove"
+      "name": "onRemove",
+      "type": "ButtonNativeProps[\"onClick\"]",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "noFooter",
-      "default": "false",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "false"
     },
     {
       "name": "modalLG",
-      "default": "false",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "false"
     },
     {
       "name": "show",
-      "default": "true",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "true"
     },
     {
       "name": "type",
-      "default": "1",
-      "optional": true
+      "type": "1 | 2 | 3",
+      "optional": true,
+      "description": "",
+      "default": "1"
     },
     {
       "name": "acceptText",
-      "default": "\"Ok\"",
-      "optional": true
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": "",
+      "default": "\"Ok\""
     },
     {
       "name": "cancelText",
-      "default": "\"Cancel\"",
-      "optional": true
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": "",
+      "default": "\"Cancel\""
     },
     {
       "name": "removeText",
-      "default": "\"Leave Page\"",
-      "optional": true
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": "",
+      "default": "\"Leave Page\""
     }
   ],
   "subcomponents": [],

@@ -1,24 +1,39 @@
 {
   "name": "Tabs",
   "kind": "Componente",
-  "source": "src/components/Tabs/index.js",
-  "implementation": "src/components/Tabs/Tabs.react.js",
-  "implementationCode": "// @flow\nimport React, { forwardRef, useImperativeHandle, useState } from \"react\"\nimport TabbedContainer from \"./TabbedContainer.react\"\nimport TabbedHeader from \"./TabbedHeader.react\"\nimport cn from \"classnames\"\n\nimport \"./Tabs.css\"\n\nconst Tabs = forwardRef(({ children, options, className, modal, initialTab }, ref) => {\n  const [selectedTitle, setTitle] = useState(initialTab)\n  const classes = cn(\"card\", className)\n\n  useImperativeHandle(ref, () => {\n    return {\n      activeTab: selectedTitle,\n    }\n  })\n\n  return (\n    <div className={classes}>\n      <TabbedHeader\n        selectedTitle={selectedTitle}\n        modal={modal}\n        stateCallback={newTitle => setTitle(newTitle)}\n        options={options}\n      >\n        {children}\n      </TabbedHeader>\n      <TabbedContainer selectedTitle={selectedTitle}>\n        {children}\n      </TabbedContainer>\n    </div>\n  )\n})\n\nTabs.displayName = \"Tabs\";\n\nexport default Tabs;\n",
+  "source": "src/components/Tabs/index.ts",
+  "implementation": "src/components/Tabs/Tabs.react.tsx",
+  "implementationCode": "import React, { forwardRef, useImperativeHandle, useState } from \"react\";\nimport TabbedContainer from \"./TabbedContainer.react\";\nimport TabbedHeader from \"./TabbedHeader.react\";\nimport cn from \"classnames\";\nimport \"./Tabs.css\";\nimport type { TabChildren } from \"./Tab.react\";\nexport type TabsProps = {\n  readonly children: TabChildren;\n  readonly options?: React.ReactNode;\n  readonly className?: string;\n  readonly modal?: boolean;\n  readonly initialTab?: string;\n};\nexport type TabsHandle = {\n  readonly activeTab: string | undefined;\n};\nconst Tabs = forwardRef<TabsHandle, TabsProps>(({\n  children,\n  options,\n  className,\n  modal,\n  initialTab\n}: TabsProps, ref) => {\n  const [selectedTitle, setTitle] = useState(initialTab);\n  const classes = cn(\"card\", className);\n  useImperativeHandle(ref, () => {\n    return {\n      activeTab: selectedTitle\n    };\n  });\n  return <div className={classes}>\n      <TabbedHeader selectedTitle={selectedTitle} modal={modal} stateCallback={newTitle => setTitle(newTitle)} options={options}>\n        {children}\n      </TabbedHeader>\n      <TabbedContainer selectedTitle={selectedTitle}>\n        {children}\n      </TabbedContainer>\n    </div>;\n});\nTabs.displayName = \"Tabs\";\nexport default Tabs;\n",
   "props": [
     {
-      "name": "children"
+      "name": "children",
+      "type": "TabChildren",
+      "optional": false,
+      "description": ""
     },
     {
-      "name": "options"
+      "name": "options",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "className"
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "modal"
+      "name": "modal",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "initialTab"
+      "name": "initialTab",
+      "type": "string",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -40,7 +55,8 @@
     "behavior": [
       "initialTab establece la selección inicial y debe coincidir con un title de Tab.",
       "Cambiar initialTab después del montaje no sustituye el estado interno.",
-      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera."
+      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera.",
+      "TabsProps y TabsHandle describen las propiedades y la referencia en las fuentes TypeScript. Si initialTab no coincide con un título, no se muestra un panel. Los hijos condicionales vacíos se omiten."
     ],
     "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Datos generales.</Tab><Tab title=\"Histórico\">Evolución.</Tab></Tabs>"
   }

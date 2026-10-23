@@ -145,6 +145,9 @@ export function extractApi(info) {
       if (fromProps || fromClass) pattern(node.id)
     }
     if (node.type === 'ClassProperty' && node.static && !['defaultProps', 'displayName', 'propTypes'].includes(node.key.name)) subcomponents.add(node.key.name)
+    if (node.type === 'ClassProperty' && node.static && node.key.name === 'defaultProps' && node.value?.type === 'ObjectExpression') {
+      for (const item of node.value.properties) defaults.set(item.key.name ?? item.key.value, text(item.value))
+    }
     if (node.type === 'CallExpression' && (node.callee.name === 'useImperativeHandle' || node.callee.property?.name === 'useImperativeHandle')) {
       walk(node.arguments[1], child => {
         if (child.type === 'ReturnStatement' && child.argument?.type === 'ObjectExpression') child.argument.properties.forEach(item => members.add(item.key?.name ?? item.key?.value))

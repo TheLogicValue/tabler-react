@@ -214,6 +214,152 @@ test('NavBarMenu admite hojas sin destino, sin icono e índices de ruta inexiste
   assert.equal(container.querySelector('i.fe-undefined'), null)
 })
 
+async function changeControl(element, value, type = 'input') {
+  await React.act(async () => {
+    const prototype = element.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : element.tagName === 'SELECT' ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype
+    Object.getOwnPropertyDescriptor(prototype, 'value').set.call(element, value)
+    element.dispatchEvent(new window.Event(type, { bubbles: true }))
+  })
+}
+
+test('Los campos Form entregan eventos nativos, controlan el rango y conectan la referencia de Switch', async () => {
+  const { Form } = components
+  const ref = React.createRef(), calls = []
+  function Fields() {
+    const [name, setName] = React.useState('Inicial')
+    const [checked, setChecked] = React.useState(false)
+    return React.createElement(Form, { onSubmit: event => event.preventDefault() },
+      React.createElement(Form.Input, { name: 'name', value: name, onChange: event => { calls.push(event.currentTarget.tagName); setName(event.currentTarget.value) } }),
+      React.createElement(Form.Textarea, { name: 'note', onChange: event => calls.push(event.currentTarget.tagName) }),
+      React.createElement(Form.Select, { name: 'kind', onChange: event => calls.push(event.currentTarget.tagName) }, React.createElement('option', { value: 'a' }, 'A'), React.createElement('option', { value: 'b' }, 'B')),
+      React.createElement(Form.Switch, { ref, checked, onChange: event => setChecked(event.currentTarget.checked) }),
+      React.createElement(Form.Ratio, { defaultValue: 3, min: 0, max: 10 }))
+  }
+  await render(React.createElement(Fields))
+  await changeControl(container.querySelector('[name=name]'), 'Nuevo')
+  await changeControl(container.querySelector('textarea'), 'Nota')
+  await changeControl(container.querySelector('select'), 'b', 'change')
+  await click(ref.current)
+  assert.equal(ref.current.checked, true)
+  assert.equal(container.querySelector('[name=name]').value, 'Nuevo')
+  assert.deepEqual(calls, ['INPUT', 'TEXTAREA', 'SELECT'])
+  await changeControl(container.querySelector('[type=range]'), '7')
+  assert.equal(container.querySelector('[type=number]').value, '7')
+})
+
+test('Form.FileInput informa la selección y admite el evento con una lista de archivos vacía', async () => {
+  let changes = 0
+  await render(React.createElement(components.Form.FileInput, { label: 'Elegir', onChange: () => changes++ }))
+  const input = container.querySelector('input')
+  const file = new window.File(['a,b'], 'datos.csv', { type: 'text/csv' })
+  await React.act(async () => {
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] })
+    input.dispatchEvent(new window.Event('change', { bubbles: true }))
+  })
+  assert.equal(container.querySelector('label').textContent, 'datos.csv')
+  await React.act(async () => {
+    Object.defineProperty(input, 'files', { configurable: true, value: [] })
+    input.dispatchEvent(new window.Event('change', { bubbles: true }))
+  })
+  assert.equal(container.querySelector('label').textContent, 'Elegir')
+  assert.equal(changes, 2)
+})
+
+test('Form.DatePicker actualiza día, mes y año sin mutar la fecha recibida', async () => {
+  const initial = new Date(Date.UTC(2026, 9, 15, 12)), timestamp = initial.getTime(), dates = []
+  await render(React.createElement(components.Form.DatePicker, { defaultDate: initial, minYear: 2025, maxYear: 2026, format: 'dd/mm/yyyy', onChange: date => dates.push(date) }))
+  const selects = container.querySelectorAll('select')
+  assert.deepEqual([...selects].map(select => select.value), ['15', '9', '2026'])
+  await changeControl(selects[0], '12', 'change')
+  await changeControl(selects[1], '8', 'change')
+  await changeControl(selects[2], '2025', 'change')
+  assert.equal(dates.length, 3)
+  assert.equal(dates[2].getFullYear(), 2025)
+  assert.equal(dates[2].getMonth(), 8)
+  assert.equal(dates[2].getDate(), 12)
+  assert.equal(initial.getTime(), timestamp)
+})
+
+test('Form.SelectReact devuelve opciones y metadatos y mantiene el placeholder deshabilitado', async () => {
+  const { Form } = components
+  const options = [{ value: 'a', label: 'Alpha', id: 1 }, { value: 'b', label: 'Beta', id: 2 }]
+  const ref = React.createRef(), changes = []
+  function Selection({ disabled = false }) {
+    const [value, setValue] = React.useState(null)
+    return React.createElement(Form.SelectReact, { inputId: 'country', options, value, selectRef: ref, isDisabled: disabled, disabledValue: 'No disponible', menuIsOpen: !disabled, onChange: (option, action) => { changes.push([option, action.action]); setValue(option) } })
+  }
+  await render(React.createElement(Selection))
+  await click(container.querySelector('input'))
+  const option = [...document.querySelectorAll('[role=option]')].find(option => option.textContent === 'Beta')
+  assert.ok(option, 'El menú debe mostrar las opciones al enfocar el selector')
+  await click(option)
+  assert.deepEqual(changes, [[options[1], 'select-option']])
+  assert.deepEqual(ref.current.getValue(), [options[1]])
+  await React.act(async () => root.render(React.createElement(Selection, { disabled: true })))
+  assert.deepEqual(ref.current.getValue(), [])
+  assert.ok(container.textContent.includes('No disponible'))
+})
+
+test('Form.SelectMultiple selecciona y deselecciona todas las opciones sin devolver el marcador interno', async () => {
+  const { Form } = components
+  const options = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }], changes = []
+  function Selection() {
+    const [value, setValue] = React.useState([])
+    return React.createElement(Form.SelectMultiple, { options, value, name: 'elementos', placeholder: 'Elegir', onChange: (selected, action) => { changes.push([selected, action.action]); setValue(selected) } })
+  }
+  await render(React.createElement(Selection))
+  await click(container.querySelector('button'))
+  const all = () => [...document.querySelectorAll('[role=option]')].find(option => option.textContent === 'Seleccionar todos')
+  await click(all())
+  assert.deepEqual(changes[0][0], options)
+  if (!all()) await click(container.querySelector('button'))
+  await click(all())
+  assert.deepEqual(changes[1][0], [])
+})
+
+test('Modal y useModal conservan apertura, estados y callbacks sin enviar el formulario', async () => {
+  const { Modal, useModal } = components
+  let submissions = 0, accepted = 0
+  function Example() {
+    const modal = useModal()
+    return React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+      React.createElement('button', { type: 'button', onClick: () => { modal.changeModal('ready'); modal.openModal() } }, 'Abrir'),
+      modal.showModal && React.createElement(Modal, { type: 2, body: modal.stateBody, onClose: modal.closeModal, onCancel: modal.closeModal, onAccept: () => { accepted++; modal.closeModal() } }, 'Contenido'))
+  }
+  await render(React.createElement(Example))
+  await click(container.querySelector('button'))
+  assert.ok(container.querySelector('.modal.show'))
+  await click(container.querySelector('.modal-footer button'))
+  assert.equal(accepted, 1)
+  assert.equal(container.querySelector('.modal'), null)
+  await click(container.querySelector('button'))
+  await click(container.querySelector('.modal-header button'))
+  assert.equal(container.querySelector('.modal'), null)
+  assert.equal(submissions, 0)
+})
+
+test('Tabs, useTabs y ModalDoc conservan el cambio de panel, la referencia y los callbacks', async () => {
+  const { Tabs, Tab, useTabs, ModalDoc } = components
+  const ref = React.createRef()
+  const panels = () => ['Uno', 'Dos'].map(title => React.createElement(Tab, { key: title, title }, 'Contenido ' + title))
+  await render(React.createElement(Tabs, { ref, initialTab: 'Uno' }, panels()))
+  assert.equal(ref.current.activeTab, 'Uno')
+  await click([...container.querySelectorAll('.nav-link-item')].find(link => link.textContent === 'Dos'))
+  assert.equal(ref.current.activeTab, 'Dos')
+  assert.ok(container.textContent.includes('Contenido Dos'))
+  assert.equal(container.textContent.includes('Contenido Uno'), false)
+  function HookExample() { const { Tabs: HookTabs } = useTabs(); return React.createElement(HookTabs, { initialTab: 'Uno' }, panels()) }
+  await React.act(async () => root.render(React.createElement(HookExample)))
+  await click([...container.querySelectorAll('.nav-link-item')].find(link => link.textContent === 'Dos'))
+  assert.ok(container.textContent.includes('Contenido Dos'))
+  let accepted = 0
+  await React.act(async () => root.render(React.createElement(ModalDoc, { pathname: '/', initialTab: 'Uno', items: [{ title: 'Uno', children: 'Documento uno' }, { title: 'Dos', children: 'Documento dos' }], onAccept: () => accepted++ })))
+  await click([...container.querySelectorAll('.nav-link-item')].find(link => link.textContent === 'Dos'))
+  assert.ok(container.textContent.includes('Documento dos'))
+  await click(container.querySelector('.modal-footer button'))
+  assert.equal(accepted, 1)
+})
+
 test('Card conserva plegado, pantalla completa, cierre y su referencia sin enviar formularios', async () => {
   const { Card } = components
   const ref = React.createRef()

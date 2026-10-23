@@ -1,9 +1,9 @@
 {
   "name": "FormCheckboxInput",
   "kind": "Componente",
-  "source": "src/forms/FormCheckboxInput.react.js",
-  "implementation": "src/forms/FormCheckboxInput.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\nimport type { Props as FormCheckboxProps } from \"../components/Form/FormCheckbox.react\";\n\nfunction FormCheckboxInput(props: FormCheckboxProps) {\n  const formCheckboxComponent = React.createElement(Form.Checkbox, props);\n\n  return <Form.Group>{formCheckboxComponent}</Form.Group>;\n}\n\nexport default FormCheckboxInput;\n",
+  "source": "src/forms/FormCheckboxInput.react.tsx",
+  "implementation": "src/forms/FormCheckboxInput.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Form from \"../components/Form\";\nimport type { Props as FormCheckboxProps } from \"../components/Form/FormCheckbox.react\";\nexport type FormCheckboxInputProps = FormCheckboxProps;\nfunction FormCheckboxInput(props: FormCheckboxProps) {\n  const formCheckboxComponent = React.createElement(Form.Checkbox, props);\n  return <Form.Group>{formCheckboxComponent}</Form.Group>;\n}\nexport default FormCheckboxInput;\n",
   "props": [
     {
       "name": "className",
@@ -15,11 +15,11 @@
       "name": "label",
       "type": "string",
       "optional": true,
-      "description": "Wrap the checkbox with a label"
+      "description": ""
     },
     {
       "name": "value",
-      "type": "string | number | boolean",
+      "type": "string | number",
       "optional": true,
       "description": ""
     },
@@ -50,6 +50,24 @@
     {
       "name": "isInline",
       "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onFocus",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
       "optional": true,
       "description": ""
     }

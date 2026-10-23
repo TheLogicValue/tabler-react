@@ -20,7 +20,7 @@
             { value: 'slate', label: 'Slate', color: '#253858' },
             { value: 'silver', label: 'Silver', color: '#666666' },
         ]}
-        onChange={[{ value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true }]}
+        onChange={(nextValue, action) => console.log(nextValue, action.action)}
     />
 </Form.Group>
 ```

@@ -1,26 +1,26 @@
 {
   "name": "TabbedHeader",
   "kind": "Componente",
-  "source": "src/components/Tabs/index.js",
-  "implementation": "src/components/Tabs/TabbedHeader.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport Tab from \"./Tab.react\";\nimport Nav from \"../Nav/Nav.react\";\nimport Card from \"../Card/index\";\nimport cn from \"classnames\";\n\ntype Props = {|\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n  +selectedTitle: string,\n  +options: React.Node,\n  +stateCallback: (selectedTitle: string) => void,\n|};\n\nfunction TabbedHeader(props: Props): React.Node {\n  const { children, stateCallback, options, modal } = props;\n  const tabs = React.Children.toArray(children);\n  const classes = cn(\"tab-header\", {\"modal-header\": modal});\n\n  return (\n    <Card.Header className={classes}>\n      <ul className=\"nav nav-tabs Tab_header_tabs\">\n        {tabs.map((tab, index) => {\n          const title = tab.props.title;\n          return (\n            <Nav.Item\n              key={index}\n              value={title}\n              onClick={() => stateCallback(title)}\n              active={title === props.selectedTitle}\n            />\n          );\n        })}\n      </ul>\n      <Card.Options>\n          {options}\n      </Card.Options>\n    </Card.Header>\n  );\n}\n\nexport default TabbedHeader;\n",
+  "source": "src/components/Tabs/index.ts",
+  "implementation": "src/components/Tabs/TabbedHeader.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Nav from \"../Nav/Nav.react\";\nimport Card from \"../Card/index\";\nimport cn from \"classnames\";\nimport type { TabChildren, TabProps } from \"./Tab.react\";\nexport type TabbedHeaderProps = {\n  readonly children: TabChildren;\n  readonly selectedTitle?: string;\n  readonly options?: React.ReactNode;\n  readonly stateCallback: (selectedTitle: string) => void;\n  readonly modal?: boolean;\n};\nfunction TabbedHeader(props: TabbedHeaderProps): React.ReactNode {\n  const {\n    children,\n    stateCallback,\n    options,\n    modal\n  } = props;\n  const tabs = React.Children.toArray(children).filter((child): child is React.ReactElement<TabProps> => React.isValidElement<TabProps>(child));\n  const classes = cn(\"tab-header\", {\n    \"modal-header\": modal\n  });\n  return <Card.Header className={classes}>\n      <ul className=\"nav nav-tabs Tab_header_tabs\">\n        {tabs.map((tab, index) => {\n        const title = tab.props.title;\n        return <Nav.Item key={index} value={title} onClick={() => stateCallback(title)} active={title === props.selectedTitle} />;\n      })}\n      </ul>\n      <Card.Options>\n          {options}\n      </Card.Options>\n    </Card.Header>;\n}\nexport default TabbedHeader;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "type": "TabChildren",
       "optional": false,
       "description": ""
     },
     {
       "name": "selectedTitle",
       "type": "string",
-      "optional": false,
+      "optional": true,
       "description": ""
     },
     {
       "name": "options",
-      "type": "React.Node",
-      "optional": false,
+      "type": "React.ReactNode",
+      "optional": true,
       "description": ""
     },
     {
@@ -30,7 +30,10 @@
       "description": ""
     },
     {
-      "name": "modal"
+      "name": "modal",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],

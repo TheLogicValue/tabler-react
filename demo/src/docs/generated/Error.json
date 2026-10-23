@@ -1,19 +1,23 @@
 {
   "name": "Error",
   "kind": "Componente",
-  "source": "src/components/IconAnimate/index.js",
-  "implementation": "src/components/IconAnimate/Error.js",
-  "implementationCode": "import React from 'react';\nimport './IconAnimate.css'\nexport default function Error({ height = 26, width = 26 }) {\n    return <svg className=\"svg-container\" height={height} width={width} viewBox=\"0 0 100 100\">\n        <circle className=\"loader-svg error\" cx=\"50\" cy=\"50\" r=\"45\"></circle>\n        <path className=\"loader-svg error\" d=\"M30,30 L70,70\"></path>\n        <path className=\"loader-svg error\" d=\"M70,30 L30,70\"></path>\n    </svg>\n}",
+  "source": "src/components/IconAnimate/index.ts",
+  "implementation": "src/components/IconAnimate/Error.tsx",
+  "implementationCode": "import React from 'react';\nimport './IconAnimate.css'\nimport type { SpinnerProps } from \"./Spinner\";\nexport type ErrorProps = SpinnerProps;\n\nexport default function Error({ height = 26, width = 26 }: ErrorProps): React.ReactElement {\n    return <svg className=\"svg-container\" height={height} width={width} viewBox=\"0 0 100 100\">\n        <circle className=\"loader-svg error\" cx=\"50\" cy=\"50\" r=\"45\"></circle>\n        <path className=\"loader-svg error\" d=\"M30,30 L70,70\"></path>\n        <path className=\"loader-svg error\" d=\"M70,30 L30,70\"></path>\n    </svg>\n}",
   "props": [
     {
       "name": "height",
-      "default": "26",
-      "optional": true
+      "type": "React.SVGProps<SVGSVGElement>[\"height\"]",
+      "optional": true,
+      "description": "",
+      "default": "26"
     },
     {
       "name": "width",
-      "default": "26",
-      "optional": true
+      "type": "React.SVGProps<SVGSVGElement>[\"width\"]",
+      "optional": true,
+      "description": "",
+      "default": "26"
     }
   ],
   "subcomponents": [],

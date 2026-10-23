@@ -284,7 +284,7 @@
     "kind": "Componente",
     "summary": "Checkbox de formulario envuelto en Form.Group.",
     "status": "documented",
-    "properties": 8,
+    "properties": 11,
     "examples": 0
   },
   "FormTextInput": {
@@ -292,7 +292,7 @@
     "kind": "Componente",
     "summary": "Campo de texto con grupo y etiqueta.",
     "status": "documented",
-    "properties": 26,
+    "properties": 40,
     "examples": 0
   },
   "GalleryCard": {
@@ -612,7 +612,7 @@
     "kind": "Componente",
     "summary": "Panel de contenido identificado por un título.",
     "status": "documented",
-    "properties": 2,
+    "properties": 3,
     "examples": 1
   },
   "TabbedCard": {

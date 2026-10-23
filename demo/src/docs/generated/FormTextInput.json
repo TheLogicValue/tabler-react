@@ -1,9 +1,9 @@
 {
   "name": "FormTextInput",
   "kind": "Componente",
-  "source": "src/forms/FormTextInput.react.js",
-  "implementation": "src/forms/FormTextInput.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\n\nimport type { Props as FormInputProps } from \"../components/Form/FormInput.react\";\n\ntype Props = {|\n  ...FormInputProps,\n  +label?: string,\n|};\n\nfunction FormTextInput(props: Props): React.Node {\n  const { label, ...propsForInput } = props;\n\n  const formInputComponent = React.createElement(Form.Input, propsForInput);\n\n  return <Form.Group label={label}>{formInputComponent}</Form.Group>;\n}\n\nexport default FormTextInput;\n",
+  "source": "src/forms/FormTextInput.react.tsx",
+  "implementation": "src/forms/FormTextInput.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Form from \"../components/Form\";\nimport type { Props as FormInputProps } from \"../components/Form/FormInput.react\";\nexport type FormTextInputProps = FormInputProps;\nfunction FormTextInput(props: FormTextInputProps): React.ReactNode {\n  const {\n    label,\n    ...propsForInput\n  } = props;\n  const formInputComponent = React.createElement(Form.Input, propsForInput);\n  return <Form.Group label={label}>{formInputComponent}</Form.Group>;\n}\nexport default FormTextInput;\n",
   "props": [
     {
       "name": "className",
@@ -61,7 +61,7 @@
     },
     {
       "name": "type",
-      "type": "\"checkbox\" | \"radio\" | \"text\" | \"email\" | \"password\"",
+      "type": "React.HTMLInputTypeAttribute",
       "optional": true,
       "description": ""
     },
@@ -79,7 +79,7 @@
     },
     {
       "name": "value",
-      "type": "string | number | boolean",
+      "type": "string | number",
       "optional": true,
       "description": ""
     },
@@ -109,13 +109,13 @@
     },
     {
       "name": "minLength",
-      "type": "string | number",
+      "type": "number",
       "optional": true,
       "description": ""
     },
     {
       "name": "maxLength",
-      "type": "string | number",
+      "type": "number",
       "optional": true,
       "description": ""
     },
@@ -153,11 +153,95 @@
       "name": "label",
       "type": "string",
       "optional": true,
-      "description": "Wraps the input in Form.Group and adds a label"
+      "description": ""
     },
     {
       "name": "autoComplete",
       "type": "\"on\" | \"off\"",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onFocus",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onMouseEnter",
+      "type": "React.MouseEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onMouseLeave",
+      "type": "React.MouseEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onPointerEnter",
+      "type": "React.PointerEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onPointerLeave",
+      "type": "React.PointerEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onKeyPress",
+      "type": "React.KeyboardEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onKeyUp",
+      "type": "React.KeyboardEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onKeyDown",
+      "type": "React.KeyboardEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onCopy",
+      "type": "React.ClipboardEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onCut",
+      "type": "React.ClipboardEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "onPaste",
+      "type": "React.ClipboardEventHandler<HTMLInputElement>",
       "optional": true,
       "description": ""
     }

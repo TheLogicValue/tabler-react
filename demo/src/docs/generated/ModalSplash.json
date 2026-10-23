@@ -1,17 +1,22 @@
 {
   "name": "ModalSplash",
   "kind": "Componente",
-  "source": "src/components/Modal/index.js",
-  "implementation": "src/components/Modal/ModalSplash.js",
-  "implementationCode": "import \"./ModalSplash.css\"\nimport React from \"react\"\n\nexport default function ModalSplash({ image, alt=\"splash\" }) {\n    return <div className=\"splash-container\">\n        <div className=\"stage\">\n            <div className=\"dot-pulse\"></div>\n        </div>\n        <img src={image} className=\"splash-image\" alt={alt}></img>\n    </div>\n}",
+  "source": "src/components/Modal/index.ts",
+  "implementation": "src/components/Modal/ModalSplash.tsx",
+  "implementationCode": "import \"./ModalSplash.css\";\nimport React from \"react\";\nexport type ModalSplashProps = {\n  readonly image?: string;\n  readonly alt?: string;\n};\nexport default function ModalSplash({\n  image,\n  alt = \"splash\"\n}: ModalSplashProps): React.ReactElement {\n  return <div className=\"splash-container\">\n        <div className=\"stage\">\n            <div className=\"dot-pulse\"></div>\n        </div>\n        <img src={image} className=\"splash-image\" alt={alt}></img>\n    </div>;\n}\n",
   "props": [
     {
-      "name": "image"
+      "name": "image",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "alt",
-      "default": "\"splash\"",
-      "optional": true
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"splash\""
     }
   ],
   "subcomponents": [],

@@ -1,9 +1,9 @@
 {
   "name": "FormCard",
   "kind": "Componente",
-  "source": "src/forms/FormCard.react.js",
-  "implementation": "src/forms/FormCard.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Form from \"../components/Form\";\nimport Card from \"../components/Card\";\nimport { Button } from \"../components/Button\";\n\ntype Props = {|\n  +action ?: string,\n  +children ?: React.Node,\n  +method ?: string,\n  +title: string,\n    +buttonText: string,\n      +onSubmit ?: Function,\n|};\n\nfunction FormCard({\n  children,\n  action,\n  method,\n  onSubmit,\n  title,\n  buttonText,\n}: Props): React.Node {\n  return (\n    <Form className=\"card\" onSubmit={onSubmit} action={action} method={method}>\n      <Card.Body className=\"p-6\">\n        <Card.Title RootComponent=\"div\">{title}</Card.Title>\n        {children}\n        <Form.Footer>\n          <Button type=\"submit\" color=\"primary\" block={true}>\n            {buttonText}\n          </Button>\n        </Form.Footer>\n      </Card.Body>\n    </Form>\n  );\n}\n\nexport default FormCard;\n",
+  "source": "src/forms/FormCard.react.tsx",
+  "implementation": "src/forms/FormCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Form from \"../components/Form\";\nimport Card from \"../components/Card\";\nimport { Button } from \"../components/Button\";\nexport type FormCardProps = {\n  readonly action?: string;\n  readonly children?: React.ReactNode;\n  readonly method?: string;\n  readonly title: string;\n  readonly buttonText: string;\n  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;\n};\nfunction FormCard({\n  children,\n  action,\n  method,\n  onSubmit,\n  title,\n  buttonText\n}: FormCardProps): React.ReactNode {\n  return <Form className=\"card\" onSubmit={onSubmit} action={action} method={method}>\n      <Card.Body className=\"p-6\">\n        <Card.Title RootComponent=\"div\">{title}</Card.Title>\n        {children}\n        <Form.Footer>\n          <Button type=\"submit\" color=\"primary\" block={true}>\n            {buttonText}\n          </Button>\n        </Form.Footer>\n      </Card.Body>\n    </Form>;\n}\nexport default FormCard;\n",
   "props": [
     {
       "name": "action",
@@ -13,7 +13,7 @@
     },
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -37,7 +37,7 @@
     },
     {
       "name": "onSubmit",
-      "type": "Function",
+      "type": "React.FormEventHandler<HTMLFormElement>",
       "optional": true,
       "description": ""
     }

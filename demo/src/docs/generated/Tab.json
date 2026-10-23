@@ -1,9 +1,9 @@
 {
   "name": "Tab",
   "kind": "Componente",
-  "source": "src/components/Tabs/index.js",
-  "implementation": "src/components/Tabs/Tab.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\ntype Props = {|\n  title: string,\n  children: React.Node,\n|};\n\ntype State = {||};\n\nclass Tab extends React.PureComponent<Props, State> {\n  render(): React.Node {\n    return <div className=\"card-body\">\n              {this.props.children}\n            </div>\n  }\n}\n\nexport default Tab;\n",
+  "source": "src/components/Tabs/index.ts",
+  "implementation": "src/components/Tabs/Tab.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nexport type TabProps = {\n  readonly title: string;\n  readonly children?: React.ReactNode;\n  readonly style?: React.CSSProperties;\n};\nexport type TabChildren = React.ReactElement<TabProps> | null | undefined | boolean | readonly TabChildren[];\nclass Tab extends React.PureComponent<TabProps> {\n  render(): React.ReactNode {\n    return <div className=\"card-body\">\n              {this.props.children}\n            </div>;\n  }\n}\nexport default Tab;\n",
   "props": [
     {
       "name": "title",
@@ -13,8 +13,14 @@
     },
     {
       "name": "children",
-      "type": "React.Node",
-      "optional": false,
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "optional": true,
       "description": ""
     }
   ],
@@ -34,7 +40,8 @@
     "summary": "Panel de contenido identificado por un título.",
     "behavior": [
       "Se utiliza como hijo de Tabs o TabbedCard.",
-      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado."
+      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado.",
+      "Conserva la raíz div.card-body. style figura en el contrato heredado pero no se aplica al DOM."
     ],
     "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Contenido inicial.</Tab><Tab title=\"Detalle\">Contenido adicional.</Tab></Tabs>"
   }

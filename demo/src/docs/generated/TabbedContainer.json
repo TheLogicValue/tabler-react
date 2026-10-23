@@ -1,20 +1,20 @@
 {
   "name": "TabbedContainer",
   "kind": "Componente",
-  "source": "src/components/Tabs/index.js",
-  "implementation": "src/components/Tabs/TabbedContainer.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport Tab from \"./Tab.react\";\n\ntype Props = {|\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n  +selectedTitle: string,\n|};\n\nfunction TabbedContainer(props: Props): React.Node {\n  const tabs = React.Children.toArray(props.children);\n  return tabs.filter(tab => tab.props.title === props.selectedTitle);\n}\n\n/** @component */\nexport default TabbedContainer;\n",
+  "source": "src/components/Tabs/index.ts",
+  "implementation": "src/components/Tabs/TabbedContainer.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport type { TabChildren, TabProps } from \"./Tab.react\";\nexport type TabbedContainerProps = {\n  readonly children: TabChildren;\n  readonly selectedTitle?: string;\n};\nfunction TabbedContainer(props: TabbedContainerProps): React.ReactNode {\n  const tabs = React.Children.toArray(props.children).filter((child): child is React.ReactElement<TabProps> => React.isValidElement<TabProps>(child));\n  return tabs.filter(tab => tab.props.title === props.selectedTitle);\n}\n\n/** @component */\nexport default TabbedContainer;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "type": "TabChildren",
       "optional": false,
       "description": ""
     },
     {
       "name": "selectedTitle",
       "type": "string",
-      "optional": false,
+      "optional": true,
       "description": ""
     }
   ],

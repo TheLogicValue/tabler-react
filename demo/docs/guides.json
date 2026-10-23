@@ -502,7 +502,8 @@
       "ref.current.value devuelve un Date permitido o Invalid Date. Comprueba Number.isNaN(value.getTime()) antes de utilizarlo.",
       "disabled=true bloquea todos los días; los matchers explícitos tienen prioridad sobre los límites histórico/futuro.",
       "fromMonth y toMonth limitan la navegación del calendario, no sustituyen los matchers de selección.",
-      "Las propiedades adicionales del calendario se recogen, pero mode, selected, onSelect, disabled, locale y otras opciones del wrapper tienen prioridad. El onSelect externo no es un callback público de cambio del campo."
+      "Las propiedades adicionales del calendario se recogen, pero mode, selected, onSelect, disabled, locale y otras opciones del wrapper tienen prioridad. El onSelect externo no es un callback público de cambio del campo.",
+      "Las fuentes exportan DatePickerProps y DatePickerHandle. La referencia conserva value y reset(); los callbacks de día y las opciones adicionales compatibles proceden de los tipos de react-day-picker. El wrapper mantiene la selección single y la validación existente."
     ],
     "example": "function FechaDeReferencia() {\n  const dateRef = useRef(null);\n  return <>\n    <DatePicker ref={dateRef} today previousDay={0} />\n    <Button type=\"button\" onClick={() => {\n      const value = dateRef.current.value;\n      if (!Number.isNaN(value.getTime())) console.log(value);\n    }}>Leer fecha</Button>\n  </>;\n}",
     "props": [
@@ -608,11 +609,26 @@
     "behavior": [
       "La raíz representa un form nativo; el consumidor mantiene valores, validación y envío.",
       "Form.Input/Checkbox/Select utilizan eventos del campo. Form.SelectReact se basa en react-select y devuelve el valor seleccionado en su onChange.",
-      "Form.Group puede agrupar una etiqueta y sus campos; utiliza identificadores adecuados para asociarlos.",
-      "autoComplete=\"off\" se conserva como defaultProps heredado; establece el atributo explícitamente si necesitas garantizarlo en React 19.",
-      "Consulta la API de cada subcomponente, especialmente Form.SelectReact, que tiene opciones diferentes de un select nativo."
+      "Consulta la API de cada subcomponente, especialmente Form.SelectReact, que tiene opciones diferentes de un select nativo.",
+      "autoComplete vale off por defecto tanto en React 18 como en React 19; puede establecerse en on. Se usa un valor por defecto del parámetro, en lugar de defaultProps de una función.",
+      "Form.Group prioriza inputProps sobre children. labelLeft distribuye la etiqueta y el campo en dos columnas. La etiqueta es visual: no crea una asociación htmlFor/id automáticamente.",
+      "Los eventos de los campos se tipan con su elemento real (input, textarea o select). value nativo admite texto o números; para marcar casillas utiliza checked. Form.Input no reenvía atributos arbitrarios como id.",
+      "Form.Ratio admite value y onChange juntos o un defaultValue sin onChange; el número de la derecha refleja el rango. Form.Switch conecta su ref al input con React 18 y 19. Form.FileInput conserva el nombre y vuelve a la etiqueta inicial si recibe una selección vacía.",
+      "Form.Select admite un array de cadenas cuando multiple=true. La propiedad readOnly se conserva en el HTML heredado, pero un select nativo no ofrece ese modo: utiliza disabled si necesitas bloquearlo.",
+      "Form.SelectReact conserva los tipos de opciones de react-select: onChange recibe una opción (o null) en modo simple y un array en modo múltiple, seguido de ActionMeta. selectRef apunta a la instancia de react-select. isDisabled, isClearable e isMulti controlan estos estados; disabled, clearable y multiple son opciones heredadas que no sustituyen a las anteriores.",
+      "Form.SelectReact coloca el menú en menuTarget o document.body y usa isFixedMenu para posicionamiento fijo. Requiere un navegador. Sus styles, components y classNamePrefix están fijados por el wrapper; los que aporte el consumidor no los sustituyen. En modo deshabilitado muestra disabledValue, por defecto -, y deja vacía la selección visual.",
+      "Form.SelectMultiple requiere options, value y onChange. Añade Seleccionar todos y devuelve solo las opciones del consumidor; ActionMeta puede identificar el marcador interno <SELECT_ALL>. Conserva los objetos originales y el estado lo mantiene el consumidor.",
+      "Form.DatePicker es el selector heredado con tres selects, distinto del DatePicker desplegable. defaultDate solo inicializa el estado; format utiliza dd/mm/yyyy en el orden deseado. Conserva las lecturas UTC y los cambios locales de Date, incluidos sus desbordamientos al cambiar de mes. Los selects están controlados sin selected en cada option.",
+      "Form.Textarea mantiene el nombre maxlength y la prioridad value || children heredada. Form.Help solo emite los atributos data del popover: el consumidor aporta su activación."
     ],
-    "example": "<Form autoComplete=\"off\" onSubmit={event => event.preventDefault()}>\n  <Form.Group label=\"Nombre\">\n    <Form.Input name=\"name\" value={name} onChange={event => setName(event.target.value)} />\n  </Form.Group>\n  <Button type=\"submit\" color=\"primary\">Guardar</Button>\n</Form>"
+    "example": "<Form autoComplete=\"off\" onSubmit={event => event.preventDefault()}>\n  <Form.Group label=\"Nombre\">\n    <Form.Input name=\"name\" value={name} onChange={event => setName(event.target.value)} />\n  </Form.Group>\n  <Button type=\"submit\" color=\"primary\">Guardar</Button>\n</Form>",
+    "examples": [
+      {
+        "title": "Selector múltiple con estado del consumidor",
+        "description": "Selecciona entradas individuales, selecciona todas o vacía el conjunto. El valor se mantiene fuera del wrapper.",
+        "code": "function SeleccionMultiple() {\n  const [selected, setSelected] = React.useState([]);\n  const options = [{ value: \"a\", label: \"Alpha\" }, { value: \"b\", label: \"Beta\" }];\n  return <Form.SelectMultiple name=\"elementos\" placeholder=\"Elegir\" options={options}\n    value={selected} onChange={(next, action) => {\n      setSelected(next);\n      console.log(action.action);\n    }} />;\n}"
+      }
+    ]
   },
   "FormCard": {
     "summary": "Formulario dentro de una tarjeta con título y acción principal.",
@@ -842,8 +858,8 @@
   "ModalDoc": {
     "summary": "Modal con una o varias secciones de documentación.",
     "behavior": [
-      "items debe contener secciones con title, value y children.",
-      "pathname distinto de / excluye la sección cuyo value es features; debe quedar al menos una sección.",
+      "items contiene secciones con title y children; value es opcional y permite el filtrado de features.",
+      "pathname distinto de / excluye la sección cuyo value es features. Si no queda ninguna sección, se conserva una cabecera y un cuerpo vacíos con los controles de cierre y aceptar.",
       "Con varias secciones utiliza Tabs; con una muestra una cabecera simple.",
       "La integración decide el montaje, la visibilidad, el foco y el cierre mediante onClose/onAccept."
     ],
@@ -888,7 +904,7 @@
       },
       {
         "name": "rootIndex",
-      "description": "Índice base 0, predeterminado 0, del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; un índice inexistente no aporta una coincidencia por segmento."
+        "description": "Índice base 0, predeterminado 0, del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; un índice inexistente no aporta una coincidencia por segmento."
       }
     ]
   },
@@ -1090,7 +1106,8 @@
     "summary": "Panel de contenido identificado por un título.",
     "behavior": [
       "Se utiliza como hijo de Tabs o TabbedCard.",
-      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado."
+      "title debe coincidir con la selección del contenedor; Tab por sí solo no crea la cabecera ni mantiene el estado.",
+      "Conserva la raíz div.card-body. style figura en el contrato heredado pero no se aplica al DOM."
     ],
     "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Contenido inicial.</Tab><Tab title=\"Detalle\">Contenido adicional.</Tab></Tabs>"
   },
@@ -1135,7 +1152,8 @@
     "behavior": [
       "initialTab establece la selección inicial y debe coincidir con un title de Tab.",
       "Cambiar initialTab después del montaje no sustituye el estado interno.",
-      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera."
+      "La referencia expone activeTab como título activo. options permite añadir acciones a la cabecera.",
+      "TabsProps y TabsHandle describen las propiedades y la referencia en las fuentes TypeScript. Si initialTab no coincide con un título, no se muestra un panel. Los hijos condicionales vacíos se omiten."
     ],
     "example": "<Tabs initialTab=\"Resumen\"><Tab title=\"Resumen\">Datos generales.</Tab><Tab title=\"Histórico\">Evolución.</Tab></Tabs>"
   },
@@ -1204,7 +1222,8 @@
     "behavior": [
       "Devuelve showModal y las funciones openModal/closeModal para controlar el montaje.",
       "stateBody empieza en load y changeModal(value) lo modifica.",
-      "No renderiza el modal ni implementa un temporizador, una petición o una confirmación."
+      "No renderiza el modal ni implementa un temporizador, una petición o una confirmación.",
+      "stateBody y changeModal utilizan cadenas; load, error y ok activan los estados visuales de Modal. Otros textos dejan solo el contenido de children."
     ],
     "example": "const modal = useModal();\n<>\n  <Button type=\"button\" onClick={() => {\n    modal.changeModal(\"ready\");\n    modal.openModal();\n  }}>Abrir</Button>\n  {modal.showModal && <Modal show body={modal.stateBody}\n    onClose={modal.closeModal} onAccept={modal.closeModal}>\n    Contenido del modal.\n  </Modal>}\n</>",
     "parameters": "useModal(): { showModal, stateBody, changeModal, openModal, closeModal }"
