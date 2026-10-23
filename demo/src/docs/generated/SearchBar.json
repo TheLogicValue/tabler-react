@@ -1,23 +1,34 @@
 {
   "name": "SearchBar",
   "kind": "Componente",
-  "source": "src/components/SearchBar/index.js",
-  "implementation": "src/components/SearchBar/SearchBar.js",
-  "implementationCode": "import React from \"react\"\nimport cn from \"classnames\"\nimport Form from \"../Form\"\nimport { Button } from \"../Button\"\nimport './SearchBar.css'\n\nexport default function SearchBar({ classes, onKeyUp, onClick, placeholder = \"Search for...\" }) {\n    const className = cn(\"input-search-bar\", classes)\n    return (\n        <Form.Group className={className}>\n            <Form.Input placeholder={placeholder}\n                onKeyUp={(e) => onKeyUp(e)}\n            />\n            <Button color=\"outline\" icon=\"search\" onClick={() => onClick()} />\n        </Form.Group>\n    )\n}",
+  "source": "src/components/SearchBar/index.ts",
+  "implementation": "src/components/SearchBar/SearchBar.tsx",
+  "implementationCode": "import React from \"react\"\nimport cn from \"classnames\"\nimport Form from \"../Form\"\nimport { Button } from \"../Button\"\nimport './SearchBar.css'\n\nexport type SearchBarProps = {\n    readonly classes?: cn.Argument;\n    readonly onKeyUp: React.KeyboardEventHandler<HTMLInputElement>;\n    readonly onClick: () => void;\n    readonly placeholder?: string;\n};\n\nexport default function SearchBar({ classes, onKeyUp, onClick, placeholder = \"Search for...\" }: SearchBarProps): React.ReactElement {\n    const className = cn(\"input-search-bar\", classes)\n    return (\n        <Form.Group className={className}>\n            <Form.Input placeholder={placeholder}\n                onKeyUp={(e) => onKeyUp(e)}\n            />\n            <Button type=\"button\" color=\"outline\" icon=\"search\" onClick={() => onClick()} />\n        </Form.Group>\n    )\n}\n",
   "props": [
     {
-      "name": "classes"
+      "name": "classes",
+      "type": "cn.Argument",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onKeyUp"
+      "name": "onKeyUp",
+      "type": "React.KeyboardEventHandler<HTMLInputElement>",
+      "optional": false,
+      "description": ""
     },
     {
-      "name": "onClick"
+      "name": "onClick",
+      "type": "() => void",
+      "optional": false,
+      "description": ""
     },
     {
       "name": "placeholder",
-      "default": "\"Search for...\"",
-      "optional": true
+      "type": "string",
+      "optional": true,
+      "description": "",
+      "default": "\"Search for...\""
     }
   ],
   "subcomponents": [],
@@ -29,9 +40,10 @@
   "guide": {
     "summary": "Campo de búsqueda con un botón de acción.",
     "behavior": [
-      "onKeyUp recibe el evento del campo; onClick se ejecuta sin argumentos al pulsar el botón.",
-      "No filtra datos internamente. Puede combinarse con useSearchBar.",
-      "Proporciona ambos callbacks, porque la implementación los invoca directamente."
+      "onKeyUp es un evento de teclado del input y onClick se ejecuta sin argumentos al pulsar el botón. Proporciona ambos callbacks, porque se invocan directamente.",
+      "classes admite los valores de classnames: texto, listas y objetos condicionales. placeholder conserva el valor predeterminado Search for....",
+      "El campo es no controlado: no expone value ni se vacía por cambiar el filtro del hook. No filtra datos, añade debounce ni realiza consultas. Puede combinarse con useSearchBar.",
+      "El botón de búsqueda es de tipo button, por lo que no envía un formulario contenedor. No se añade reenvío de atributos que el wrapper no utilizaba."
     ],
     "example": "const { filter, handleChangeFilter } = useSearchBar();\n<SearchBar placeholder=\"Buscar...\" onKeyUp={handleChangeFilter} onClick={() => console.log(filter)} />"
   }

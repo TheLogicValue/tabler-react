@@ -1,7 +1,13 @@
 import React, {  useState  } from 'react';
 import "./Accordion.css";
 
-export default function Accordion({children, accordionButton, collapseDefault = true}) {    
+export type AccordionProps = {
+    readonly children?: React.ReactNode;
+    readonly accordionButton?: React.ReactNode;
+    readonly collapseDefault?: boolean;
+};
+
+export default function Accordion({children, accordionButton, collapseDefault = true}: AccordionProps): React.ReactElement {
     const [collapse, setCollapse] = useState(collapseDefault);
 
     return (

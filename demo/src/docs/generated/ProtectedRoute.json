@@ -1,25 +1,35 @@
 {
   "name": "ProtectedRoute",
   "kind": "Componente",
-  "source": "src/components/ProtectedRoute/index.js",
-  "implementation": "src/components/ProtectedRoute/ProtectedRoute.js",
-  "implementationCode": "import { Navigate, Outlet } from \"react-router-dom\";\nimport React from 'react';\n\nexport const ProtectedRoute = ({\n  isAllowed,\n  redirectTo = \"/\",\n  replace = true,\n  children,\n}) => {\n  if (!isAllowed) {\n    return <Navigate to={redirectTo} replace={replace} />;\n  }\n\n  return children ? children : <Outlet />;\n};",
+  "source": "src/components/ProtectedRoute/index.ts",
+  "implementation": "src/components/ProtectedRoute/ProtectedRoute.tsx",
+  "implementationCode": "import { Navigate, Outlet } from \"react-router-dom\";\nimport React from 'react';\nimport type { To } from \"react-router-dom\";\n\nexport type ProtectedRouteProps = {\n  readonly isAllowed: boolean;\n  readonly redirectTo?: To;\n  readonly replace?: boolean;\n  readonly children?: React.ReactNode;\n};\n\nexport const ProtectedRoute = ({\n  isAllowed,\n  redirectTo = \"/\",\n  replace = true,\n  children,\n}: ProtectedRouteProps): React.ReactNode => {\n  if (!isAllowed) {\n    return <Navigate to={redirectTo} replace={replace} />;\n  }\n\n  return children ? children : <Outlet />;\n};\n",
   "props": [
     {
-      "name": "isAllowed"
+      "name": "isAllowed",
+      "type": "boolean",
+      "optional": false,
+      "description": ""
     },
     {
       "name": "redirectTo",
-      "default": "\"/\"",
-      "optional": true
+      "type": "To",
+      "optional": true,
+      "description": "",
+      "default": "\"/\""
     },
     {
       "name": "replace",
-      "default": "true",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "true"
     },
     {
-      "name": "children"
+      "name": "children",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -31,8 +41,9 @@
   "guide": {
     "summary": "Protección visual de rutas mediante React Router.",
     "behavior": [
-      "Si isAllowed es falso devuelve Navigate a redirectTo; replace decide si sustituye la entrada del historial.",
-      "Cuando se permite el acceso, representa children o un Outlet.",
+      "isAllowed expresa una decisión booleana de acceso. Si es falso devuelve Navigate a redirectTo; su valor predeterminado es /. redirectTo acepta el tipo To nativo de React Router, incluido un objeto pathname/search/hash.",
+      "replace=true (predeterminado) sustituye la entrada del historial. Con false se añade una entrada nueva, conservando el comportamiento nativo de Navigate.",
+      "Cuando se permite el acceso, representa children si tiene valor truthy o un Outlet. El consumidor conserva el router, sus rutas y la decisión de acceso.",
       "No sustituye la autorización en el servidor ni valida una sesión por sí mismo."
     ],
     "example": "<Route element={<ProtectedRoute isAllowed={canRead} redirectTo=\"/sin-acceso\" />}><Route path=\"datos\" element={<DataPage />} /></Route>"

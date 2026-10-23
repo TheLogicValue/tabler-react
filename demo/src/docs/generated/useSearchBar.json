@@ -1,9 +1,9 @@
 {
   "name": "useSearchBar",
   "kind": "Hook",
-  "source": "src/components/SearchBar/index.js",
-  "implementation": "src/components/SearchBar/useSearchBar.js",
-  "implementationCode": "﻿import { useCallback, useState } from 'react'\n\nexport default function useSearchBar() {\n    const [filter, setFilter] = useState(undefined)\n\n    const handleChangeFilter = useCallback((e) => {        \n        setFilter(e.target.value.trim().length > 0 ? e.target.value.trim() : undefined)\n    }, [setFilter])\n\n    return {\n        filter,\n        setFilter,\n        handleChangeFilter\n    }\n} ",
+  "source": "src/components/SearchBar/index.ts",
+  "implementation": "src/components/SearchBar/useSearchBar.ts",
+  "implementationCode": "import { useCallback, useState } from 'react'\nimport type { Dispatch, SetStateAction } from 'react'\n\n// React key events expose the input through currentTarget. Keep accepting the\n// original target.value shape for change events and consumer-created events.\nexport type SearchBarFilterEvent =\n    | { readonly target: { readonly value: string } }\n    | { readonly currentTarget: HTMLInputElement };\n\nexport type UseSearchBarResult = {\n    readonly filter: string | undefined;\n    readonly setFilter: Dispatch<SetStateAction<string | undefined>>;\n    readonly handleChangeFilter: (event: SearchBarFilterEvent) => void;\n};\n\nexport default function useSearchBar(): UseSearchBarResult {\n    const [filter, setFilter] = useState<string | undefined>(undefined)\n\n    const handleChangeFilter = useCallback((event: SearchBarFilterEvent) => {\n        const value = (\"currentTarget\" in event ? event.currentTarget.value : event.target.value).trim()\n        setFilter(value.length > 0 ? value : undefined)\n    }, [setFilter])\n\n    return {\n        filter,\n        setFilter,\n        handleChangeFilter\n    }\n}\n",
   "props": [],
   "subcomponents": [],
   "members": [
@@ -18,11 +18,11 @@
   "guide": {
     "summary": "Hook que almacena un filtro de texto normalizado.",
     "behavior": [
-      "handleChangeFilter recibe un evento con target.value y elimina los espacios exteriores.",
-      "Una cadena vacía se convierte en undefined; setFilter permite cambiarlo directamente.",
-      "No consulta servidores ni filtra arrays por sí mismo."
+      "filter es string | undefined. handleChangeFilter admite eventos de cambio/teclado de un input y la forma heredada { target: { value: string } }; elimina los espacios exteriores.",
+      "Una cadena vacía se convierte en undefined. setFilter acepta un valor o una función sobre el estado anterior, igual que el setter de React.",
+      "El callback conserva su identidad entre renders. El hook solo mantiene el filtro: no cambia el texto de SearchBar, consulta servidores ni filtra arrays por sí mismo."
     ],
     "example": "const { filter, handleChangeFilter, setFilter } = useSearchBar();\n<>\n  <input onChange={handleChangeFilter} placeholder=\"Buscar\" />\n  <Button type=\"button\" onClick={() => setFilter(undefined)}>Restablecer</Button>\n</>",
-    "parameters": "useSearchBar(): { filter, setFilter, handleChangeFilter }"
+    "parameters": "useSearchBar(): UseSearchBarResult = { filter: string | undefined, setFilter, handleChangeFilter }"
   }
 }

@@ -1,9 +1,20 @@
 import React from 'react';
-import {Grid, List} from "../"
+import Grid from "../Grid"
+import List from "../List"
 
-function Breadcrumb(props) {
+export type BreadcrumbCrumb<TPath = string> = {
+  readonly name: React.ReactNode;
+  readonly path: TPath;
+};
 
-  function isLast(index) {
+export type BreadcrumbProps<TPath = string> = {
+  readonly crumbs: ReadonlyArray<BreadcrumbCrumb<TPath>>;
+  readonly selected: (path: TPath) => void;
+};
+
+function Breadcrumb<TPath = string>(props: BreadcrumbProps<TPath>): React.ReactElement {
+
+  function isLast(index: number) {
     return index === props.crumbs.length - 1;
   }
 
@@ -20,7 +31,7 @@ function Breadcrumb(props) {
                             key={ci}
                             className="breadcrumb-item align-items-center"
                         >
-                            <button className={`btn btn-link ${disabled}`} onClick={()=> props.selected(crumb.path)}>
+                            <button type="button" className={`btn btn-link ${disabled}`} onClick={()=> props.selected(crumb.path)}>
                                 {crumb.name}
                             </button>
                         </li>

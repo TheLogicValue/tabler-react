@@ -3,7 +3,8 @@
     "summary": "Contenido desplegable con un botón de cabecera.",
     "behavior": [
       "accordionButton define el texto del disparador y children el contenido.",
-      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial."
+      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial.",
+      "collapseDefault=true empieza cerrado y false empieza abierto. Solo inicializa el estado: cambiar la propiedad después no controla la apertura. El botón es de tipo button y no envía formularios."
     ],
     "example": "<Accordion accordionButton=\"Ver detalles\"><p>Contenido ampliado.</p></Accordion>"
   },
@@ -377,21 +378,21 @@
   "Breadcrumb": {
     "summary": "Ruta de navegación construida a partir de migas.",
     "behavior": [
-      "crumbs debe ser un array de objetos con name y path.",
-      "selected recibe el path de la miga pulsada; el componente no realiza la navegación.",
-      "La última miga se presenta con apariencia deshabilitada."
+      "crumbs es una lista de BreadcrumbCrumb<TPath> con name (nodo React) y path. TPath se infiere de los datos: puede ser texto u otro valor del consumidor, sin transformar su referencia.",
+      "selected recibe el path de la miga pulsada; el componente no realiza la navegación. Los botones son de tipo button y no envían un formulario contenedor.",
+      "La última miga conserva la clase visual disabled; no se añade el atributo nativo disabled ni una regla nueva que bloquee selected. No se reenvían atributos HTML adicionales."
     ],
     "example": "<Breadcrumb crumbs={[{ name: \"Inicio\", path: \"/\" }, { name: \"Datos\", path: \"/datos\" }]} selected={path => console.log(path)} />",
     "props": [
       {
         "name": "crumbs",
-        "type": "Array<{name: string, path: string}>",
+        "type": "ReadonlyArray<BreadcrumbCrumb<TPath>>",
         "optional": false,
         "description": "Migas en el orden de navegación."
       },
       {
         "name": "selected",
-        "type": "(path: string) => void",
+        "type": "(path: TPath) => void",
         "optional": false,
         "description": "Recibe el path seleccionado; conecta aquí el router de la aplicación."
       }
@@ -1015,8 +1016,9 @@
   "ProtectedRoute": {
     "summary": "Protección visual de rutas mediante React Router.",
     "behavior": [
-      "Si isAllowed es falso devuelve Navigate a redirectTo; replace decide si sustituye la entrada del historial.",
-      "Cuando se permite el acceso, representa children o un Outlet.",
+      "isAllowed expresa una decisión booleana de acceso. Si es falso devuelve Navigate a redirectTo; su valor predeterminado es /. redirectTo acepta el tipo To nativo de React Router, incluido un objeto pathname/search/hash.",
+      "replace=true (predeterminado) sustituye la entrada del historial. Con false se añade una entrada nueva, conservando el comportamiento nativo de Navigate.",
+      "Cuando se permite el acceso, representa children si tiene valor truthy o un Outlet. El consumidor conserva el router, sus rutas y la decisión de acceso.",
       "No sustituye la autorización en el servidor ni valida una sesión por sí mismo."
     ],
     "example": "<Route element={<ProtectedRoute isAllowed={canRead} redirectTo=\"/sin-acceso\" />}><Route path=\"datos\" element={<DataPage />} /></Route>"
@@ -1042,9 +1044,10 @@
   "SearchBar": {
     "summary": "Campo de búsqueda con un botón de acción.",
     "behavior": [
-      "onKeyUp recibe el evento del campo; onClick se ejecuta sin argumentos al pulsar el botón.",
-      "No filtra datos internamente. Puede combinarse con useSearchBar.",
-      "Proporciona ambos callbacks, porque la implementación los invoca directamente."
+      "onKeyUp es un evento de teclado del input y onClick se ejecuta sin argumentos al pulsar el botón. Proporciona ambos callbacks, porque se invocan directamente.",
+      "classes admite los valores de classnames: texto, listas y objetos condicionales. placeholder conserva el valor predeterminado Search for....",
+      "El campo es no controlado: no expone value ni se vacía por cambiar el filtro del hook. No filtra datos, añade debounce ni realiza consultas. Puede combinarse con useSearchBar.",
+      "El botón de búsqueda es de tipo button, por lo que no envía un formulario contenedor. No se añade reenvío de atributos que el wrapper no utilizaba."
     ],
     "example": "const { filter, handleChangeFilter } = useSearchBar();\n<SearchBar placeholder=\"Buscar...\" onKeyUp={handleChangeFilter} onClick={() => console.log(filter)} />"
   },
@@ -1245,12 +1248,12 @@
   "useSearchBar": {
     "summary": "Hook que almacena un filtro de texto normalizado.",
     "behavior": [
-      "handleChangeFilter recibe un evento con target.value y elimina los espacios exteriores.",
-      "Una cadena vacía se convierte en undefined; setFilter permite cambiarlo directamente.",
-      "No consulta servidores ni filtra arrays por sí mismo."
+      "filter es string | undefined. handleChangeFilter admite eventos de cambio/teclado de un input y la forma heredada { target: { value: string } }; elimina los espacios exteriores.",
+      "Una cadena vacía se convierte en undefined. setFilter acepta un valor o una función sobre el estado anterior, igual que el setter de React.",
+      "El callback conserva su identidad entre renders. El hook solo mantiene el filtro: no cambia el texto de SearchBar, consulta servidores ni filtra arrays por sí mismo."
     ],
     "example": "const { filter, handleChangeFilter, setFilter } = useSearchBar();\n<>\n  <input onChange={handleChangeFilter} placeholder=\"Buscar\" />\n  <Button type=\"button\" onClick={() => setFilter(undefined)}>Restablecer</Button>\n</>",
-    "parameters": "useSearchBar(): { filter, setFilter, handleChangeFilter }"
+    "parameters": "useSearchBar(): UseSearchBarResult = { filter: string | undefined, setFilter, handleChangeFilter }"
   },
   "useTabs": {
     "summary": "Hook que devuelve un componente de pestañas y su selección.",

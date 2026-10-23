@@ -4,7 +4,7 @@
     {
       "name": "Accordion",
       "kind": "Componente",
-      "source": "src/components/Accordion/index.js"
+      "source": "src/components/Accordion/index.ts"
     },
     {
       "name": "AccountDropdown",
@@ -54,7 +54,7 @@
     {
       "name": "Breadcrumb",
       "kind": "Componente",
-      "source": "src/components/Breadcrumb/index.js"
+      "source": "src/components/Breadcrumb/index.ts"
     },
     {
       "name": "Button",
@@ -314,7 +314,7 @@
     {
       "name": "ProtectedRoute",
       "kind": "Componente",
-      "source": "src/components/ProtectedRoute/index.js"
+      "source": "src/components/ProtectedRoute/index.ts"
     },
     {
       "name": "RadarChart",
@@ -334,7 +334,7 @@
     {
       "name": "SearchBar",
       "kind": "Componente",
-      "source": "src/components/SearchBar/index.js"
+      "source": "src/components/SearchBar/index.ts"
     },
     {
       "name": "Site",
@@ -444,7 +444,7 @@
     {
       "name": "useSearchBar",
       "kind": "Hook",
-      "source": "src/components/SearchBar/index.js"
+      "source": "src/components/SearchBar/index.ts"
     },
     {
       "name": "useTabs",

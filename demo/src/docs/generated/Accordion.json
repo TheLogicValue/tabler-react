@@ -1,20 +1,28 @@
 {
   "name": "Accordion",
   "kind": "Componente",
-  "source": "src/components/Accordion/index.js",
-  "implementation": "src/components/Accordion/Accordion.react.js",
-  "implementationCode": "import React, {  useState  } from 'react';\nimport \"./Accordion.css\";\n\nexport default function Accordion({children, accordionButton, collapseDefault = true}) {    \n    const [collapse, setCollapse] = useState(collapseDefault);\n\n    return (\n        <div className=\"accordion-item\">\n            <h2 className=\"accordion-header\">\n                <button type=\"button\" className={collapse ? \"accordion-button\" : \"accordion-button collapseBtn\"} onClick={() => setCollapse((collapse) ? false : true)}>{accordionButton}</button>\n            </h2>\n            <div className={collapse ? \"accordion-collapse collapse\" : \"accordion-collapse collapse show\" }>\n                <div className=\"accordion-body\">{children}</div>\n            </div>\n        </div>\n    )\n}",
+  "source": "src/components/Accordion/index.ts",
+  "implementation": "src/components/Accordion/Accordion.react.tsx",
+  "implementationCode": "import React, {  useState  } from 'react';\nimport \"./Accordion.css\";\n\nexport type AccordionProps = {\n    readonly children?: React.ReactNode;\n    readonly accordionButton?: React.ReactNode;\n    readonly collapseDefault?: boolean;\n};\n\nexport default function Accordion({children, accordionButton, collapseDefault = true}: AccordionProps): React.ReactElement {\n    const [collapse, setCollapse] = useState(collapseDefault);\n\n    return (\n        <div className=\"accordion-item\">\n            <h2 className=\"accordion-header\">\n                <button type=\"button\" className={collapse ? \"accordion-button\" : \"accordion-button collapseBtn\"} onClick={() => setCollapse((collapse) ? false : true)}>{accordionButton}</button>\n            </h2>\n            <div className={collapse ? \"accordion-collapse collapse\" : \"accordion-collapse collapse show\" }>\n                <div className=\"accordion-body\">{children}</div>\n            </div>\n        </div>\n    )\n}\n",
   "props": [
     {
-      "name": "children"
+      "name": "children",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "accordionButton"
+      "name": "accordionButton",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "collapseDefault",
-      "default": "true",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "true"
     }
   ],
   "subcomponents": [],
@@ -27,7 +35,8 @@
     "summary": "Contenido desplegable con un botón de cabecera.",
     "behavior": [
       "accordionButton define el texto del disparador y children el contenido.",
-      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial."
+      "Mantiene internamente el estado de apertura; collapseDefault configura el estado inicial.",
+      "collapseDefault=true empieza cerrado y false empieza abierto. Solo inicializa el estado: cambiar la propiedad después no controla la apertura. El botón es de tipo button y no envía formularios."
     ],
     "example": "<Accordion accordionButton=\"Ver detalles\"><p>Contenido ampliado.</p></Accordion>"
   }

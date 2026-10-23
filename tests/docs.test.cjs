@@ -146,6 +146,24 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('Tag').childApis.length, 2)
   assert.equal(document('Tag').props.find(prop => prop.name === 'rootRef').type, 'React.Ref<T>')
   assert.equal(document('Tooltip').props.find(prop => prop.name === 'children').type, 'React.ReactElement<TooltipTriggerProps>')
+  for (const [name, implementation] of [
+    ['Accordion', 'src/components/Accordion/Accordion.react.tsx'],
+    ['Breadcrumb', 'src/components/Breadcrumb/Breadcrumb.react.tsx'],
+    ['SearchBar', 'src/components/SearchBar/SearchBar.tsx'],
+    ['useSearchBar', 'src/components/SearchBar/useSearchBar.ts'],
+    ['ProtectedRoute', 'src/components/ProtectedRoute/ProtectedRoute.tsx'],
+  ]) {
+    const doc = document(name)
+    assert.equal(doc.implementation, implementation)
+    assert.ok(doc.props.every(prop => prop.type), name + ': todas las propiedades deben tener tipo')
+  }
+  assert.equal(document('Accordion').props.find(prop => prop.name === 'collapseDefault').default, 'true')
+  assert.ok(document('Breadcrumb').props.find(prop => prop.name === 'crumbs').type.includes('BreadcrumbCrumb<TPath>'))
+  assert.equal(document('SearchBar').props.find(prop => prop.name === 'onKeyUp').type, 'React.KeyboardEventHandler<HTMLInputElement>')
+  assert.equal(document('SearchBar').props.find(prop => prop.name === 'onClick').optional, false)
+  assert.deepEqual(document('useSearchBar').members.sort(), ['filter', 'handleChangeFilter', 'setFilter'])
+  assert.equal(document('ProtectedRoute').props.find(prop => prop.name === 'redirectTo').type, 'To')
+  assert.equal(document('ProtectedRoute').props.find(prop => prop.name === 'replace').default, 'true')
 })
 
 function walk(node, visit) {

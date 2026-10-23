@@ -5,7 +5,7 @@ const path = require('node:path')
 const consumerRequire = createRequire(path.join(process.env.TABLER_TEST_PACKAGE_DIR || path.join(__dirname, '..'), 'package.json'))
 const React = consumerRequire('react')
 const { renderToStaticMarkup } = consumerRequire('react-dom/server')
-const { Alert, List, Nav, Site, Notification, AccountDropdown, Button } = consumerRequire(process.env.TABLER_TEST_PACKAGE_DIR || './dist/index.js')
+const { Alert, List, Nav, Site, Notification, AccountDropdown, Button, Accordion, Breadcrumb, SearchBar } = consumerRequire(process.env.TABLER_TEST_PACKAGE_DIR || './dist/index.js')
 const render = (Component, props, children) => renderToStaticMarkup(React.createElement(Component, props, children))
 
 test('Alert conserva variantes, avatar, icono y enlace; cerrar es una acción accesible', () => {
@@ -56,4 +56,27 @@ test('Notification y AccountDropdown conservan sus datos y composición de dispa
   assert.match(html, /<span class="text-default">Ana<\/span>/)
   assert.match(html, /<small class="text-muted d-block mt-1">Equipo<\/small>/)
   assert.match(html, /aria-expanded="false"/)
+})
+
+test('Accordion conserva el estado inicial y Breadcrumb mantiene la selección en el consumidor', () => {
+  const closed = render(Accordion, { accordionButton: 'Detalles', id: 'ignored' }, 'Contenido')
+  assert.match(closed, /<button type="button" class="accordion-button">Detalles<\/button>/)
+  assert.match(closed, /class="accordion-collapse collapse"/)
+  assert.doesNotMatch(closed, /ignored/)
+  assert.match(render(Accordion, { accordionButton: 'Detalles', collapseDefault: false }, 'Contenido'), /class="accordion-collapse collapse show"/)
+  const html = render(Breadcrumb, { crumbs: [{ name: 'Inicio', path: '/' }, { name: React.createElement('strong', null, 'Datos'), path: '/datos' }], selected: () => undefined })
+  assert.match(html, /<ul class="list breadcrumb">/)
+  assert.match(html, /<button type="button" class="btn btn-link ">Inicio<\/button>/)
+  assert.match(html, /<button type="button" class="btn btn-link disabled"><strong>Datos<\/strong><\/button>/)
+  assert.doesNotMatch(html, /href=|disabled=""/)
+  assert.doesNotThrow(() => render(Breadcrumb, { crumbs: [], selected: () => undefined }))
+})
+
+test('SearchBar conserva las clases del consumidor, el placeholder y su campo no controlado', () => {
+  const html = render(SearchBar, { classes: ['consumer', { active: true, inactive: false }], onKeyUp: () => undefined, onClick: () => undefined, value: 'ignored' })
+  assert.match(html, /class="form-group input-search-bar consumer active"/)
+  assert.match(html, /placeholder="Search for\.\.\."/)
+  assert.match(html, /<button[^>]*type="button"/)
+  assert.doesNotMatch(html, /value=|ignored|inactive/)
+  assert.match(render(SearchBar, { placeholder: 'Buscar fondos', onKeyUp: () => undefined, onClick: () => undefined }), /placeholder="Buscar fondos"/)
 })

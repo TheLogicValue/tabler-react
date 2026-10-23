@@ -214,6 +214,104 @@ test('NavBarMenu admite hojas sin destino, sin icono e índices de ruta inexiste
   assert.equal(container.querySelector('i.fe-undefined'), null)
 })
 
+test('Accordion mantiene su estado local y Breadcrumb comunica los paths sin enviar formularios', async () => {
+  const selected = [], path = { pathname: '/datos' }
+  let submissions = 0
+  const example = collapseDefault => React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+    React.createElement(components.Accordion, { accordionButton: 'Detalles', collapseDefault }, 'Contenido'),
+    React.createElement(components.Breadcrumb, { crumbs: [{ name: 'Inicio', path: '/' }, { name: 'Datos', path }], selected: value => selected.push(value) }))
+  await render(example(true))
+  assert.equal(container.querySelector('.accordion-collapse').classList.contains('show'), false)
+  await click(container.querySelector('.accordion-button'))
+  assert.equal(container.querySelector('.accordion-collapse').classList.contains('show'), true)
+  await React.act(async () => root.render(example(true)))
+  assert.equal(container.querySelector('.accordion-collapse').classList.contains('show'), true, 'La prop solo inicializa el estado')
+  await click(container.querySelector('.accordion-button'))
+  assert.equal(container.querySelector('.accordion-collapse').classList.contains('show'), false)
+  const crumbs = container.querySelectorAll('.breadcrumb button')
+  await click(crumbs[0])
+  await click(crumbs[1])
+  assert.deepEqual(selected, ['/', path])
+  assert.equal(selected[1], path, 'El consumidor recibe la misma referencia de path')
+  assert.ok(crumbs[1].classList.contains('disabled'))
+  assert.equal(crumbs[1].disabled, false, 'La última miga conserva la apariencia deshabilitada heredada')
+  assert.equal(submissions, 0)
+})
+
+test('SearchBar y su hook conservan eventos, normalización y control del filtro por el consumidor', async () => {
+  let submissions = 0
+  const clicked = [], keys = [], handlers = []
+  function Example() {
+    const search = components.useSearchBar()
+    handlers.push(search.handleChangeFilter)
+    return React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+      React.createElement(components.SearchBar, { onKeyUp: event => { keys.push([event.key, event.currentTarget.tagName]); search.handleChangeFilter(event) }, onClick: (...args) => clicked.push(args) }),
+      React.createElement('output', null, search.filter ?? '(vacío)'),
+      React.createElement('button', { type: 'button', onClick: () => search.setFilter(previous => previous ? previous + '!' : undefined) }, 'Actualizar'),
+      React.createElement('button', { type: 'button', onClick: () => search.setFilter(undefined) }, 'Limpiar'),
+      React.createElement('button', { type: 'button', onClick: () => search.handleChangeFilter({ target: { value: '  Manual  ' } }) }, 'Evento externo'),
+      React.createElement('input', { 'aria-label': 'Cambio nativo', onChange: search.handleChangeFilter }))
+  }
+  await render(React.createElement(Example))
+  const input = container.querySelector('.input-search-bar input')
+  assert.equal(container.querySelector('output').textContent, '(vacío)')
+  await changeControl(input, '  Atlas Global  ')
+  await React.act(async () => input.dispatchEvent(new window.KeyboardEvent('keyup', { key: 'a', bubbles: true })))
+  assert.equal(container.querySelector('output').textContent, 'Atlas Global')
+  assert.equal(input.value, '  Atlas Global  ', 'El hook no controla ni reescribe el campo')
+  assert.deepEqual(keys, [['a', 'INPUT']])
+  await click(container.querySelector('.input-search-bar button'))
+  assert.deepEqual(clicked, [[]], 'El botón comunica la acción sin argumentos')
+  await click([...container.querySelectorAll('button')].find(button => button.textContent === 'Actualizar'))
+  assert.equal(container.querySelector('output').textContent, 'Atlas Global!')
+  await click([...container.querySelectorAll('button')].find(button => button.textContent === 'Limpiar'))
+  assert.equal(container.querySelector('output').textContent, '(vacío)')
+  assert.equal(input.value, '  Atlas Global  ')
+  await changeControl(input, '   ')
+  await React.act(async () => input.dispatchEvent(new window.KeyboardEvent('keyup', { key: 'Backspace', bubbles: true })))
+  assert.equal(container.querySelector('output').textContent, '(vacío)')
+  await click([...container.querySelectorAll('button')].find(button => button.textContent === 'Evento externo'))
+  assert.equal(container.querySelector('output').textContent, 'Manual')
+  await changeControl(container.querySelector('[aria-label="Cambio nativo"]'), '  Cambio  ')
+  assert.equal(container.querySelector('output').textContent, 'Cambio')
+  assert.ok(handlers.every(handler => handler === handlers[0]), 'El callback conserva su identidad entre renders')
+  assert.equal(submissions, 0)
+})
+
+test('ProtectedRoute conserva destinos, children, Outlet y la opción replace del historial', async () => {
+  const { Routes, Route, useLocation, useNavigate } = consumerRequire('react-router-dom')
+  function Probe() {
+    const location = useLocation(), navigate = useNavigate()
+    return React.createElement(React.Fragment, null, React.createElement('output', null, location.pathname + location.search + location.hash),
+      React.createElement('button', { type: 'button', onClick: () => navigate(-1) }, 'Atrás'))
+  }
+  function Example({ allowed, replace }) {
+    return React.createElement(MemoryRouter, { initialEntries: ['/inicio', '/privado'], initialIndex: 1 }, React.createElement(Probe),
+      React.createElement(Routes, null,
+        React.createElement(Route, { path: '/inicio', element: React.createElement('p', null, 'Inicio') }),
+        React.createElement(Route, { path: '/login', element: React.createElement('p', null, 'Acceso denegado') }),
+        React.createElement(Route, { element: React.createElement(components.ProtectedRoute, { isAllowed: allowed, replace, redirectTo: { pathname: '/login', search: '?return=privado', hash: '#form' } }) },
+          React.createElement(Route, { path: '/privado', element: React.createElement('p', null, 'Contenido privado') }))))
+  }
+  for (const replace of [undefined, false]) {
+    const example = allowed => React.createElement(Example, { key: String(replace), allowed, replace })
+    if (!root) await render(example(false))
+    else await React.act(async () => root.render(example(false)))
+    assert.equal(container.querySelector('output').textContent, '/login?return=privado#form')
+    assert.ok(container.textContent.includes('Acceso denegado'))
+    await React.act(async () => root.render(example(true)))
+    await click(container.querySelector('button'))
+    assert.equal(container.querySelector('output').textContent, replace === false ? '/privado' : '/inicio')
+    if (replace === false) assert.ok(container.textContent.includes('Contenido privado'), 'Sin children se muestra el Outlet')
+  }
+  await React.act(async () => root.render(React.createElement(components.ProtectedRoute, { isAllowed: true }, React.createElement('strong', null, 'Children directo'))))
+  assert.equal(container.innerHTML, '<strong>Children directo</strong>')
+  await React.act(async () => root.render(React.createElement(MemoryRouter, { initialEntries: ['/privado'] },
+    React.createElement(Routes, null, React.createElement(Route, { path: '/privado', element: React.createElement(components.ProtectedRoute, { isAllowed: false }) }),
+      React.createElement(Route, { path: '/', element: React.createElement('p', null, 'Redirección predeterminada') })))))
+  assert.equal(container.textContent, 'Redirección predeterminada')
+})
+
 async function changeControl(element, value, type = 'input') {
   await React.act(async () => {
     const prototype = element.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : element.tagName === 'SELECT' ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype

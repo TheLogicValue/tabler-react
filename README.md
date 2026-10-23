@@ -321,6 +321,8 @@ colors, Tooltip, Tag con List/AddOn, Stamp, Progress con Bar, Loader/LoaderZone/
 
 En este bloque se corrige Tag para renderizar el RootComponent recibido en vez de la clase base React.Component. LoaderZone admite alturas numéricas y fraccionarias sin fallar ni alterar sus unidades; mantiene el ajuste heredado de 0.313 y pasa expresiones CSS sin interpretarlas. Las pruebas cubren las variantes de Tag, sus referencias y retirada interna o delegada, los loaders y la composición de Progress/Dimmer. Las fichas muestran las APIs migradas, sin ampliar artificialmente la cobertura visual.
 
+Accordion, Breadcrumb, SearchBar, useSearchBar y ProtectedRoute están migrados a TypeScript. Breadcrumb conserva el tipo del path y entrega su valor al callback sin gestionar la navegación. SearchBar tipa el evento de teclado del input; el hook conserva string | undefined, el setter funcional y los eventos heredados con target.value. ProtectedRoute utiliza el tipo To de React Router, conserva children/Outlet y la opción replace del historial. Los botones de Breadcrumb y SearchBar son de tipo button para evitar envíos accidentales de formularios. Las pruebas incluyen apertura del acordeón, navegación, historial, eventos y normalización del filtro con React 18 y 19; la documentación sigue separada de la cobertura visual.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck
