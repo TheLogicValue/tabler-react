@@ -5,6 +5,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css'
 import { AGGridTable, Badge, Form, Tab, Table, Tabs } from 'tabler-react'
 import { funds } from '../data.js'
 import { Result, Scenario } from '../shared.jsx'
+import GridConsumerExamples from './GridConsumerExamples.jsx'
 
 function SimpleTable({ rows }) {
   return <Table responsive striped highlightRowOnHover>
@@ -47,6 +48,7 @@ export default function DataView() {
       </Tabs>
       <Result>{selected ? <>Fila seleccionada: <strong>{selected.name}</strong> · ESG {selected.score} · Cobertura {selected.coverage}%</> : 'Selecciona una fila para comprobar el callback onRowClick.'}</Result>
     </Scenario>
+    <GridConsumerExamples />
     <div className="demo-note"><strong>Community:</strong> esta demo no importa ag-grid-enterprise ni utiliza filtros o funciones que requieran licencia.</div>
   </>
 }

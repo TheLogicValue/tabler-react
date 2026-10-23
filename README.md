@@ -112,7 +112,7 @@ Las vistas de la demo permiten probar:
 
 - **Resumen:** Page, Grid, Card, Text, Icon y navegación con NavBarMenu.
 - **Menú principal:** NavBarMenu muestra «Resumen», el desplegable «Componentes» y los enlaces directos «Gráficos y estados» y «Cobertura de componentes». Abre «Componentes» con ratón, Intro o Espacio; selecciona una página y comprueba el enlace activo, Escape y clic fuera. El submenú utiliza el mismo posicionamiento de Floating UI que Dropdown.
-- **Tablas y datos:** AGGridTable con Community: búsqueda, filtros, ordenación, paginación, selección y CSV; comparación con Table. Activa y desactiva «Mostrar ayuda en las cabeceras» y pasa el ratón por un título para comprobar los tooltips sin recargar la tabla.
+- **Tablas y datos:** AGGridTable con Community: búsqueda, filtros, ordenación, paginación, selección y CSV; comparación con Table. Activa y desactiva «Mostrar ayuda en las cabeceras» y pasa el ratón por un título para comprobar los tooltips sin recargar la tabla. En «Cartera editable y fila de totales», edita los pesos con doble clic e Intro y comprueba el total fijado, las columnas agrupadas, la ordenación opcional y la consulta mediante referencia. Las dos tarjetas de selección permiten buscar y seleccionar varios fondos de forma independiente: limpiar una tabla debe conservar el filtro y la selección de la otra. Prueba también el botón externo con el interno oculto; los envíos del formulario deben permanecer a cero.
 - **Formularios y fechas:** Form, react-select, DatePicker, referencia de fecha, validación y restablecimiento. En «Fecha inicial y días anteriores», cambia el desplazamiento y pulsa «Restablecer fecha»: por defecto muestra 14/10/2026, con 0 días muestra 15/10/2026 y con 3 días muestra 12/10/2026.
 - **Interacciones:** Modal/useModal, Tabs/Tab/useTabs, Dropdown, Accordion y ProtectedRoute con Outlet y redirección. En «Controles de tarjeta y cabecera», prueba plegar, maximizar, cerrar y restaurar la tarjeta; abre el desplegable con Intro o Espacio. Por debajo de 992 px aparece el botón de navegación de Site.Header. Comprueba que todos estos controles mantienen a cero los envíos del formulario.
 - **Posicionamiento, dentro de Interacciones:** Dropdown, Button.Dropdown, disparador personalizado, Nav horizontal/vertical y Tooltip. Cambia entre las quince posiciones, incluidas `auto`, `auto-start` y `auto-end`; comprueba Escape, clic fuera, scroll y redimensionado. Las ayudas se abren con ratón y foco, conservan `aria-describedby` y orientan la flecha según la posición final.
@@ -178,6 +178,18 @@ El calendario, la escritura manual y la referencia pública validan las mismas f
 En «Formularios y fechas», el ejemplo «Límites y días deshabilitados» permite probar histórico y futuro con límite inclusivo, fines de semana y todos los días deshabilitados. Las pruebas de interacción se ejecutan también con React 18 y una instalación del paquete sin ignorar los peers.
 
 DayPicker 10 cambia su HTML, las clases internas `.rdp-*` y algunas propiedades avanzadas que antes se pasaban directamente al calendario. Los consumidores que personalicen esos detalles deben revisar la [guía de migración oficial](https://daypicker.dev/upgrading-v8-to-v10). Las propiedades propias de DatePicker indicadas arriba se mantienen.
+
+## AGGridTable como wrapper
+
+El consumidor aporta `AgGridReact`, los datos, las definiciones de columna y la lógica de negocio. La biblioteca no registra módulos Enterprise ni calcula totales: la demo utiliza únicamente Community y genera sus filas fijadas y actualizaciones desde React.
+
+Las opciones nativas, como `pinnedTopRowData`, `rowHeight`, `onPaginationChanged`, `postSortRows` y `overlayLoadingTemplate`, se entregan a AG Grid. `onGridReady`, `onRowClicked` y `onCellClicked` se conservan junto con los alias del wrapper; `onRowClick` recibe los datos de la fila y `onCellClick` recibe el evento completo. El alias `onGrid` recibe el evento de tabla preparada. Si se proporcionan un alias y su callback nativo, se ejecutan ambos.
+
+`sortable`, `resizable` y `suppressMovable` se aplican como valores predeterminados de columna cuando se proporcionan. Las opciones explícitas de `defaultColDef` tienen prioridad sobre esos valores y las propiedades de cada columna tienen la prioridad final. La selección predeterminada utiliza `mode: 'singleRow'`; para selección múltiple se utiliza `'multiRow'`.
+
+Cada tabla mantiene su propio buscador y la limpieza funciona también sin buscador. Se conservan los identificadores heredados `searcher` y `clearDataTables` por compatibilidad con consumidores existentes; el wrapper no los utiliza para localizar controles globalmente. Para nuevos estilos utiliza `.ag-grid-search`; si necesitas pulsar el botón oculto desde fuera, limita la consulta al contenedor de la tabla correspondiente. Los consumidores que consulten los identificadores globalmente todavía deben revisar su integración cuando muestran varias tablas.
+
+`onHandleChangeFilter` permite sustituir la búsqueda interna por la lógica del consumidor, conservando su comportamiento anterior. Si se proporciona `quickFilterText`, el consumidor controla el filtro y debe actualizar esa propiedad para cambiarlo o restablecerlo. La referencia pública mantiene `getDisplayedRowAtIndex()`, `flashCells()` y un acceso a la API vigente mediante `ref.current.api`.
 
 ## Lint
 

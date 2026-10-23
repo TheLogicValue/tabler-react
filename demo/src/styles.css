@@ -103,10 +103,15 @@ a { color: #2f6fbd; }
 .grid-demo { min-width: 0; }
 .grid-demo .ag-theme-balham { --ag-font-family: 'Segoe UI', sans-serif; --ag-font-size: 12px; --ag-row-height: 39px; --ag-header-height: 42px; --ag-border-color: #dfe6ef; --ag-header-background-color: #f5f8fc; }
 .grid-demo .addons-aggrid { display: flex; gap: 12px; margin-bottom: 15px; }
-.grid-demo #searcher { border: 1px solid #d6dfeb; border-radius: 5px; padding: 8px 12px; width: 260px; }
+.grid-demo .ag-grid-search { border: 1px solid #d6dfeb; border-radius: 5px; padding: 8px 12px; width: 260px; }
 .grid-demo .downloadCSV { margin-left: auto; }
 .grid-demo .row { margin-left: 0; margin-right: 0; }
 .grid-demo .col-12 { padding-left: 0; padding-right: 0; }
+.grid-demo .ag-btn-list { margin-bottom: 16px; }
+.grid-example-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.grid-demo .demo-grid-weight { color: #2868ab; background: #edf5fd; }
+.demo-shell .grid-consumer-row { margin-inline: calc(-.5 * var(--demo-space)); margin-top: 0; }
+.demo-shell .grid-consumer-row > .col { padding-inline: calc(.5 * var(--demo-space)); }
 .demo-note { background: #eaf3ef; color: #4c7c69; padding: 16px 20px; border-radius: 6px; font-size: 12px; }
 .demo-shell .Tab_header_tabs .nav-link { cursor: pointer; }
 .demo-shell .tab-header { padding: 0 20px; }
@@ -155,5 +160,5 @@ a { color: #2f6fbd; }
   .demo-shell .card-body { padding: 18px; } .chart-controls { align-items: start; flex-direction: column; }
   .filter-row { flex-wrap: wrap; }
   .demo-radar-chart { margin-inline: -12px; }
-  .demo-footer { flex-direction: column; gap: 5px; } .grid-demo #searcher { width: min(260px, 75%); }
+  .demo-footer { flex-direction: column; gap: 5px; } .grid-demo .ag-grid-search { width: min(260px, 75%); }
 }
