@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
+import type { EChartsOption } from "echarts";
+import type { PieChartProps, ChartTooltipItem } from "./types";
 
 export default function PieChart({
     title = "",
@@ -19,9 +21,9 @@ export default function PieChart({
     //Methods    
     tooltipFormatter,
     center = ['50%', '50%'],
-}) {
+}: PieChartProps): React.ReactElement {
 
-    const option = {
+    const option: EChartsOption = {
         title: { text: title },
         tooltip: { trigger: 'item' },
         toolbox: {
@@ -51,7 +53,7 @@ export default function PieChart({
                 },
                 center: center,
                 tooltip: {
-                    formatter: (item) => tooltipFormatter(item),
+                    formatter: (item) => tooltipFormatter(item as ChartTooltipItem),
                 },
                 data: series?.map((item, i) => ({
                     name: seriesDataName[i],
@@ -63,7 +65,7 @@ export default function PieChart({
     }
 
     const style = () => {
-        let style = { height: height }
+        const style: React.CSSProperties = { height: height }
         if (paddingBottom) style.paddingBottom = paddingBottom
         return style
     }

@@ -1,7 +1,10 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
-const BarChartLoader = props => {
+import type { ContentLoaderProps } from "./types";
+export type BarChartLoaderProps = ContentLoaderProps;
+
+const BarChartLoader = (props: BarChartLoaderProps): React.ReactElement => {
   return (
     <ContentLoader width={200} height={200} viewBox="0 0 200 200" {...props}>
       <rect x="0" y="160" rx="0" ry="0" width="25" height="40" />

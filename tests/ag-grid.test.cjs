@@ -4,7 +4,7 @@ const { createRequire } = require('node:module')
 const path = require('node:path')
 
 const consumerRequire = createRequire(path.join(process.env.TABLER_TEST_PACKAGE_DIR || path.join(__dirname, '..'), 'package.json'))
-let window, React, createRoot, AGGridTable, root, container
+let window, React, createRoot, AGGridTable, AGGridPagination, root, container
 
 before(async () => {
   const { Window } = await import('happy-dom')
@@ -16,6 +16,7 @@ before(async () => {
   React = consumerRequire('react')
   createRoot = consumerRequire('react-dom/client').createRoot
   AGGridTable = consumerRequire(process.env.TABLER_TEST_PACKAGE_DIR || './dist/index.js').AGGridTable
+  AGGridPagination = consumerRequire(process.env.TABLER_TEST_PACKAGE_DIR || './dist/index.js').AGGridPagination
 })
 
 afterEach(async () => {
@@ -157,4 +158,65 @@ test('El filtro personalizado conserva el control de la búsqueda', async () => 
   assert.deepEqual(calls, ['consulta externa'])
   assert.equal(input.value, 'consulta externa')
   assert.equal(grid.props.quickFilterText, '')
+})
+
+test('Las columnas agrupadas conservan las opciones nativas y solo traducen un nivel de subItems', async () => {
+  const grid = gridDouble()
+  const formatter = params => String(params.value)
+  const language = { noRowsToShow: 'Vacío' }
+  const column = Object.freeze({ header: 'Grupo', marryChildren: true, minWidth: 80, subItems: [
+    Object.freeze({ header: 'Peso', item: 'weight', key: 'weight-col', minWidth: 40, headerTooltip: '  Peso local  ', valueFormatter: formatter, editable: true }),
+  ] })
+  await render(React.createElement(AGGridTable, { AgGridReact: grid.Grid, dataColumn: [column], minWidth: 100, flex: 2, autoHeaderTooltip: true, language }))
+  const definition = grid.props.columnDefs[0]
+  assert.equal(definition.marryChildren, true)
+  assert.equal(definition.minWidth, 100)
+  assert.equal(definition.flex, 2)
+  assert.equal(definition.headerTooltip, 'Grupo')
+  assert.equal(definition.children[0].field, 'weight')
+  assert.equal(definition.children[0].colId, 'weight-col')
+  assert.equal(definition.children[0].minWidth, 40)
+  // The child's explicit native headerTooltip retains priority over the fallback.
+  assert.equal(definition.children[0].headerTooltip, '  Peso local  ')
+  assert.equal(definition.children[0].valueFormatter, formatter)
+  assert.equal(grid.props.localeText, language)
+})
+
+test('El paginador externo sincroniza la API, los límites y el rango de la última página', async () => {
+  const ref = React.createRef(), calls = []
+  const controles = { current: { api: {
+    paginationGoToPage: page => calls.push(['page', page]),
+    paginationGoToNextPage: () => calls.push(['next']),
+    paginationGoToPreviousPage: () => calls.push(['previous']),
+  } } }
+  let submissions = 0
+  await render(React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+    React.createElement(AGGridPagination, { ref, controles, pagesSizes: [20, 20, 5], totalPages: 3, totalElements: 45, pageSize: 20, lastPage: 3 })))
+  const button = name => container.querySelector('[aria-label="' + name + '"]')
+  assert.equal(button('Previous Page').disabled, true)
+  await React.act(async () => button('Next Page').click())
+  assert.equal(ref.current.page, 2)
+  await React.act(async () => button('Last Page').click())
+  assert.equal(ref.current.page, 3)
+  assert.deepEqual(calls, [['next'], ['page', 2]])
+  assert.match(container.querySelector('.ag-paging-row-summary-panel').textContent, /41\s*to\s*45\s*de\s*45/)
+  assert.equal(button('Next Page').disabled, true)
+  await React.act(async () => ref.current.noData())
+  assert.equal(ref.current.page, 2)
+  await React.act(async () => button('First Page').click())
+  assert.equal(ref.current.page, 1)
+  assert.deepEqual(calls.slice(-2), [['previous'], ['page', 0]])
+  assert.equal(submissions, 0)
+})
+
+test('El paginador no accede a una API o unos tamaños ausentes y permite alcanzar lastPage', async () => {
+  const controles = { current: null }, ref = React.createRef(), calls = []
+  await render(React.createElement(AGGridPagination, { ref, controles, totalPages: 2, totalElements: 28 }))
+  await React.act(async () => { for (const button of container.querySelectorAll('button')) button.click() })
+  assert.equal(ref.current.page, 1)
+  controles.current = { api: { paginationGoToNextPage: () => calls.push('next') } }
+  await React.act(async () => root.render(React.createElement(AGGridPagination, { ref, controles, totalPages: 2, totalElements: 28, pagesSizes: [20, 8], lastPage: 2 })))
+  await React.act(async () => container.querySelector('[aria-label="Next Page"]').click())
+  assert.equal(ref.current.page, 2)
+  assert.deepEqual(calls, ['next'])
 })

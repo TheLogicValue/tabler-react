@@ -14,12 +14,12 @@
     {
       "name": "AGGridPagination",
       "kind": "Componente",
-      "source": "src/components/AGGridTable/index.js"
+      "source": "src/components/AGGridTable/index.ts"
     },
     {
       "name": "AGGridTable",
       "kind": "Componente",
-      "source": "src/components/AGGridTable/index.js"
+      "source": "src/components/AGGridTable/index.ts"
     },
     {
       "name": "Alert",
@@ -39,12 +39,12 @@
     {
       "name": "BarChart",
       "kind": "Componente",
-      "source": "src/components/Chart/index.js"
+      "source": "src/components/Chart/index.ts"
     },
     {
       "name": "BarChartLoader",
       "kind": "Componente",
-      "source": "src/components/ContentLoader/index.js"
+      "source": "src/components/ContentLoader/index.ts"
     },
     {
       "name": "BlogCard",
@@ -119,7 +119,7 @@
     {
       "name": "DoughnutChart",
       "kind": "Componente",
-      "source": "src/components/Chart/index.js"
+      "source": "src/components/Chart/index.ts"
     },
     {
       "name": "Dropdown",
@@ -209,7 +209,7 @@
     {
       "name": "LineChart",
       "kind": "Componente",
-      "source": "src/components/Chart/index.js"
+      "source": "src/components/Chart/index.ts"
     },
     {
       "name": "List",
@@ -274,7 +274,7 @@
     {
       "name": "OverlayLoading",
       "kind": "Utilidad",
-      "source": "src/components/AGGridTable/index.js"
+      "source": "src/components/AGGridTable/index.ts"
     },
     {
       "name": "Page",
@@ -284,12 +284,12 @@
     {
       "name": "PieChart",
       "kind": "Componente",
-      "source": "src/components/Chart/index.js"
+      "source": "src/components/Chart/index.ts"
     },
     {
       "name": "PieChartLoader",
       "kind": "Componente",
-      "source": "src/components/ContentLoader/index.js"
+      "source": "src/components/ContentLoader/index.ts"
     },
     {
       "name": "PricingCard",
@@ -319,7 +319,7 @@
     {
       "name": "RadarChart",
       "kind": "Componente",
-      "source": "src/components/Chart/index.js"
+      "source": "src/components/Chart/index.ts"
     },
     {
       "name": "RegisterPage",
@@ -404,12 +404,12 @@
     {
       "name": "Table",
       "kind": "Componente",
-      "source": "src/components/Table/index.js"
+      "source": "src/components/Table/index.ts"
     },
     {
       "name": "TableLoader",
       "kind": "Componente",
-      "source": "src/components/ContentLoader/index.js"
+      "source": "src/components/ContentLoader/index.ts"
     },
     {
       "name": "Tabs",

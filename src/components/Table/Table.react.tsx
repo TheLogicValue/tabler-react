@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 import TableHeader from "./TableHeader.react";
@@ -8,36 +6,14 @@ import TableRow from "./TableRow.react";
 import TableCol from "./TableCol.react";
 import TableColHeader from "./TableColHeader.react";
 
-type BodyItem = {|
-  key: string | number,
-  item: Array<{
-    +content?: React.Node,
-    +className?: string,
-    +alignContent?: "left" | "center" | "right",
-  }>
-|};
-
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  /**
-   * Should this Table be optimized to contain Cards
-   */
-  +cards?: boolean,
-  /**
-   * Give the table striped rows
-   */
-  +striped?: boolean,
-  /**
-   * Make the table responsive
-   */
-  +responsive?: boolean,
-  +highlightRowOnHover?: boolean,
-  +hasOutline?: boolean,
-  +verticalAlign?: "center",
-  +headeritems?: Array<{ +content?: React.Node, +className?: string }>,
-  +bodyitems?: Array<BodyItem>,
-|};
+export type TableCell = { readonly content?: React.ReactNode; readonly className?: string; readonly alignContent?: "left" | "center" | "right" };
+export type TableBodyItem = { readonly key: string | number; readonly item: readonly TableCell[] };
+export type TableProps = React.TableHTMLAttributes<HTMLTableElement> & {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly cards?: boolean; readonly striped?: boolean; readonly responsive?: boolean; readonly highlightRowOnHover?: boolean; readonly hasOutline?: boolean; readonly verticalAlign?: "center";
+  readonly headeritems?: readonly Pick<TableCell, "content" | "className">[]; readonly bodyitems?: readonly TableBodyItem[];
+};
 
 function Table({
   className,
@@ -48,8 +24,10 @@ function Table({
   highlightRowOnHover,
   hasOutline,
   verticalAlign,
+  headeritems,
+  bodyitems,
   ...props
-}: Props): React.Node {
+}: TableProps): React.ReactNode {
   const classes = cn(
     "table",
     {
@@ -62,10 +40,10 @@ function Table({
     className
   );
 
-  const header = props.headeritems && (
+  const header = headeritems && (
     <Table.Header>
       <Table.Row>
-        {props.headeritems.map((item, i) => (
+        {headeritems.map((item, i) => (
           <Table.ColHeader key={i} className={item.className}>
             {item.content}
           </Table.ColHeader>
@@ -74,9 +52,9 @@ function Table({
     </Table.Header>
   );
 
-  const body = props.bodyitems && (
+  const body = bodyitems && (
     <Table.Body>
-      {props.bodyitems.map((row, i) => (
+      {bodyitems.map((row, i) => (
         <Table.Row key={row.key}>
           {row.item.map((col, i) => (
             <Table.Col

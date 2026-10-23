@@ -1,10 +1,77 @@
 {
   "name": "PieChartLoader",
   "kind": "Componente",
-  "source": "src/components/ContentLoader/index.js",
-  "implementation": "src/components/ContentLoader/PieChartLoader.react.js",
-  "implementationCode": "import React from 'react'\nimport ContentLoader from 'react-content-loader'\n\nconst PieChartLoader = props => {\n  return (\n    <ContentLoader viewBox=\"0 0 400 200\" height={250} width={400} {...props}>\n      <rect x=\"100\" y=\"5\" rx=\"0\" ry=\"0\" width=\"200\" height=\"15\" />\n      <circle cx=\"140\" cy=\"110\" r=\"70\" />\n      <rect x=\"230\" y=\"50\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"50\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"64\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"64\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"78\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"78\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"92\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"92\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n    </ContentLoader>\n  )\n}\n\nexport default PieChartLoader",
-  "props": [],
+  "source": "src/components/ContentLoader/index.ts",
+  "implementation": "src/components/ContentLoader/PieChartLoader.react.tsx",
+  "implementationCode": "import React from 'react'\nimport ContentLoader from 'react-content-loader'\n\nimport type { ContentLoaderProps } from \"./types\";\nexport type PieChartLoaderProps = ContentLoaderProps;\n\nconst PieChartLoader = (props: PieChartLoaderProps): React.ReactElement => {\n  return (\n    <ContentLoader viewBox=\"0 0 400 200\" height={250} width={400} {...props}>\n      <rect x=\"100\" y=\"5\" rx=\"0\" ry=\"0\" width=\"200\" height=\"15\" />\n      <circle cx=\"140\" cy=\"110\" r=\"70\" />\n      <rect x=\"230\" y=\"50\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"50\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"64\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"64\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"78\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"78\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n      <rect x=\"230\" y=\"92\" rx=\"0\" ry=\"0\" width=\"7\" height=\"7\" />\n      <rect x=\"250\" y=\"92\" rx=\"0\" ry=\"0\" width=\"30\" height=\"7\" />\n    </ContentLoader>\n  )\n}\n\nexport default PieChartLoader",
+  "props": [
+    {
+      "name": "width",
+      "type": "IContentLoaderProps[\"width\"]",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "height",
+      "type": "IContentLoaderProps[\"height\"]",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "uniqueKey",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "animate",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "speed",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "foregroundColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "backgroundOpacity",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "foregroundOpacity",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "viewBox",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
   "subcomponents": [],
   "members": [],
   "rest": true,
@@ -21,7 +88,8 @@
     "summary": "Esqueleto SVG con forma de gráfico circular.",
     "behavior": [
       "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
-      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición.",
+      "Su tipo de propiedades reutiliza IContentLoaderProps: admite las opciones SVG y las de react-content-loader, manteniendo las formas del esqueleto."
     ],
     "example": "<PieChartLoader width={600} height={250} speed={2} />"
   }

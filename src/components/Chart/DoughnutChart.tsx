@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
+import type { EChartsOption, LegendComponentOption } from "echarts";
+import type { DoughnutChartProps, ChartTooltipItem } from "./types";
 
 export default function DoughnutChart({
     title = "",
@@ -18,15 +20,15 @@ export default function DoughnutChart({
     download = false,
     //Methods    
     tooltipFormatter
-}) {
+}: DoughnutChartProps): React.ReactElement {
 
-    const option = {
+    const option: EChartsOption = {
         title: { text: title },
         tooltip: { trigger: 'item' },
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { show: legend, bottom: "0rem", symbol: null },
+        legend: { show: legend, bottom: "0rem", symbol: null } as LegendComponentOption & { symbol: null },
         series: [
             {
                 type: 'pie',
@@ -37,7 +39,7 @@ export default function DoughnutChart({
                     position: 'inside'
                 },
                 tooltip: {
-                    formatter: (item) => tooltipFormatter(item),
+                    formatter: (item) => tooltipFormatter(item as ChartTooltipItem),
                 },
                 data: series?.map((item, i) => {
                     return {
@@ -51,7 +53,7 @@ export default function DoughnutChart({
     }
 
     const style = () => {
-        let style = { height: height }
+        const style: React.CSSProperties = { height: height }
         if (paddingBottom) style.paddingBottom = paddingBottom
         return style
     }

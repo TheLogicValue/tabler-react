@@ -1,14 +1,9 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement> & { readonly className?: string; readonly children?: React.ReactNode };
 
-function TableRow({ className, children, ...props }: Props): React.Node {
+function TableRow({ className, children, ...props }: TableRowProps): React.ReactNode {
   const classes = cn(className);
   return (
     <tr className={classes} {...props}>

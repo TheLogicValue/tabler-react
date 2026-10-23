@@ -1,36 +1,54 @@
 {
   "name": "AGGridPagination",
   "kind": "Componente",
-  "source": "src/components/AGGridTable/index.js",
-  "implementation": "src/components/AGGridTable/AGGridPagination.js",
-  "implementationCode": "import React, { forwardRef, useImperativeHandle } from 'react'\nimport usePagination from './Hooks/usePagination'\nimport cn from \"classnames\"\nimport \"./AGGridPagination.css\"\n\nconst AGGridPagination = forwardRef(({ controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20 }, ref) => {\n    const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination()\n    const previousClasses = cn(\"ag-paging-button\", { \"ag-disabled\": page <= 1 })\n    const nextClasses = cn(\"ag-paging-button\", {\n        \"ag-disabled\": (pagesSizes && pagesSizes[page - 1] < pageSize) || lastPage == page || totalPages == page\n    })\n\n    const defaultStrings = {\n        \"to\": \"to\",\n        \"page\": \"Page\",\n        \"of\": 'de'\n    }\n\n    const handleFirstPage = () => {\n        controles.current.api.paginationGoToPage(0)\n        goToFirstPage()\n    }\n\n    const handleNextPage = () => {\n        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {\n            controles.current.api.paginationGoToNextPage()\n            nextPage({ pageSize })\n        }\n    }\n\n    const handleLastPage = () => {\n        if (pagesSizes[page - 1] == pageSize && lastPage != page + 1) {\n            controles.current.api.paginationGoToPage(totalPages - 1)\n            goToLastPage({ page: totalPages, pageSize })\n        }\n    }\n\n    const handlePreviousPage = () => {\n        if (page > 1) {\n            controles.current.api.paginationGoToPreviousPage()\n            previousPage({ pageSize })\n        }\n    }\n\n    useImperativeHandle(ref, () => {\n        return {\n            page: page,\n            noData: () => handlePreviousPage({ pageSize }),\n            firstPage: () => goToFirstPage()\n        }\n    })\n\n    return <div className=\"ag-paging-panel ag-unselectable ag-panel-custom\" >\n        {pagesSizes && <span className=\"ag-paging-row-summary-panel\" role=\"status\">\n            <span className=\"ag-paging-row-summary-panel-number\">{numRows + 1}</span>\n            <span> {strings.to || defaultStrings.to} </span>\n            <span className=\"ag-paging-row-summary-panel-number\">{numRows + ((pagesSizes && pagesSizes[page - 1]) || pageSize)}</span>\n            <span> {strings.of || defaultStrings.of} </span>\n            <span className=\"ag-paging-row-summary-panel-number\">{totalElements}</span>\n        </span>}\n        <span className=\"ag-paging-page-summary-panel\" role=\"presentation\">\n            <div className={previousClasses} role=\"button\" aria-label=\"First Page\" onClick={handleFirstPage}>\n                <span className=\"ag-icon ag-icon-first\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <div className={previousClasses} role=\"button\" aria-label=\"Previous Page\" onClick={handlePreviousPage} tabIndex=\"0\" disabled={page == 1}>\n                <span className=\"ag-icon ag-icon-previous\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <span className=\"ag-paging-description\" role=\"status\">\n                <span> {strings.page || defaultStrings.page} </span>\n                <span className=\"ag-paging-number\">{page}</span>\n                <span> {strings.of || defaultStrings.of} </span>\n                <span className=\"ag-paging-row-summary-panel-number\">{totalPages}</span>\n            </span>\n            <div className={nextClasses} role=\"button\" aria-label=\"Next Page\" onClick={handleNextPage} tabIndex=\"0\">\n                <span className=\"ag-icon ag-icon-next\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n            <div className={nextClasses} role=\"button\" aria-label=\"Last Page\" onClick={handleLastPage} tabIndex=\"0\">\n                <span className=\"ag-icon ag-icon-last\" style={{ userSelect: \"none\" }} role=\"presentation\"></span>\n            </div>\n        </span>\n    </div>\n})\n\n\n\nAGGridPagination.displayName = \"AGGridPagination\"\n\nexport default AGGridPagination\n",
+  "source": "src/components/AGGridTable/index.ts",
+  "implementation": "src/components/AGGridTable/AGGridPagination.tsx",
+  "implementationCode": "import React, { forwardRef, useImperativeHandle } from \"react\";\nimport usePagination from \"./Hooks/usePagination\";\nimport cn from \"classnames\";\nimport type { AGGridPaginationProps, AGGridPaginationHandle } from \"./types\";\nimport \"./AGGridPagination.css\";\n\nconst AGGridPagination = forwardRef<AGGridPaginationHandle, AGGridPaginationProps>(({\n  controles, lastPage, totalElements, totalPages, pagesSizes = null, strings = {}, pageSize = 20,\n}: AGGridPaginationProps, ref) => {\n  const { page, numRows, nextPage, previousPage, goToFirstPage, goToLastPage } = usePagination();\n  const previousDisabled = page <= 1;\n  const nextDisabled = !pagesSizes || pagesSizes[page - 1] !== pageSize || (lastPage != null && page >= lastPage) || page >= totalPages;\n  const previousClasses = cn(\"tabler-action ag-paging-button\", { \"ag-disabled\": previousDisabled });\n  const nextClasses = cn(\"tabler-action ag-paging-button\", { \"ag-disabled\": nextDisabled });\n  const firstRow = totalElements === 0 ? 0 : Math.min(numRows + 1, totalElements);\n  const lastRow = Math.min(numRows + (pagesSizes?.[page - 1] ?? pageSize), totalElements);\n\n  const handleFirstPage = () => {\n    const api = controles.current?.api;\n    if (!api) return;\n    api.paginationGoToPage(0);\n    goToFirstPage();\n  };\n  const handleNextPage = () => {\n    const api = controles.current?.api;\n    if (!api || nextDisabled) return;\n    api.paginationGoToNextPage();\n    nextPage({ pageSize });\n  };\n  const handleLastPage = () => {\n    const api = controles.current?.api;\n    if (!api || nextDisabled) return;\n    const target = Math.min(totalPages, lastPage ?? totalPages);\n    api.paginationGoToPage(target - 1);\n    goToLastPage({ page: target, pageSize });\n  };\n  const handlePreviousPage = () => {\n    const api = controles.current?.api;\n    if (!api || previousDisabled) return;\n    api.paginationGoToPreviousPage();\n    previousPage({ pageSize });\n  };\n  useImperativeHandle(ref, () => {\n    return { page, noData: handlePreviousPage, firstPage: goToFirstPage };\n  });\n\n  return <div className=\"ag-paging-panel ag-unselectable ag-panel-custom\">\n    {pagesSizes && <span className=\"ag-paging-row-summary-panel\" role=\"status\">\n      <span className=\"ag-paging-row-summary-panel-number\">{firstRow}</span>\n      <span> {strings.to || \"to\"} </span>\n      <span className=\"ag-paging-row-summary-panel-number\">{lastRow}</span>\n      <span> {strings.of || \"de\"} </span>\n      <span className=\"ag-paging-row-summary-panel-number\">{totalElements}</span>\n    </span>}\n    <span className=\"ag-paging-page-summary-panel\" role=\"presentation\">\n      <button type=\"button\" className={previousClasses} aria-label=\"First Page\" onClick={handleFirstPage} disabled={previousDisabled}>\n        <span className=\"ag-icon ag-icon-first\" style={{ userSelect: \"none\" }} role=\"presentation\" />\n      </button>\n      <button type=\"button\" className={previousClasses} aria-label=\"Previous Page\" onClick={handlePreviousPage} disabled={previousDisabled}>\n        <span className=\"ag-icon ag-icon-previous\" style={{ userSelect: \"none\" }} role=\"presentation\" />\n      </button>\n      <span className=\"ag-paging-description\" role=\"status\">\n        <span> {strings.page || \"Page\"} </span><span className=\"ag-paging-number\">{page}</span>\n        <span> {strings.of || \"de\"} </span><span className=\"ag-paging-row-summary-panel-number\">{totalPages}</span>\n      </span>\n      <button type=\"button\" className={nextClasses} aria-label=\"Next Page\" onClick={handleNextPage} disabled={nextDisabled}>\n        <span className=\"ag-icon ag-icon-next\" style={{ userSelect: \"none\" }} role=\"presentation\" />\n      </button>\n      <button type=\"button\" className={nextClasses} aria-label=\"Last Page\" onClick={handleLastPage} disabled={nextDisabled}>\n        <span className=\"ag-icon ag-icon-last\" style={{ userSelect: \"none\" }} role=\"presentation\" />\n      </button>\n    </span>\n  </div>;\n});\n\nAGGridPagination.displayName = \"AGGridPagination\";\nexport default AGGridPagination;\n",
   "props": [
     {
-      "name": "controles"
+      "name": "controles",
+      "type": "React.RefObject<{ readonly api?: PaginationApi } | null>",
+      "optional": false,
+      "description": ""
     },
     {
-      "name": "lastPage"
+      "name": "lastPage",
+      "type": "number",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "totalElements"
+      "name": "totalElements",
+      "type": "number",
+      "optional": false,
+      "description": ""
     },
     {
-      "name": "totalPages"
+      "name": "totalPages",
+      "type": "number",
+      "optional": false,
+      "description": ""
     },
     {
       "name": "pagesSizes",
-      "default": "null",
-      "optional": true
+      "type": "readonly number[] | null",
+      "optional": true,
+      "description": "",
+      "default": "null"
     },
     {
       "name": "strings",
-      "default": "{}",
-      "optional": true
+      "type": "{ readonly to?: string; readonly page?: string; readonly of?: string }",
+      "optional": true,
+      "description": "",
+      "default": "{}"
     },
     {
       "name": "pageSize",
-      "default": "20",
-      "optional": true
+      "type": "number",
+      "optional": true,
+      "description": "",
+      "default": "20"
     }
   ],
   "subcomponents": [],
@@ -77,10 +95,12 @@
   "guide": {
     "summary": "Paginador externo que utiliza la API de una tabla AG Grid.",
     "behavior": [
-      "controles debe ser una referencia con current.api y los métodos de paginación de AG Grid.",
-      "Mantiene una página interna; las páginas de AG Grid son base 0 y las mostradas son base 1.",
-      "Proporciona pagesSizes cuando utilices los controles de avance: la implementación los consulta sin comprobar que existan en cada callback.",
-      "La referencia pública expone page, firstPage() y noData(); noData() retrocede una página."
+      "controles es una referencia a una instancia con api (por ejemplo, la referencia de AGGridTable). La API solo necesita los métodos nativos de navegación; antes de estar disponible, los controles no ejecutan acciones.",
+      "Mantiene una página interna en base 1 y entrega índices en base 0 a AG Grid. No calcula datos, totales ni tamaños de página del consumidor.",
+      "pagesSizes contiene el número de filas de cada página. Si falta, el avance queda deshabilitado. totalPages y lastPage limitan el avance; lastPage se puede alcanzar, pero no superar. El rango de la última página utiliza el desplazamiento de base 0 y el totalElements recibido.",
+      "Los cuatro controles son botones nativos de tipo button: admiten teclado, reflejan disabled y no envían un formulario contenedor.",
+      "La referencia pública expone page, firstPage() y noData(). firstPage() restablece únicamente el estado interno; el botón Primera página navega también con la API. noData() intenta retroceder una página con la API.",
+      "La sincronización ante filtros, cambios de tamaño o datos remotos pertenece al consumidor; no se introduce carga ni lógica de negocio dentro del paginador."
     ],
     "example": "<AGGridPagination controles={gridRef} pagesSizes={[20, 8]} totalElements={28} totalPages={2} pageSize={20} />"
   }

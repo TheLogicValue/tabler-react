@@ -1,13 +1,13 @@
 {
   "name": "Table",
   "kind": "Componente",
-  "source": "src/components/Table/index.js",
-  "implementation": "src/components/Table/Table.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport TableHeader from \"./TableHeader.react\";\nimport TableBody from \"./TableBody.react\";\nimport TableRow from \"./TableRow.react\";\nimport TableCol from \"./TableCol.react\";\nimport TableColHeader from \"./TableColHeader.react\";\n\ntype BodyItem = {|\n  key: string | number,\n  item: Array<{\n    +content?: React.Node,\n    +className?: string,\n    +alignContent?: \"left\" | \"center\" | \"right\",\n  }>\n|};\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * Should this Table be optimized to contain Cards\n   */\n  +cards?: boolean,\n  /**\n   * Give the table striped rows\n   */\n  +striped?: boolean,\n  /**\n   * Make the table responsive\n   */\n  +responsive?: boolean,\n  +highlightRowOnHover?: boolean,\n  +hasOutline?: boolean,\n  +verticalAlign?: \"center\",\n  +headeritems?: Array<{ +content?: React.Node, +className?: string }>,\n  +bodyitems?: Array<BodyItem>,\n|};\n\nfunction Table({\n  className,\n  children,\n  cards = false,\n  striped = false,\n  responsive = false,\n  highlightRowOnHover,\n  hasOutline,\n  verticalAlign,\n  ...props\n}: Props): React.Node {\n  const classes = cn(\n    \"table\",\n    {\n      \"card-table\": cards,\n      \"table-striped\": striped,\n      \"table-hover\": highlightRowOnHover,\n      \"table-outline\": hasOutline,\n      \"table-vcenter\": verticalAlign === \"center\",\n    },\n    className\n  );\n\n  const header = props.headeritems && (\n    <Table.Header>\n      <Table.Row>\n        {props.headeritems.map((item, i) => (\n          <Table.ColHeader key={i} className={item.className}>\n            {item.content}\n          </Table.ColHeader>\n        ))}\n      </Table.Row>\n    </Table.Header>\n  );\n\n  const body = props.bodyitems && (\n    <Table.Body>\n      {props.bodyitems.map((row, i) => (\n        <Table.Row key={row.key}>\n          {row.item.map((col, i) => (\n            <Table.Col\n              className={col.className}\n              alignContent={col.alignContent}\n              key={i}\n            >\n              {col.content}\n            </Table.Col>\n          ))}\n        </Table.Row>\n      ))}\n    </Table.Body>\n  );\n\n  const table = (\n    <table className={classes} {...props}>\n      {header}\n      {body || children}\n    </table>\n  );\n\n  return !responsive ? table : <div className=\"table-responsive\">{table}</div>;\n}\n\nTable.Header = TableHeader;\nTable.Body = TableBody;\nTable.Row = TableRow;\nTable.Col = TableCol;\nTable.ColHeader = TableColHeader;\n\n/** @component */\nexport default Table;\n",
+  "source": "src/components/Table/index.ts",
+  "implementation": "src/components/Table/Table.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport TableHeader from \"./TableHeader.react\";\nimport TableBody from \"./TableBody.react\";\nimport TableRow from \"./TableRow.react\";\nimport TableCol from \"./TableCol.react\";\nimport TableColHeader from \"./TableColHeader.react\";\n\nexport type TableCell = { readonly content?: React.ReactNode; readonly className?: string; readonly alignContent?: \"left\" | \"center\" | \"right\" };\nexport type TableBodyItem = { readonly key: string | number; readonly item: readonly TableCell[] };\nexport type TableProps = React.TableHTMLAttributes<HTMLTableElement> & {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly cards?: boolean; readonly striped?: boolean; readonly responsive?: boolean; readonly highlightRowOnHover?: boolean; readonly hasOutline?: boolean; readonly verticalAlign?: \"center\";\n  readonly headeritems?: readonly Pick<TableCell, \"content\" | \"className\">[]; readonly bodyitems?: readonly TableBodyItem[];\n};\n\nfunction Table({\n  className,\n  children,\n  cards = false,\n  striped = false,\n  responsive = false,\n  highlightRowOnHover,\n  hasOutline,\n  verticalAlign,\n  headeritems,\n  bodyitems,\n  ...props\n}: TableProps): React.ReactNode {\n  const classes = cn(\n    \"table\",\n    {\n      \"card-table\": cards,\n      \"table-striped\": striped,\n      \"table-hover\": highlightRowOnHover,\n      \"table-outline\": hasOutline,\n      \"table-vcenter\": verticalAlign === \"center\",\n    },\n    className\n  );\n\n  const header = headeritems && (\n    <Table.Header>\n      <Table.Row>\n        {headeritems.map((item, i) => (\n          <Table.ColHeader key={i} className={item.className}>\n            {item.content}\n          </Table.ColHeader>\n        ))}\n      </Table.Row>\n    </Table.Header>\n  );\n\n  const body = bodyitems && (\n    <Table.Body>\n      {bodyitems.map((row, i) => (\n        <Table.Row key={row.key}>\n          {row.item.map((col, i) => (\n            <Table.Col\n              className={col.className}\n              alignContent={col.alignContent}\n              key={i}\n            >\n              {col.content}\n            </Table.Col>\n          ))}\n        </Table.Row>\n      ))}\n    </Table.Body>\n  );\n\n  const table = (\n    <table className={classes} {...props}>\n      {header}\n      {body || children}\n    </table>\n  );\n\n  return !responsive ? table : <div className=\"table-responsive\">{table}</div>;\n}\n\nTable.Header = TableHeader;\nTable.Body = TableBody;\nTable.Row = TableRow;\nTable.Col = TableCol;\nTable.ColHeader = TableColHeader;\n\n/** @component */\nexport default Table;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -21,21 +21,21 @@
       "name": "cards",
       "type": "boolean",
       "optional": true,
-      "description": "Should this Table be optimized to contain Cards",
+      "description": "",
       "default": "false"
     },
     {
       "name": "striped",
       "type": "boolean",
       "optional": true,
-      "description": "Give the table striped rows",
+      "description": "",
       "default": "false"
     },
     {
       "name": "responsive",
       "type": "boolean",
       "optional": true,
-      "description": "Make the table responsive",
+      "description": "",
       "default": "false"
     },
     {
@@ -58,13 +58,13 @@
     },
     {
       "name": "headeritems",
-      "type": "Array<{ +content?: React.Node, +className?: string }>",
+      "type": "readonly Pick<TableCell, \"content\" | \"className\">[]",
       "optional": true,
       "description": ""
     },
     {
       "name": "bodyitems",
-      "type": "Array<BodyItem>",
+      "type": "readonly TableBodyItem[]",
       "optional": true,
       "description": ""
     }
@@ -81,17 +81,17 @@
   "childApis": [
     {
       "name": "Header",
-      "source": "src/components/Table/TableHeader.react.js",
+      "source": "src/components/Table/TableHeader.react.tsx",
       "props": [
         {
-          "name": "children",
-          "type": "React.Node",
+          "name": "className",
+          "type": "string",
           "optional": true,
           "description": ""
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "children",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -102,17 +102,17 @@
     },
     {
       "name": "Body",
-      "source": "src/components/Table/TableBody.react.js",
+      "source": "src/components/Table/TableBody.react.tsx",
       "props": [
         {
-          "name": "children",
-          "type": "React.Node",
+          "name": "className",
+          "type": "string",
           "optional": true,
           "description": ""
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "children",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -123,17 +123,17 @@
     },
     {
       "name": "Row",
-      "source": "src/components/Table/TableRow.react.js",
+      "source": "src/components/Table/TableRow.react.tsx",
       "props": [
         {
-          "name": "children",
-          "type": "React.Node",
+          "name": "className",
+          "type": "string",
           "optional": true,
           "description": ""
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "children",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -144,11 +144,11 @@
     },
     {
       "name": "Col",
-      "source": "src/components/Table/TableCol.react.js",
+      "source": "src/components/Table/TableCol.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -166,7 +166,7 @@
         },
         {
           "name": "alignContent",
-          "type": "\"left\" | \"center\" | \"right\"",
+          "type": "\"\" | \"left\" | \"center\" | \"right\"",
           "optional": true,
           "description": "",
           "default": "\"\""
@@ -178,11 +178,11 @@
     },
     {
       "name": "ColHeader",
-      "source": "src/components/Table/TableColHeader.react.js",
+      "source": "src/components/Table/TableColHeader.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -200,7 +200,7 @@
         },
         {
           "name": "alignContent",
-          "type": "\"left\" | \"center\" | \"right\"",
+          "type": "\"\" | \"left\" | \"center\" | \"right\"",
           "optional": true,
           "description": "",
           "default": "\"\""
@@ -235,7 +235,9 @@
       "Puedes componer Header, Body, Row, ColHeader y Col, o usar headeritems/bodyitems.",
       "responsive añade un contenedor con desplazamiento horizontal local.",
       "No incorpora búsqueda, ordenación ni paginación; esas funciones pertenecen al consumidor o a AGGridTable.",
-      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content."
+      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content.",
+      "TableProps y los tipos de sus cinco subcomponentes están definidos en TypeScript. Table, Header, Body y Row reenvían sus atributos HTML nativos; Col y ColHeader conservan únicamente las propiedades que ya aplicaban.",
+      "headeritems y bodyitems se utilizan para construir las filas y ya no se copian como atributos del elemento table. bodyitems tiene prioridad sobre children cuando se proporciona."
     ],
     "example": "<Table responsive striped>\n  <Table.Header><Table.Row><Table.ColHeader>Nombre</Table.ColHeader></Table.Row></Table.Header>\n  <Table.Body><Table.Row><Table.Col>Atlas</Table.Col></Table.Row></Table.Body>\n</Table>"
   }

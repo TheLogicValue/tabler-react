@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
+import type { EChartsOption, BarSeriesOption, XAxisComponentOption, YAxisComponentOption, LegendComponentOption } from "echarts";
+import type { BarChartProps, BarChartData, ChartTooltipItem, ChartCategoryData } from "./types";
 
 export default function BarChart ({
     title = "",
@@ -31,10 +33,10 @@ export default function BarChart ({
     decal = null,
     seriesShowBackground = true,
     backgroundStyleColor = 'rgba(180, 180, 180, 0.2)'
-}) {
+}: BarChartProps): React.ReactElement {
 
     const xAxis = () => {
-        let xAxis = {
+        const xAxis: XAxisComponentOption & { data?: ChartCategoryData } = {
             type: type === "vertical" ? "category" : "value",
             data: xAxisData
         }
@@ -43,35 +45,35 @@ export default function BarChart ({
         }
         if (type !== "vertical") {
             xAxis.boundaryGap = [0, 0.01]
-            xAxis.axisLabel = { formatter: (item) => xAxisFormatter(item) }
-            xAxis.max = (value) => xAxisMinMax(value, "max")
-            xAxis.min = (value) => xAxisMinMax(value, "min")
+            xAxis.axisLabel = { formatter: (item: number) => xAxisFormatter!(item) }
+            xAxis.max = (value) => xAxisMinMax!(value, "max")
+            xAxis.min = (value) => xAxisMinMax!(value, "min")
         }
         return xAxis
     }
 
     const yAxis = () => {
-        let yAxis = {
+        const yAxis: YAxisComponentOption & { data?: ChartCategoryData } = {
             type: type === "vertical" ? "value" : "category",
             data: yAxisData
         }
         if (type === "vertical") {
             yAxis.show = complete
-            yAxis.axisLabel = { formatter: (item) => yAxisFormatter(item) }
-            yAxis.max = (value) => yAxisMinMax(value, "max")
-            yAxis.min = (value) => yAxisMinMax(value, "min")
+            yAxis.axisLabel = { formatter: (item: number) => yAxisFormatter!(item) }
+            yAxis.max = (value) => yAxisMinMax!(value, "max")
+            yAxis.min = (value) => yAxisMinMax!(value, "min")
         }
         return yAxis
     }
 
     const grid = () => {
-        let verticalGrid = {
+        const verticalGrid = {
             top: complete == true ? 30 : 10,
             bottom: complete == true ? 70 : 0,
             left: complete == true ? 60 : 0,
             right: complete == true ? 60 : 0,
         }
-        let horizontalGrid = {
+        const horizontalGrid = {
             left: '3%',
             right: '4%',
             top: '5%',
@@ -84,12 +86,12 @@ export default function BarChart ({
     const serie = () => {
         return series.map((item, i) => {
 
-            let ser = {
+            const ser: BarSeriesOption & { backgoundStyle: { color: string } } = {
                 type: 'bar',
                 color: colors[i],
-                name: (!stack) ? seriesName[i] : item,
-                data: (!stack) ? item : seriesName[i],
-                stack: stack,
+                name: ((!stack) ? seriesName[i] : item) as string,
+                data: ((!stack) ? item : seriesName[i]) as BarChartData,
+                stack: stack ?? undefined,
                 showBackground: seriesShowBackground,
                 backgoundStyle: { color: backgroundStyleColor },
               
@@ -98,31 +100,31 @@ export default function BarChart ({
             if(decal) {
                 ser.itemStyle = {
                     decal: {
-                        show: seriesName[i] != "Fondo",
+                        ...{ show: seriesName[i] != "Fondo" },
                         color: 'white',
                         rotation: 0.5,
                         dashArrayX: [1, 0],
                         dashArrayY: [2, 5],
-                        symbolSize: 0.5
+                        symbolSize: 0.5,
+                        symbol: seriesName[i] == "Fondo" ? "none" : undefined
                     }
                 }
-                if(seriesName[i] == "Fondo") ser.itemStyle.decal.symbol = "none"
             }
 
             return ser
         })
     }
 
-    const option = {
+    const option: EChartsOption = {
         title: { text: title, left: 'center' },
         toolbox: {
             feature: { saveAsImage: { name: downloadName, title: downloadTitle, show: download } }
         },
-        legend: { show: legend, bottom: "0rem", symbol: null },
+        legend: { show: legend, bottom: "0rem", symbol: null } as LegendComponentOption & { symbol: null },
         tooltip: {
             trigger: 'item',
             axisPointer: { type: 'shadow' },
-            formatter: (item) => tooltipFormatter(item)
+            formatter: (item) => tooltipFormatter(item as ChartTooltipItem)
         },
         xAxis: xAxis(),
         yAxis: yAxis(),
@@ -131,7 +133,7 @@ export default function BarChart ({
     }
 
     const style = () => {
-        let style = { height: height }
+        const style: React.CSSProperties = { height: height }
         if (paddingBottom) style.paddingBottom = paddingBottom
         return style
     }

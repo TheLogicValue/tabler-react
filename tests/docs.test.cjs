@@ -119,6 +119,18 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('Tab').implementation, 'src/components/Tabs/Tab.react.tsx')
   assert.equal(document('useModal').implementation, 'src/components/Modal/Hooks/useModal.ts')
   assert.equal(document('ModalDoc').props.find(prop => prop.name === 'items').type, 'readonly ModalDocItem[]')
+  assert.equal(document('AGGridTable').implementation, 'src/components/AGGridTable/AGGridTable.react.tsx')
+  assert.ok(document('AGGridTable').props.find(prop => prop.name === 'dataColumn').type.includes('AGGridColumn<TData>'))
+  assert.deepEqual(document('AGGridPagination').members.sort(), ['firstPage', 'noData', 'page'])
+  for (const name of ['BarChart', 'LineChart', 'PieChart', 'DoughnutChart', 'RadarChart']) {
+    const chart = document(name)
+    assert.equal(chart.implementation, `src/components/Chart/${name}.tsx`)
+    assert.ok(chart.props.every(prop => prop.type), 'Todas las propiedades de ' + name + ' deben tener tipo')
+  }
+  assert.ok(!document('DoughnutChart').props.some(prop => prop.name === 'center'), 'Omit debe excluir las opciones que ese wrapper no admite')
+  assert.equal(document('Table').childApis.length, 5)
+  assert.ok(document('Table').childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  for (const name of ['TableLoader', 'BarChartLoader', 'PieChartLoader']) assert.ok(document(name).props.find(prop => prop.name === 'width').type)
 })
 
 function walk(node, visit) {

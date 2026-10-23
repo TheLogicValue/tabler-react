@@ -1,83 +1,102 @@
 {
   "name": "PieChart",
   "kind": "Componente",
-  "source": "src/components/Chart/index.js",
-  "implementation": "src/components/Chart/PieChart.js",
-  "implementationCode": "import React from 'react'\nimport ReactECharts from 'echarts-for-react'\n\nexport default function PieChart({\n    title = \"\",\n    height = \"18.75rem\",\n    paddingBottom = null,\n    legend = true,\n    legendformatter = '{c}',\n    colors,\n    complete,\n    //series\n    series,\n    seriesDataName,\n    //download\n    downloadName = \"Export\",\n    downloadTitle = \"\",\n    download = false,\n    //Methods    \n    tooltipFormatter,\n    center = ['50%', '50%'],\n}) {\n\n    const option = {\n        title: { text: title },\n        tooltip: { trigger: 'item' },\n        toolbox: {\n            feature: {\n                saveAsImage: {\n                    name: downloadName,\n                    title: downloadTitle,\n                    show: download\n                }\n            }\n        },\n        legend: {\n            show: legend,\n            bottom: \"0rem\",\n        },\n        series: [\n            {\n                type: 'pie',\n                radius: '50%',\n                label: {\n                    show: true\n                },\n                labelLine: {\n                    show: true,\n                    length: 20,\n                    length2: 10\n                },\n                center: center,\n                tooltip: {\n                    formatter: (item) => tooltipFormatter(item),\n                },\n                data: series?.map((item, i) => ({\n                    name: seriesDataName[i],\n                    value: item,\n                    itemStyle: { color: colors[i] }\n                }))\n            }\n        ]\n    }\n\n    const style = () => {\n        let style = { height: height }\n        if (paddingBottom) style.paddingBottom = paddingBottom\n        return style\n    }\n\n    return <ReactECharts className={'charts-complete-' + complete} option={option} style={style()} />\n}",
+  "source": "src/components/Chart/index.ts",
+  "implementation": "src/components/Chart/PieChart.tsx",
+  "implementationCode": "import React from 'react'\nimport ReactECharts from 'echarts-for-react'\nimport type { EChartsOption } from \"echarts\";\nimport type { PieChartProps, ChartTooltipItem } from \"./types\";\n\nexport default function PieChart({\n    title = \"\",\n    height = \"18.75rem\",\n    paddingBottom = null,\n    legend = true,\n    legendformatter = '{c}',\n    colors,\n    complete,\n    //series\n    series,\n    seriesDataName,\n    //download\n    downloadName = \"Export\",\n    downloadTitle = \"\",\n    download = false,\n    //Methods    \n    tooltipFormatter,\n    center = ['50%', '50%'],\n}: PieChartProps): React.ReactElement {\n\n    const option: EChartsOption = {\n        title: { text: title },\n        tooltip: { trigger: 'item' },\n        toolbox: {\n            feature: {\n                saveAsImage: {\n                    name: downloadName,\n                    title: downloadTitle,\n                    show: download\n                }\n            }\n        },\n        legend: {\n            show: legend,\n            bottom: \"0rem\",\n        },\n        series: [\n            {\n                type: 'pie',\n                radius: '50%',\n                label: {\n                    show: true\n                },\n                labelLine: {\n                    show: true,\n                    length: 20,\n                    length2: 10\n                },\n                center: center,\n                tooltip: {\n                    formatter: (item) => tooltipFormatter(item as ChartTooltipItem),\n                },\n                data: series?.map((item, i) => ({\n                    name: seriesDataName[i],\n                    value: item,\n                    itemStyle: { color: colors[i] }\n                }))\n            }\n        ]\n    }\n\n    const style = () => {\n        const style: React.CSSProperties = { height: height }\n        if (paddingBottom) style.paddingBottom = paddingBottom\n        return style\n    }\n\n    return <ReactECharts className={'charts-complete-' + complete} option={option} style={style()} />\n}",
   "props": [
     {
       "name": "title",
-      "default": "\"\"",
+      "type": "string",
       "optional": true,
-      "description": "Texto del título visible de ECharts."
+      "description": "Texto del título visible de ECharts.",
+      "default": "\"\""
     },
     {
       "name": "height",
-      "default": "\"18.75rem\"",
+      "type": "React.CSSProperties[\"height\"]",
       "optional": true,
-      "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
+      "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar.",
+      "default": "\"18.75rem\""
     },
     {
       "name": "paddingBottom",
-      "default": "null",
+      "type": "React.CSSProperties[\"paddingBottom\"] | null",
       "optional": true,
-      "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
-    },
-    {
-      "name": "legend",
-      "default": "true",
-      "optional": true,
-      "description": "Activa o desactiva la leyenda inferior. La leyenda no se controla con complete."
-    },
-    {
-      "name": "legendformatter",
-      "default": "'{c}'",
-      "optional": true,
-      "description": "Propiedad heredada recogida pero no utilizada. No cambia las etiquetas ni la leyenda de PieChart en la implementación actual."
+      "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts.",
+      "default": "null"
     },
     {
       "name": "colors",
+      "type": "Color[]",
+      "optional": false,
       "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
     },
     {
       "name": "complete",
+      "type": "boolean",
+      "optional": true,
       "description": "Solo añade la clase CSS charts-complete-*. En este componente no modifica las opciones de leyenda, etiquetas o ejes."
     },
     {
+      "name": "downloadName",
+      "type": "string",
+      "optional": true,
+      "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico.",
+      "default": "\"Export\""
+    },
+    {
+      "name": "downloadTitle",
+      "type": "string",
+      "optional": true,
+      "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico.",
+      "default": "\"\""
+    },
+    {
+      "name": "download",
+      "type": "boolean",
+      "optional": true,
+      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga.",
+      "default": "false"
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "optional": true,
+      "description": "Activa o desactiva la leyenda inferior. La leyenda no se controla con complete.",
+      "default": "true"
+    },
+    {
+      "name": "legendformatter",
+      "type": "NonNullable<PieSeriesOption[\"label\"]>[\"formatter\"]",
+      "optional": true,
+      "description": "Propiedad heredada recogida pero no utilizada. No cambia las etiquetas ni la leyenda de PieChart en la implementación actual.",
+      "default": "'{c}'"
+    },
+    {
       "name": "series",
+      "type": "(number | \"-\")[]",
+      "optional": true,
       "description": "Array numérico, por ejemplo [60, 40]. Cada posición corresponde a un sector y se combina con seriesDataName[i] y colors[i]. No pases objetos { name, value } de ECharts directamente."
     },
     {
       "name": "seriesDataName",
+      "type": "string[]",
+      "optional": false,
       "description": "Array con un nombre por sector, en el mismo orden y longitud que series y colors. Por ejemplo [\"Renta variable\", \"Renta fija\"]."
     },
     {
-      "name": "downloadName",
-      "default": "\"Export\"",
-      "optional": true,
-      "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
-    },
-    {
-      "name": "downloadTitle",
-      "default": "\"\"",
-      "optional": true,
-      "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
-    },
-    {
-      "name": "download",
-      "default": "false",
-      "optional": true,
-      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
-    },
-    {
       "name": "tooltipFormatter",
+      "type": "ChartTooltipFormatter",
+      "optional": false,
       "description": "Función (item) => string. Recibe un objeto ECharts con name, value y percent del sector. Proporciónala: el wrapper la invoca directamente cuando se muestra la ayuda."
     },
     {
       "name": "center",
-      "default": "['50%', '50%']",
+      "type": "PieSeriesOption[\"center\"]",
       "optional": true,
-      "description": "Posición [horizontal, vertical] del centro, en porcentajes o coordenadas compatibles con ECharts. Por ejemplo [\"50%\", \"45%\"]. El radio está fijado en 50%."
+      "description": "Posición [horizontal, vertical] del centro, en porcentajes o coordenadas compatibles con ECharts. Por ejemplo [\"50%\", \"45%\"]. El radio está fijado en 50%.",
+      "default": "['50%', '50%']"
     }
   ],
   "subcomponents": [],
@@ -110,7 +129,8 @@
       "tooltipFormatter recibe un objeto del sector con name, value y percent. Utiliza datos controlados si devuelves HTML para las ayudas.",
       "PieChart fija el radio en 50% y permite mover el centro con center. legendformatter se recoge, pero no tiene efecto en este componente.",
       "legend controla la leyenda inferior; complete solo forma parte del nombre de una clase CSS. download guarda una imagen con downloadName y downloadTitle, no un CSV de los sectores.",
-      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error."
+      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error.",
+      "Las fuentes exportan PieChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban."
     ],
     "example": "import React from \"react\";\nimport { PieChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function Distribucion() {\n  return <PieChart title=\"Distribución de activos\" height=\"320px\" legend\n    series={[60, 40]}\n    seriesDataName={[\"Renta variable\", \"Renta fija\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    center={[\"50%\", \"45%\"]}\n    tooltipFormatter={item => item.name + \": \" + item.value + \" (\" + item.percent + \" %)\"}\n    download downloadName=\"distribucion\" downloadTitle=\"Descargar imagen\" />;\n}",
     "props": [

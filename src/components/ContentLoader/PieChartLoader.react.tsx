@@ -1,7 +1,10 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
-const PieChartLoader = props => {
+import type { ContentLoaderProps } from "./types";
+export type PieChartLoaderProps = ContentLoaderProps;
+
+const PieChartLoader = (props: PieChartLoaderProps): React.ReactElement => {
   return (
     <ContentLoader viewBox="0 0 400 200" height={250} width={400} {...props}>
       <rect x="100" y="5" rx="0" ry="0" width="200" height="15" />

@@ -311,6 +311,12 @@ DatePicker expone en las fuentes DatePickerProps y DatePickerHandle para su refe
 
 Los modales públicos Modal, ModalDoc, ModalSplash y useModal, la familia de pestañas Tab/Tabs/TabbedHeader/TabbedContainer/useTabs y los iconos Error/Success están migrados. Se conservan los estados, acciones y callbacks; ModalDoc admite también una lista vacía tras filtrar sus secciones. La visibilidad, el foco y Escape de los modales siguen correspondiendo a la integración consumidora, como en los ejemplos de la demo. Las fichas y las pruebas incluyen los contratos de este bloque; el extractor reconoce además los valores predeterminados estáticos de las clases.
 
+AGGridTable, AGGridPagination, Table y sus cinco subcomponentes, los cinco gráficos de ECharts y los tres esqueletos de tablas/gráficos también utilizan TypeScript. AGGridTableProps, AGGridColumn y AGGridTableHandle conservan el tipo de fila del consumidor en las opciones nativas, rutas de campo, eventos y API. Los imports de AG Grid son solo de tipos: el consumidor sigue aportando AgGridReact, módulos, datos, totales y lógica de negocio. Se mantienen las prioridades de las columnas y los callbacks nativos junto con los alias del wrapper.
+
+AGGridPagination evita accesos a una API o unos tamaños todavía ausentes, permite alcanzar lastPage y corrige el desplazamiento de filas al ir a la última página. Sus controles son botones nativos que no envían formularios. El consumidor sigue sincronizando el paginador con sus filtros y datos. Table mantiene sus atributos HTML y deja de enviar headeritems/bodyitems al DOM como atributos.
+
+Los gráficos comprueban la opción generada contra EChartsOption y reutilizan los tipos de sus series y callbacks. BarChart conserva el contrato heredado de apilado, LineChart recibe un array en el tooltip y RadarChart recibe los valores del perfil. Las propiedades públicas conservan su alcance: no se añade reenvío de opciones que el wrapper no utilizaba. Las pruebas comprueban la frontera con ReactECharts y representan las cinco variantes en SVG con el motor real de ECharts. `src/echarts-react-jsx.d.ts` aporta únicamente el alias JSX.Element que aún referencia echarts-for-react 3 durante la comprobación con los tipos de React 19; no añade código de ejecución y mantiene skipLibCheck=false.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck

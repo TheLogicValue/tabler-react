@@ -68,7 +68,7 @@
     "kind": "Componente",
     "summary": "Esqueleto SVG con forma de gráfico de barras.",
     "status": "documented",
-    "properties": 0,
+    "properties": 11,
     "examples": 1
   },
   "BlogCard": {
@@ -460,7 +460,7 @@
     "kind": "Componente",
     "summary": "Esqueleto SVG con forma de gráfico circular.",
     "status": "documented",
-    "properties": 0,
+    "properties": 11,
     "examples": 1
   },
   "PricingCard": {
@@ -652,7 +652,7 @@
     "kind": "Componente",
     "summary": "Esqueleto SVG con forma de tabla.",
     "status": "documented",
-    "properties": 0,
+    "properties": 11,
     "examples": 1
   },
   "Tabs": {

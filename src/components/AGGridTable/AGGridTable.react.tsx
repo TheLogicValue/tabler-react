@@ -1,13 +1,16 @@
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react"
 import cn from "classnames"
-import { Grid } from "../"
+import Grid from "../Grid"
 import { es } from "./Languages/es"
 import { Button } from "../Button"
 import Icon from "../Icon"
 
-export function OverlayLoading(text) { return `<span class="ag-overlay-loading-center">${text}</span>` }
+import type { ColDef, ColGroupDef, GridReadyEvent } from "ag-grid-community"
+import type { AGGridTableProps, AGGridTableHandle, AGGridTableComponent, AGGridInstance } from "./types"
 
-const AGGridTable = forwardRef(({
+export function OverlayLoading(text: string): string { return `<span class="ag-overlay-loading-center">${text}</span>` }
+
+function AGGridTableInner<TData>({
     AgGridReact,
     className,
     panelPagination,
@@ -37,14 +40,13 @@ const AGGridTable = forwardRef(({
         mode: 'singleRow',
         enableClickSelection: false,
         checkboxes: false,
-        headerCheckbox: false,
     },
     listBtn = false,
     deselectAllBtn = false,
     deselectAllOptions = { text: "Clear", hidden: false },
     ...gridProps
-}, ref) => {
-    const gridRef = useRef()
+}: AGGridTableProps<TData>, ref: React.ForwardedRef<AGGridTableHandle<TData>>): React.ReactElement {
+    const gridRef = useRef<AGGridInstance<TData>>(null)
     const [filter, setFilter] = useState("")
     const [searchText, setSearchText] = useState("")
     const { onGridReady: consumerOnGridReady, onRowClicked, onCellClicked,
@@ -58,10 +60,10 @@ const AGGridTable = forwardRef(({
 
     const columnDefs = useMemo(() => dataColumn?.map(column => {
         const { header, name, headerTooltip, key, subItems, item, ...props } = column
-        const columnDef = {
+        const columnDef: ColDef<TData> & Partial<Omit<ColGroupDef<TData>, "children">> & { children?: (ColDef<TData> | ColGroupDef<TData>)[] } = {
             headerName: header,
             field: item,
-            colId: subItems == null ? key ?? item : null,
+            colId: subItems == null ? key ?? item : undefined,
             flex: flex,
             ...props,
             children: subItems?.map(subItem => {
@@ -84,14 +86,14 @@ const AGGridTable = forwardRef(({
     }), [dataColumn, flex, minWidth, autoHeaderTooltip])
 
     const classes = cn(className, "ag-theme-balham")
-    const onGridReady = useCallback((params) => {
+    const onGridReady = useCallback((params: GridReadyEvent<TData>) => {
         onGrid?.(params)
         consumerOnGridReady?.(params)
     }, [onGrid, consumerOnGridReady])
-    const handleChangeFilter = (event) => {
-        setSearchText(event.target.value)
+    const handleChangeFilter = (event: React.FormEvent<HTMLInputElement>) => {
+        setSearchText(event.currentTarget.value)
         if (onHandleChangeFilter) onHandleChangeFilter(event)
-        else setFilter(event.target.value)
+        else setFilter(event.currentTarget.value)
     }
 
     const deselectAll = useCallback(() => {
@@ -104,8 +106,8 @@ const AGGridTable = forwardRef(({
 
     useImperativeHandle(ref, () => {
         return {
-            getDisplayedRowAtIndex(row) { return gridRef.current?.api?.getDisplayedRowAtIndex(row) },
-            flashCells(item) { gridRef.current?.api?.flashCells(item) },
+            getDisplayedRowAtIndex(row: number) { return gridRef.current?.api?.getDisplayedRowAtIndex(row) },
+            flashCells(item?: Parameters<AGGridTableHandle<TData>["flashCells"]>[0]) { gridRef.current?.api?.flashCells(item) },
             get api() { return gridRef.current?.api }
         }
     }, [])
@@ -116,7 +118,7 @@ const AGGridTable = forwardRef(({
                 <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>
                     {search === true ? <div className="addons-aggrid">
                         <input type="text" id="searcher" className="ag-grid-search" aria-label="Buscar en la tabla" placeholder="Buscar..." value={quickFilterText ?? searchText} onInput={handleChangeFilter} />
-                        {downloadCSV === true ? <Button type="button" square className="downloadCSV" title="Descargar CSV" onClick={onBtnExport} >
+                        {downloadCSV === true ? <Button type="button" square className="downloadCSV" aria-label="Descargar CSV" onClick={onBtnExport} >
                             <Icon prefix="fe" name="download"></Icon>
                         </Button> : null}
                     </div> : null}
@@ -151,7 +153,10 @@ const AGGridTable = forwardRef(({
             </Grid.Col>
         </Grid.Row>
     )
-})
+}
+
+// React.forwardRef erases the row generic; restore it on the public call signature.
+const AGGridTable = forwardRef(AGGridTableInner) as AGGridTableComponent
 
 AGGridTable.displayName = "AGGridTable"
 

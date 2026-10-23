@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
+import type { EChartsOption } from "echarts";
+import type { RadarChartProps, RadarTooltipItem } from "./types";
 
 export default function RadarChart({
     title = "",   
@@ -17,9 +19,9 @@ export default function RadarChart({
     download = false,
     //Methods    
     tooltipFormatter
-}) { 
+}: RadarChartProps): React.ReactElement { 
 
-    const option = {
+    const option: EChartsOption = {
         title: { text: title },
         tooltip: { trigger: 'axis' },
         toolbox: {
@@ -36,7 +38,7 @@ export default function RadarChart({
                 type: 'radar',
                 tooltip: {
                     trigger: 'item',
-                    formatter: (item) => tooltipFormatter(item),
+                    formatter: (item) => tooltipFormatter(item as RadarTooltipItem),
                 },
                 data: series?.map((item, i) => {
                     return {
@@ -50,7 +52,7 @@ export default function RadarChart({
     }
 
     const style = () => {
-        let style = { height: height }
+        const style: React.CSSProperties = { height: height }
         if (paddingBottom) style.paddingBottom = paddingBottom
         return style
     }

@@ -1,5 +1,7 @@
 import React from "react";
 import ReactECharts from "echarts-for-react";
+import type { EChartsOption, LegendComponentOption } from "echarts";
+import type { LineChartProps, ChartTooltipItem } from "./types";
 
 export default function LineChartTabler({
     lines,
@@ -23,14 +25,14 @@ export default function LineChartTabler({
     toolboxTop = 0,
     toolboxRight = 10,
     toolboxBottom = 10,
-}) {
-    const option = {
+}: LineChartProps): React.ReactElement {
+    const option: EChartsOption = {
         tooltip: {
             trigger: "axis",
             axisPointer: { animation: false },
             confine: false,
             appendToBody: true,
-            formatter: (item) => tooltipFormatter(item),
+            formatter: (item) => tooltipFormatter(item as ChartTooltipItem[]),
         },
         toolbox: {
             top: toolboxTop,
@@ -43,7 +45,7 @@ export default function LineChartTabler({
                     show: onExpand != null,
                     title: "",
                     icon: "path://M15,3 L21,3 L21,9 M9,21 L3,21 L3,15 M21,3 L14,10 M3,21 L10,14",
-                    onclick: onExpand,
+                    onclick: onExpand ?? undefined,
                 },
             },
         },
@@ -53,7 +55,7 @@ export default function LineChartTabler({
             show: complete,
             bottom: "0rem",
             symbol: null,
-        },
+        } as LegendComponentOption & { symbol: null },
         xAxis: {
             type: "category",
             boundaryGap: false,

@@ -20,10 +20,12 @@
   "AGGridPagination": {
     "summary": "Paginador externo que utiliza la API de una tabla AG Grid.",
     "behavior": [
-      "controles debe ser una referencia con current.api y los métodos de paginación de AG Grid.",
-      "Mantiene una página interna; las páginas de AG Grid son base 0 y las mostradas son base 1.",
-      "Proporciona pagesSizes cuando utilices los controles de avance: la implementación los consulta sin comprobar que existan en cada callback.",
-      "La referencia pública expone page, firstPage() y noData(); noData() retrocede una página."
+      "controles es una referencia a una instancia con api (por ejemplo, la referencia de AGGridTable). La API solo necesita los métodos nativos de navegación; antes de estar disponible, los controles no ejecutan acciones.",
+      "Mantiene una página interna en base 1 y entrega índices en base 0 a AG Grid. No calcula datos, totales ni tamaños de página del consumidor.",
+      "pagesSizes contiene el número de filas de cada página. Si falta, el avance queda deshabilitado. totalPages y lastPage limitan el avance; lastPage se puede alcanzar, pero no superar. El rango de la última página utiliza el desplazamiento de base 0 y el totalElements recibido.",
+      "Los cuatro controles son botones nativos de tipo button: admiten teclado, reflejan disabled y no envían un formulario contenedor.",
+      "La referencia pública expone page, firstPage() y noData(). firstPage() restablece únicamente el estado interno; el botón Primera página navega también con la API. noData() intenta retroceder una página con la API.",
+      "La sincronización ante filtros, cambios de tamaño o datos remotos pertenece al consumidor; no se introduce carga ni lógica de negocio dentro del paginador."
     ],
     "example": "<AGGridPagination controles={gridRef} pagesSizes={[20, 8]} totalElements={28} totalPages={2} pageSize={20} />"
   },
@@ -39,7 +41,9 @@
       "La referencia expone api, getDisplayedRowAtIndex(index) y flashCells(options). api puede ser undefined antes de grid ready. El índice es base 0 dentro de las filas mostradas; el resultado es un RowNode y sus datos están en node.data.",
       "La limpieza integrada afecta solo a esta instancia. Con quickFilterText controlado, el consumidor debe restablecer su estado: el botón no cambia la prop ni llama a onHandleChangeFilter para notificar la limpieza.",
       "downloadCSV requiere search=true. panelPagination solo coloca un nodo debajo de la tabla y suppressPaginationPanel oculta el panel nativo; la aplicación debe sincronizar cualquier paginador externo.",
-      "Los totales se calculan en la aplicación y se pasan como pinnedTopRowData. autosize y dataTotal son propiedades heredadas sin efecto. Evita consultas globales a los IDs heredados searcher y clearDataTables si hay varias tablas."
+      "Los totales se calculan en la aplicación y se pasan como pinnedTopRowData. autosize y dataTotal son propiedades heredadas sin efecto. Evita consultas globales a los IDs heredados searcher y clearDataTables si hay varias tablas.",
+      "Las fuentes TypeScript exportan AGGridTableProps<TData>, AGGridColumn<TData> y AGGridTableHandle<TData>. TData se conserva en filas, rutas de campo, eventos y resultados de la API. AgGridReact sigue siendo un componente que aporta el consumidor; no se registra ningún módulo ni se importa Enterprise en ejecución.",
+      "Las opciones adicionales usan el contrato nativo AgGridReactProps<TData>. Los tipos no cambian las prioridades: las opciones fijadas por el wrapper siguen prevaleciendo según lo descrito arriba. onRowClick puede recibir undefined en filas sin datos, como grupos; el evento nativo mantiene su forma completa."
     ],
     "example": "import React, { useRef, useState } from \"react\";\nimport { AgGridReact } from \"ag-grid-react\";\nimport { AGGridTable } from \"tabler-react\";\nimport \"tabler-react/style.css\";\nimport \"ag-grid-community/styles/ag-grid.css\";\nimport \"ag-grid-community/styles/ag-theme-balham.css\";\n\nexport default function TablaDeFondos() {\n  const gridRef = useRef(null);\n  const [seleccionados, setSeleccionados] = useState([]);\n  const [primero, setPrimero] = useState(\"Sin consultar\");\n  const filas = [\n    { id: \"atlas\", name: \"Atlas\", weight: 60 },\n    { id: \"brisa\", name: \"Brisa\", weight: 40 },\n  ];\n  const columnas = [\n    { header: \"Fondo\", item: \"name\", filter: true },\n    { header: \"Peso (%)\", item: \"weight\", valueFormatter: p => p.value + \" %\" },\n  ];\n  return <>\n    <AGGridTable ref={gridRef} AgGridReact={AgGridReact}\n      dataColumn={columnas} dataRow={filas}\n      getRowId={p => p.data.id}\n      defaultColDef={{ sortable: true, resizable: true }}\n      rowSelection={{ mode: \"multiRow\", checkboxes: true, headerCheckbox: true, enableClickSelection: true }}\n      onSelectionChanged={event => setSeleccionados(event.api.getSelectedRows())}\n      onRowClick={row => console.log(\"Datos de la fila\", row)}\n      pinnedTopRowData={[{ id: \"total\", name: \"Total\", weight: filas.reduce((sum, row) => sum + row.weight, 0) }]}\n      search downloadCSV textFileCSV=\"fondos.csv\"\n      pageSize={5} paginationPageSizeSelector={[5, 10]}\n      listBtn deselectAllBtn deselectAllOptions={{ text: \"Limpiar\", hidden: false }} />\n    <p>Seleccionados: {seleccionados.map(row => row.name).join(\", \") || \"ninguno\"}</p>\n    <button type=\"button\" onClick={() => {\n      const node = gridRef.current?.getDisplayedRowAtIndex(0);\n      setPrimero(node?.data?.name ?? \"No hay filas visibles\");\n    }}>Consultar primera fila visible</button>\n    <p>{primero}</p>\n  </>;\n}",
     "props": [
@@ -245,7 +249,9 @@
       "tooltipFormatter recibe un único objeto con name, seriesName y value. ECharts usa el texto devuelto para la ayuda; utiliza contenido de confianza si generas HTML.",
       "stack tiene un contrato heredado diferente: series pasa a contener nombres y seriesName los arrays numéricos. Los ejemplos adicionales muestran ambas orientaciones y el apilado.",
       "complete y legend son independientes. download activa una imagen del gráfico; no exporta los datos de negocio. La gestión de carga, ausencia de datos y errores pertenece al consumidor.",
-      "decal utiliza una trama fija. backgroundStyleColor se envía con una clave incorrecta en la implementación actual; se documenta esta limitación sin cambiar el componente."
+      "decal utiliza una trama fija. backgroundStyleColor se envía con una clave incorrecta en la implementación actual; se documenta esta limitación sin cambiar el componente.",
+      "Las fuentes exportan BarChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban.",
+      "Los tipos distinguen barras verticales y horizontales y exigen los callbacks del eje numérico correspondiente. Con un stack no vacío se conserva el intercambio heredado de nombres y arrays; no se transforma el contrato del consumidor."
     ],
     "example": "import React from \"react\";\nimport { BarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function BarrasVerticales() {\n  return <BarChart title=\"Peso por mes\" height=\"300px\" complete legend\n    series={[[12, 18, 24], [10, 16, 20]]}\n    seriesName={[\"Cartera\", \"Referencia\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    xAxisData={[\"Ene\", \"Feb\", \"Mar\"]} rotateX={0}\n    yAxisFormatter={value => value + \" %\"}\n    yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : Math.ceil(range.max * 1.1)}\n    tooltipFormatter={item => item.seriesName + \": \" + item.value + \" %\"}\n    download downloadName=\"peso-mensual\" downloadTitle=\"Descargar imagen\" />;\n}",
     "props": [
@@ -704,7 +710,9 @@
       "tooltipFormatter recibe un array de parámetros del punto porque la ayuda se activa por eje. yAxisFormatter recibe un número y yAxisMinMax recibe ({ min, max }, \"min\" | \"max\"); devuelve límites numéricos finitos.",
       "Los cambios de leyenda hechos por el usuario los gestiona ECharts. El wrapper no expone onLegendChange ni onEvents para sincronizarlos con el estado de React; getLegend es la configuración que envía el consumidor.",
       "onExpand habilita una herramienta, pero la aplicación debe decidir qué abrir. download guarda una imagen usando name como nombre de archivo y title como texto de ayuda, no como título visible.",
-      "top/right/left/bottom se aplican mediante ||: un 0 numérico no reemplaza el margen calculado. Los estados de carga, error y vacío se presentan desde la aplicación."
+      "top/right/left/bottom se aplican mediante ||: un 0 numérico no reemplaza el margen calculado. Los estados de carga, error y vacío se presentan desde la aplicación.",
+      "Las fuentes exportan LineChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban.",
+      "tooltipFormatter recibe un array de parámetros de ECharts y los callbacks de límites reciben { min, max } y min/max. onExpand sigue notificando al consumidor sin abrir una vista por sí mismo."
     ],
     "example": "import React, { useState } from \"react\";\nimport { LineChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function EvolucionDeLaCartera() {\n  const [mensaje, setMensaje] = useState(\"\");\n  const lines = [\n    { name: \"Cartera\", data: [100, 104, 109], color: \"#3676c8\" },\n    { name: \"Referencia\", data: [100, 102, 106], color: \"#21a48a\" },\n  ];\n  return <>\n    <LineChart lines={lines} height=\"320px\" complete\n      xAxisData={[\"Ene\", \"Feb\", \"Mar\"]}\n      selectedOptions={[\"Cartera\", \"Referencia\"]}\n      getLegend={{ Cartera: true, Referencia: true }}\n      yAxisMinInterval={1}\n      yAxisFormatter={value => String(value)}\n      yAxisMinMax={(range, boundary) => boundary === \"min\"\n        ? Math.floor(range.min - 2) : Math.ceil(range.max + 2)}\n      tooltipFormatter={items => items.map(item =>\n        item.seriesName + \": \" + item.value).join(\"<br/>\")}\n      download name=\"evolucion-cartera\" title=\"Descargar imagen\"\n      onExpand={() => setMensaje(\"Aquí la aplicación abriría una vista ampliada.\")} />\n    <p role=\"status\">{mensaje}</p>\n  </>;\n}",
     "props": [
@@ -1143,7 +1151,9 @@
       "Puedes componer Header, Body, Row, ColHeader y Col, o usar headeritems/bodyitems.",
       "responsive añade un contenedor con desplazamiento horizontal local.",
       "No incorpora búsqueda, ordenación ni paginación; esas funciones pertenecen al consumidor o a AGGridTable.",
-      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content."
+      "La forma de bodyitems es una lista de filas con key e item, cuyos elementos tienen content.",
+      "TableProps y los tipos de sus cinco subcomponentes están definidos en TypeScript. Table, Header, Body y Row reenvían sus atributos HTML nativos; Col y ColHeader conservan únicamente las propiedades que ya aplicaban.",
+      "headeritems y bodyitems se utilizan para construir las filas y ya no se copian como atributos del elemento table. bodyitems tiene prioridad sobre children cuando se proporciona."
     ],
     "example": "<Table responsive striped>\n  <Table.Header><Table.Row><Table.ColHeader>Nombre</Table.ColHeader></Table.Row></Table.Header>\n  <Table.Body><Table.Row><Table.Col>Atlas</Table.Col></Table.Row></Table.Body>\n</Table>"
   },
@@ -1252,7 +1262,8 @@
     "summary": "Esqueleto SVG con forma de gráfico de barras.",
     "behavior": [
       "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
-      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición.",
+      "Su tipo de propiedades reutiliza IContentLoaderProps: admite las opciones SVG y las de react-content-loader, manteniendo las formas del esqueleto."
     ],
     "example": "<BarChartLoader width={600} height={250} speed={2} />"
   },
@@ -1260,7 +1271,8 @@
     "summary": "Esqueleto SVG con forma de gráfico circular.",
     "behavior": [
       "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
-      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición.",
+      "Su tipo de propiedades reutiliza IContentLoaderProps: admite las opciones SVG y las de react-content-loader, manteniendo las formas del esqueleto."
     ],
     "example": "<PieChartLoader width={600} height={250} speed={2} />"
   },
@@ -1268,7 +1280,8 @@
     "summary": "Esqueleto SVG con forma de tabla.",
     "behavior": [
       "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
-      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición.",
+      "Su tipo de propiedades reutiliza IContentLoaderProps: admite las opciones SVG y las de react-content-loader, manteniendo las formas del esqueleto."
     ],
     "example": "<TableLoader width={600} height={250} speed={2} />"
   },
@@ -1352,7 +1365,8 @@
       "tooltipFormatter recibe un objeto del sector con name, value y percent. Utiliza datos controlados si devuelves HTML para las ayudas.",
       "PieChart fija el radio en 50% y permite mover el centro con center. legendformatter se recoge, pero no tiene efecto en este componente.",
       "legend controla la leyenda inferior; complete solo forma parte del nombre de una clase CSS. download guarda una imagen con downloadName y downloadTitle, no un CSV de los sectores.",
-      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error."
+      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error.",
+      "Las fuentes exportan PieChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban."
     ],
     "example": "import React from \"react\";\nimport { PieChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function Distribucion() {\n  return <PieChart title=\"Distribución de activos\" height=\"320px\" legend\n    series={[60, 40]}\n    seriesDataName={[\"Renta variable\", \"Renta fija\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    center={[\"50%\", \"45%\"]}\n    tooltipFormatter={item => item.name + \": \" + item.value + \" (\" + item.percent + \" %)\"}\n    download downloadName=\"distribucion\" downloadTitle=\"Descargar imagen\" />;\n}",
     "props": [
@@ -1421,7 +1435,8 @@
       "tooltipFormatter recibe un objeto del sector con name, value y percent. Utiliza datos controlados si devuelves HTML para las ayudas.",
       "DoughnutChart fija el radio interior en 30% y el exterior en 70%. legendformatter cambia las etiquetas interiores, no el texto de la leyenda.",
       "legend controla la leyenda inferior; complete solo forma parte del nombre de una clase CSS. download guarda una imagen con downloadName y downloadTitle, no un CSV de los sectores.",
-      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error."
+      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error.",
+      "Las fuentes exportan DoughnutChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban."
     ],
     "example": "import React from \"react\";\nimport { DoughnutChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function Distribucion() {\n  return <DoughnutChart title=\"Distribución de activos\" height=\"320px\" legend\n    series={[60, 40]}\n    seriesDataName={[\"Renta variable\", \"Renta fija\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    legendformatter=\"{b}: {d}%\"\n    tooltipFormatter={item => item.name + \": \" + item.value + \" (\" + item.percent + \" %)\"}\n    download downloadName=\"distribucion\" downloadTitle=\"Descargar imagen\" />;\n}",
     "props": [
@@ -1486,7 +1501,8 @@
       "seriesDataName y colors identifican los perfiles, no las dimensiones. En el ejemplo hay tres dimensiones y dos perfiles comparados.",
       "tooltipFormatter recibe un único objeto: name es el perfil y value es su array de valores. Utiliza indicator para añadir los nombres de cada dimensión a la ayuda.",
       "La implementación fija radio 90 y centro [\"50%\", \"50%\"], y muestra una leyenda inferior sin prop legend. complete solo añade una clase CSS; no cambia estas opciones.",
-      "download activa saveAsImage con downloadName y downloadTitle. El wrapper no reenvía opciones arbitrarias ni callbacks de ECharts; el consumidor prepara los datos y los estados externos."
+      "download activa saveAsImage con downloadName y downloadTitle. El wrapper no reenvía opciones arbitrarias ni callbacks de ECharts; el consumidor prepara los datos y los estados externos.",
+      "Las fuentes exportan RadarChartProps y comprueban la opción generada contra EChartsOption de ECharts. Se mantienen las propiedades del wrapper; no se añade reenvío automático de option, onEvents ni otras propiedades que antes se ignoraban."
     ],
     "example": "import React from \"react\";\nimport { RadarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function CompararPerfiles() {\n  const indicator = [\n    { name: \"Ambiental\", max: 100 },\n    { name: \"Social\", max: 100 },\n    { name: \"Gobierno\", max: 100 },\n  ];\n  return <RadarChart title=\"Perfil de la cartera\" height=\"340px\"\n    indicator={indicator} series={[[80, 70, 90], [65, 85, 75]]}\n    seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]}\n    tooltipFormatter={item => item.name + \"<br/>\" + item.value.map((value, index) =>\n      indicator[index].name + \": \" + value).join(\"<br/>\")}\n    download downloadName=\"perfiles\" downloadTitle=\"Descargar imagen\" />;\n}",
     "props": [

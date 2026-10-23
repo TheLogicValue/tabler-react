@@ -1,10 +1,77 @@
 {
   "name": "BarChartLoader",
   "kind": "Componente",
-  "source": "src/components/ContentLoader/index.js",
-  "implementation": "src/components/ContentLoader/BarChartLoader.react.js",
-  "implementationCode": "import React from 'react'\nimport ContentLoader from 'react-content-loader'\n\nconst BarChartLoader = props => {\n  return (\n    <ContentLoader width={200} height={200} viewBox=\"0 0 200 200\" {...props}>\n      <rect x=\"0\" y=\"160\" rx=\"0\" ry=\"0\" width=\"25\" height=\"40\" />\n      <rect x=\"30\" y=\"145\" rx=\"0\" ry=\"0\" width=\"25\" height=\"55\" />\n      <rect x=\"60\" y=\"126\" rx=\"0\" ry=\"0\" width=\"25\" height=\"74\" />\n      <rect x=\"90\" y=\"80\" rx=\"0\" ry=\"0\" width=\"25\" height=\"120\" />\n      <rect x=\"120\" y=\"142\" rx=\"0\" ry=\"0\" width=\"25\" height=\"58\" />\n    </ContentLoader>\n  )\n}\n\nexport default BarChartLoader",
-  "props": [],
+  "source": "src/components/ContentLoader/index.ts",
+  "implementation": "src/components/ContentLoader/BarChartLoader.react.tsx",
+  "implementationCode": "import React from 'react'\nimport ContentLoader from 'react-content-loader'\n\nimport type { ContentLoaderProps } from \"./types\";\nexport type BarChartLoaderProps = ContentLoaderProps;\n\nconst BarChartLoader = (props: BarChartLoaderProps): React.ReactElement => {\n  return (\n    <ContentLoader width={200} height={200} viewBox=\"0 0 200 200\" {...props}>\n      <rect x=\"0\" y=\"160\" rx=\"0\" ry=\"0\" width=\"25\" height=\"40\" />\n      <rect x=\"30\" y=\"145\" rx=\"0\" ry=\"0\" width=\"25\" height=\"55\" />\n      <rect x=\"60\" y=\"126\" rx=\"0\" ry=\"0\" width=\"25\" height=\"74\" />\n      <rect x=\"90\" y=\"80\" rx=\"0\" ry=\"0\" width=\"25\" height=\"120\" />\n      <rect x=\"120\" y=\"142\" rx=\"0\" ry=\"0\" width=\"25\" height=\"58\" />\n    </ContentLoader>\n  )\n}\n\nexport default BarChartLoader",
+  "props": [
+    {
+      "name": "width",
+      "type": "IContentLoaderProps[\"width\"]",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "height",
+      "type": "IContentLoaderProps[\"height\"]",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "uniqueKey",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "animate",
+      "type": "boolean",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "speed",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "backgroundColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "foregroundColor",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "backgroundOpacity",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "foregroundOpacity",
+      "type": "number",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "viewBox",
+      "type": "string",
+      "optional": true,
+      "description": ""
+    }
+  ],
   "subcomponents": [],
   "members": [],
   "rest": true,
@@ -21,7 +88,8 @@
     "summary": "Esqueleto SVG con forma de gráfico de barras.",
     "behavior": [
       "Utiliza react-content-loader y reenvía sus propiedades al esqueleto.",
-      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición."
+      "La anchura, altura, velocidad y colores se pueden personalizar; no representa un progreso real de una petición.",
+      "Su tipo de propiedades reutiliza IContentLoaderProps: admite las opciones SVG y las de react-content-loader, manteniendo las formas del esqueleto."
     ],
     "example": "<BarChartLoader width={600} height={250} speed={2} />"
   }

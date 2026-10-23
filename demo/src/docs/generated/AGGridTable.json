@@ -1,177 +1,55 @@
 {
   "name": "AGGridTable",
   "kind": "Componente",
-  "source": "src/components/AGGridTable/index.js",
-  "implementation": "src/components/AGGridTable/AGGridTable.react.js",
-  "implementationCode": "import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from \"react\"\nimport cn from \"classnames\"\nimport { Grid } from \"../\"\nimport { es } from \"./Languages/es\"\nimport { Button } from \"../Button\"\nimport Icon from \"../Icon\"\n\nexport function OverlayLoading(text) { return `<span class=\"ag-overlay-loading-center\">${text}</span>` }\n\nconst AGGridTable = forwardRef(({\n    AgGridReact,\n    className,\n    panelPagination,\n    domLayout = 'autoHeight',\n    autoHeaderTooltip = false,\n    suppressPaginationPanel = false,\n    onGrid,\n    onHandleChangeFilter = null,\n    search = false,\n    textFileCSV = \"Export\",\n    downloadCSV = false,\n    minWidth = null,\n    flex = 1,\n    dataRow = [],\n    dataTotal = [],\n    dataColumn = [],\n    autosize = true,\n    resizable,\n    sortable,\n    suppressMovable,\n    language = null,\n    onRowClick = () => null,\n    onCellClick = () => null,\n    onSelectionChanged = () => null,\n    pageSize = 0,\n    rowSelection = {\n        mode: 'singleRow',\n        enableClickSelection: false,\n        checkboxes: false,\n        headerCheckbox: false,\n    },\n    listBtn = false,\n    deselectAllBtn = false,\n    deselectAllOptions = { text: \"Clear\", hidden: false },\n    ...gridProps\n}, ref) => {\n    const gridRef = useRef()\n    const [filter, setFilter] = useState(\"\")\n    const [searchText, setSearchText] = useState(\"\")\n    const { onGridReady: consumerOnGridReady, onRowClicked, onCellClicked,\n        defaultColDef, quickFilterText } = gridProps\n    const columnDefaults = useMemo(() => ({\n        ...(resizable == null ? {} : { resizable }),\n        ...(sortable == null ? {} : { sortable }),\n        ...(suppressMovable == null ? {} : { suppressMovable }),\n        ...defaultColDef,\n    }), [resizable, sortable, suppressMovable, defaultColDef])\n\n    const columnDefs = useMemo(() => dataColumn?.map(column => {\n        const { header, name, headerTooltip, key, subItems, item, ...props } = column\n        const columnDef = {\n            headerName: header,\n            field: item,\n            colId: subItems == null ? key ?? item : null,\n            flex: flex,\n            ...props,\n            children: subItems?.map(subItem => {\n                const { header, key, subItems, item, ...props } = subItem\n                const element = {\n                    headerName: header,\n                    field: item,\n                    colId: key ?? item,\n                    headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name,\n                    ...props\n                }\n                return element\n            })\n        }\n\n        if (autoHeaderTooltip) columnDef[\"headerTooltip\"] = headerTooltip?.trim() || header || name\n        if (minWidth != null) columnDef[\"minWidth\"] = minWidth\n\n        return columnDef\n    }), [dataColumn, flex, minWidth, autoHeaderTooltip])\n\n    const classes = cn(className, \"ag-theme-balham\")\n    const onGridReady = useCallback((params) => {\n        onGrid?.(params)\n        consumerOnGridReady?.(params)\n    }, [onGrid, consumerOnGridReady])\n    const handleChangeFilter = (event) => {\n        setSearchText(event.target.value)\n        if (onHandleChangeFilter) onHandleChangeFilter(event)\n        else setFilter(event.target.value)\n    }\n\n    const deselectAll = useCallback(() => {\n        setFilter(\"\")\n        setSearchText(\"\")\n        gridRef.current?.api?.deselectAll()\n    }, [])\n\n    const onBtnExport = () => { gridRef.current?.api?.exportDataAsCsv({ fileName: textFileCSV }) }\n\n    useImperativeHandle(ref, () => {\n        return {\n            getDisplayedRowAtIndex(row) { return gridRef.current?.api?.getDisplayedRowAtIndex(row) },\n            flashCells(item) { gridRef.current?.api?.flashCells(item) },\n            get api() { return gridRef.current?.api }\n        }\n    }, [])\n\n    return (\n        <Grid.Row>\n            <Grid.Col width={12}>\n                <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>\n                    {search === true ? <div className=\"addons-aggrid\">\n                        <input type=\"text\" id=\"searcher\" className=\"ag-grid-search\" aria-label=\"Buscar en la tabla\" placeholder=\"Buscar...\" value={quickFilterText ?? searchText} onInput={handleChangeFilter} />\n                        {downloadCSV === true ? <Button type=\"button\" square className=\"downloadCSV\" title=\"Descargar CSV\" onClick={onBtnExport} >\n                            <Icon prefix=\"fe\" name=\"download\"></Icon>\n                        </Button> : null}\n                    </div> : null}\n                    {listBtn === true ? <div className={deselectAllOptions.hidden ? \"d-none\" : \"ag-btn-list\"}>\n                        {\n                            deselectAllBtn === true ? <button type=\"button\" id=\"clearDataTables\" onClick={deselectAll} className={deselectAllOptions.hidden ? \"d-none\" : \"btn btn-primary\"}>{deselectAllOptions.text}</button> : null\n                        }\n                    </div> : null}\n                    <div style={{ flex: '1 1 auto', height: '100%' }} >\n                        <AgGridReact\n                            {...gridProps}\n                            ref={gridRef}\n                            columnDefs={columnDefs}\n                            defaultColDef={columnDefaults}\n                            rowData={dataRow}\n                            onGridReady={onGridReady}\n                            quickFilterText={quickFilterText ?? filter}\n                            localeText={language || es}\n                            pagination={pageSize > 0}\n                            paginationPageSize={pageSize}\n                            onRowClicked={(e) => { onRowClick(e.data); onRowClicked?.(e) }}\n                            onCellClicked={(e) => { onCellClick(e); onCellClicked?.(e) }}\n                            onSelectionChanged={(e) => onSelectionChanged(e)}\n                            domLayout={domLayout}\n                            suppressPaginationPanel={suppressPaginationPanel}\n                            rowSelection={rowSelection}\n                        >\n                        </AgGridReact>\n                        <div className=\"ag-panel-custom\">{panelPagination}</div>\n                    </div>\n                </div>\n            </Grid.Col>\n        </Grid.Row>\n    )\n})\n\nAGGridTable.displayName = \"AGGridTable\"\n\nexport default AGGridTable\n",
+  "source": "src/components/AGGridTable/index.ts",
+  "implementation": "src/components/AGGridTable/AGGridTable.react.tsx",
+  "implementationCode": "import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from \"react\"\nimport cn from \"classnames\"\nimport Grid from \"../Grid\"\nimport { es } from \"./Languages/es\"\nimport { Button } from \"../Button\"\nimport Icon from \"../Icon\"\n\nimport type { ColDef, ColGroupDef, GridReadyEvent } from \"ag-grid-community\"\nimport type { AGGridTableProps, AGGridTableHandle, AGGridTableComponent, AGGridInstance } from \"./types\"\n\nexport function OverlayLoading(text: string): string { return `<span class=\"ag-overlay-loading-center\">${text}</span>` }\n\nfunction AGGridTableInner<TData>({\n    AgGridReact,\n    className,\n    panelPagination,\n    domLayout = 'autoHeight',\n    autoHeaderTooltip = false,\n    suppressPaginationPanel = false,\n    onGrid,\n    onHandleChangeFilter = null,\n    search = false,\n    textFileCSV = \"Export\",\n    downloadCSV = false,\n    minWidth = null,\n    flex = 1,\n    dataRow = [],\n    dataTotal = [],\n    dataColumn = [],\n    autosize = true,\n    resizable,\n    sortable,\n    suppressMovable,\n    language = null,\n    onRowClick = () => null,\n    onCellClick = () => null,\n    onSelectionChanged = () => null,\n    pageSize = 0,\n    rowSelection = {\n        mode: 'singleRow',\n        enableClickSelection: false,\n        checkboxes: false,\n    },\n    listBtn = false,\n    deselectAllBtn = false,\n    deselectAllOptions = { text: \"Clear\", hidden: false },\n    ...gridProps\n}: AGGridTableProps<TData>, ref: React.ForwardedRef<AGGridTableHandle<TData>>): React.ReactElement {\n    const gridRef = useRef<AGGridInstance<TData>>(null)\n    const [filter, setFilter] = useState(\"\")\n    const [searchText, setSearchText] = useState(\"\")\n    const { onGridReady: consumerOnGridReady, onRowClicked, onCellClicked,\n        defaultColDef, quickFilterText } = gridProps\n    const columnDefaults = useMemo(() => ({\n        ...(resizable == null ? {} : { resizable }),\n        ...(sortable == null ? {} : { sortable }),\n        ...(suppressMovable == null ? {} : { suppressMovable }),\n        ...defaultColDef,\n    }), [resizable, sortable, suppressMovable, defaultColDef])\n\n    const columnDefs = useMemo(() => dataColumn?.map(column => {\n        const { header, name, headerTooltip, key, subItems, item, ...props } = column\n        const columnDef: ColDef<TData> & Partial<Omit<ColGroupDef<TData>, \"children\">> & { children?: (ColDef<TData> | ColGroupDef<TData>)[] } = {\n            headerName: header,\n            field: item,\n            colId: subItems == null ? key ?? item : undefined,\n            flex: flex,\n            ...props,\n            children: subItems?.map(subItem => {\n                const { header, key, subItems, item, ...props } = subItem\n                const element = {\n                    headerName: header,\n                    field: item,\n                    colId: key ?? item,\n                    headerTooltip: subItem?.headerTooltip?.trim() || header || subItem?.name,\n                    ...props\n                }\n                return element\n            })\n        }\n\n        if (autoHeaderTooltip) columnDef[\"headerTooltip\"] = headerTooltip?.trim() || header || name\n        if (minWidth != null) columnDef[\"minWidth\"] = minWidth\n\n        return columnDef\n    }), [dataColumn, flex, minWidth, autoHeaderTooltip])\n\n    const classes = cn(className, \"ag-theme-balham\")\n    const onGridReady = useCallback((params: GridReadyEvent<TData>) => {\n        onGrid?.(params)\n        consumerOnGridReady?.(params)\n    }, [onGrid, consumerOnGridReady])\n    const handleChangeFilter = (event: React.FormEvent<HTMLInputElement>) => {\n        setSearchText(event.currentTarget.value)\n        if (onHandleChangeFilter) onHandleChangeFilter(event)\n        else setFilter(event.currentTarget.value)\n    }\n\n    const deselectAll = useCallback(() => {\n        setFilter(\"\")\n        setSearchText(\"\")\n        gridRef.current?.api?.deselectAll()\n    }, [])\n\n    const onBtnExport = () => { gridRef.current?.api?.exportDataAsCsv({ fileName: textFileCSV }) }\n\n    useImperativeHandle(ref, () => {\n        return {\n            getDisplayedRowAtIndex(row: number) { return gridRef.current?.api?.getDisplayedRowAtIndex(row) },\n            flashCells(item?: Parameters<AGGridTableHandle<TData>[\"flashCells\"]>[0]) { gridRef.current?.api?.flashCells(item) },\n            get api() { return gridRef.current?.api }\n        }\n    }, [])\n\n    return (\n        <Grid.Row>\n            <Grid.Col width={12}>\n                <div style={{ display: 'flex', flexDirection: 'column' }} className={classes}>\n                    {search === true ? <div className=\"addons-aggrid\">\n                        <input type=\"text\" id=\"searcher\" className=\"ag-grid-search\" aria-label=\"Buscar en la tabla\" placeholder=\"Buscar...\" value={quickFilterText ?? searchText} onInput={handleChangeFilter} />\n                        {downloadCSV === true ? <Button type=\"button\" square className=\"downloadCSV\" aria-label=\"Descargar CSV\" onClick={onBtnExport} >\n                            <Icon prefix=\"fe\" name=\"download\"></Icon>\n                        </Button> : null}\n                    </div> : null}\n                    {listBtn === true ? <div className={deselectAllOptions.hidden ? \"d-none\" : \"ag-btn-list\"}>\n                        {\n                            deselectAllBtn === true ? <button type=\"button\" id=\"clearDataTables\" onClick={deselectAll} className={deselectAllOptions.hidden ? \"d-none\" : \"btn btn-primary\"}>{deselectAllOptions.text}</button> : null\n                        }\n                    </div> : null}\n                    <div style={{ flex: '1 1 auto', height: '100%' }} >\n                        <AgGridReact\n                            {...gridProps}\n                            ref={gridRef}\n                            columnDefs={columnDefs}\n                            defaultColDef={columnDefaults}\n                            rowData={dataRow}\n                            onGridReady={onGridReady}\n                            quickFilterText={quickFilterText ?? filter}\n                            localeText={language || es}\n                            pagination={pageSize > 0}\n                            paginationPageSize={pageSize}\n                            onRowClicked={(e) => { onRowClick(e.data); onRowClicked?.(e) }}\n                            onCellClicked={(e) => { onCellClick(e); onCellClicked?.(e) }}\n                            onSelectionChanged={(e) => onSelectionChanged(e)}\n                            domLayout={domLayout}\n                            suppressPaginationPanel={suppressPaginationPanel}\n                            rowSelection={rowSelection}\n                        >\n                        </AgGridReact>\n                        <div className=\"ag-panel-custom\">{panelPagination}</div>\n                    </div>\n                </div>\n            </Grid.Col>\n        </Grid.Row>\n    )\n}\n\n// React.forwardRef erases the row generic; restore it on the public call signature.\nconst AGGridTable = forwardRef(AGGridTableInner) as AGGridTableComponent\n\nAGGridTable.displayName = \"AGGridTable\"\n\nexport default AGGridTable\n",
   "props": [
     {
-      "name": "AgGridReact",
-      "type": "React.ComponentType",
-      "optional": false,
-      "description": "Componente AgGridReact aportado por el consumidor; no se importa dentro del wrapper."
-    },
-    {
       "name": "className",
+      "type": "string",
+      "optional": true,
       "description": "Clases del contenedor de la tabla; se añade ag-theme-balham. El consumidor importa el CSS base y el tema de AG Grid."
     },
     {
-      "name": "panelPagination",
-      "description": "Nodo React colocado debajo de la tabla. Es solo un espacio de composición: no sincroniza por sí mismo un paginador externo."
-    },
-    {
       "name": "domLayout",
-      "default": "'autoHeight'",
+      "type": "AgGridReactProps<TData>[\"domLayout\"]",
       "optional": true,
-      "description": "Modo nativo de AG Grid: autoHeight crece con las filas. Si utilizas normal, proporciona altura al contenedor desde el consumidor."
-    },
-    {
-      "name": "autoHeaderTooltip",
-      "default": "false",
-      "optional": true,
-      "description": "En columnas principales genera headerTooltip con el primer texto no vacío entre headerTooltip, header y name. En subcolumnas el tooltip se genera siempre."
+      "description": "Modo nativo de AG Grid: autoHeight crece con las filas. Si utilizas normal, proporciona altura al contenedor desde el consumidor.",
+      "default": "'autoHeight'"
     },
     {
       "name": "suppressPaginationPanel",
-      "default": "false",
+      "type": "boolean",
       "optional": true,
-      "description": "Oculta los controles nativos de paginación. La paginación puede seguir activa; el consumidor debe proporcionar controles si los necesita."
-    },
-    {
-      "name": "onGrid",
-      "description": "Alias onGrid(event): recibe el GridReadyEvent con event.api. Se ejecuta antes del callback nativo onGridReady(event)."
-    },
-    {
-      "name": "onHandleChangeFilter",
-      "default": "null",
-      "optional": true,
-      "description": "Sustituye la búsqueda interna por la lógica del consumidor y recibe el evento del campo."
-    },
-    {
-      "name": "search",
-      "default": "false",
-      "optional": true,
-      "description": "Muestra el buscador. Escribe el quick filter interno, salvo que se proporcione onHandleChangeFilter o quickFilterText controlado."
-    },
-    {
-      "name": "textFileCSV",
-      "default": "\"Export\"",
-      "optional": true,
-      "description": "Nombre entregado a api.exportDataAsCsv({ fileName }). La exportación es CSV, no un libro Excel."
-    },
-    {
-      "name": "downloadCSV",
-      "default": "false",
-      "optional": true,
-      "description": "Muestra el botón de CSV junto al buscador. Requiere también search=true; no aparece si el buscador está oculto."
-    },
-    {
-      "name": "minWidth",
-      "default": "null",
-      "optional": true,
-      "description": "Ancho mínimo aplicado al final de la transformación de cada columna principal. Si se proporciona, reemplaza su minWidth individual; no se aplica automáticamente a subcolumnas."
-    },
-    {
-      "name": "flex",
-      "default": "1",
-      "optional": true,
-      "description": "Valor flex inicial de cada columna principal. Una columna puede sobrescribirlo con su propio flex; las subcolumnas no lo reciben del wrapper."
-    },
-    {
-      "name": "dataRow",
-      "default": "[]",
-      "optional": true,
-      "description": "Filas del consumidor. Los cálculos, carga de datos y actualizaciones corresponden a la aplicación."
-    },
-    {
-      "name": "dataTotal",
-      "default": "[]",
-      "optional": true,
-      "description": "Propiedad heredada sin efecto; utiliza pinnedTopRowData para filas fijadas."
-    },
-    {
-      "name": "dataColumn",
-      "default": "[]",
-      "optional": true,
-      "description": "Array de columnas { header, item, key?, subItems?, ...opcionesAGGrid }. header pasa a headerName, item a field y key a colId. subItems crea un nivel de columnas hijas; no hay transformación recursiva de más niveles."
-    },
-    {
-      "name": "autosize",
-      "default": "true",
-      "optional": true,
-      "description": "Propiedad heredada sin efecto en la implementación actual."
-    },
-    {
-      "name": "resizable",
-      "description": "Valor predeterminado de redimensionado. defaultColDef.resizable y la configuración explícita de cada columna pueden reemplazarlo."
-    },
-    {
-      "name": "sortable",
-      "description": "Valor predeterminado de ordenación. defaultColDef.sortable y la configuración explícita de cada columna pueden reemplazarlo."
-    },
-    {
-      "name": "suppressMovable",
-      "description": "Valor predeterminado que impide arrastrar columnas. defaultColDef y cada columna pueden establecer su propio valor."
-    },
-    {
-      "name": "language",
-      "default": "null",
-      "optional": true,
-      "description": "Objeto localeText de AG Grid, por ejemplo { noRowsToShow: \"Sin filas\" }. Si es null o un valor falsy se utiliza el diccionario español incluido."
-    },
-    {
-      "name": "onRowClick",
-      "default": "() => null",
-      "optional": true,
-      "description": "Recibe e.data, no el evento completo de AG Grid."
-    },
-    {
-      "name": "onCellClick",
-      "default": "() => null",
-      "optional": true,
-      "description": "Recibe el evento completo de la celda."
-    },
-    {
-      "name": "onSelectionChanged",
-      "default": "() => null",
-      "optional": true,
-      "description": "Callback onSelectionChanged(event): recibe el evento nativo; event.api.getSelectedRows() devuelve los datos seleccionados. Es distinto de onRowClick(row)."
-    },
-    {
-      "name": "pageSize",
-      "default": "0",
-      "optional": true,
-      "description": "Tamaño de página. Un número mayor que 0 activa la paginación; 0 la desactiva. Esta propiedad controla pagination y paginationPageSize nativos."
+      "description": "Oculta los controles nativos de paginación. La paginación puede seguir activa; el consumidor debe proporcionar controles si los necesita.",
+      "default": "false"
     },
     {
       "name": "rowSelection",
-      "default": "{\n        mode: 'singleRow',\n        enableClickSelection: false,\n        checkboxes: false,\n        headerCheckbox: false,\n    }",
+      "type": "AgGridReactProps<TData>[\"rowSelection\"]",
       "optional": true,
-      "description": "Objeto nativo de AG Grid 32: mode=\"singleRow\" o \"multiRow\". El objeto proporcionado reemplaza completamente el predeterminado; define también checkboxes, headerCheckbox y enableClickSelection según tu flujo."
+      "description": "Objeto nativo de AG Grid 32: mode=\"singleRow\" o \"multiRow\". El objeto proporcionado reemplaza completamente el predeterminado; define también checkboxes, headerCheckbox y enableClickSelection según tu flujo.",
+      "default": "{\n        mode: 'singleRow',\n        enableClickSelection: false,\n        checkboxes: false,\n    }"
     },
     {
-      "name": "listBtn",
-      "default": "false",
+      "name": "onSelectionChanged",
+      "type": "AgGridReactProps<TData>[\"onSelectionChanged\"]",
       "optional": true,
-      "description": "Activa el contenedor de acciones de limpieza. Para mostrar el botón integrado se requieren listBtn=true y deselectAllBtn=true."
+      "description": "Callback onSelectionChanged(event): recibe el evento nativo; event.api.getSelectedRows() devuelve los datos seleccionados. Es distinto de onRowClick(row).",
+      "default": "() => null"
     },
     {
-      "name": "deselectAllBtn",
-      "default": "false",
+      "name": "defaultColDef",
+      "type": "AgGridReactProps<TData>[\"defaultColDef\"]",
       "optional": true,
-      "description": "Muestra el botón integrado cuando listBtn=true. Limpia el buscador interno y llama api.deselectAll() únicamente en esta instancia."
+      "description": "Opciones nativas predeterminadas de columna. Se mezclan sobre resizable, sortable y suppressMovable del wrapper; las columnas concretas pueden sobrescribirlas."
     },
     {
-      "name": "deselectAllOptions",
-      "default": "{ text: \"Clear\", hidden: false }",
+      "name": "paginationPageSizeSelector",
+      "type": "AgGridReactProps<TData>[\"paginationPageSizeSelector\"]",
       "optional": true,
-      "description": "Objeto { text, hidden }. text es la etiqueta del botón y hidden aplica d-none al botón y su contenedor. Se reemplaza el objeto completo, no se mezclan sus valores con los predeterminados."
-    },
-    {
-      "name": "pinnedTopRowData",
-      "type": "Array<Object>",
-      "optional": true,
-      "description": "Filas fijadas arriba, por ejemplo totales calculados por el consumidor."
+      "description": "Opción nativa reenviada: lista de tamaños como [5, 10, 20], o false para ocultar el selector. Si usas una lista, incluye el pageSize del ejemplo."
     },
     {
       "name": "onGridReady",
@@ -180,30 +58,196 @@
       "description": "Evento nativo de tabla preparada; se conserva junto con el alias onGrid."
     },
     {
-      "name": "quickFilterText",
-      "type": "string",
-      "optional": true,
-      "description": "Filtro controlado por el consumidor. Debe actualizarlo también cuando quiera restablecerlo."
-    },
-    {
-      "name": "defaultColDef",
-      "description": "Opciones nativas predeterminadas de columna. Se mezclan sobre resizable, sortable y suppressMovable del wrapper; las columnas concretas pueden sobrescribirlas."
-    },
-    {
-      "name": "paginationPageSizeSelector",
-      "description": "Opción nativa reenviada: lista de tamaños como [5, 10, 20], o false para ocultar el selector. Si usas una lista, incluye el pageSize del ejemplo."
-    },
-    {
       "name": "onRowClicked",
+      "type": "AgGridReactProps<TData>[\"onRowClicked\"]",
+      "optional": true,
       "description": "Callback nativo onRowClicked(event), ejecutado después de onRowClick(event.data). A diferencia del alias, conserva el evento completo."
     },
     {
       "name": "onCellClicked",
+      "type": "AgGridReactProps<TData>[\"onCellClicked\"]",
+      "optional": true,
       "description": "Callback nativo onCellClicked(event), ejecutado después de onCellClick(event). Ambos reciben el evento completo."
     },
     {
       "name": "getRowId",
+      "type": "AgGridReactProps<TData>[\"getRowId\"]",
+      "optional": true,
       "description": "Función nativa params => string que devuelve una clave estable y única por fila. Facilita conservar identidad al actualizar dataRow."
+    },
+    {
+      "name": "AgGridReact",
+      "type": "React.ComponentType",
+      "optional": false,
+      "description": "Componente AgGridReact aportado por el consumidor; no se importa dentro del wrapper."
+    },
+    {
+      "name": "panelPagination",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": "Nodo React colocado debajo de la tabla. Es solo un espacio de composición: no sincroniza por sí mismo un paginador externo."
+    },
+    {
+      "name": "autoHeaderTooltip",
+      "type": "boolean",
+      "optional": true,
+      "description": "En columnas principales genera headerTooltip con el primer texto no vacío entre headerTooltip, header y name. En subcolumnas el tooltip se genera siempre.",
+      "default": "false"
+    },
+    {
+      "name": "onGrid",
+      "type": "(event: GridReadyEvent<TData>) => void",
+      "optional": true,
+      "description": "Alias onGrid(event): recibe el GridReadyEvent con event.api. Se ejecuta antes del callback nativo onGridReady(event)."
+    },
+    {
+      "name": "onHandleChangeFilter",
+      "type": "React.FormEventHandler<HTMLInputElement> | null",
+      "optional": true,
+      "description": "Sustituye la búsqueda interna por la lógica del consumidor y recibe el evento del campo.",
+      "default": "null"
+    },
+    {
+      "name": "search",
+      "type": "boolean",
+      "optional": true,
+      "description": "Muestra el buscador. Escribe el quick filter interno, salvo que se proporcione onHandleChangeFilter o quickFilterText controlado.",
+      "default": "false"
+    },
+    {
+      "name": "textFileCSV",
+      "type": "string",
+      "optional": true,
+      "description": "Nombre entregado a api.exportDataAsCsv({ fileName }). La exportación es CSV, no un libro Excel.",
+      "default": "\"Export\""
+    },
+    {
+      "name": "downloadCSV",
+      "type": "boolean",
+      "optional": true,
+      "description": "Muestra el botón de CSV junto al buscador. Requiere también search=true; no aparece si el buscador está oculto.",
+      "default": "false"
+    },
+    {
+      "name": "minWidth",
+      "type": "number | null",
+      "optional": true,
+      "description": "Ancho mínimo aplicado al final de la transformación de cada columna principal. Si se proporciona, reemplaza su minWidth individual; no se aplica automáticamente a subcolumnas.",
+      "default": "null"
+    },
+    {
+      "name": "flex",
+      "type": "number",
+      "optional": true,
+      "description": "Valor flex inicial de cada columna principal. Una columna puede sobrescribirlo con su propio flex; las subcolumnas no lo reciben del wrapper.",
+      "default": "1"
+    },
+    {
+      "name": "dataRow",
+      "type": "AgGridReactProps<TData>[\"rowData\"]",
+      "optional": true,
+      "description": "Filas del consumidor. Los cálculos, carga de datos y actualizaciones corresponden a la aplicación.",
+      "default": "[]"
+    },
+    {
+      "name": "dataTotal",
+      "type": "readonly TData[]",
+      "optional": true,
+      "description": "Propiedad heredada sin efecto; utiliza pinnedTopRowData para filas fijadas.",
+      "default": "[]"
+    },
+    {
+      "name": "dataColumn",
+      "type": "readonly AGGridColumn<TData>[] | null",
+      "optional": true,
+      "description": "Array de columnas { header, item, key?, subItems?, ...opcionesAGGrid }. header pasa a headerName, item a field y key a colId. subItems crea un nivel de columnas hijas; no hay transformación recursiva de más niveles.",
+      "default": "[]"
+    },
+    {
+      "name": "autosize",
+      "type": "boolean",
+      "optional": true,
+      "description": "Propiedad heredada sin efecto en la implementación actual.",
+      "default": "true"
+    },
+    {
+      "name": "resizable",
+      "type": "ColDef<TData>[\"resizable\"]",
+      "optional": true,
+      "description": "Valor predeterminado de redimensionado. defaultColDef.resizable y la configuración explícita de cada columna pueden reemplazarlo."
+    },
+    {
+      "name": "sortable",
+      "type": "ColDef<TData>[\"sortable\"]",
+      "optional": true,
+      "description": "Valor predeterminado de ordenación. defaultColDef.sortable y la configuración explícita de cada columna pueden reemplazarlo."
+    },
+    {
+      "name": "suppressMovable",
+      "type": "ColDef<TData>[\"suppressMovable\"]",
+      "optional": true,
+      "description": "Valor predeterminado que impide arrastrar columnas. defaultColDef y cada columna pueden establecer su propio valor."
+    },
+    {
+      "name": "language",
+      "type": "Record<string, string> | null",
+      "optional": true,
+      "description": "Objeto localeText de AG Grid, por ejemplo { noRowsToShow: \"Sin filas\" }. Si es null o un valor falsy se utiliza el diccionario español incluido.",
+      "default": "null"
+    },
+    {
+      "name": "onRowClick",
+      "type": "(data: TData | undefined) => void",
+      "optional": true,
+      "description": "Recibe e.data, no el evento completo de AG Grid.",
+      "default": "() => null"
+    },
+    {
+      "name": "onCellClick",
+      "type": "(event: CellClickedEvent<TData>) => void",
+      "optional": true,
+      "description": "Recibe el evento completo de la celda.",
+      "default": "() => null"
+    },
+    {
+      "name": "listBtn",
+      "type": "boolean",
+      "optional": true,
+      "description": "Activa el contenedor de acciones de limpieza. Para mostrar el botón integrado se requieren listBtn=true y deselectAllBtn=true.",
+      "default": "false"
+    },
+    {
+      "name": "deselectAllBtn",
+      "type": "boolean",
+      "optional": true,
+      "description": "Muestra el botón integrado cuando listBtn=true. Limpia el buscador interno y llama api.deselectAll() únicamente en esta instancia.",
+      "default": "false"
+    },
+    {
+      "name": "deselectAllOptions",
+      "type": "{ readonly text?: React.ReactNode; readonly hidden?: boolean }",
+      "optional": true,
+      "description": "Objeto { text, hidden }. text es la etiqueta del botón y hidden aplica d-none al botón y su contenedor. Se reemplaza el objeto completo, no se mezclan sus valores con los predeterminados.",
+      "default": "{ text: \"Clear\", hidden: false }"
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "optional": true,
+      "description": "Tamaño de página. Un número mayor que 0 activa la paginación; 0 la desactiva. Esta propiedad controla pagination y paginationPageSize nativos.",
+      "default": "0"
+    },
+    {
+      "name": "pinnedTopRowData",
+      "type": "Array<Object>",
+      "optional": true,
+      "description": "Filas fijadas arriba, por ejemplo totales calculados por el consumidor."
+    },
+    {
+      "name": "quickFilterText",
+      "type": "string",
+      "optional": true,
+      "description": "Filtro controlado por el consumidor. Debe actualizarlo también cuando quiera restablecerlo."
     }
   ],
   "subcomponents": [],
@@ -259,7 +303,9 @@
       "La referencia expone api, getDisplayedRowAtIndex(index) y flashCells(options). api puede ser undefined antes de grid ready. El índice es base 0 dentro de las filas mostradas; el resultado es un RowNode y sus datos están en node.data.",
       "La limpieza integrada afecta solo a esta instancia. Con quickFilterText controlado, el consumidor debe restablecer su estado: el botón no cambia la prop ni llama a onHandleChangeFilter para notificar la limpieza.",
       "downloadCSV requiere search=true. panelPagination solo coloca un nodo debajo de la tabla y suppressPaginationPanel oculta el panel nativo; la aplicación debe sincronizar cualquier paginador externo.",
-      "Los totales se calculan en la aplicación y se pasan como pinnedTopRowData. autosize y dataTotal son propiedades heredadas sin efecto. Evita consultas globales a los IDs heredados searcher y clearDataTables si hay varias tablas."
+      "Los totales se calculan en la aplicación y se pasan como pinnedTopRowData. autosize y dataTotal son propiedades heredadas sin efecto. Evita consultas globales a los IDs heredados searcher y clearDataTables si hay varias tablas.",
+      "Las fuentes TypeScript exportan AGGridTableProps<TData>, AGGridColumn<TData> y AGGridTableHandle<TData>. TData se conserva en filas, rutas de campo, eventos y resultados de la API. AgGridReact sigue siendo un componente que aporta el consumidor; no se registra ningún módulo ni se importa Enterprise en ejecución.",
+      "Las opciones adicionales usan el contrato nativo AgGridReactProps<TData>. Los tipos no cambian las prioridades: las opciones fijadas por el wrapper siguen prevaleciendo según lo descrito arriba. onRowClick puede recibir undefined en filas sin datos, como grupos; el evento nativo mantiene su forma completa."
     ],
     "example": "import React, { useRef, useState } from \"react\";\nimport { AgGridReact } from \"ag-grid-react\";\nimport { AGGridTable } from \"tabler-react\";\nimport \"tabler-react/style.css\";\nimport \"ag-grid-community/styles/ag-grid.css\";\nimport \"ag-grid-community/styles/ag-theme-balham.css\";\n\nexport default function TablaDeFondos() {\n  const gridRef = useRef(null);\n  const [seleccionados, setSeleccionados] = useState([]);\n  const [primero, setPrimero] = useState(\"Sin consultar\");\n  const filas = [\n    { id: \"atlas\", name: \"Atlas\", weight: 60 },\n    { id: \"brisa\", name: \"Brisa\", weight: 40 },\n  ];\n  const columnas = [\n    { header: \"Fondo\", item: \"name\", filter: true },\n    { header: \"Peso (%)\", item: \"weight\", valueFormatter: p => p.value + \" %\" },\n  ];\n  return <>\n    <AGGridTable ref={gridRef} AgGridReact={AgGridReact}\n      dataColumn={columnas} dataRow={filas}\n      getRowId={p => p.data.id}\n      defaultColDef={{ sortable: true, resizable: true }}\n      rowSelection={{ mode: \"multiRow\", checkboxes: true, headerCheckbox: true, enableClickSelection: true }}\n      onSelectionChanged={event => setSeleccionados(event.api.getSelectedRows())}\n      onRowClick={row => console.log(\"Datos de la fila\", row)}\n      pinnedTopRowData={[{ id: \"total\", name: \"Total\", weight: filas.reduce((sum, row) => sum + row.weight, 0) }]}\n      search downloadCSV textFileCSV=\"fondos.csv\"\n      pageSize={5} paginationPageSizeSelector={[5, 10]}\n      listBtn deselectAllBtn deselectAllOptions={{ text: \"Limpiar\", hidden: false }} />\n    <p>Seleccionados: {seleccionados.map(row => row.name).join(\", \") || \"ninguno\"}</p>\n    <button type=\"button\" onClick={() => {\n      const node = gridRef.current?.getDisplayedRowAtIndex(0);\n      setPrimero(node?.data?.name ?? \"No hay filas visibles\");\n    }}>Consultar primera fila visible</button>\n    <p>{primero}</p>\n  </>;\n}",
     "props": [

@@ -81,6 +81,18 @@ export function extractApi(info) {
     if (!type) return
     if (['TypeAnnotation', 'TSTypeAnnotation'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
     const reference = type.type === 'GenericTypeAnnotation' ? type.id : type.type === 'TSTypeReference' ? type.typeName : type.type === 'TSExpressionWithTypeArguments' ? type.expression : null
+    if (reference?.name === 'Omit' && type.type === 'TSTypeReference') {
+      const [source, excluded] = type.typeParameters?.params ?? type.typeArguments?.params ?? []
+      const names = (excluded?.type === 'TSUnionType' ? excluded.types : [excluded]).filter(Boolean)
+        .map(item => item.type === 'TSLiteralType' ? item.literal.value : null).filter(name => typeof name === 'string')
+      const previous = new Map(props)
+      typeProperties(source, new Set(seen), owner)
+      for (const name of names) {
+        if (previous.has(name)) props.set(name, previous.get(name))
+        else props.delete(name)
+      }
+      return
+    }
     if (reference?.type === 'Identifier' && !seen.has(owner.file + ':' + reference.name)) {
       seen.add(owner.file + ':' + reference.name)
       if (owner.types.has(reference.name)) return typeProperties(owner.types.get(reference.name), seen, owner)
@@ -131,6 +143,7 @@ export function extractApi(info) {
     }
   }
   let target = info.node
+  while (['TSAsExpression', 'TSSatisfiesExpression', 'TSNonNullExpression'].includes(target.type)) target = target.expression
   if (target.type === 'CallExpression') target = target.arguments.find(item => ['ArrowFunctionExpression', 'FunctionExpression'].includes(item.type)) ?? target
   if (target.type === 'CallExpression') target = target.arguments.map(item => info.bindings.get(item.name)).find(item => item && ['FunctionDeclaration', 'ArrowFunctionExpression', 'FunctionExpression'].includes(item.type)) ?? target
   if (target.params) pattern(target.params[0])

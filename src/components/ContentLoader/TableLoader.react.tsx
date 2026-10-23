@@ -1,7 +1,10 @@
 import React from "react"
 import ContentLoader from "react-content-loader"
 
-const TableLoader = props => {
+import type { ContentLoaderProps } from "./types";
+export type TableLoaderProps = ContentLoaderProps;
+
+const TableLoader = (props: TableLoaderProps): React.ReactElement => {
   return (
     <ContentLoader
     width={1200}

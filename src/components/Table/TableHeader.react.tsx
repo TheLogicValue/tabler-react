@@ -1,14 +1,9 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type TableHeaderProps = React.HTMLAttributes<HTMLTableSectionElement> & { readonly className?: string; readonly children?: React.ReactNode };
 
-function TableHeader({ className, children, ...props }: Props): React.Node {
+function TableHeader({ className, children, ...props }: TableHeaderProps): React.ReactNode {
   const classes = cn(className);
   return (
     <thead className={classes} {...props}>
