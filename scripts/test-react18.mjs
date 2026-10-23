@@ -25,8 +25,8 @@ writeFileSync(join(fixture, 'package.json'), JSON.stringify({
   },
 }, null, 2))
 console.log(`Consumidor aislado con React 18: ${fixture}`)
-// The calendar's existing date-fns peer conflict is unrelated to this migration.
-run([npmCli, 'install', '--ignore-scripts', '--legacy-peer-deps', '--no-audit', '--no-fund'], fixture, { stdio: 'inherit' })
+// Install the packed library as a normal consumer, checking peer compatibility.
+run([npmCli, 'install', '--ignore-scripts', '--legacy-peer-deps=false', '--no-audit', '--no-fund'], fixture, { stdio: 'inherit' })
 run(['--test', '--test-timeout=30000', 'tests/floating.test.cjs'], project, {
   stdio: 'inherit',
   env: { ...process.env, TABLER_TEST_PACKAGE_DIR: join(fixture, 'node_modules', 'tabler-react') },

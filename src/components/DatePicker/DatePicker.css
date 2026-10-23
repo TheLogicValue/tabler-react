@@ -27,67 +27,60 @@
   color: var(--primary);
 }
 
-.rdp-caption_label {
-  text-transform: capitalize !important;
+/* DayPicker 10 styles are scoped to this wrapper's calendar. */
+.tabler-datepicker-calendar {
+  --rdp-accent-color: var(--primary, #2f6fbd);
+  --rdp-accent-background-color: var(--quaternary, #edf4fc);
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  --rdp-day_button-height: 40px;
+  --rdp-day_button-width: 40px;
+  --rdp-day_button-border: 0;
+  --rdp-selected-border: 0;
+  --rdp-nav_button-height: 32px;
+  --rdp-nav_button-width: 32px;
+  margin: 1em;
 }
 
-.rdp-dropdown_icon {
-  display: none !important;
+.tabler-datepicker-calendar .rdp-caption_label {
+  text-transform: capitalize;
 }
 
-.rdp-dropdown:focus:not([disabled]) + .rdp-caption_label,
-.rdp-dropdown:active:not([disabled]) + .rdp-caption_label {
-  border: none !important;
-  background-color: var(--white) !important;
+.tabler-datepicker-calendar .rdp-day_button {
+  border: 0;
 }
 
-.dialog-sheet .rdp-dropdown_month:nth-child(2) {
-  margin-left: 10px !important;
-  margin-right: 10px !important;
+.tabler-datepicker-calendar .rdp-button_previous:hover:not(:disabled),
+.tabler-datepicker-calendar .rdp-button_next:hover:not(:disabled) {
+  background: var(--white, #fff);
+  color: var(--close-modal, #526581);
 }
 
-.rdp-dropdown_month {
-  padding: 0px 17px !important;
+.tabler-datepicker-calendar .rdp-button_previous .rdp-chevron,
+.tabler-datepicker-calendar .rdp-button_next .rdp-chevron {
+  fill: currentColor;
 }
 
-.rdp-caption .rdp-button:focus:not([disabled]),
-.rdp-caption .rdp-button:active:not([disabled]),
-.rdp-caption .rdp-button:hover:not([disabled]) {
-  background-color: var(--white) !important;
-  border: none !important;
-  outline: none !important;
-}
-
-.rdp-caption .rdp-button:hover:not([disabled]) {
-  color: var(--close-modal) !important;
-}
-
-.rdp-day_today:not([disabled]) {
-  color: inherit !important;
-  background-color: var(--white) !important;
-  border: none !important;
+.tabler-datepicker-calendar .rdp-today:not(.rdp-disabled) .rdp-day_button {
+  color: inherit;
   font-weight: 800;
 }
 
-.rdp-day_selected, .rdp-day_selected:focus-visible, .rdp-day_selected:hover {
-  background-color: var(--primary) !important;
+.tabler-datepicker-calendar .rdp-day_button:hover:not(:disabled) {
+  background: var(--primary-hover, #2860a4);
+  color: var(--white, #fff);
 }
 
-.rdp-day_selected:not([disabled]) {
-  background-color: var(--primary) !important;
-  border: none !important;
-  color: var(--white);
+.tabler-datepicker-calendar .rdp-selected:not(.rdp-disabled) .rdp-day_button {
+  background: var(--primary, #2f6fbd);
+  color: var(--white, #fff);
 }
 
-.rdp-day:hover:not([disabled]) {
-  background-color: var(--primary-hover) !important;
+.tabler-datepicker-calendar .rdp-disabled {
+  color: #8894a6;
 }
 
-.rdp-day:not([disabled]) {
-  border: none !important;
+.tabler-datepicker-calendar button:focus-visible {
+  outline: 2px solid var(--primary, #2f6fbd);
+  outline-offset: 2px;
 }
-
-.rdp-day_disabled {
-  color: #dce0e0;
-}
-

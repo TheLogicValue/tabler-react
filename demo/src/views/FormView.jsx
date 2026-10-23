@@ -9,6 +9,7 @@ export default function FormView() {
   const dateRef = useRef(null)
   const offsetRef = useRef(null)
   const [previousDay, setPreviousDay] = useState('default')
+  const [restriction, setRestriction] = useState('historic')
   const [name, setName] = useState('Cartera de prueba')
   const [category, setCategory] = useState(categoryOptions[1])
   const [enabled, setEnabled] = useState(true)
@@ -37,6 +38,17 @@ export default function FormView() {
         {error && <Alert type="danger">{error}</Alert>}
         <div className="action-row"><Button type="submit" color="primary" icon="check">Guardar configuración</Button><Button type="button" color="secondary" onClick={reset}>Restablecer</Button></div>
       </Form>
+    </Scenario>
+    <Scenario title="Límites y días deshabilitados" description="Histórico permite elegir hasta el 15/10/2026 y Futuro desde ese día, ambos inclusive. Los otros modos usan un matcher personalizado o deshabilitan todos los días. La navegación está limitada a septiembre-noviembre de 2026." components={['DatePicker', 'Form']}>
+      <div className="form-group"><label className="field-label">Restricción del calendario<Form.Select value={restriction} onChange={event => setRestriction(event.target.value)}>
+        <option value="historic">Histórico hasta el 15 de octubre</option>
+        <option value="future">Futuro desde el 15 de octubre</option>
+        <option value="weekends">Fines de semana deshabilitados</option>
+        <option value="all">Todos los días deshabilitados</option>
+      </Form.Select></label></div>
+      <label className="field-label">Fecha con restricciones<DatePicker key={restriction} date={initialDate} dateIni={initialDate} today
+        fromMonth={new Date(2026, 8, 1)} toMonth={new Date(2026, 10, 1)} lastDate={initialDate}
+        isHistoric={restriction !== 'future'} disabled={restriction === 'all' ? true : restriction === 'weekends' ? { dayOfWeek: [0, 6] } : false} /></label>
     </Scenario>
   </Grid.Col><Grid.Col lg={4}>
     <Scenario title="Resultado del formulario" description="Estos valores se leen del estado de Form y de la referencia pública de DatePicker." components={['Card', 'Text']}>

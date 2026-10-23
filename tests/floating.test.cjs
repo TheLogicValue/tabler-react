@@ -211,7 +211,7 @@ test('DatePicker abre, selecciona fecha, devuelve foco y cierra por Escape y cli
   const trigger = container.querySelector('button')
   await click(trigger)
   assert.ok(container.querySelector('[role=dialog][data-placement]'))
-  const day = container.querySelector('.rdp-day:not([disabled])')
+  const day = container.querySelector('.rdp-day_button:not([disabled])')
   assert.ok(day)
   await click(day)
   assert.equal(container.querySelector('[role=dialog]'), null)
@@ -224,3 +224,99 @@ test('DatePicker abre, selecciona fecha, devuelve foco y cierra por Escape y cli
   await React.act(async () => document.body.dispatchEvent(new window.MouseEvent('mousedown', { bubbles: true })))
   assert.equal(container.querySelector('[role=dialog]'), null)
 })
+
+
+function calendarDay(isoDate) {
+  const button = container.querySelector('[data-day="' + isoDate + '"] button');
+  assert.ok(button, 'Debe existir el día ' + isoDate);
+  return button;
+}
+function disabledDay(button) {
+  return button.disabled || button.getAttribute('aria-disabled') === 'true';
+}
+async function typeDate(value) {
+  const input = container.querySelector('.DayPicker input');
+  await React.act(async () => {
+    Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set.call(input, value);
+    input.dispatchEvent(new window.Event('input', { bubbles: true }));
+  });
+}
+
+test('DatePicker conserva los límites inclusivos del histórico y fromMonth/toMonth', async () => {
+  const { DatePicker } = components;
+  await render(React.createElement(DatePicker, {
+    date: new Date(2026, 9, 15), dateIni: new Date(2026, 9, 15), today: true,
+    fromMonth: new Date(2026, 8, 1), toMonth: new Date(2026, 9, 1), lastDate: new Date(2026, 9, 20),
+  }));
+  await click(container.querySelector('.DayPicker button'));
+  assert.ok(!disabledDay(calendarDay('2026-10-20')));
+  assert.ok(disabledDay(calendarDay('2026-10-21')));
+  assert.equal(container.querySelector('.rdp-button_next').getAttribute('aria-disabled'), 'true');
+  await click(container.querySelector('.rdp-button_previous'));
+  assert.match(container.querySelector('.rdp-caption_label').textContent, /septiembre 2026/i);
+  assert.equal(container.querySelector('.rdp-button_previous').getAttribute('aria-disabled'), 'true');
+});
+
+test('DatePicker conserva el límite inferior del modo futuro', async () => {
+  const { DatePicker } = components;
+  await render(React.createElement(DatePicker, {
+    date: new Date(2026, 9, 15), dateIni: new Date(2026, 9, 15), today: true,
+    isHistoric: false, lastDate: new Date(2026, 9, 10),
+  }));
+  await click(container.querySelector('.DayPicker button'));
+  assert.ok(disabledDay(calendarDay('2026-10-09')));
+  assert.ok(!disabledDay(calendarDay('2026-10-10')));
+  assert.ok(!disabledDay(calendarDay('2026-10-20')));
+});
+
+test('DatePicker respeta disabled personalizado y permite deshabilitar todos los días', async () => {
+  const { DatePicker } = components;
+  const props = { date: new Date(2026, 9, 15), dateIni: new Date(2026, 9, 15), today: true };
+  await render(React.createElement(DatePicker, { ...props, disabled: { dayOfWeek: [0, 6] } }));
+  await click(container.querySelector('.DayPicker button'));
+  assert.ok(disabledDay(calendarDay('2026-10-24')));
+  assert.ok(!disabledDay(calendarDay('2026-10-23')), 'El matcher explícito conserva su prioridad sobre el histórico');
+  await React.act(async () => root.render(React.createElement(DatePicker, { ...props, disabled: true })));
+  const days = [...container.querySelectorAll('.rdp-day_button')];
+  assert.ok(days.length > 0);
+  assert.ok(days.every(disabledDay));
+});
+
+test('DatePicker mantiene las fechas locales, el castellano y la referencia pública al seleccionar', async () => {
+  const { DatePicker } = components;
+  const ref = React.createRef();
+  await render(React.createElement(DatePicker, {
+    ref, dateIni: new Date(2026, 2, 30), previousDay: 1, lastDate: new Date(2026, 11, 31),
+  }));
+  assert.equal(container.querySelector('.DayPicker input').value, '29/03/2026');
+  await click(container.querySelector('.DayPicker button'));
+  assert.match(container.querySelector('.rdp-caption_label').textContent, /marzo 2026/i);
+  await click(calendarDay('2026-03-29'));
+  assert.equal(container.querySelector('.DayPicker input').value, '29/03/2026');
+  assert.equal(ref.current.value.getFullYear(), 2026);
+  assert.equal(ref.current.value.getMonth(), 2);
+  assert.equal(ref.current.value.getDate(), 29);
+});
+
+test('DatePicker procesa escritura válida e inválida y reset restaura campo y selección', async () => {
+  const { DatePicker } = components;
+  const ref = React.createRef();
+  await render(React.createElement(DatePicker, {
+    ref, date: new Date(2026, 9, 15), dateIni: new Date(2026, 9, 15), today: true,
+    lastDate: new Date(2026, 11, 31),
+  }));
+  await typeDate('12/10/2026');
+  assert.equal(ref.current.value.getDate(), 12);
+  await click(container.querySelector('.DayPicker button'));
+  assert.equal(calendarDay('2026-10-12').parentElement.getAttribute('aria-selected'), 'true');
+  await click(calendarDay('2026-10-11'));
+  await React.act(async () => ref.current.reset());
+  assert.equal(container.querySelector('.DayPicker input').value, '15/10/2026');
+  await click(container.querySelector('.DayPicker button'));
+  assert.equal(calendarDay('2026-10-15').parentElement.getAttribute('aria-selected'), 'true');
+  await key(document.activeElement, 'Escape');
+  await typeDate('31/02/2026');
+  assert.ok(Number.isNaN(ref.current.value.getTime()));
+  await React.act(async () => ref.current.reset());
+  assert.equal(ref.current.value.getDate(), 15);
+});

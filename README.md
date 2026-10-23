@@ -1,6 +1,6 @@
 # Tabler React
 
-Última actualización: **22/10/2026**. Versión de la biblioteca: **2.0.0**, según el campo `version` de [package.json](./package.json).
+Última actualización: **23/10/2026**. Versión de la biblioteca: **2.0.0**, según el campo `version` de [package.json](./package.json).
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
@@ -47,7 +47,7 @@ Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 11.
 3. Run `npm run build` to compile the component library, or `npm start` to rebuild it when source files change.
 
 Use `npm install` when intentionally adding or updating dependencies, and commit the updated `package-lock.json`.
-The repository's `.npmrc` enables `legacy-peer-deps` because the ESLint plugins still declare ESLint up to 9 and react-day-picker 8 declares date-fns up to 3. This setting applies to development in this repository; consuming projects keep their own npm configuration. The demo installs without this setting.
+The repository's `.npmrc` enables `legacy-peer-deps` because the ESLint plugins still declare ESLint up to 9. This setting applies to development in this repository; consuming projects keep their own npm configuration. The demo installs without this setting.
 
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
@@ -163,6 +163,16 @@ npm run test:react18
 ```
 
 Las pruebas DOM verifican apertura, cierre, callbacks, referencias, las quince posiciones aceptadas y el foco del calendario en React 18 y 19. El entorno DOM simula los rectángulos para probar el foco; la geometría real, las flechas y el ajuste a bordes se comprueban en la demo del navegador. Esta migración no introduce navegación completa de menús con flechas ni portales: esas mejoras se pueden incorporar después mediante las utilidades de Floating UI, sin mezclar cambios de API con la sustitución del motor.
+
+## Calendario y compatibilidad de fechas
+
+DatePicker utiliza `react-day-picker` 10 y `date-fns` 4. Se conservan las propiedades `date`, `dateIni`, `today`, `previousDay`, `lastDate`, `isHistoric`, `disabled`, `fromMonth` y `toMonth`, además de la referencia pública `value`/`reset` y el formato de entrada `dd/MM/yyyy`.
+
+El wrapper traduce `fromMonth`/`toMonth` a los límites de navegación nuevos y utiliza el foco automático de DayPicker 10. Las fechas se mantienen en la zona local, como en DayPicker 8; no se fuerza un desfase fijo de UTC. El restablecimiento actualiza el campo y la selección del calendario.
+
+En «Formularios y fechas», el ejemplo «Límites y días deshabilitados» permite probar histórico y futuro con límite inclusivo, fines de semana y todos los días deshabilitados. Las pruebas de interacción se ejecutan también con React 18 y una instalación del paquete sin ignorar los peers.
+
+DayPicker 10 cambia su HTML, las clases internas `.rdp-*` y algunas propiedades avanzadas que antes se pasaban directamente al calendario. Los consumidores que personalicen esos detalles deben revisar la [guía de migración oficial](https://daypicker.dev/upgrading-v8-to-v10). Las propiedades propias de DatePicker indicadas arriba se mantienen.
 
 ## Lint
 
