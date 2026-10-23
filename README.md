@@ -230,6 +230,26 @@ Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/comp
 
 Para compilar y ejecutar las pruebas de regresión de componentes, posicionamiento, foco y assets, usa `npm test` desde la raíz.
 
+## Comprobaciones locales
+
+Después de instalar las dependencias de la raíz y de la demo como se indica en Setup, puedes ejecutar todas las comprobaciones desde una terminal en la raíz:
+
+```sh
+# Comprobación habitual: lint de biblioteca y demo, compilación de la
+# biblioteca, pruebas con React 19 y compilación independiente de la demo.
+npm run check
+
+# Comprobación completa: lo anterior y pruebas de integración con React 18
+# en un consumidor temporal que instala el paquete compilado.
+npm run check:all
+```
+
+Los pasos se ejecutan en orden y se detienen en el primero que falle. En estos comandos, cualquier aviso de lint también hace fallar la comprobación. `check:all` reutiliza la compilación de `check` para el consumidor de React 18, sin compilar la biblioteca una segunda vez.
+
+`check` utiliza las dependencias ya instaladas. `check:all` necesita acceso al registro npm para preparar el consumidor temporal de React 18, sin cambiar los `package.json` ni los locks de la biblioteca o la demo. Ambos comandos regeneran los directorios de compilación correspondientes y terminan al completar las comprobaciones.
+
+Puedes utilizarlos antes de un commit o de actualizar la biblioteca en un consumidor. Se ejecutan a petición desde la terminal; no se añaden hooks de Git, acciones de GitHub ni pasos de publicación. Las pruebas visuales y los flujos propios de cada consumidor siguen requiriendo su revisión.
+
 ## Deploy
 
 The `prepare` script builds the library before packaging. Run `npm run build` to generate the artifacts locally. Both the library and demo use npm with independent `package-lock.json` files.
