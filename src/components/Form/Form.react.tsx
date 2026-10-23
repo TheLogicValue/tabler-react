@@ -26,7 +26,6 @@ import FormSwitch from "./FormSwitch.react";
 import FormInputGroupAppend from "./FormInputGroupAppend.react";
 import FormInputGroupPrepend from "./FormInputGroupPrepend.react";
 import FormInputGroupText from "./FormInputGroupText.react";
-// import FormMaskedInput from "./FormMaskedInput.react";
 import FormDatePicker from "./FormDatePicker.react";
 export type FormProps = {
   readonly children?: React.ReactNode;
@@ -76,6 +75,5 @@ Form.Switch = FormSwitch;
 Form.InputGroupAppend = FormInputGroupAppend;
 Form.InputGroupPrepend = FormInputGroupPrepend;
 Form.InputGroupText = FormInputGroupText;
-// Form.MaskedInput = FormMaskedInput;
 Form.DatePicker = FormDatePicker;
 export default Form;

@@ -852,7 +852,7 @@
       "Recibe values/errors y callbacks onChange, onBlur y onSubmit; strings personaliza los textos.",
       "No autentica, almacena credenciales ni realiza llamadas a un servidor.",
       "imageURL configura la imagen de la página contenedora.",
-      "El export público utiliza LoginPageForm, tipado en TypeScript. Muestra errors directamente, sin filtrarlos por touched. Se conserva la otra implementación interna, también tipada, sin cambiar el export.",
+      "El export público utiliza LoginPageForm, tipado en TypeScript. Muestra errors directamente, sin filtrarlos por touched.",
       "children se muestra después del formulario. La página conserva la clase login. Solo se reenvían los callbacks onChange/onBlur de los inputs y onSubmit del formulario.",
       "strings permite reemplazar textos individuales. Una cadena vacía utiliza el texto predeterminado, por el operador || heredado. No se añade validación automática de email ni de contraseña."
     ],

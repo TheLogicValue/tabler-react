@@ -9,6 +9,7 @@ import Playground from '../docs/Playground.jsx'
 import { propDescriptions } from '../docs/prop-descriptions.js'
 
 const loaders = import.meta.glob('../docs/generated/*.json', { import: 'default' })
+const FeatherFonts = lazy(() => import('../docs/FeatherFonts.jsx'))
 const pages = Object.fromEntries(Object.entries(loaders).map(([path, load]) => [path.split('/').at(-1).slice(0, -5), lazy(async () => {
   const doc = await load()
   return { default: function DocumentationPage() { return <DocDetail doc={doc} /> } }
@@ -17,17 +18,20 @@ const pages = Object.fromEntries(Object.entries(loaders).map(([path, load]) => [
 function DocIndex() {
   const [search, setSearch] = useState('')
   const entries = Object.values(documents).filter(item => item.name.toLowerCase().includes(search.trim().toLowerCase()))
-  return <Scenario title="Fichas de la biblioteca" description="Consulta el uso, la API actual, los subcomponentes y los ejemplos. Documentar un componente y disponer de una demostración visual son estados independientes." components={[]}>
+  return <><Scenario title="Guías de integración" description="Recursos compartidos que acompañan a los componentes de la biblioteca." components={[]}>
+    <Link to="/documentacion/fuentes-feather" className="docs-index-entry"><strong>Fuentes Feather</strong><span>Cargar las fuentes, utilizar los iconos y resolver problemas de archivos o estilos.</span></Link>
+  </Scenario><Scenario title="Fichas de la biblioteca" description="Consulta el uso, la API actual, los subcomponentes y los ejemplos. Documentar un componente y disponer de una demostración visual son estados independientes." components={[]}>
     <label className="filter-label">Buscar ficha<input className="form-control" type="search" placeholder="Por ejemplo: DatePicker" value={search} onChange={event => setSearch(event.target.value)} /></label>
     <p className="muted docs-index-count">{entries.length} de {Object.keys(documents).length} fichas.</p>
     <div className="docs-index">{entries.map(item => <Link key={item.name} to={'/documentacion/' + item.name} className="docs-index-entry"><strong>{item.name}</strong><span>{item.summary}</span><small>{item.kind} · {componentExamplePaths[item.name] ? 'Con ejemplo visual' : 'Sin ejemplo visual'}</small></Link>)}</div>
     {entries.length === 0 && <p role="status">No hay fichas que coincidan con la búsqueda.</p>}
-  </Scenario>
+  </Scenario></>
 }
 
 export default function DocumentationView() {
   const { name } = useParams()
   if (!name) return <DocIndex />
+  if (name === 'fuentes-feather') return <Suspense fallback={<p role="status">Cargando guía…</p>}><FeatherFonts /></Suspense>
   const Document = Object.hasOwn(documents, name) ? pages[name] : null
   if (!Document) return <Alert type="warning">No existe una ficha para este nombre. <Link to="/documentacion">Volver al catálogo</Link></Alert>
   return <Suspense fallback={<p role="status">Cargando ficha…</p>}><Document /></Suspense>
@@ -37,7 +41,7 @@ function DocDetail({ doc }) {
   const { name } = doc
   const guide = doc.guide
   return <div className="component-documentation">
-    <div className="docs-navigation"><Link to="/documentacion">← Todas las fichas</Link><Link to="/cobertura">Ver cobertura</Link>{componentExamplePaths[name] && <Link to={componentExamplePaths[name]}>Abrir ejemplo visual</Link>}</div>
+    <div className="docs-navigation"><Link to="/documentacion">← Todas las fichas</Link><Link to="/cobertura">Ver cobertura</Link>{name === 'Icon' && <Link to="/documentacion/fuentes-feather">Fuentes Feather</Link>}{componentExamplePaths[name] && <Link to={componentExamplePaths[name]}>Abrir ejemplo visual</Link>}</div>
     <Scenario title={name} description={guide?.summary ?? 'Referencia de la API actual. La guía de comportamiento está pendiente de redacción.'} components={[]}>
       <div className="action-row"><Badge color={guide ? 'success' : 'secondary'}>{guide ? 'Guía y API' : 'API disponible'}</Badge><Badge color={componentExamplePaths[name] ? 'success' : 'secondary'}>{componentExamplePaths[name] ? 'Con ejemplo visual' : 'Sin ejemplo visual'}</Badge><span className="muted">{doc.kind}</span></div>
       {doc.dependencies.length > 0 && <section className="docs-integration"><h3>Versiones de integración</h3><p className="muted">Versiones fijadas en los package-lock.json de la biblioteca y la demo al generar esta ficha. npm ci instala esas versiones; cada consumidor mantiene su propio lock y debe respetar los rangos declarados.</p><Table responsive striped><Table.Header><Table.Row>{['Paquete', 'Uso', 'Rango biblioteca', 'Lock biblioteca', 'Demo (lock)'].map(title => <Table.ColHeader key={title}>{title}</Table.ColHeader>)}</Table.Row></Table.Header><Table.Body>{doc.dependencies.map(item => <Table.Row key={item.name}><Table.Col><code>{item.name}</code></Table.Col><Table.Col>{item.role}</Table.Col><Table.Col><code>{item.libraryRange}</code></Table.Col><Table.Col>{item.libraryVersion ?? 'Sin instalar'}</Table.Col><Table.Col>{item.demoVersion ?? 'No instalado'}</Table.Col></Table.Row>)}</Table.Body></Table>{name.startsWith('AGGrid') ? <p>La demo utiliza AG Grid Community; no instala ni registra Enterprise. El consumidor aporta AgGridReact y configura los módulos, las opciones y la licencia cuando utilice funciones Enterprise.</p> : <p>La demo utiliza un motor modular de ECharts, configurado en demo/src/echarts-engine.js. El consumidor puede definir su propia configuración; los componentes reciben los datos y las opciones descritos en esta ficha.</p>}</section>}

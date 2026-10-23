@@ -133,6 +133,10 @@ a { color: #2f6fbd; }
 .docs-preview .action-row { margin-top: 18px; }
 .docs-preview p { margin: 18px 0 0; font-size: 13px; color: #426284; }
 .docs-markdown { overflow-wrap: anywhere; line-height: 1.7; }
+.docs-feather-examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 16px; margin: 24px 0; padding: 0; list-style: none; }
+.docs-feather-examples li { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid #dce5ef; border-radius: 6px; min-width: 0; }
+.docs-feather-examples .fe { color: #2f6fbd; font-size: 24px; }
+.docs-feather-examples code { overflow-wrap: anywhere; }
 .field-label { width: 100%; color: #465d77; font-size: 13px; }
 .field-label > input, .field-label > div { margin-top: 8px; }
 .demo-shell .form-control { border: 1px solid #d6dfeb; border-radius: 5px; min-height: 39px; }

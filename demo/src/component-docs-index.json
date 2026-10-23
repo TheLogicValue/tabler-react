@@ -269,7 +269,7 @@
     "summary": "Formulario y familia de campos de entrada.",
     "status": "documented",
     "properties": 6,
-    "examples": 12
+    "examples": 11
   },
   "FormCard": {
     "name": "FormCard",

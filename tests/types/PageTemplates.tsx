@@ -11,7 +11,6 @@ import Error500Page from "../../src/page_templates/errors/Error500Page.react";
 import Error503Page from "../../src/page_templates/errors/Error503Page.react";
 import LoginPage from "../../src/page_templates/account/LoginPage";
 import type { LoginPageProps, LoginPageStrings, LoginPageValues } from "../../src/page_templates/account/LoginPage";
-import LegacyLoginPage from "../../src/page_templates/account/LoginPage/LoginPage.react";
 import ForgotPasswordPage from "../../src/page_templates/account/ForgotPasswordPage";
 import type { ForgotPasswordPageProps, ForgotPasswordPageStrings } from "../../src/page_templates/account/ForgotPasswordPage";
 import RegisterPage from "../../src/page_templates/account/RegisterPage";
@@ -40,7 +39,6 @@ export const pageTemplateExamples = <>
   <Error400Page {...error} /><Error401Page /><Error403Page />
   <Error404Page /><Error500Page /><Error503Page />
   <LoginPage {...login} /><LoginPage />
-  <LegacyLoginPage {...handlers} values={loginValues} touched={{ password: true }} />
   <RegisterPage {...register} /><RegisterPage />
   <ForgotPasswordPage {...forgot} /><ForgotPasswordPage />
 </>;
