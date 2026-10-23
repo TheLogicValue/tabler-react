@@ -4,7 +4,7 @@
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Tipos en las fuentes](https://img.shields.io/badge/source%20types-Flow%20%2B%20TypeScript-green.svg)
+[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Tipos TypeScript](https://img.shields.io/badge/types-TypeScript-blue.svg)
 
 ## Install
 
@@ -67,22 +67,23 @@ Usa `npm install` para añadir o actualizar dependencias y guarda el `package-lo
 
 El `.npmrc` de la raíz activa `legacy-peer-deps` porque los plugins de ESLint todavía declaran compatibilidad hasta ESLint 9. Esta excepción se conserva para el desarrollo de la biblioteca; los consumidores mantienen su configuración de npm y la demo se instala sin esa excepción.
 
-The build uses Vite in library mode with `src/index.js` as its only entry point.
-Babel compiles JavaScript/JSX with Flow and the migrated TypeScript/TSX files. The parser is selected by file extension; each file uses one type syntax.
+The build uses Vite in library mode with `src/index.ts` as its only entry point.
+Babel compiles the TypeScript/TSX sources. TypeScript checks the library and emits declarations for consumers.
 
-La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Las implementaciones públicas de componentes y plantillas de páginas están en TypeScript; se conservan `@babel/preset-flow`, Hermes y `flow-typed` hasta revisar las entradas públicas y los archivos auxiliares pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
+La configuración de Babel utilizada por la compilación está en `vite.config.mjs`. Las implementaciones, las entradas públicas y los tipos de eventos están en TypeScript. Se han retirado las fuentes Flow, `@babel/preset-flow`, `hermes-eslint`, `.flowconfig`, `flow-typed` y `scripts/runflow`. La compilación publica declaraciones `.d.ts` junto a los bundles; no publica `.js.flow`.
 
 Los scripts y configuraciones conservados tienen estas funciones:
 
-- `vite.config.mjs`: compila la biblioteca, elimina las anotaciones Flow o TypeScript según la extensión y genera los formatos ESM y CommonJS, el CSS y las fuentes.
+- `vite.config.mjs`: compila TypeScript a los formatos ESM y CommonJS, extrae el CSS y las fuentes y conserva las declaraciones tras las salidas ESM y CommonJS. La comprobación semántica se reutiliza mientras no cambien las fuentes o la configuración. En modo watch también observa las dependencias que solo contienen tipos.
 - `tsconfig.json`: comprueba estrictamente las fuentes `.ts`/`.tsx` migradas y los contratos de `tests/types/`, sin emitir archivos.
 - `demo/vite.config.mjs`: compila y sirve únicamente la demo; incluye el presupuesto de bundles de `demo/scripts/bundle-budget.mjs`.
 - `eslint.config.mjs`: configura el lint de la biblioteca, la demo, las pruebas y los scripts JavaScript.
-- `scripts/test-react18.mjs`: empaqueta la biblioteca y ejecuta las pruebas en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
+- `scripts/test-react18.mjs`: empaqueta la biblioteca y comprueba ejecución y declaraciones en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
 - `demo/scripts/scan-usage.mjs`: regenera manualmente el inventario de componentes a partir de un consumidor; su comando se muestra en la sección de la demo.
 - `demo/scripts/scan-exports.mjs`: genera el catálogo completo de exports públicos de la biblioteca para la cobertura de la demo; `--check` comprueba que está actualizado. Comparte con la documentación el parser y la resolución de `.js`, `.jsx`, `.ts` y `.tsx` de `demo/scripts/source-parser.mjs`.
 - `demo/scripts/generate-docs.mjs` y `demo/scripts/docs-source.mjs`: generan y comprueban las fichas de documentación a partir de las guías y la API de las fuentes.
-- `scripts/runflow` y `.flowconfig`: soporte opcional de Flow, separado de las comprobaciones habituales. No se considera una validación automática de tipos.
+- `tsconfig.build.json` y `scripts/build-types.mjs`: emiten únicamente declaraciones de `src/` en `dist/`; excluyen las pruebas y la demo. `npm run build:types` permite regenerarlas por separado.
+- `scripts/test-package-types.mjs`: instala un paquete temporal con React 19 y comprueba sus declaraciones desde un consumidor, con resolución Bundler y NodeNext, entradas ESM/CommonJS y el import de CSS.
 - `.editorconfig` y `.gitignore`: formato de archivos y exclusiones del repositorio. El `.npmrc` de desarrollo se mantiene versionado deliberadamente.
 
 Se han retirado los scripts Python `generateindex.py`, `propscheck.py` y su helper `repoutils.py`, que no tenían llamadas desde los comandos ni la documentación actuales y conservaban lógica del antiguo árbol `example/`. También se ha retirado `src/styles.css`, una hoja de prueba que no se importaba. La biblioteca no necesita Python ni Yarn para instalarse, compilarse o probarse.
@@ -91,6 +92,8 @@ The published package keeps these entry points:
 
 - `dist/index.js`: CommonJS (`require('tabler-react')`).
 - `dist/index.es.js`: ES modules (`import { Card } from 'tabler-react'`).
+- `dist/index.d.ts` y los demás `.d.ts` de `dist/`: tipos públicos, referenciados por `types` y `exports` de `package.json`.
+- `dist/style.css.d.ts`: declaración vacía para reconocer el import público del CSS.
 - `dist/style.css`: styles (`import 'tabler-react/style.css'`).
 - `dist/fonts/feather/`: font assets referenced by the stylesheet.
 
@@ -120,7 +123,7 @@ npm --prefix demo ci
 npm --prefix demo run dev
 ```
 
-Abre `http://127.0.0.1:5174`. Para recompilar la biblioteca mientras editas componentes, ejecuta `npm start` en otra terminal. La demo importa `dist/index.es.js` y `dist/style.css` mediante sus nombres públicos; no importa el código Flow de `src`.
+Abre `http://127.0.0.1:5174`. Para recompilar la biblioteca mientras editas componentes, ejecuta `npm start` en otra terminal. La demo importa `dist/index.es.js` y `dist/style.css` mediante sus nombres públicos; no importa las fuentes TypeScript de `src`.
 
 Para probar cambios en componentes, abre una segunda terminal en la raíz:
 
@@ -162,7 +165,7 @@ El inventario `demo/src/usage.json` cuenta archivos de producción que importan 
 node demo/scripts/scan-usage.mjs <ruta-al-src-del-consumidor>
 ```
 
-Ese inventario de uso es una muestra independiente del catálogo completo. `demo/src/library-exports.json` se genera recorriendo las exportaciones de valor de `src/index.js` y sus barrels; excluye los tipos Flow y TypeScript, que no existen en el paquete JavaScript. Para actualizarlo después de añadir o retirar un export público:
+Ese inventario de uso es una muestra independiente del catálogo completo. `demo/src/library-exports.json` se genera recorriendo las exportaciones de valor de `src/index.ts` y sus barrels; excluye los tipos TypeScript, que no existen como valores en el paquete JavaScript. Para actualizarlo después de añadir o retirar un export público:
 
 ```sh
 npm run demo:inventory
@@ -198,7 +201,7 @@ Las fichas explican cómo funciona cada componente, hook o utilidad y cómo inte
 
 Actualmente hay **90 fichas con guía y API**. La demostración visual sigue siendo un estado independiente: **36 exports tienen ejemplo y 54 están sin cubrir**. Documentar un componente no lo marca automáticamente como probado ni certifica todas sus variantes. Los fragmentos de integración se comprueban por sintaxis y por existencia de los subcomponentes utilizados; los valores, handlers e imports auxiliares corresponden a la aplicación consumidora.
 
-Se conservan los **72 archivos Markdown heredados** de las familias de componentes como material de consulta, identificados en un apartado separado. Pueden contener propiedades antiguas o ejemplos incompletos; el archivo marcado como `broken` muestra una advertencia adicional. Estos ejemplos se presentan como texto y código, sin ejecutarse. Para integrar un componente, utiliza la guía y contrástala con la API actual. Las anotaciones Flow o TypeScript mostradas son declaraciones de las fuentes y no constituyen archivos de tipos publicados ni una garantía de validación en tiempo de ejecución.
+Se conservan los **72 archivos Markdown heredados** de las familias de componentes como material de consulta, identificados en un apartado separado. Pueden contener propiedades antiguas o ejemplos incompletos; el archivo marcado como `broken` muestra una advertencia adicional. Estos ejemplos se presentan como texto y código, sin ejecutarse. Para integrar un componente, utiliza la guía y contrástala con la API actual. Las anotaciones TypeScript mostradas corresponden a los tipos publicados; no añaden validación de datos en tiempo de ejecución.
 
 Para mantener esta documentación:
 
@@ -227,7 +230,7 @@ La biblioteca utiliza `@floating-ui/react` para el posicionamiento de Dropdown, 
 El plan se realiza por etapas:
 
 1. Comprobar la compilación y el lint de partida.
-2. Centralizar el posicionamiento en `src/helpers/Floating.react.js`, con referencias independientes, ajuste a bordes y actualización al hacer scroll o redimensionar. Las posiciones `auto` utilizan `autoPlacement` y las posiciones explícitas utilizan `flip`.
+2. Centralizar el posicionamiento en `src/helpers/Floating.react.tsx`, con referencias independientes, ajuste a bordes y actualización al hacer scroll o redimensionar. Las posiciones `auto` utilizan `autoPlacement` y las posiciones explícitas utilizan `flip`.
 3. Adaptar juntos los desplegables y los submenús de navegación, conservando los menús verticales en el flujo de la página.
 4. Adaptar Tooltip y DatePicker. Mantener la gestión de foco del calendario y orientar las flechas de la ayuda según la posición resuelta.
 5. Retirar las dependencias de Popper y actualizar ambos locks. Retirar la excepción de instalación de la demo; la raíz la conserva por los conflictos de peers indicados en Setup.
@@ -277,9 +280,9 @@ Cada tabla mantiene su propio buscador y la limpieza funciona también sin busca
 
 `onHandleChangeFilter` permite sustituir la búsqueda interna por la lógica del consumidor, conservando su comportamiento anterior. Si se proporciona `quickFilterText`, el consumidor controla el filtro y debe actualizar esa propiedad para cambiarlo o restablecerlo. La referencia pública mantiene `getDisplayedRowAtIndex()`, `flashCells()` y un acceso a la API vigente mediante `ref.current.api`.
 
-## Migración gradual de Flow a TypeScript
+## TypeScript y declaraciones para consumidores
 
-La migración comienza con `src/components/Badge/Badge.react.tsx` y su barrel `index.ts`. Conserva las propiedades `children`, `className` y `color`, el color predeterminado y la salida HTML. `BadgeProps` describe esas propiedades en las fuentes. La entrada pública de JavaScript sigue siendo `import { Badge } from 'tabler-react'`.
+La biblioteca, sus entradas públicas y sus tipos de eventos utilizan TypeScript. `src/components/Badge/Badge.react.tsx` y su barrel `index.ts` fueron el primer bloque de esta migración. Conserva las propiedades `children`, `className` y `color`, el color predeterminado y la salida HTML. `BadgeProps` describe esas propiedades en las fuentes. La entrada pública de JavaScript sigue siendo `import { Badge } from 'tabler-react'`.
 
 La familia Grid también está migrada: `Grid`, `Grid.Row`, `Grid.Col` y su barrel utilizan `.tsx`/`.ts`. Exporta en las fuentes `GridProps`, `GridRowProps` y `GridColProps`, sin añadir exports de valor al paquete. Se conservan todos los anchos, offsets, clases y valores predeterminados. Los flags `xl2Auto`, `xl3Auto`, `xl4Auto`, `xl6Auto` y `xl8Auto` admiten booleanos y los números heredados; `gutters` admite la cadena vacía que ya utiliza el valor predeterminado. No se cambian las reglas CSS ni se añaden atributos DOM que antes no se reenviaban.
 
@@ -287,11 +290,11 @@ La familia Grid también está migrada: `Grid`, `Grid.Row`, `Grid.Col` y su barr
 
 Las fichas de Icon, Container y Text muestran sus fuentes y tipos actualizados, incluida la API de `Text.Small`. Documentan también dos comportamientos heredados: `isAriaHidden` solo se aplica al contenedor de Icon con `link`, y Text sigue reenviando las opciones de formato a su raíz. Los flags booleanos de Text pueden generar avisos de React en elementos HTML; se recomiendan las variantes de cadena como `align="center"`. Esta etapa mantiene esos comportamientos para no mezclar la migración de tipos con cambios de ejecución.
 
-La familia Card también utiliza TypeScript: `Card`, `Card.Header`, `Card.Title`, `Card.Body`, `Card.Options`, `Card.OptionsItem`, `Card.Status`, `Card.Alert`, `Card.Footer` y `Card.Map`. El barrel exporta sus diez tipos de propiedades únicamente para las fuentes. Se mantienen la composición, las clases, los controles, la referencia a la instancia y su estado interno; `isClosed` e `isCollapsed` solo establecen el estado inicial. Card y Card.Title suministran `className` y `children` a su `RootComponent`. Los eventos de Card.OptionsItem reciben un evento de botón de React y se conservan sus etiquetas y atributos `data-toggle` heredados.
+La familia Card también utiliza TypeScript: `Card`, `Card.Header`, `Card.Title`, `Card.Body`, `Card.Options`, `Card.OptionsItem`, `Card.Status`, `Card.Alert`, `Card.Footer` y `Card.Map`. El barrel exporta sus diez tipos de propiedades para los consumidores. Se mantienen la composición, las clases, los controles, la referencia a la instancia y su estado interno; `isClosed` e `isCollapsed` solo establecen el estado inicial. Card y Card.Title suministran `className` y `children` a su `RootComponent`. Los eventos de Card.OptionsItem reciben un evento de botón de React y se conservan sus etiquetas y atributos `data-toggle` heredados.
 
 Los estilos opcionales de Card.Header y Card.Map se omiten cuando no hay URL. Esto corrige además el fallo de Card.Map con `placeholder=""`, que antes enviaba una cadena al atributo `style`. Las fichas recogen las APIs TypeScript de los nueve subcomponentes y las pruebas verifican la composición y los controles con React 18 y 19.
 
-Page, sus ocho subcomponentes públicos y los tres auxiliares internos de cabecera están migrados a TypeScript. Se conservan `Page.Main`, `Page.Content`, `Page.Header`, `Page.ContentWithSidebar`, `Page.Card`, `Page.Title`, `Page.MapHeader` y `Page.Sidebar`, además de su HTML, clases y distribución. `Page.Card` reutiliza el contrato de `RootComponent` de Card. Las dependencias con Container, Grid y Card apuntan a sus fuentes migradas, sin incorporar el barrel Flow a la comprobación de tipos. Los tipos de los auxiliares también se exportan desde las fuentes; no se añaden subcomponentes de valor a Page.
+Page, sus ocho subcomponentes públicos y los tres auxiliares internos de cabecera están migrados a TypeScript. Se conservan `Page.Main`, `Page.Content`, `Page.Header`, `Page.ContentWithSidebar`, `Page.Card`, `Page.Title`, `Page.MapHeader` y `Page.Sidebar`, además de su HTML, clases y distribución. `Page.Card` reutiliza el contrato de `RootComponent` de Card. Las dependencias con Container, Grid y Card apuntan a sus fuentes migradas, utilizando el barrel TypeScript. Los tipos de los auxiliares también se exportan desde las fuentes; no se añaden subcomponentes de valor a Page.
 
 `PageSidebarHeaderProps` describe la configuración que realmente consume la barra lateral y sustituye una importación Flow que apuntaba a un archivo inexistente. Conserva `darkImageUrl` como URL opcional del logo y acepta otros campos de configuración heredados sin utilizarlos. No se cambia por `darkImageURL`. Los atributos Bootstrap del botón de la barra lateral se mantienen; la gestión del colapso corresponde al consumidor. La ficha de Page muestra los ocho subcomponentes, sus contratos y ejemplos de composición. Las pruebas verifican el paquete con React 18 y 19.
 
@@ -325,7 +328,7 @@ En este bloque se corrige Tag para renderizar el RootComponent recibido en vez d
 
 Accordion, Breadcrumb, SearchBar, useSearchBar y ProtectedRoute están migrados a TypeScript. Breadcrumb conserva el tipo del path y entrega su valor al callback sin gestionar la navegación. SearchBar tipa el evento de teclado del input; el hook conserva string | undefined, el setter funcional y los eventos heredados con target.value. ProtectedRoute utiliza el tipo To de React Router, conserva children/Outlet y la opción replace del historial. Los botones de Breadcrumb y SearchBar son de tipo button para evitar envíos accidentales de formularios. Las pruebas incluyen apertura del acordeón, navegación, historial, eventos y normalización del filtro con React 18 y 19; la documentación sigue separada de la cobertura visual.
 
-Media y sus seis subcomponentes, SocialNetworksList, Profile/Profile.Image, Comment/List/Reply y CommentsCard utilizan TypeScript. Se mantienen las clases, la composición y las prioridades de las listas sociales, que admiten arrays readonly. Las importaciones internas apuntan a las familias migradas, sin arrastrar el barrel Flow. Las fichas distinguen las propiedades utilizadas de las limitaciones heredadas: destinos y ayudas fijas de Media.BodySocial, twitterURL sin efecto en Profile y children no representado por Comment/CommentsCard.
+Media y sus seis subcomponentes, SocialNetworksList, Profile/Profile.Image, Comment/List/Reply y CommentsCard utilizan TypeScript. Se mantienen las clases, la composición y las prioridades de las listas sociales, que admiten arrays readonly. Las importaciones internas apuntan a las familias migradas, utilizando imports TypeScript. Las fichas distinguen las propiedades utilizadas de las limitaciones heredadas: destinos y ayudas fijas de Media.BodySocial, twitterURL sin efecto en Profile y children no representado por Comment/CommentsCard.
 
 Los auxiliares internos FormWithSingleInputAndButton y withTouchedErrors también están migrados. El formulario reutiliza los contratos de Form, Form.Input y Button y conserva su envío nativo. El HOC mantiene las demás propiedades del componente envuelto y filtra los errores por campos visitados sin mutar los mapas recibidos. Los errores de campos visitados que no aparecen en el mapa pueden ser undefined; los demás se sustituyen por una cadena vacía. Las pruebas verifican estos contratos a través de las plantillas públicas RegisterPage y ForgotPasswordPage con React 18 y 19. Los auxiliares siguen siendo internos.
 
@@ -336,22 +339,24 @@ La familia Timeline está migrada con Item, ItemTime, ItemBadge, ItemTitle e Ite
 Las once plantillas públicas también están migradas: StandaloneFormPage, DefaultErrorPage, las seis páginas de error y las tres páginas de cuenta LoginPage, RegisterPage y ForgotPasswordPage. Sus propiedades, valores, textos parciales y eventos se comprueban en las fuentes. Se conserva LoginPageForm como implementación del export LoginPage. RegisterPage y ForgotPasswordPage mantienen el filtro por touched; LoginPage muestra los errores directamente y permite children después del formulario. values.terms sigue siendo el value textual del checkbox, sin controlar checked. action de las páginas de error cambia el texto del botón que vuelve al historial, no su destino. Las fichas reflejan estos límites y las pruebas comprueban entradas, selección, envío y navegación con React 18 y 19.
 
 ```sh
-# Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
+# Comprueba toda la biblioteca y los contratos de prueba, sin generar archivos.
 npm run typecheck
 ```
 
-`tsconfig.json` activa `strict`, `isolatedModules` y `noEmit`. Solo incluye fuentes TypeScript y los ejemplos de contrato en `tests/types/`; no habilita `allowJs` ni intenta interpretar Flow. Incluye las declaraciones ES2016.Array.Include y ES2022.String para los usos existentes de Array.includes y String.at, y ES2020.Intl para las declaraciones de date-fns, sin cambiar el target ES2015 ni añadir código de ejecución. Las pruebas de tipos aceptan los usos públicos válidos de las familias migradas y exigen errores para propiedades incorrectas, incluidos los eventos, referencias y raíces de los controles. El código TypeScript nuevo debe mantener sus dependencias dentro de la parte migrada o resolver expresamente la frontera con las fuentes antiguas; añadir `any` o ignorar errores no sustituye esa revisión.
+`tsconfig.json` activa `strict`, `isolatedModules` y `noEmit`. Incluye todas las fuentes TypeScript, las entradas públicas y los ejemplos de contrato en `tests/types/`, sin habilitar `allowJs`. Incluye las declaraciones ES2016.Array.Include y ES2022.String para los usos existentes de Array.includes y String.at, y ES2020.Intl para las declaraciones de date-fns, sin cambiar el target ES2015 ni añadir código de ejecución. Las pruebas de tipos aceptan los usos públicos válidos de las familias migradas y exigen errores para propiedades incorrectas, incluidos los eventos, referencias y raíces de los controles. Los cambios nuevos deben conservar los contratos públicos y pasar la comprobación estricta; añadir `any` o ignorar errores no sustituye esa revisión.
 
-Se utiliza TypeScript 6.0.3 porque el parser `@typescript-eslint` 8.72.0 declara soporte para TypeScript menor que 6.1 y para ESLint 10. El build de Vite transpila con Babel; la comprobación semántica la realiza `typecheck`, que también forma parte de `npm run check`. Los archivos Flow pendientes siguen teniendo lint, compilación y pruebas, pero no una comprobación semántica de tipos dentro de ese comando.
+Se utiliza TypeScript 6.0.3 porque el parser `@typescript-eslint` 8.72.0 declara soporte para TypeScript menor que 6.1 y para ESLint 10. El build de Vite transpila con Babel y comprueba los tipos antes de emitir las declaraciones. `typecheck` comprueba además los contratos de pruebas y forma parte de `npm run check`.
 
-El catálogo y las fichas reconocen ambos formatos, incluidos los tipos de propiedades y las APIs de los subcomponentes ya migrados. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18, incluidos los eventos de Icon y el reenvío de propiedades de Text. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
+El catálogo y las fichas reconocen las entradas TypeScript, incluidos los tipos de propiedades y las APIs de los subcomponentes. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18, incluidos los eventos de Icon y el reenvío de propiedades de Text. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
 
-Queda cerrar las entradas públicas, generar las declaraciones `.d.ts` y configurar `types`/`exports` para los consumidores, además de revisar los archivos auxiliares heredados. Esta etapa todavía no publica declaraciones de tipos. Las herramientas de Flow se retirarán cuando ya no tengan usos.
+Los quince grupos públicos de eventos (por ejemplo, `MouseEvents`, `FocusEvents` y `FormEvents`) conservan sus nombres y se basan en los handlers nativos de React. Admiten el elemento como parámetro, por ejemplo `MouseEvents<HTMLButtonElement>`. Se corrigen los antiguos tipos de composición, arrastre y puntero, se elimina la propiedad de puntero duplicada y `onSubmit` utiliza el contrato nativo de React. OtherEvents toma onToggle de DetailsHTMLAttributes para conservar compatibilidad con los tipos de React 18 y 19. Estos tipos solo describen propiedades; no registran listeners ni cambian el comportamiento de los componentes.
+
+Puedes importar tipos como `CardProps`, `DatePickerHandle`, `AGGridColumn<T>` o `BarChartProps` desde `tabler-react`. Los consumidores JavaScript mantienen sus imports y no necesitan usar TypeScript. Las aplicaciones TypeScript deben aportar los tipos de su versión de React. La emisión conserva las dependencias de los tipos dentro de `dist/`, omite imports de CSS internos y declara por separado `tabler-react/style.css`. La configuración no publica las fuentes ni la demo.
 
 ## Lint
 
-`npm run lint` analiza la biblioteca, las pruebas, los scripts `.mjs` y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow y `@typescript-eslint` analiza las fuentes y contratos TypeScript. Sus reglas recomendadas se aplican únicamente a los archivos TypeScript.
-Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos.
+`npm run lint` analiza la biblioteca, las pruebas, los scripts `.mjs` y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; `@typescript-eslint` analiza las fuentes y los contratos TypeScript; el parser estándar analiza el JavaScript de la demo y los scripts. Sus reglas recomendadas se aplican únicamente a los archivos TypeScript.
+Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos. El parser hermes-parser que utiliza internamente eslint-plugin-react-hooks se conserva como dependencia transitiva de ese plugin; no analiza las fuentes de la biblioteca como Flow.
 
 Para compilar y ejecutar las pruebas de regresión de componentes, posicionamiento, foco y assets, usa `npm test` desde la raíz.
 
@@ -360,18 +365,22 @@ Para compilar y ejecutar las pruebas de regresión de componentes, posicionamien
 Después de instalar las dependencias de la raíz y de la demo como se indica en Setup, puedes ejecutar todas las comprobaciones desde una terminal en la raíz:
 
 ```sh
-# Comprobación habitual: tipos migrados, catálogo y fichas actualizados, lint de biblioteca y demo,
+# Comprobación habitual: tipos públicos, catálogo y fichas actualizados, lint de biblioteca y demo,
 # compilación de la biblioteca, pruebas con React 19 y compilación de la demo.
 npm run check
 
-# Comprobación completa: lo anterior y pruebas de integración con React 18
+# Comprobación completa: lo anterior, declaraciones en un consumidor React 19
+# y pruebas de integración y declaraciones con React 18
 # en un consumidor temporal que instala el paquete compilado.
 npm run check:all
+
+# Solo el paquete y sus declaraciones en un consumidor TypeScript con React 19.
+npm run test:types
 ```
 
-Los pasos se ejecutan en orden y se detienen en el primero que falle. En estos comandos, cualquier aviso de lint también hace fallar la comprobación. `check:all` reutiliza la compilación de `check` para el consumidor de React 18, sin compilar la biblioteca una segunda vez.
+Los pasos se ejecutan en orden y se detienen en el primero que falle. En estos comandos, cualquier aviso de lint también hace fallar la comprobación. `check:all` reutiliza la compilación de `check` para los consumidores de React 18 y 19, sin compilar la biblioteca una segunda vez.
 
-`check` utiliza las dependencias ya instaladas. `check:all` necesita acceso al registro npm para preparar el consumidor temporal de React 18, sin cambiar los `package.json` ni los locks de la biblioteca o la demo. Ambos comandos regeneran los directorios de compilación correspondientes y terminan al completar las comprobaciones.
+`check` utiliza las dependencias ya instaladas. `check:all` y `test:types` necesitan acceso al registro npm para preparar sus consumidores temporales, sin cambiar los `package.json` ni los locks de la biblioteca o la demo. Ambos comandos regeneran los directorios de compilación correspondientes y terminan al completar las comprobaciones.
 
 Puedes utilizarlos antes de un commit o de actualizar la biblioteca en un consumidor. Se ejecutan a petición desde la terminal; no se añaden hooks de Git, acciones de GitHub ni pasos de publicación. Las pruebas visuales y los flujos propios de cada consumidor siguen requiriendo su revisión.
 

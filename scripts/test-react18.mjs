@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawnSync } from 'node:child_process'
+import { checkPackageTypes } from './test-package-types.mjs'
 
 const project = fileURLToPath(new URL('../', import.meta.url))
 const npmCli = process.env.npm_execpath
@@ -20,13 +21,15 @@ writeFileSync(join(fixture, 'package.json'), JSON.stringify({
   dependencies: {
     'tabler-react': `file:./${packed.filename}`,
     react: '18.3.1', 'react-dom': '18.3.1',
+    '@types/react': '18.3.31', '@types/react-dom': '18.3.7',
     ...Object.fromEntries(['ag-grid-community', 'ag-grid-react', 'react-router-dom'].map(name =>
       [name, lock.packages[`node_modules/${name}`].version])),
   },
 }, null, 2))
 console.log(`Consumidor aislado con React 18: ${fixture}`)
 // Install the packed library as a normal consumer, checking peer compatibility.
-run([npmCli, 'install', '--ignore-scripts', '--legacy-peer-deps=false', '--no-audit', '--no-fund'], fixture, { stdio: 'inherit' })
+run([npmCli, 'install', '--ignore-scripts', '--legacy-peer-deps=false', '--prefer-offline', '--no-audit', '--no-fund'], fixture, { stdio: 'inherit' })
+checkPackageTypes(fixture)
 run(['--test', '--test-timeout=30000', 'tests/floating.test.cjs', 'tests/ag-grid.test.cjs', 'tests/badge.test.cjs', 'tests/grid.test.cjs', 'tests/primitives.test.cjs', 'tests/card.test.cjs', 'tests/page.test.cjs', 'tests/controls.test.cjs', 'tests/navigation.test.cjs', 'tests/form-modal.test.cjs', 'tests/charts.test.cjs', 'tests/table.test.cjs', 'tests/content.test.cjs', 'tests/cards-timeline.test.cjs', 'tests/page-templates.test.cjs'], project, {
   stdio: 'inherit',
   env: { ...process.env, TABLER_TEST_PACKAGE_DIR: join(fixture, 'node_modules', 'tabler-react') },

@@ -1,5 +1,5 @@
 {
-  "entry": "src/index.js",
+  "entry": "src/index.ts",
   "exports": [
     {
       "name": "Accordion",

@@ -71,5 +71,5 @@ DropdownMenu.displayName = "Dropdown.Menu";
 
 export default DropdownMenu;
 
-// Retain the source type name used by pending Flow components.
+// Retain the short source type alias for internal imports.
 export type Props = DropdownMenuProps;

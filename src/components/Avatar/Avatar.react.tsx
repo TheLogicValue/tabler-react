@@ -94,5 +94,5 @@ Avatar.List = AvatarList;
 
 export default Avatar;
 
-// Retain the source type name used by pending Flow components.
+// Retain the short source type alias for internal imports.
 export type Props = AvatarProps;

@@ -27,10 +27,14 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": {
+      "types": "./dist/style.css.d.ts",
+      "default": "./dist/style.css"
+    }
   },
   "scripts": {
     "build": "vite build",
@@ -45,8 +49,10 @@
     "demo:docs": "npm run demo:inventory && node demo/scripts/generate-docs.mjs",
     "demo:docs:check": "node demo/scripts/generate-docs.mjs --check",
     "check": "npm run typecheck && npm run demo:inventory:check && npm run demo:docs:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
-    "check:all": "npm run check && node scripts/test-react18.mjs",
-    "typecheck": "tsc --project tsconfig.json"
+    "check:all": "npm run check && node scripts/test-package-types.mjs && node scripts/test-react18.mjs",
+    "typecheck": "tsc --project tsconfig.json",
+    "build:types": "node scripts/build-types.mjs",
+    "test:types": "npm run build && node scripts/test-package-types.mjs"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.10",
@@ -78,7 +84,6 @@
     "@babel/plugin-transform-json-strings": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.28.5",
     "@babel/preset-env": "^7.26.0",
-    "@babel/preset-flow": "^7.25.9",
     "@babel/preset-react": "^7.25.9",
     "@babel/preset-typescript": "7.29.7",
     "@eslint/compat": "^2.1.1",
@@ -97,7 +102,6 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
     "happy-dom": "^21.0.4",
-    "hermes-eslint": "^0.37.0",
     "postcss": "^8.5.31",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -109,5 +113,6 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "types": "dist/index.d.ts"
 }

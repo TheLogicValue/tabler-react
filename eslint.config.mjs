@@ -1,7 +1,6 @@
 import js from '@eslint/js'
 import { fixupPluginRules } from '@eslint/compat'
 import globals from 'globals'
-import hermesParser from 'hermes-eslint'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
@@ -10,17 +9,8 @@ import typescriptPlugin from '@typescript-eslint/eslint-plugin'
 
 const reactRules = fixupPluginRules(react)
 const accessibilityRules = fixupPluginRules(jsxA11y)
-// These types are supplied by Flow's React/DOM standard libraries, rather than
-// declared as JavaScript bindings. Keep no-undef active for actual identifiers.
-const flowGlobals = Object.fromEntries([
-  '$Keys', 'MouseEventListener', 'SyntheticEvent', 'SyntheticAnimationEvent',
-  'SyntheticClipboardEvent', 'SyntheticFocusEvent', 'SyntheticInputEvent',
-  'SyntheticKeyboardEvent', 'SyntheticMouseEvent', 'SyntheticTouchEvent',
-  'SyntheticTransitionEvent', 'SyntheticUIEvent', 'SyntheticWheelEvent',
-].map(name => [name, 'readonly']))
-
 export default [
-  { ignores: ['**/node_modules/**', 'dist/**', 'demo/dist/**', 'flow-typed/**'] },
+  { ignores: ['**/node_modules/**', 'dist/**', 'demo/dist/**'] },
   {
     files: ['src/**/*.{js,ts,tsx}', 'tests/**/*.cjs', 'tests/types/**/*.tsx', 'demo/src/**/*.{js,jsx}', '**/*.mjs'],
     ...js.configs.recommended,
@@ -36,11 +26,6 @@ export default [
       eqeqeq: 'off',
       'no-implied-eval': 'off',
     },
-  },
-  {
-    files: ['src/**/*.js'],
-    // Hermes supports Flow and ESLint 10 without changing the Babel 7 build.
-    languageOptions: { parser: hermesParser, globals: flowGlobals },
   },
   {
     files: ['src/**/*.{ts,tsx}', 'tests/types/**/*.tsx'],
@@ -61,7 +46,7 @@ export default [
     settings: { react: { version: 'detect' } },
     rules: {
       ...react.configs.recommended.rules,
-      // Source types define props during the Flow to TypeScript migration.
+      // TypeScript declarations define the library's component props.
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',

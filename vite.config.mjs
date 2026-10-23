@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { transformAsync } from '@babel/core'
 import { defineConfig, esmExternalRequirePlugin, normalizePath } from 'vite'
+import { buildTypes, declarationConfig } from './scripts/build-types.mjs'
 
 const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
 const sourceDirectory = normalizePath(fileURLToPath(new URL('./src/', import.meta.url)))
@@ -12,7 +13,7 @@ const externals = [...peers, 'echarts-for-react']
 
 export default defineConfig({
   base: './',
-  // The library has no HTML entry point. Only src/index.js enters the build.
+  // The library has no HTML entry point. Only src/index.ts enters the build.
   publicDir: false,
   plugins: [
     // Bundled CommonJS dependencies also require React. Convert those external
@@ -24,11 +25,19 @@ export default defineConfig({
     {
       name: 'tabler-source-and-jsx',
       enforce: 'pre',
+      buildStart() {
+        // Type-only dependencies must also trigger a rebuild in watch mode.
+        for (const file of declarationConfig().fileNames) this.addWatchFile(file)
+        this.addWatchFile(fileURLToPath(new URL('./tsconfig.json', import.meta.url)))
+        this.addWatchFile(fileURLToPath(new URL('./tsconfig.build.json', import.meta.url)))
+      },
+      writeBundle() {
+        buildTypes()
+      },
       async transform(code, id) {
-        if (!normalizePath(id).startsWith(sourceDirectory) || !/\.[jt]sx?$/.test(id)) return
-        const isTypeScript = /\.tsx?$/.test(id)
+        if (!normalizePath(id).startsWith(sourceDirectory) || !/\.tsx?$/.test(id)) return
 
-        // Each file uses one type syntax. Babel transpiles; tsc checks migrated files.
+        // Babel transpiles TypeScript; the declaration build checks its types.
         return transformAsync(code, {
           filename: id,
           babelrc: false,
@@ -37,7 +46,7 @@ export default defineConfig({
           presets: [
             ['@babel/preset-env', { modules: false }],
             ['@babel/preset-react', { runtime: 'classic' }],
-            isTypeScript ? ['@babel/preset-typescript', { onlyRemoveTypeImports: true, allowDeclareFields: true }] : '@babel/preset-flow',
+            ['@babel/preset-typescript', { onlyRemoveTypeImports: true, allowDeclareFields: true }],
           ],
           plugins: [
             '@babel/plugin-transform-runtime',
@@ -73,7 +82,7 @@ export default defineConfig({
     minify: 'terser',
     cssMinify: false,
     lib: {
-      entry: fileURLToPath(new URL('./src/index.js', import.meta.url)),
+      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       formats: ['es', 'cjs'],
       fileName: format => format === 'es' ? 'index.es.js' : 'index.js',
       cssFileName: 'style',

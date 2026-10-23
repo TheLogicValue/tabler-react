@@ -2,7 +2,6 @@ import * as React from "react";
 import cn from "classnames";
 import Grid from "../Grid";
 
-// FormEvents not imported due to check on props utilization. FormRatioProps typing do not use mandatory props.
 
 export type FormRatioCommonProps = {
   readonly className?: string;

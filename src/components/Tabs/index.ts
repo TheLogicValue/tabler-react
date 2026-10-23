@@ -1,4 +1,3 @@
-// @flow
 
 import Tab from "./Tab.react";
 import TabbedContainer from "./TabbedContainer.react";

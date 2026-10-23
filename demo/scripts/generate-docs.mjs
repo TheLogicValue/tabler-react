@@ -34,7 +34,7 @@ for (const entry of catalog.exports) {
     name: file, source: relative(project, resolve(folder, file)).replaceAll('\\', '/'),
     markdown: readFileSync(resolve(folder, file), 'utf8').replaceAll('\r\n', '\n'),
   }))
-  // Ensure every parsed definition is valid even when it has no Flow props.
+  // Ensure every parsed definition is valid even when it has no local props.
   moduleInfo(info.file)
   const guide = guides[entry.name]
   for (const override of guide?.props ?? []) {

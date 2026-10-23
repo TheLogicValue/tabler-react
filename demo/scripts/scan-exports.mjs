@@ -41,9 +41,9 @@ function scan(file) {
   }
 }
 
-scan(resolve(project, 'src/index.js'))
+scan(resolve(project, 'src/index.ts'))
 const result = JSON.stringify({
-  entry: 'src/index.js',
+  entry: 'src/index.ts',
   exports: [...entries.values()].sort((a, b) => a.name.localeCompare(b.name, 'en')),
 }, null, 2) + '\n'
 

@@ -1,4 +1,3 @@
-// @flow
 
 import BarChartLoader from "./BarChartLoader.react";
 import PieChartLoader from "./PieChartLoader.react";

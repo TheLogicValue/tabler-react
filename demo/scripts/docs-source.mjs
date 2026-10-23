@@ -13,7 +13,6 @@ export function moduleInfo(file) {
       info.imports.set(specifier.local.name, { source: statement.source.value, name: specifier.imported?.name ?? 'default' })
     }
     const declaration = statement.declaration ?? statement
-    if (declaration.type === 'TypeAlias') info.types.set(declaration.id.name, declaration.right)
     if (declaration.type === 'TSTypeAliasDeclaration') info.types.set(declaration.id.name, declaration.typeAnnotation)
     if (declaration.type === 'TSInterfaceDeclaration') info.types.set(declaration.id.name, declaration)
     if (declaration.type === 'VariableDeclaration') for (const item of declaration.declarations) {
@@ -79,8 +78,8 @@ export function extractApi(info) {
   }
   function typeProperties(type, seen = new Set(), owner = info) {
     if (!type) return
-    if (['TypeAnnotation', 'TSTypeAnnotation', 'TSParenthesizedType'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
-    const reference = type.type === 'GenericTypeAnnotation' ? type.id : type.type === 'TSTypeReference' ? type.typeName : type.type === 'TSExpressionWithTypeArguments' ? type.expression : null
+    if (['TSTypeAnnotation', 'TSParenthesizedType'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
+    const reference = type.type === 'TSTypeReference' ? type.typeName : type.type === 'TSExpressionWithTypeArguments' ? type.expression : null
     if (reference?.name === 'Omit' && type.type === 'TSTypeReference') {
       const [source, excluded] = type.typeParameters?.params ?? type.typeArguments?.params ?? []
       const names = (excluded?.type === 'TSUnionType' ? excluded.types : [excluded]).filter(Boolean)
@@ -108,7 +107,7 @@ export function extractApi(info) {
       type.types.forEach(item => typeProperties(item, new Set(seen), owner))
       unionDepth--
     }
-    if (['UnionTypeAnnotation', 'IntersectionTypeAnnotation', 'TSIntersectionType'].includes(type.type)) type.types.forEach(item => typeProperties(item, new Set(seen), owner))
+    if (type.type === 'TSIntersectionType') type.types.forEach(item => typeProperties(item, new Set(seen), owner))
     if (type.type === 'TSInterfaceDeclaration') {
       for (const parent of type.extends ?? []) typeProperties(parent, new Set(seen), owner)
       return typeProperties(type.body, seen, owner)
@@ -119,15 +118,6 @@ export function extractApi(info) {
       const description = (item.leadingComments ?? []).map(comment => comment.value.replace(/\*/g, '').trim()).join(' ')
       const previous = props.get(name)
       property(name, { type: item.typeAnnotation ? text(item.typeAnnotation.typeAnnotation, owner) : undefined, optional: Boolean(item.optional || previous?.optional), description: description || previous?.description || '' })
-    }
-    if (type.type === 'ObjectTypeAnnotation') for (const item of type.properties) {
-      if (item.type === 'ObjectTypeSpreadProperty') typeProperties(item.argument, new Set(seen), owner)
-      else if (item.key) {
-        const name = item.key.name ?? item.key.value
-        const description = (item.leadingComments ?? []).map(comment => comment.value.replace(/\*/g, '').trim()).join(' ')
-        const previous = props.get(name)
-        property(name, { type: text(item.value, owner), optional: Boolean(item.optional || previous?.optional), description: description || previous?.description || '' })
-      }
     }
   }
   function pattern(node) {

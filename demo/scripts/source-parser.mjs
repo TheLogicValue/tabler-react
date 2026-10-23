@@ -7,7 +7,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx']
 export function parseSource(code, filename) {
   return parseSync(code, {
     filename, babelrc: false, configFile: false,
-    parserOpts: { sourceType: 'module', plugins: ['jsx', /\.tsx?$/.test(filename) ? 'typescript' : 'flow'] },
+    parserOpts: { sourceType: 'module', plugins: ['jsx', ...(/\.tsx?$/.test(filename) ? ['typescript'] : [])] },
   })
 }
 

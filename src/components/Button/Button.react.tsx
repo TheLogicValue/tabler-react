@@ -59,7 +59,7 @@ export type ButtonCustomProps = ButtonCommonProps & {
   readonly type?: never;
 };
 export type ButtonProps = ButtonNativeProps | ButtonAnchorProps | ButtonInputProps | ButtonCustomProps;
-// Retain the source type name imported by legacy Flow components.
+// Retain the short source type alias for internal imports.
 export type Props = ButtonProps;
 
 type ButtonForwardedProps = Pick<ButtonCommonProps, "aria-label" | "disabled" | "onClick" | "onMouseEnter" | "onMouseLeave" | "onPointerEnter" | "onPointerLeave" | "tabIndex" | "onFocus" | "onBlur" | "aria-describedby" | "aria-expanded" | "aria-haspopup"> & { className: string };

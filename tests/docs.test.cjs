@@ -23,7 +23,7 @@ test('Las fichas corresponden al paquete público y sus subcomponentes existen',
   }
 })
 
-test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () => {
+test('La extracción sigue reexports, wrappers y tipos TypeScript', () => {
   for (const name of ['DefaultErrorPage', 'Error400Page', 'Error401Page', 'Error403Page', 'Error404Page', 'Error500Page', 'Error503Page']) {
     const doc = document(name)
     assert.equal(doc.implementation, `src/page_templates/errors/${name}.react.tsx`)
@@ -225,7 +225,7 @@ test('Los ejemplos de las guías tienen sintaxis válida y no usan subcomponente
     const guide = document(name).guide
     if (!guide) continue
     for (const example of [guide.example, ...(guide.examples ?? []).map(item => item.code)]) {
-      const ast = parseSync(example, { babelrc: false, configFile: false, parserOpts: { plugins: ['jsx', 'flow'] } })
+      const ast = parseSync(example, { babelrc: false, configFile: false, parserOpts: { plugins: ['jsx'] } })
       walk(ast, node => {
         if (node.type !== 'JSXOpeningElement') return
         const parts = nameParts(node.name)
