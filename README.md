@@ -4,7 +4,7 @@
 
 > React implementation of the [Tabler Dashboard UI Kit](https://github.com/tabler/tabler)
 
-[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Tipos en las fuentes](https://img.shields.io/badge/source%20types-Flow-green.svg)
+[![Versión de package.json](https://img.shields.io/badge/version-2.0.0-blue)](./package.json) ![Tipos en las fuentes](https://img.shields.io/badge/source%20types-Flow%20%2B%20TypeScript-green.svg)
 
 ## Install
 
@@ -68,18 +68,19 @@ Usa `npm install` para añadir o actualizar dependencias y guarda el `package-lo
 El `.npmrc` de la raíz activa `legacy-peer-deps` porque los plugins de ESLint todavía declaran compatibilidad hasta ESLint 9. Esta excepción se conserva para el desarrollo de la biblioteca; los consumidores mantienen su configuración de npm y la demo se instala sin esa excepción.
 
 The build uses Vite in library mode with `src/index.js` as its only entry point.
-Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
+Babel compiles JavaScript/JSX with Flow and the migrated TypeScript/TSX files. The parser is selected by file extension; each file uses one type syntax.
 
-La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Se conservan las anotaciones de las fuentes, `@babel/preset-flow`, Hermes y las definiciones de `flow-typed`. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`. La compilación no publica declaraciones `.js.flow` ni `.d.ts`.
+La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. El piloto de TypeScript es Badge; se conservan `@babel/preset-flow`, Hermes y `flow-typed` para las familias pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
 
 Los scripts y configuraciones conservados tienen estas funciones:
 
-- `vite.config.mjs`: compila la biblioteca, elimina las anotaciones Flow y genera los formatos ESM y CommonJS, el CSS y las fuentes.
+- `vite.config.mjs`: compila la biblioteca, elimina las anotaciones Flow o TypeScript según la extensión y genera los formatos ESM y CommonJS, el CSS y las fuentes.
+- `tsconfig.json`: comprueba estrictamente las fuentes `.ts`/`.tsx` migradas y los contratos de `tests/types/`, sin emitir archivos.
 - `demo/vite.config.mjs`: compila y sirve únicamente la demo; incluye el presupuesto de bundles de `demo/scripts/bundle-budget.mjs`.
 - `eslint.config.mjs`: configura el lint de la biblioteca, la demo, las pruebas y los scripts JavaScript.
 - `scripts/test-react18.mjs`: empaqueta la biblioteca y ejecuta las pruebas en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
 - `demo/scripts/scan-usage.mjs`: regenera manualmente el inventario de componentes a partir de un consumidor; su comando se muestra en la sección de la demo.
-- `demo/scripts/scan-exports.mjs`: genera el catálogo completo de exports públicos de la biblioteca para la cobertura de la demo; `--check` comprueba que está actualizado.
+- `demo/scripts/scan-exports.mjs`: genera el catálogo completo de exports públicos de la biblioteca para la cobertura de la demo; `--check` comprueba que está actualizado. Comparte con la documentación el parser y la resolución de `.js`, `.jsx`, `.ts` y `.tsx` de `demo/scripts/source-parser.mjs`.
 - `demo/scripts/generate-docs.mjs` y `demo/scripts/docs-source.mjs`: generan y comprueban las fichas de documentación a partir de las guías y la API de las fuentes.
 - `scripts/runflow` y `.flowconfig`: soporte opcional de Flow, separado de las comprobaciones habituales. No se considera una validación automática de tipos.
 - `.editorconfig` y `.gitignore`: formato de archivos y exclusiones del repositorio. El `.npmrc` de desarrollo se mantiene versionado deliberadamente.
@@ -161,7 +162,7 @@ El inventario `demo/src/usage.json` cuenta archivos de producción que importan 
 node demo/scripts/scan-usage.mjs <ruta-al-src-del-consumidor>
 ```
 
-Ese inventario de uso es una muestra independiente del catálogo completo. `demo/src/library-exports.json` se genera recorriendo las exportaciones de valor de `src/index.js` y sus barrels; excluye los tipos Flow, que no existen en el paquete JavaScript. Para actualizarlo después de añadir o retirar un export público:
+Ese inventario de uso es una muestra independiente del catálogo completo. `demo/src/library-exports.json` se genera recorriendo las exportaciones de valor de `src/index.js` y sus barrels; excluye los tipos Flow y TypeScript, que no existen en el paquete JavaScript. Para actualizarlo después de añadir o retirar un export público:
 
 ```sh
 npm run demo:inventory
@@ -197,7 +198,7 @@ Las fichas explican cómo funciona cada componente, hook o utilidad y cómo inte
 
 Actualmente hay **90 fichas con guía y API**. La demostración visual sigue siendo un estado independiente: **36 exports tienen ejemplo y 54 están sin cubrir**. Documentar un componente no lo marca automáticamente como probado ni certifica todas sus variantes. Los fragmentos de integración se comprueban por sintaxis y por existencia de los subcomponentes utilizados; los valores, handlers e imports auxiliares corresponden a la aplicación consumidora.
 
-Se conservan los **73 archivos Markdown heredados** de las familias de componentes como material de consulta, identificados en un apartado separado. Pueden contener propiedades antiguas o ejemplos incompletos; el archivo marcado como `broken` muestra una advertencia adicional. Estos ejemplos se presentan como texto y código, sin ejecutarse. Para integrar un componente, utiliza la guía y contrástala con la API actual. Las anotaciones Flow mostradas son declaraciones de las fuentes y no constituyen archivos de tipos publicados ni una garantía de validación en tiempo de ejecución.
+Se conservan los **73 archivos Markdown heredados** de las familias de componentes como material de consulta, identificados en un apartado separado. Pueden contener propiedades antiguas o ejemplos incompletos; el archivo marcado como `broken` muestra una advertencia adicional. Estos ejemplos se presentan como texto y código, sin ejecutarse. Para integrar un componente, utiliza la guía y contrástala con la API actual. Las anotaciones Flow o TypeScript mostradas son declaraciones de las fuentes y no constituyen archivos de tipos publicados ni una garantía de validación en tiempo de ejecución.
 
 Para mantener esta documentación:
 
@@ -274,9 +275,26 @@ Cada tabla mantiene su propio buscador y la limpieza funciona también sin busca
 
 `onHandleChangeFilter` permite sustituir la búsqueda interna por la lógica del consumidor, conservando su comportamiento anterior. Si se proporciona `quickFilterText`, el consumidor controla el filtro y debe actualizar esa propiedad para cambiarlo o restablecerlo. La referencia pública mantiene `getDisplayedRowAtIndex()`, `flashCells()` y un acceso a la API vigente mediante `ref.current.api`.
 
+## Migración gradual de Flow a TypeScript
+
+La migración comienza con `src/components/Badge/Badge.react.tsx` y su barrel `index.ts`. Conserva las propiedades `children`, `className` y `color`, el color predeterminado y la salida HTML. `BadgeProps` describe esas propiedades en las fuentes. La entrada pública de JavaScript sigue siendo `import { Badge } from 'tabler-react'`.
+
+```sh
+# Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
+npm run typecheck
+```
+
+`tsconfig.json` activa `strict`, `isolatedModules` y `noEmit`. Solo incluye fuentes TypeScript y los ejemplos de contrato en `tests/types/`; no habilita `allowJs` ni intenta interpretar Flow. Las pruebas de tipos aceptan los usos públicos válidos de Badge y exigen errores para propiedades incorrectas. El código TypeScript nuevo debe mantener sus dependencias dentro de la parte migrada o resolver expresamente la frontera con las fuentes antiguas; añadir `any` o ignorar errores no sustituye esa revisión.
+
+Se utiliza TypeScript 6.0.3 porque el parser `@typescript-eslint` 8.72.0 declara soporte para TypeScript menor que 6.1 y para ESLint 10. El build de Vite transpila con Babel; la comprobación semántica la realiza `typecheck`, que también forma parte de `npm run check`. Los archivos Flow pendientes siguen teniendo lint, compilación y pruebas, pero no una comprobación semántica de tipos dentro de ese comando.
+
+El catálogo y las fichas reconocen ambos formatos, incluidos los tipos de propiedades de Badge. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
+
+El siguiente paso es migrar una familia como Grid con sus dependencias, manteniendo su API. La publicación de declaraciones `.d.ts` y la configuración de `types`/`exports` se abordarán al disponer de una superficie pública coherente; este piloto no anuncia tipos completos para los otros componentes. Las herramientas de Flow se retirarán cuando ya no tengan usos.
+
 ## Lint
 
-`npm run lint` analiza la biblioteca, las pruebas, los scripts `.mjs` y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow sin cambiar Babel ni el formato publicado de los componentes.
+`npm run lint` analiza la biblioteca, las pruebas, los scripts `.mjs` y sus configuraciones; `npm run lint:demo` analiza la demo. ESLint 10 usa `eslint.config.mjs` en formato plano; Hermes analiza el código Flow y `@typescript-eslint` analiza las fuentes y contratos TypeScript. Sus reglas recomendadas se aplican únicamente a los archivos TypeScript.
 Los plugins de React y accesibilidad utilizan el adaptador oficial `@eslint/compat`, ya que todavía no declaran soporte nativo para ESLint 10. Las reglas de hooks comprueban su uso y las dependencias de los efectos.
 
 Para compilar y ejecutar las pruebas de regresión de componentes, posicionamiento, foco y assets, usa `npm test` desde la raíz.
@@ -286,7 +304,7 @@ Para compilar y ejecutar las pruebas de regresión de componentes, posicionamien
 Después de instalar las dependencias de la raíz y de la demo como se indica en Setup, puedes ejecutar todas las comprobaciones desde una terminal en la raíz:
 
 ```sh
-# Comprobación habitual: catálogo y fichas actualizados, lint de biblioteca y demo,
+# Comprobación habitual: tipos migrados, catálogo y fichas actualizados, lint de biblioteca y demo,
 # compilación de la biblioteca, pruebas con React 19 y compilación de la demo.
 npm run check
 

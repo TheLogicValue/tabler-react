@@ -1,13 +1,13 @@
 {
   "name": "Badge",
   "kind": "Componente",
-  "source": "src/components/Badge/index.js",
-  "implementation": "src/components/Badge/Badge.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +color?: string,\n|};\n\n/**\n * A small colored rectangle with rounded corners.\n */\nfunction Badge({ className, children, color = \"primary\" }: Props): React.Node {\n  const classes = cn(\n    {\n      badge: true,\n      [`badge-${color}`]: color,\n    },\n    className\n  );\n  return <span className={classes}>{children}</span>;\n}\n\nexport default Badge;\n",
+  "source": "src/components/Badge/index.ts",
+  "implementation": "src/components/Badge/Badge.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nexport type BadgeProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly color?: string;\n};\n\n/**\n * A small colored rectangle with rounded corners.\n */\nfunction Badge({ className, children, color = \"primary\" }: BadgeProps): React.ReactElement {\n  const classes = cn(\n    {\n      badge: true,\n      [`badge-${color}`]: color,\n    },\n    className\n  );\n  return <span className={classes}>{children}</span>;\n}\n\nexport default Badge;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },

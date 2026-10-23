@@ -5,6 +5,8 @@ import hermesParser from 'hermes-eslint'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
+import typescriptParser from '@typescript-eslint/parser'
+import typescriptPlugin from '@typescript-eslint/eslint-plugin'
 
 const reactRules = fixupPluginRules(react)
 const accessibilityRules = fixupPluginRules(jsxA11y)
@@ -20,7 +22,7 @@ const flowGlobals = Object.fromEntries([
 export default [
   { ignores: ['**/node_modules/**', 'dist/**', 'demo/dist/**', 'flow-typed/**'] },
   {
-    files: ['src/**/*.js', 'tests/**/*.cjs', 'demo/src/**/*.{js,jsx}', '**/*.mjs'],
+    files: ['src/**/*.{js,ts,tsx}', 'tests/**/*.cjs', 'tests/types/**/*.tsx', 'demo/src/**/*.{js,jsx}', '**/*.mjs'],
     ...js.configs.recommended,
     languageOptions: {
       ecmaVersion: 'latest',
@@ -41,13 +43,25 @@ export default [
     languageOptions: { parser: hermesParser, globals: flowGlobals },
   },
   {
-    files: ['src/**/*.js', 'demo/src/**/*.{js,jsx}'],
+    files: ['src/**/*.{ts,tsx}', 'tests/types/**/*.tsx'],
+    languageOptions: { parser: typescriptParser },
+    plugins: { '@typescript-eslint': typescriptPlugin },
+    rules: {
+      ...typescriptPlugin.configs['eslint-recommended'].overrides[0].rules,
+      ...typescriptPlugin.configs.recommended.rules,
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { args: 'none', ignoreRestSiblings: true }],
+    },
+  },
+  {
+    files: ['src/**/*.{js,ts,tsx}', 'tests/types/**/*.tsx', 'demo/src/**/*.{js,jsx}'],
     languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } },
     plugins: { react: reactRules, 'react-hooks': reactHooks, 'jsx-a11y': accessibilityRules },
     settings: { react: { version: 'detect' } },
     rules: {
       ...react.configs.recommended.rules,
-      // Flow is the library's existing props schema; don't require PropTypes.
+      // Source types define props during the Flow to TypeScript migration.
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',

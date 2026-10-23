@@ -1,19 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname, relative, resolve } from 'node:path'
+import { relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { parseSync } from '@babel/core'
+import { parseSource, resolveSourceFile as resolveSource } from './source-parser.mjs'
 
 const project = fileURLToPath(new URL('../../', import.meta.url))
 const output = new URL('../src/library-exports.json', import.meta.url)
 const entries = new Map()
 const visited = new Set()
-
-function resolveSource(parent, specifier) {
-  const path = resolve(dirname(parent), specifier)
-  const file = [path, `${path}.js`, resolve(path, 'index.js')].find(candidate => existsSync(candidate) && /\.js$/.test(candidate))
-  if (!file) throw new Error(`No se puede resolver ${specifier} desde ${parent}`)
-  return file
-}
 
 function register(name, source) {
   const path = relative(project, source).replaceAll('\\', '/')
@@ -27,10 +20,7 @@ function register(name, source) {
 function scan(file) {
   if (visited.has(file)) return
   visited.add(file)
-  const ast = parseSync(readFileSync(file, 'utf8'), {
-    filename: file, babelrc: false, configFile: false,
-    parserOpts: { sourceType: 'module', plugins: ['jsx', 'flow'] },
-  })
+  const ast = parseSource(readFileSync(file, 'utf8'), file)
   for (const node of ast.program.body) {
     if (node.exportKind === 'type') continue
     if (node.type === 'ExportAllDeclaration') {

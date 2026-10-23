@@ -1,12 +1,11 @@
-import { existsSync, readFileSync, statSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-import { parseSync } from '@babel/core'
+import { readFileSync } from 'node:fs'
+import { parseSource, resolveSourceFile as resolveFile } from './source-parser.mjs'
 
 const cache = new Map()
 export function moduleInfo(file) {
   if (cache.has(file)) return cache.get(file)
   const code = readFileSync(file, 'utf8').replaceAll('\r\n', '\n')
-  const ast = parseSync(code, { filename: file, babelrc: false, configFile: false, parserOpts: { plugins: ['jsx', 'flow'] } })
+  const ast = parseSource(code, file)
   const info = { file, code, ast, bindings: new Map(), imports: new Map(), types: new Map() }
   cache.set(file, info)
   for (const statement of ast.program.body) {
@@ -15,19 +14,14 @@ export function moduleInfo(file) {
     }
     const declaration = statement.declaration ?? statement
     if (declaration.type === 'TypeAlias') info.types.set(declaration.id.name, declaration.right)
+    if (declaration.type === 'TSTypeAliasDeclaration') info.types.set(declaration.id.name, declaration.typeAnnotation)
+    if (declaration.type === 'TSInterfaceDeclaration') info.types.set(declaration.id.name, declaration)
     if (declaration.type === 'VariableDeclaration') for (const item of declaration.declarations) {
       if (item.id.type === 'Identifier') info.bindings.set(item.id.name, item.init)
     }
     else if (declaration.id?.name) info.bindings.set(declaration.id.name, declaration)
   }
   return info
-}
-
-function resolveFile(file, source) {
-  const path = resolve(dirname(file), source)
-  const found = [path, path + '.js', resolve(path, 'index.js')].find(candidate => existsSync(candidate) && statSync(candidate).isFile())
-  if (!found) throw new Error('No se puede resolver ' + source + ' desde ' + file)
-  return found
 }
 
 export function resolveExport(file, name, seen = new Set()) {
@@ -75,18 +69,30 @@ export function extractApi(info) {
   function property(name, values = {}) { props.set(name, { name, ...props.get(name), ...values }) }
   function typeProperties(type, seen = new Set(), owner = info) {
     if (!type) return
-    if (type.type === 'TypeAnnotation') return typeProperties(type.typeAnnotation, seen, owner)
-    if (type.type === 'GenericTypeAnnotation' && !seen.has(owner.file + ':' + type.id.name)) {
-      seen.add(owner.file + ':' + type.id.name)
-      if (owner.types.has(type.id.name)) return typeProperties(owner.types.get(type.id.name), seen, owner)
-      const imported = owner.imports.get(type.id.name)
+    if (['TypeAnnotation', 'TSTypeAnnotation'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
+    const reference = type.type === 'GenericTypeAnnotation' ? type.id : type.type === 'TSTypeReference' ? type.typeName : type.type === 'TSExpressionWithTypeArguments' ? type.expression : null
+    if (reference?.type === 'Identifier' && !seen.has(owner.file + ':' + reference.name)) {
+      seen.add(owner.file + ':' + reference.name)
+      if (owner.types.has(reference.name)) return typeProperties(owner.types.get(reference.name), seen, owner)
+      const imported = owner.imports.get(reference.name)
       if (imported?.source.startsWith('.')) {
         const dependency = moduleInfo(resolveFile(owner.file, imported.source))
         return typeProperties(dependency.types.get(imported.name), seen, dependency)
       }
       return
     }
-    if (type.type === 'UnionTypeAnnotation' || type.type === 'IntersectionTypeAnnotation') type.types.forEach(item => typeProperties(item, new Set(seen), owner))
+    if (['UnionTypeAnnotation', 'IntersectionTypeAnnotation', 'TSUnionType', 'TSIntersectionType'].includes(type.type)) type.types.forEach(item => typeProperties(item, new Set(seen), owner))
+    if (type.type === 'TSInterfaceDeclaration') {
+      for (const parent of type.extends ?? []) typeProperties(parent, new Set(seen), owner)
+      return typeProperties(type.body, seen, owner)
+    }
+    if (['TSTypeLiteral', 'TSInterfaceBody'].includes(type.type)) for (const item of type.members ?? type.body) {
+      if (item.type !== 'TSPropertySignature') continue
+      const name = item.key.name ?? item.key.value
+      const description = (item.leadingComments ?? []).map(comment => comment.value.replace(/\*/g, '').trim()).join(' ')
+      const previous = props.get(name)
+      property(name, { type: item.typeAnnotation ? text(item.typeAnnotation.typeAnnotation, owner) : undefined, optional: Boolean(item.optional || previous?.optional), description: description || previous?.description || '' })
+    }
     if (type.type === 'ObjectTypeAnnotation') for (const item of type.properties) {
       if (item.type === 'ObjectTypeSpreadProperty') typeProperties(item.argument, new Set(seen), owner)
       else if (item.key) {

@@ -23,13 +23,17 @@ test('Las fichas corresponden al paquete público y sus subcomponentes existen',
   }
 })
 
-test('La extracción sigue reexports, wrappers y tipos Flow importados', () => {
+test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () => {
   assert.equal(document('Modal').implementation, 'src/components/Modal/Modal.js')
   assert.ok(document('RegisterPage').props.some(prop => prop.name === 'values'))
   assert.ok(document('FormTextInput').props.some(prop => prop.name === 'name'))
   assert.ok(document('Grid').childApis.find(child => child.name === 'Col').props.some(prop => prop.name === 'lg'))
   assert.ok(document('AGGridTable').members.includes('api'))
   assert.ok(document('DatePicker').members.includes('reset'))
+  assert.equal(document('Badge').implementation, 'src/components/Badge/Badge.react.tsx')
+  assert.equal(document('Badge').props.find(prop => prop.name === 'children').type, 'React.ReactNode')
+  assert.equal(document('Badge').props.find(prop => prop.name === 'color').default, '"primary"')
+  assert.deepEqual(document('Badge').props.map(prop => prop.name).sort(), ['children', 'className', 'color'])
 })
 
 function walk(node, visit) {

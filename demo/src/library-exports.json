@@ -34,7 +34,7 @@
     {
       "name": "Badge",
       "kind": "Componente",
-      "source": "src/components/Badge/index.js"
+      "source": "src/components/Badge/index.ts"
     },
     {
       "name": "BarChart",

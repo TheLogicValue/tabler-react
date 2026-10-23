@@ -44,11 +44,13 @@
     "demo:inventory:check": "node demo/scripts/scan-exports.mjs --check",
     "demo:docs": "npm run demo:inventory && node demo/scripts/generate-docs.mjs",
     "demo:docs:check": "node demo/scripts/generate-docs.mjs --check",
-    "check": "npm run demo:inventory:check && npm run demo:docs:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
-    "check:all": "npm run check && node scripts/test-react18.mjs"
+    "check": "npm run typecheck && npm run demo:inventory:check && npm run demo:docs:check && npm run lint -- --max-warnings 0 && npm run lint:demo -- --max-warnings 0 && npm test && npm --prefix demo run build",
+    "check:all": "npm run check && node scripts/test-react18.mjs",
+    "typecheck": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@babel/runtime": "^7.29.10",
+    "@floating-ui/react": "^0.27.20",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "echarts": "^6.0.0",
@@ -56,8 +58,7 @@
     "focus-trap-react": "^11.0.4",
     "react-content-loader": "^7.1.1",
     "react-day-picker": "^10.0.2",
-    "react-select": "^5.7.3",
-    "@floating-ui/react": "^0.27.20"
+    "react-select": "^5.7.3"
   },
   "peerDependencies": {
     "ag-grid-community": "^32.3.9",
@@ -79,10 +80,13 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-flow": "^7.25.9",
     "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "7.29.7",
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@typescript-eslint/eslint-plugin": "8.72.0",
+    "@typescript-eslint/parser": "8.72.0",
     "ag-grid-community": "^32.3.9",
     "ag-grid-enterprise": "^32.3.9",
     "ag-grid-react": "^32.3.9",
@@ -92,14 +96,15 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.13.0",
+    "happy-dom": "^21.0.4",
     "hermes-eslint": "^0.37.0",
     "postcss": "^8.5.31",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4",
     "terser": "5.51.2",
+    "typescript": "6.0.3",
     "vite": "8.3.5",
-    "happy-dom": "^21.0.4",
     "yaml": "^2.9.1"
   },
   "files": [

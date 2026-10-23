@@ -1,18 +1,16 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +color?: string,
-|};
+export type BadgeProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly color?: string;
+};
 
 /**
  * A small colored rectangle with rounded corners.
  */
-function Badge({ className, children, color = "primary" }: Props): React.Node {
+function Badge({ className, children, color = "primary" }: BadgeProps): React.ReactElement {
   const classes = cn(
     {
       badge: true,

@@ -22,12 +22,13 @@ export default defineConfig({
       external: externals.flatMap(dependency => [dependency, new RegExp('^' + dependency + '/')]),
     }),
     {
-      name: 'tabler-flow-and-jsx',
+      name: 'tabler-source-and-jsx',
       enforce: 'pre',
       async transform(code, id) {
-        if (!normalizePath(id).startsWith(sourceDirectory) || !/\.jsx?$/.test(id)) return
+        if (!normalizePath(id).startsWith(sourceDirectory) || !/\.[jt]sx?$/.test(id)) return
+        const isTypeScript = /\.tsx?$/.test(id)
 
-        // Strip Flow and compile JSX before Vite parses the .js source files.
+        // Each file uses one type syntax. Babel transpiles; tsc checks migrated files.
         return transformAsync(code, {
           filename: id,
           babelrc: false,
@@ -36,7 +37,7 @@ export default defineConfig({
           presets: [
             ['@babel/preset-env', { modules: false }],
             ['@babel/preset-react', { runtime: 'classic' }],
-            '@babel/preset-flow',
+            isTypeScript ? ['@babel/preset-typescript', { onlyRemoveTypeImports: true, allowDeclareFields: true }] : '@babel/preset-flow',
           ],
           plugins: [
             '@babel/plugin-transform-runtime',
