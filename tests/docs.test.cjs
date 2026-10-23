@@ -90,6 +90,19 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.ok(document('Dropdown').childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
   assert.equal(document('ButtonModal').implementation, 'src/components/Button/ButtonModal.tsx')
   assert.equal(document('Spinner').implementation, 'src/components/IconAnimate/Spinner.tsx')
+  for (const name of ['Alert', 'Nav', 'Site', 'Notification', 'AccountDropdown', 'List']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/components/${name}/${name}.react.tsx`)
+    assert.ok(doc.childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  }
+  assert.equal(document('NavBarMenu').implementation, 'src/components/NavBar/NavBarMenu.tsx')
+  assert.equal(document('NavBarMenu').props.find(prop => prop.name === 'items').type, 'ReadonlyArray<NavBarMenuItem>')
+  assert.equal(document('Alert').props.find(prop => prop.name === 'onClick').type, 'React.MouseEventHandler<HTMLDivElement>')
+  assert.equal(document('Nav').childApis.find(child => child.name === 'Link').props.find(prop => prop.name === 'rootRef').type, 'React.Ref<HTMLAnchorElement>')
+  assert.equal(document('Site').childApis.find(child => child.name === 'Wrapper').props.find(prop => prop.name === 'headerProps').optional, false)
+  assert.equal(document('RouterContextProvider').implementation, 'src/helpers/RouterContextProvider.react.tsx')
+  assert.equal(document('RouterContextProvider').props.find(prop => prop.name === 'location').type, 'RouterLocation')
+  assert.equal(button.props.find(prop => prop.name === 'aria-label').type, 'React.AriaAttributes["aria-label"]')
 })
 
 function walk(node, visit) {

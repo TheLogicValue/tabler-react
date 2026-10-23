@@ -131,6 +131,89 @@ test('Dropdown conserva refs de disparadores forwardRef y memo y el callback ori
   }
 })
 
+test('Alert ejecuta sus callbacks, se cierra y no envía el formulario', async () => {
+  const { Alert } = components
+  let dismissed = 0, clicked = 0, submitted = 0
+  await render(React.createElement('form', { onSubmit: event => { event.preventDefault(); submitted++ } },
+    React.createElement(Alert, { type: 'warning', isDismissible: true, onDismissClick: () => dismissed++, onClick: () => clicked++ }, 'Aviso')))
+  await click(container.querySelector('button[aria-label="Close alert"]'))
+  assert.equal(container.querySelector('[role="alert"]'), null)
+  assert.equal(dismissed, 1)
+  assert.equal(clicked, 1)
+  assert.equal(submitted, 0)
+})
+
+test('Notificaciones y cuenta conservan presets, callbacks y prioridad de children', async () => {
+  const { Notification, AccountDropdown } = components
+  let marked = 0, actions = 0
+  await render(React.createElement('div', null,
+    React.createElement(Notification.Tray, { unread: true, markAllAsRead: () => marked++, notificationsObjects: [{ message: 'Aviso del objeto', time: 'Ahora', unread: true }] }),
+    React.createElement(AccountDropdown, { name: 'Ana', options: ['profile', 'divider', { value: 'Acción propia', onClick: () => actions++ }] })))
+  await click(container.querySelectorAll('button')[0])
+  assert.ok(container.textContent.includes('Aviso del objeto'))
+  await click([...container.querySelectorAll('a')].find(element => element.textContent === 'Mark all as read'))
+  assert.equal(marked, 1)
+  await click(container.querySelectorAll('button')[1])
+  assert.equal(container.querySelector('a[href="/profile"]').textContent.trim(), 'Profile')
+  assert.ok(container.querySelector('.dropdown-divider'))
+  await click([...container.querySelectorAll('a')].find(element => element.textContent === 'Acción propia'))
+  assert.equal(actions, 1)
+  await React.act(async () => root.render(React.createElement(Notification.Tray, { notificationsObjects: [{ message: 'Ignorado' }] }, React.createElement(Notification, { message: 'Hijo prioritario' }))))
+  await click(container.querySelector('button'))
+  assert.ok(container.textContent.includes('Hijo prioritario'))
+  assert.equal(container.textContent.includes('Ignorado'), false)
+})
+
+test('Nav actualiza la ruta activa mediante RouterContextProvider tras navegar', async () => {
+  const { Nav, RouterContextProvider } = components
+  const { Link, useLocation } = consumerRequire('react-router-dom')
+  // Keep Nav's legacy exact contract; React Router 7 adapters must consume it.
+  const RouterLink = React.forwardRef(function RouterLink({ exact, ...props }, ref) {
+    return React.createElement(Link, { ...props, ref })
+  })
+  function Context({ callback }) { return React.createElement(RouterContextProvider, { callback, location: useLocation() }) }
+  await render(React.createElement(MemoryRouter, { initialEntries: ['/first'] },
+    React.createElement(Nav, { routerContextComponentType: Context, itemsObjects: [{ value: 'Primero', to: '/first', LinkComponent: RouterLink }, { value: 'Segundo', to: '/second', LinkComponent: RouterLink }] })))
+  assert.equal(container.querySelector('a.active').textContent, 'Primero')
+  await click(container.querySelector('a[href="/second"]'))
+  assert.equal(container.querySelector('a.active').textContent, 'Segundo')
+})
+
+test('Site.Wrapper alterna la navegación móvil y libera su listener de resize', async () => {
+  const { Site } = components
+  const width = window.innerWidth
+  window.innerWidth = 800
+  let added = 0, removed = 0, listener
+  const add = window.addEventListener.bind(window), remove = window.removeEventListener.bind(window)
+  window.addEventListener = (type, callback, options) => { if (type === 'resize') { added++; listener = callback } return add(type, callback, options) }
+  window.removeEventListener = (type, callback, options) => { if (type === 'resize' && callback === listener) removed++; return remove(type, callback, options) }
+  try {
+    const props = { headerProps: { darkImageUrl: '/logo.svg' }, navProps: { itemsObjects: [{ value: 'Inicio', to: '/' }] }, footerProps: {}, vertical: true }
+    await render(React.createElement(Site.Wrapper, props, 'Contenido'))
+    const nav = () => container.querySelector('.header.p-0')
+    assert.equal(nav().classList.contains('collapse'), true)
+    await click(container.querySelector('button[aria-label="Toggle navigation"]'))
+    assert.equal(nav().classList.contains('collapse'), false)
+    await React.act(async () => { window.innerWidth = 1200; window.dispatchEvent(new window.Event('resize')) })
+    assert.ok(container.querySelector('.wrapper .navbar-vertical'))
+    await React.act(async () => { window.innerWidth = 800; window.dispatchEvent(new window.Event('resize')) })
+    assert.ok(container.querySelector('button[aria-label="Toggle navigation"]'))
+    assert.equal(added, 1)
+    await React.act(async () => root.unmount())
+    root = null
+    assert.equal(removed, 1)
+    await React.act(async () => window.dispatchEvent(new window.Event('resize')))
+  } finally { window.innerWidth = width; window.addEventListener = add; window.removeEventListener = remove }
+})
+
+test('NavBarMenu admite hojas sin destino, sin icono e índices de ruta inexistentes', async () => {
+  const { NavBarMenu } = components
+  await render(React.createElement(MemoryRouter, null, React.createElement(NavBarMenu, { rootIndex: 99, items: [{ value: 'Etiqueta' }, { value: 'Ruta', to: '/details', LinkComponent: true }] })))
+  assert.ok(container.textContent.includes('Etiqueta'))
+  assert.equal(container.querySelector('a[href="/details"]').textContent, 'Ruta')
+  assert.equal(container.querySelector('i.fe-undefined'), null)
+})
+
 test('Card conserva plegado, pantalla completa, cierre y su referencia sin enviar formularios', async () => {
   const { Card } = components
   const ref = React.createRef()

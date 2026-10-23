@@ -9,7 +9,7 @@
     {
       "name": "AccountDropdown",
       "kind": "Componente",
-      "source": "src/components/AccountDropdown/index.js"
+      "source": "src/components/AccountDropdown/index.ts"
     },
     {
       "name": "AGGridPagination",
@@ -24,7 +24,7 @@
     {
       "name": "Alert",
       "kind": "Componente",
-      "source": "src/components/Alert/index.js"
+      "source": "src/components/Alert/index.ts"
     },
     {
       "name": "Avatar",
@@ -214,7 +214,7 @@
     {
       "name": "List",
       "kind": "Componente",
-      "source": "src/components/List/index.js"
+      "source": "src/components/List/index.ts"
     },
     {
       "name": "Loader",
@@ -259,17 +259,17 @@
     {
       "name": "Nav",
       "kind": "Componente",
-      "source": "src/components/Nav/index.js"
+      "source": "src/components/Nav/index.ts"
     },
     {
       "name": "NavBarMenu",
       "kind": "Componente",
-      "source": "src/components/NavBar/index.js"
+      "source": "src/components/NavBar/index.ts"
     },
     {
       "name": "Notification",
       "kind": "Componente",
-      "source": "src/components/Notification/index.js"
+      "source": "src/components/Notification/index.ts"
     },
     {
       "name": "OverlayLoading",
@@ -329,7 +329,7 @@
     {
       "name": "RouterContextProvider",
       "kind": "Proveedor",
-      "source": "src/helpers/RouterContextProvider.react.js"
+      "source": "src/helpers/RouterContextProvider.react.tsx"
     },
     {
       "name": "SearchBar",
@@ -339,7 +339,7 @@
     {
       "name": "Site",
       "kind": "Componente",
-      "source": "src/components/Site/index.js"
+      "source": "src/components/Site/index.ts"
     },
     {
       "name": "SocialNetworksList",

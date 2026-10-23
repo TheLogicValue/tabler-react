@@ -11,7 +11,8 @@
     "summary": "Menú de cuenta con nombre, avatar y acciones.",
     "behavior": [
       "Compone Avatar y Dropdown; no realiza autenticación ni cierra una sesión por sí mismo.",
-      "options admite nombres predefinidos como profile/settings/logout o elementos personalizados con value, to y onClick.",
+      "options admite los presets profile, settings, mail, message, divider, help y logout, o elementos personalizados con value, to y onClick. optionsRootComponent configura la raíz común; la raíz de cada opción tiene prioridad.",
+      "avatarImage inserta un nodo personalizado en el disparador. avatarURL añade un Avatar; si se proporcionan ambos, se muestran los dos.",
       "Las rutas y las acciones deben corresponder a la aplicación consumidora."
     ],
     "example": "<AccountDropdown name=\"Usuario de prueba\" description=\"Cuenta local\" options={[{ value: \"Mi perfil\", to: \"/perfil\" }]} />"
@@ -211,7 +212,8 @@
     "summary": "Mensaje contextual de información, éxito, aviso o error.",
     "behavior": [
       "type selecciona las clases visuales, por ejemplo info, success, warning o danger.",
-      "isDismissible muestra un control de cierre; onDismissClick permite al consumidor retirar el mensaje.",
+      "isDismissible muestra un control de cierre que oculta la alerta internamente y ejecuta onDismissClick() sin argumentos. El botón tiene type=button y la etiqueta accesible Close alert, para no enviar el formulario que lo contiene.",
+      "Reenvía onClick, onMouseEnter, onMouseLeave, onPointerEnter y onPointerLeave al div raíz. Alert.Link recibe href, className y children.",
       "No modifica por sí mismo los datos ni el estado de un formulario."
     ],
     "example": "<Alert type=\"info\" icon=\"info\">Datos de demostración.</Alert>"
@@ -398,7 +400,8 @@
       "Button.List agrupa acciones y Button.Dropdown combina un botón con un menú. rootRef permite acceder al elemento DOM.",
       "Los contratos TypeScript distinguen button, input, a y raíces personalizadas. En las tres raíces nativas se tipan los eventos y rootRef con su elemento concreto y se admiten referencias de objeto o callback.",
       "Una raíz personalizada recibe las propiedades comunes de representación y eventos, to y children. Se conserva el comportamiento anterior: rootRef y atributos adicionales no se reenvían a esa raíz. Button.List reenvía los atributos nativos de su div.",
-      "Button.Dropdown mantiene el callback original, fuerza type=\"button\" cuando no se proporciona y controla show del menú desde su estado. dropdownProps recibe las opciones de Dropdown.Menu sin modificar el objeto del consumidor."
+      "Button.Dropdown mantiene el callback original, fuerza type=\"button\" cuando no se proporciona y controla show del menú desde su estado. dropdownProps recibe las opciones de Dropdown.Menu sin modificar el objeto del consumidor.",
+      "aria-label se reenvía a la raíz y permite dar un nombre accesible a los botones que solo contienen un icono."
     ],
     "example": "<Button type=\"button\" color=\"primary\" icon=\"check\" onClick={() => console.log(\"Confirmado\")}>Confirmar</Button>",
     "props": [
@@ -858,9 +861,11 @@
   "Nav": {
     "summary": "Navegación horizontal o vertical con elementos y submenús.",
     "behavior": [
-      "Se puede componer con Nav.Item o construir desde itemsObjects.",
+      "Se puede componer con Nav.Item o construir desde itemsObjects. La prioridad es items, itemsObjects y children, según sus valores verdaderos.",
       "Los submenús horizontales utilizan posicionamiento flotante; los verticales permanecen en el flujo.",
-      "Los destinos y el router pertenecen al consumidor; consulta los campos de Nav.Item para la composición elegida."
+      "Los destinos y el router pertenecen al consumidor; consulta los campos de Nav.Item para la composición elegida. Nav.Link usa href con una raíz a y to con una raíz personalizada; Nav.SubItem y Nav.SubmenuItem conservan el reenvío heredado de to: aporta LinkComponent para navegar con el router.",
+      "Nav.Item llama onClick() sin argumentos; Nav.SubItem entrega el evento al callback. useExact conserva el atributo exact heredado en la raíz personalizada: adapta ese atributo si utilizas React Router 7.",
+      "routerContextComponentType recibe callback. Un adaptador con useLocation y RouterContextProvider permite actualizar el elemento activo de itemsObjects al cambiar pathname. active=true tiene prioridad; la coincidencia automática compara el destino y los subdestinos completos."
     ],
     "example": "<Nav vertical itemsObjects={[{ value: \"Datos\", to: \"#/datos\" }, { value: \"Más\", subItems: [{ value: \"Formulario\", to: \"#/formulario\" }] }]} />"
   },
@@ -869,7 +874,7 @@
     "behavior": [
       "Requiere un Router de React Router porque los enlaces consultan useLocation. Si tu aplicación ya tiene BrowserRouter o HashRouter, monta únicamente NavBarMenu dentro de ese contexto; no añadas un segundo router.",
       "Cada enlace directo declara { value, to, icon, LinkComponent }. value es la etiqueta y la clave React. LinkComponent=true utiliza NavLink con end; sin él se crea un <a href={to}> que sigue la navegación normal del navegador.",
-      "rootIndex controla la comparación heredada de rutas de los enlaces directos. Para /app/resumen, el índice 0 compara app y el 1 compara resumen. La comparación utiliza pathname.includes(segmento), no segmentos exactos; elige rutas sin coincidencias ambiguas.",
+      "rootIndex controla la comparación heredada de rutas de los enlaces directos y vale 0 por defecto. Para /app/resumen, el índice 0 compara app y el 1 compara resumen. La comparación utiliza pathname.includes(segmento), no segmentos exactos; elige rutas sin coincidencias ambiguas. Un destino ausente o un índice fuera de rango ya no produce un error; no permite calcular una coincidencia por segmento. Si falta icon, no se crea un icono vacío.",
       "En enlaces con LinkComponent=true, NavLink también calcula su estado activo con end. rootIndex no cambia el destino y no controla la lógica de los submenús, cuyos NavLink utilizan su propia coincidencia.",
       "Un grupo declara { value, icon, subItems: [...] }. Cada hijo utiliza value, to, LinkComponent y onClick. La implementación admite un nivel de desplegable; no transforma subItems anidados ni muestra los iconos o className de los hijos.",
       "onClick de un enlace directo solo se pasa al <a> cuando LinkComponent es falso. Con LinkComponent=true no se reenvía ese callback en los enlaces directos. En los hijos del desplegable sí se conserva onClick con ambos tipos de enlace.",
@@ -883,7 +888,7 @@
       },
       {
         "name": "rootIndex",
-        "description": "Índice base 0 del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; usa un índice existente en todas esas rutas."
+      "description": "Índice base 0, predeterminado 0, del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; un índice inexistente no aporta una coincidencia por segmento."
       }
     ]
   },
@@ -891,7 +896,9 @@
     "summary": "Contenido de una notificación con avatar, mensaje y hora.",
     "behavior": [
       "message es el contenido principal y time un texto ya formateado.",
-      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación."
+      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación.",
+      "En Tray, children tiene prioridad sobre notificationsObjects. Las entradas de notificationsObjects con unread añaden bg-light y unread en Tray muestra el indicador del disparador.",
+      "El control Mark all as read solo aparece si Tray recibe unread y markAllAsRead. Ejecuta el callback sin modificar los datos: el consumidor actualiza el estado de lectura."
     ],
     "example": "<Notification message=\"Informe preparado\" time=\"Hace un momento\" />"
   },
@@ -997,11 +1004,11 @@
     "example": "<RegisterPage values={{ name: \"\", email: \"\", password: \"\", terms: false }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   },
   "RouterContextProvider": {
-    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "summary": "Adaptador que comunica la ubicación inicial y los cambios de pathname.",
     "behavior": [
       "Recibe location y llama callback(location) en componentDidMount.",
       "Devuelve null: no dibuja contenido ni crea por sí mismo el contexto de un router.",
-      "No notifica automáticamente todos los cambios de ruta; si necesitas ese comportamiento, gestiona actualizaciones o el montaje desde el consumidor."
+      "También llama callback(location) cuando cambia location.pathname; no vuelve a notificar por cambios exclusivos de search, hash, state o del callback. Pasa la ubicación actualizada desde el router consumidor."
     ],
     "example": "<RouterContextProvider location={location} callback={current => console.log(current.pathname)} />"
   },
@@ -1018,10 +1025,15 @@
     "summary": "Familia de estructura global del sitio.",
     "behavior": [
       "Compone Site.Header, Site.Nav, Site.Wrapper y Site.Footer.",
-      "La cabecera puede incluir el control de navegación; onMenuToggleClick comunica el cambio al consumidor.",
-      "No define rutas ni decide por sí mismo qué usuario tiene acceso."
+      "Site no añade HTML: devuelve sus hijos. No define rutas ni decide por sí mismo qué usuario tiene acceso.",
+      "Site.Header construye logo, notificaciones, cuenta y control de navegación. children con valor verdadero sustituye esa composición. condensed incrusta Site.Nav; onMenuToggleClick comunica la pulsación del control.",
+      "Site.Wrapper requiere headerProps, navProps, footerProps y children. Controla el colapso del menú y utiliza la barra lateral cuando vertical=true y el ancho es al menos 992 px; por debajo vuelve a la cabecera horizontal. Su listener de resize se registra al montar y se elimina al desmontar.",
+      "Site.Wrapper consulta window.innerWidth al crearse: necesita un navegador y no admite renderizado en servidor directamente. condensed y vertical conservan su comportamiento existente.",
+      "Site.Header usa imageURL para el logo. En modo vertical, Page.Sidebar utiliza darkImageUrl del objeto headerProps; darkImageURL se conserva por compatibilidad de configuración pero no se consume.",
+      "Site.Nav recibe items/itemsObjects, collapse, stickyTop, condensed, vertical y navOption. withSearchForm y rightColumnComponent son opciones heredadas sin efecto. Los hijos personalizados solo sustituyen el contenido de la rama horizontal.",
+      "Site.Footer no muestra contenido sin note, copyright, nav o links. List mantiene la propiedad heredada seperated para sus listas."
     ],
-    "example": "<Site><Site.Header href=\"/\" imageURL=\"/logo-local.svg\" alt=\"Mi aplicación\" onMenuToggleClick={handleToggle} /><Site.Wrapper>Contenido del sitio.</Site.Wrapper></Site>"
+    "example": "<Site.Wrapper\n  headerProps={{ href: \"/\", imageURL: \"/logo-local.svg\", alt: \"Mi aplicación\" }}\n  navProps={{ itemsObjects: [{ value: \"Inicio\", to: \"/\" }] }}\n  footerProps={{ note: \"Aplicación de ejemplo\" }}\n>\n  <main>Contenido del sitio.</main>\n</Site.Wrapper>"
   },
   "SocialNetworksList": {
     "summary": "Lista de enlaces o acciones sociales.",

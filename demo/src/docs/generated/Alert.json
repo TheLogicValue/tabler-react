@@ -1,13 +1,13 @@
 {
   "name": "Alert",
   "kind": "Componente",
-  "source": "src/components/Alert/index.js",
-  "implementation": "src/components/Alert/Alert.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Icon, Avatar } from \"../\";\nimport { Button } from \"../Button\";\nimport AlertLink from \"./AlertLink.react\";\n\nimport type { MouseEvents, PointerEvents } from \"../../\";\n\ntype AlertType =\n  | \"primary\"\n  | \"secondary\"\n  | \"success\"\n  | \"info\"\n  | \"warning\"\n  | \"danger\";\n\ntype Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The type of this Alert, changes it's color\n   */\n  +type: AlertType,\n  /**\n   * An Icon to be displayed on the right hand side of the Alert\n   */\n  +icon?: string,\n  /**\n   * Add extra space above and below the alert\n   */\n  +hasExtraSpace?: boolean,\n  /**\n   * Adds an 'X' to the left side of the Alert that dismisses the Alert\n   */\n  +isDismissible?: boolean,\n  /**\n   * Display an Avatar on the left hand side of this Alert\n   */\n  +avatar?: string,\n  /**\n   * Handle the dismissing of the Alert yourself\n   */\n  +onDismissClick?: () => void,\n|};\n\ntype State = {\n  isDismissed: boolean,\n};\n\nclass Alert extends React.Component<Props, State> {\n  state = {\n    isDismissed: false,\n  };\n\n  _handleOnDismissClick = (): void => {\n    if (this.props.onDismissClick) this.props.onDismissClick();\n    this.setState({ isDismissed: true });\n  };\n\n  static Link = AlertLink;\n\n  render(): React.Node {\n    const { isDismissed } = this.state;\n    const {\n      className,\n      children,\n      type,\n      icon,\n      hasExtraSpace,\n      isDismissible,\n      avatar,\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n    }: Props = this.props;\n    const classes = cn(\n      \"alert\",\n      `alert-${type}`,\n      {\n        \"alert-icon\": !!icon,\n        \"mt-5 mb-6\": hasExtraSpace,\n        \"alert-dismissible\": isDismissible,\n        \"alert-avatar\": !!avatar,\n      },\n      className\n    );\n\n    const events = {\n      onClick: onClick,\n      onMouseEnter: onMouseEnter,\n      onMouseLeave: onMouseLeave,\n      onPointerEnter: onPointerEnter,\n      onPointerLeave: onPointerLeave,\n    };\n\n    return (\n      !isDismissed && (\n        <div {...events} className={classes} role=\"alert\">\n          {isDismissible && (\n            <Button className=\"close\" onClick={this._handleOnDismissClick} />\n          )}\n          {avatar && <Avatar imageURL={avatar} />}\n          {icon && <Icon name={icon} className=\"mr-2\" isAriaHidden={true} />}\n          {children}\n        </div>\n      )\n    );\n  }\n}\n\nexport default Alert;\n",
+  "source": "src/components/Alert/index.ts",
+  "implementation": "src/components/Alert/Alert.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Icon from \"../Icon\";\nimport Avatar from \"../Avatar\";\nimport { Button } from \"../Button\";\nimport AlertLink from \"./AlertLink.react\";\n\n\nexport type AlertType =\n  | \"primary\"\n  | \"secondary\"\n  | \"success\"\n  | \"info\"\n  | \"warning\"\n  | \"danger\";\n\nexport type AlertProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  /**\n   * The type of this Alert, changes it's color\n   */\n  readonly type: AlertType;\n  /**\n   * An Icon to be displayed on the right hand side of the Alert\n   */\n  readonly icon?: string;\n  /**\n   * Add extra space above and below the alert\n   */\n  readonly hasExtraSpace?: boolean;\n  /**\n   * Adds an 'X' to the left side of the Alert that dismisses the Alert\n   */\n  readonly isDismissible?: boolean;\n  /**\n   * Display an Avatar on the left hand side of this Alert\n   */\n  readonly avatar?: string;\n  /**\n   * Handle the dismissing of the Alert yourself\n   */\n  readonly onDismissClick?: () => void;\n  readonly onClick?: React.MouseEventHandler<HTMLDivElement>;\n  readonly onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;\n  readonly onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;\n  readonly onPointerEnter?: React.PointerEventHandler<HTMLDivElement>;\n  readonly onPointerLeave?: React.PointerEventHandler<HTMLDivElement>;\n};\n\ntype AlertState = {\n  isDismissed: boolean,\n};\n\nclass Alert extends React.Component<AlertProps, AlertState> {\n  state: AlertState = {\n    isDismissed: false,\n  };\n\n  _handleOnDismissClick = (): void => {\n    if (this.props.onDismissClick) this.props.onDismissClick();\n    this.setState({ isDismissed: true });\n  };\n\n  static Link = AlertLink;\n\n  render(): React.ReactNode {\n    const { isDismissed } = this.state;\n    const {\n      className,\n      children,\n      type,\n      icon,\n      hasExtraSpace,\n      isDismissible,\n      avatar,\n      onClick,\n      onMouseEnter,\n      onMouseLeave,\n      onPointerEnter,\n      onPointerLeave,\n    }: AlertProps = this.props;\n    const classes = cn(\n      \"alert\",\n      `alert-${type}`,\n      {\n        \"alert-icon\": !!icon,\n        \"mt-5 mb-6\": hasExtraSpace,\n        \"alert-dismissible\": isDismissible,\n        \"alert-avatar\": !!avatar,\n      },\n      className\n    );\n\n    const events = {\n      onClick: onClick,\n      onMouseEnter: onMouseEnter,\n      onMouseLeave: onMouseLeave,\n      onPointerEnter: onPointerEnter,\n      onPointerLeave: onPointerLeave,\n    };\n\n    return (\n      !isDismissed && (\n        <div {...events} className={classes} role=\"alert\">\n          {isDismissible && (\n            <Button type=\"button\" aria-label=\"Close alert\" className=\"close\" onClick={this._handleOnDismissClick} />\n          )}\n          {avatar && <Avatar imageURL={avatar} />}\n          {icon && <Icon name={icon} className=\"mr-2\" isAriaHidden={true} />}\n          {children}\n        </div>\n      )\n    );\n  }\n}\n\nexport default Alert;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -54,19 +54,34 @@
       "description": "Handle the dismissing of the Alert yourself"
     },
     {
-      "name": "onClick"
+      "name": "onClick",
+      "type": "React.MouseEventHandler<HTMLDivElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseEnter"
+      "name": "onMouseEnter",
+      "type": "React.MouseEventHandler<HTMLDivElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseLeave"
+      "name": "onMouseLeave",
+      "type": "React.MouseEventHandler<HTMLDivElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerEnter"
+      "name": "onPointerEnter",
+      "type": "React.PointerEventHandler<HTMLDivElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerLeave"
+      "name": "onPointerLeave",
+      "type": "React.PointerEventHandler<HTMLDivElement>",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [
@@ -77,11 +92,11 @@
   "childApis": [
     {
       "name": "Link",
-      "source": "src/components/Alert/AlertLink.react.js",
+      "source": "src/components/Alert/AlertLink.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -120,7 +135,8 @@
     "summary": "Mensaje contextual de información, éxito, aviso o error.",
     "behavior": [
       "type selecciona las clases visuales, por ejemplo info, success, warning o danger.",
-      "isDismissible muestra un control de cierre; onDismissClick permite al consumidor retirar el mensaje.",
+      "isDismissible muestra un control de cierre que oculta la alerta internamente y ejecuta onDismissClick() sin argumentos. El botón tiene type=button y la etiqueta accesible Close alert, para no enviar el formulario que lo contiene.",
+      "Reenvía onClick, onMouseEnter, onMouseLeave, onPointerEnter y onPointerLeave al div raíz. Alert.Link recibe href, className y children.",
       "No modifica por sí mismo los datos ni el estado de un formulario."
     ],
     "example": "<Alert type=\"info\" icon=\"info\">Datos de demostración.</Alert>"

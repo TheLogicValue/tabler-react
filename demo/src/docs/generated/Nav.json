@@ -1,13 +1,13 @@
 {
   "name": "Nav",
   "kind": "Componente",
-  "source": "src/components/Nav/index.js",
-  "implementation": "src/components/Nav/Nav.react.js",
-  "implementationCode": "//@flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport NavItem from \"./NavItem.react\";\nimport NavLink from \"./NavLink.react\";\nimport NavSubItem from \"./NavSubItem.react\";\nimport NavSubmenu from \"./NavSubmenu.react\";\nimport NavSubmenuItem from \"./NavSubmenuItem.react\";\n\nexport type subNavItem = {|\n  +value: string,\n  +to?: string,\n  +icon?: string,\n  +LinkComponent?: React.ElementType,\n  +useExact?: boolean,\n|};\n\ntype navItem = {|\n  +value: string,\n  +to?: string,\n  +icon?: string,\n  +active?: boolean,\n  +LinkComponent?: React.ElementType,\n  +subItems?: Array<subNavItem>,\n  +useExact?: boolean,\n|};\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +tabbed?: boolean,\n  +vertical?: boolean,\n  +items?: React.ChildrenArray<React.Element<typeof Nav.Item>>,\n  +itemsObjects?: Array<navItem>,\n  +routerContextComponentType?: React.ElementType,\n|};\n\ntype State = {|\n  pathName: ?string,\n|};\n\nclass Nav extends React.Component<Props, State> {\n  state = {\n    pathName: null,\n  };\n\n  static Item = NavItem;\n  static SubItem = NavSubItem;\n  static Link = NavLink;\n  static Submenu = NavSubmenu;\n  static SubmenuItem = NavSubmenuItem;\n\n  routerCallback = (location: { pathname: string }): void => {\n    this.setState({ pathName: location.pathname });\n  };\n\n  computeActive(\n    initialValue?: boolean,\n    to?: string,\n    subItems?: Array<subNavItem>\n  ): boolean {\n    const { pathName } = this.state;\n\n    if (\n      initialValue !== null &&\n      initialValue !== undefined &&\n      initialValue === true\n    ) {\n      return true;\n    }\n\n    if (to !== null && to !== undefined && to === pathName) {\n      return true;\n    }\n\n    if (subItems !== null && subItems !== undefined) {\n      if (\n        subItems.find(\n          item =>\n            item.to !== null && item.to !== undefined && item.to === pathName\n        )\n      ) {\n        return true;\n      }\n    }\n\n    return false;\n  }\n\n  render(): React.Node {\n    const {\n      className,\n      children,\n      tabbed = true,\n      vertical = false,\n      items,\n      itemsObjects,\n      routerContextComponentType,\n    } = this.props;\n    const classes = cn({ nav: true, \"nav-tabs\": tabbed }, className);\n\n    let element: ?React.Element<*> = null;\n    if (routerContextComponentType) {\n      \n      let createFactory = type => React.createElement.bind(null, type);\n\n      const routerContextComponentFactory = createFactory(\n        routerContextComponentType\n      );\n\n      element = routerContextComponentFactory({\n        callback: this.routerCallback,\n      });\n    }\n\n    return (\n      <React.Fragment>\n        {element}\n        <ul className={classes}>\n          {items ||\n            (itemsObjects &&\n              itemsObjects.map((a, i) => (\n                <Nav.Item\n                  vertical={vertical}\n                  key={i}\n                  icon={a.icon}\n                  value={a.value}\n                  to={a.to}\n                  hasSubNav={!!a.subItems}\n                  LinkComponent={a.LinkComponent}\n                  subItemsObjects={a.subItems}\n                  active={this.computeActive(a.active, a.to, a.subItems)}\n                  useExact={a.useExact}\n                />\n              ))) ||\n            children}\n        </ul>\n      </React.Fragment>\n    );\n  }\n}\n\n//Nav.Item = NavItem;\n\nexport default Nav;\n",
+  "source": "src/components/Nav/index.ts",
+  "implementation": "src/components/Nav/Nav.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport NavItem from \"./NavItem.react\";\nimport NavLink from \"./NavLink.react\";\nimport NavSubItem from \"./NavSubItem.react\";\nimport NavSubmenu from \"./NavSubmenu.react\";\nimport NavSubmenuItem from \"./NavSubmenuItem.react\";\n\nexport type SubNavItem = {\n  readonly value: string;\n  readonly to?: string;\n  readonly icon?: string;\n  readonly LinkComponent?: React.ElementType;\n  readonly useExact?: boolean;\n  readonly onClick?: React.MouseEventHandler<HTMLElement>;\n};\n\nexport type NavItemObject = {\n  readonly value: string;\n  readonly to?: string;\n  readonly icon?: string;\n  readonly active?: boolean;\n  readonly LinkComponent?: React.ElementType;\n  readonly subItems?: ReadonlyArray<SubNavItem>;\n  readonly useExact?: boolean;\n};\n\nexport type NavRouterContextProps = { readonly callback: (location: { pathname: string }) => void };\n\nexport type NavProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly tabbed?: boolean;\n  readonly vertical?: boolean;\n  readonly items?: React.ReactNode;\n  readonly itemsObjects?: ReadonlyArray<NavItemObject>;\n  readonly routerContextComponentType?: React.ElementType<NavRouterContextProps>;\n};\n\ntype NavState = {\n  pathName: string | null,\n};\n\nclass Nav extends React.Component<NavProps, NavState> {\n  state: NavState = {\n    pathName: null,\n  };\n\n  static Item = NavItem;\n  static SubItem = NavSubItem;\n  static Link = NavLink;\n  static Submenu = NavSubmenu;\n  static SubmenuItem = NavSubmenuItem;\n\n  routerCallback = (location: { pathname: string }): void => {\n    this.setState({ pathName: location.pathname });\n  };\n\n  computeActive(\n    initialValue?: boolean,\n    to?: string,\n    subItems?: ReadonlyArray<SubNavItem>\n  ): boolean {\n    const { pathName } = this.state;\n\n    if (\n      initialValue !== null &&\n      initialValue !== undefined &&\n      initialValue === true\n    ) {\n      return true;\n    }\n\n    if (to !== null && to !== undefined && to === pathName) {\n      return true;\n    }\n\n    if (subItems !== null && subItems !== undefined) {\n      if (\n        subItems.find(\n          item =>\n            item.to !== null && item.to !== undefined && item.to === pathName\n        )\n      ) {\n        return true;\n      }\n    }\n\n    return false;\n  }\n\n  render(): React.ReactNode {\n    const {\n      className,\n      children,\n      tabbed = true,\n      vertical = false,\n      items,\n      itemsObjects,\n      routerContextComponentType,\n    } = this.props;\n    const classes = cn({ nav: true, \"nav-tabs\": tabbed }, className);\n\n    let element: React.ReactElement | null = null;\n    if (routerContextComponentType) {\n      element = React.createElement(routerContextComponentType, {\n        callback: this.routerCallback,\n      });\n    }\n\n    return (\n      <React.Fragment>\n        {element}\n        <ul className={classes}>\n          {items ||\n            (itemsObjects &&\n              itemsObjects.map((a, i) => (\n                <Nav.Item\n                  vertical={vertical}\n                  key={i}\n                  icon={a.icon}\n                  value={a.value}\n                  to={a.to}\n                  hasSubNav={!!a.subItems}\n                  LinkComponent={a.LinkComponent}\n                  subItemsObjects={a.subItems}\n                  active={this.computeActive(a.active, a.to, a.subItems)}\n                  useExact={a.useExact}\n                />\n              ))) ||\n            children}\n        </ul>\n      </React.Fragment>\n    );\n  }\n}\n\n//Nav.Item = NavItem;\n\nexport default Nav;\n\nexport type subNavItem = SubNavItem;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -33,19 +33,19 @@
     },
     {
       "name": "items",
-      "type": "React.ChildrenArray<React.Element<typeof Nav.Item>>",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
     {
       "name": "itemsObjects",
-      "type": "Array<navItem>",
+      "type": "ReadonlyArray<NavItemObject>",
       "optional": true,
       "description": ""
     },
     {
       "name": "routerContextComponentType",
-      "type": "React.ElementType",
+      "type": "React.ElementType<NavRouterContextProps>",
       "optional": true,
       "description": ""
     }
@@ -62,11 +62,11 @@
   "childApis": [
     {
       "name": "Item",
-      "source": "src/components/Nav/NavItem.react.js",
+      "source": "src/components/Nav/NavItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -139,13 +139,13 @@
         },
         {
           "name": "subItems",
-          "type": "React.ChildrenArray<React.Element<typeof Nav.SubItem>>",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "subItemsObjects",
-          "type": "Array<subNavItem>",
+          "type": "ReadonlyArray<subNavItem>",
           "optional": true,
           "description": ""
         },
@@ -169,11 +169,11 @@
     },
     {
       "name": "SubItem",
-      "source": "src/components/Nav/NavSubItem.react.js",
+      "source": "src/components/Nav/NavSubItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -202,6 +202,12 @@
           "description": ""
         },
         {
+          "name": "hasSubNav",
+          "type": "boolean",
+          "optional": true,
+          "description": ""
+        },
+        {
           "name": "value",
           "type": "string",
           "optional": true,
@@ -215,12 +221,9 @@
         },
         {
           "name": "onClick",
-          "type": "(event: SyntheticMouseEvent<*>) => mixed",
+          "type": "React.MouseEventHandler<HTMLElement>",
           "optional": true,
           "description": ""
-        },
-        {
-          "name": "hasSubNav"
         }
       ],
       "subcomponents": [],
@@ -229,11 +232,11 @@
     },
     {
       "name": "Link",
-      "source": "src/components/Nav/NavLink.react.js",
+      "source": "src/components/Nav/NavLink.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -276,7 +279,7 @@
         },
         {
           "name": "rootRef",
-          "type": "(?HTMLElement) => void",
+          "type": "React.Ref<HTMLAnchorElement>",
           "optional": true,
           "description": ""
         },
@@ -293,11 +296,11 @@
     },
     {
       "name": "Submenu",
-      "source": "src/components/Nav/NavSubmenu.react.js",
+      "source": "src/components/Nav/NavSubmenu.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -314,11 +317,11 @@
     },
     {
       "name": "SubmenuItem",
-      "source": "src/components/Nav/NavSubmenuItem.react.js",
+      "source": "src/components/Nav/NavSubmenuItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -375,9 +378,11 @@
   "guide": {
     "summary": "Navegación horizontal o vertical con elementos y submenús.",
     "behavior": [
-      "Se puede componer con Nav.Item o construir desde itemsObjects.",
+      "Se puede componer con Nav.Item o construir desde itemsObjects. La prioridad es items, itemsObjects y children, según sus valores verdaderos.",
       "Los submenús horizontales utilizan posicionamiento flotante; los verticales permanecen en el flujo.",
-      "Los destinos y el router pertenecen al consumidor; consulta los campos de Nav.Item para la composición elegida."
+      "Los destinos y el router pertenecen al consumidor; consulta los campos de Nav.Item para la composición elegida. Nav.Link usa href con una raíz a y to con una raíz personalizada; Nav.SubItem y Nav.SubmenuItem conservan el reenvío heredado de to: aporta LinkComponent para navegar con el router.",
+      "Nav.Item llama onClick() sin argumentos; Nav.SubItem entrega el evento al callback. useExact conserva el atributo exact heredado en la raíz personalizada: adapta ese atributo si utilizas React Router 7.",
+      "routerContextComponentType recibe callback. Un adaptador con useLocation y RouterContextProvider permite actualizar el elemento activo de itemsObjects al cambiar pathname. active=true tiene prioridad; la coincidencia automática compara el destino y los subdestinos completos."
     ],
     "example": "<Nav vertical itemsObjects={[{ value: \"Datos\", to: \"#/datos\" }, { value: \"Más\", subItems: [{ value: \"Formulario\", to: \"#/formulario\" }] }]} />"
   }

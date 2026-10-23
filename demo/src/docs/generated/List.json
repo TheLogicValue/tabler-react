@@ -1,13 +1,13 @@
 {
   "name": "List",
   "kind": "Componente",
-  "source": "src/components/List/index.js",
-  "implementation": "src/components/List/List.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport ListItem from \"./ListItem.react\";\nimport ListGroup from \"./ListGroup.react\";\nimport ListGroupItem from \"./ListGroupItem.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +unstyled?: boolean,\n  +seperated?: boolean,\n  +inline?: boolean,\n|};\n\nfunction List({\n  className,\n  children,\n  unstyled,\n  seperated,\n  inline,\n}: Props): React.Node {\n  const classes = cn(\n    {\n      list: !unstyled,\n      \"list-unstyled\": unstyled,\n      \"list-seperated\": seperated,\n      \"list-inline\": inline,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nList.Item = ListItem;\nList.Group = ListGroup;\nList.GroupItem = ListGroupItem;\n\nexport default List;\n",
+  "source": "src/components/List/index.ts",
+  "implementation": "src/components/List/List.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport ListItem from \"./ListItem.react\";\nimport ListGroup from \"./ListGroup.react\";\nimport ListGroupItem from \"./ListGroupItem.react\";\n\nexport type ListProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly unstyled?: boolean;\n  readonly seperated?: boolean;\n  readonly inline?: boolean;\n};\n\nfunction List({\n  className,\n  children,\n  unstyled,\n  seperated,\n  inline,\n}: ListProps): React.ReactNode {\n  const classes = cn(\n    {\n      list: !unstyled,\n      \"list-unstyled\": unstyled,\n      \"list-seperated\": seperated,\n      \"list-inline\": inline,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nList.Item = ListItem;\nList.Group = ListGroup;\nList.GroupItem = ListGroupItem;\n\nexport default List;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -46,11 +46,11 @@
   "childApis": [
     {
       "name": "Item",
-      "source": "src/components/List/ListItem.react.js",
+      "source": "src/components/List/ListItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -73,11 +73,11 @@
     },
     {
       "name": "Group",
-      "source": "src/components/List/ListGroup.react.js",
+      "source": "src/components/List/ListGroup.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -106,11 +106,11 @@
     },
     {
       "name": "GroupItem",
-      "source": "src/components/List/ListGroupItem.react.js",
+      "source": "src/components/List/ListGroupItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },

@@ -5,6 +5,7 @@ import ButtonList from "./ButtonList.react";
 import ButtonDropdown from "./ButtonDropdown.react";
 
 export type ButtonCommonProps<T extends HTMLElement = HTMLElement> = {
+  readonly "aria-label"?: React.AriaAttributes["aria-label"];
   readonly "aria-describedby"?: React.AriaAttributes["aria-describedby"];
   readonly "aria-expanded"?: React.AriaAttributes["aria-expanded"];
   readonly "aria-haspopup"?: React.AriaAttributes["aria-haspopup"];
@@ -61,7 +62,7 @@ export type ButtonProps = ButtonNativeProps | ButtonAnchorProps | ButtonInputPro
 // Retain the source type name imported by legacy Flow components.
 export type Props = ButtonProps;
 
-type ButtonForwardedProps = Pick<ButtonCommonProps, "disabled" | "onClick" | "onMouseEnter" | "onMouseLeave" | "onPointerEnter" | "onPointerLeave" | "tabIndex" | "onFocus" | "onBlur" | "aria-describedby" | "aria-expanded" | "aria-haspopup"> & { className: string };
+type ButtonForwardedProps = Pick<ButtonCommonProps, "aria-label" | "disabled" | "onClick" | "onMouseEnter" | "onMouseLeave" | "onPointerEnter" | "onPointerLeave" | "tabIndex" | "onFocus" | "onBlur" | "aria-describedby" | "aria-expanded" | "aria-haspopup"> & { className: string };
 
 const Button = (props: ButtonProps): React.ReactElement => {
   const {
@@ -123,6 +124,7 @@ const Button = (props: ButtonProps): React.ReactElement => {
     tabIndex: tabIndex,
     onFocus,
     onBlur,
+    "aria-label": props["aria-label"],
     "aria-describedby": props["aria-describedby"],
     "aria-expanded": props["aria-expanded"],
     "aria-haspopup": props["aria-haspopup"],

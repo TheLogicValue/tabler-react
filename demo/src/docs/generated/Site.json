@@ -1,13 +1,13 @@
 {
   "name": "Site",
   "kind": "Componente",
-  "source": "src/components/Site/index.js",
-  "implementation": "src/components/Site/Site.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport SiteHeader from \"./SiteHeader.react\";\nimport SiteFooter from \"./SiteFooter.react\";\nimport SiteNav from \"./SiteNav.react\";\nimport SiteLogo from \"./SiteLogo.react\";\nimport SiteWrapper from \"./SiteWrapper.react\";\n\ntype Props = {|\n  +children: React.Node,\n|};\n\n/**\n * Components for building the base of your website, such as a header, footer and nav bar\n */\nfunction Site(props: Props): React.Node {\n  return props.children;\n}\n\nSite.Header = SiteHeader;\nSite.Footer = SiteFooter;\nSite.Nav = SiteNav;\nSite.Logo = SiteLogo;\nSite.Wrapper = SiteWrapper;\n\nSite.displayName = \"Site\";\n\n/** @component */\nexport default Site;\n",
+  "source": "src/components/Site/index.ts",
+  "implementation": "src/components/Site/Site.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport SiteHeader from \"./SiteHeader.react\";\nimport SiteFooter from \"./SiteFooter.react\";\nimport SiteNav from \"./SiteNav.react\";\nimport SiteLogo from \"./SiteLogo.react\";\nimport SiteWrapper from \"./SiteWrapper.react\";\n\nexport type SiteProps = {\n  readonly children: React.ReactNode;\n};\n\n/**\n * Components for building the base of your website, such as a header, footer and nav bar\n */\nfunction Site(props: SiteProps): React.ReactNode {\n  return props.children;\n}\n\nSite.Header = SiteHeader;\nSite.Footer = SiteFooter;\nSite.Nav = SiteNav;\nSite.Logo = SiteLogo;\nSite.Wrapper = SiteWrapper;\n\nSite.displayName = \"Site\";\n\n/** @component */\nexport default Site;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": false,
       "description": ""
     }
@@ -24,11 +24,11 @@
   "childApis": [
     {
       "name": "Header",
-      "source": "src/components/Site/SiteHeader.react.js",
+      "source": "src/components/Site/SiteHeader.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -89,7 +89,13 @@
         {
           "name": "condensed",
           "type": "boolean",
-          "optional": false,
+          "optional": true,
+          "description": ""
+        },
+        {
+          "name": "darkImageUrl",
+          "type": "string",
+          "optional": true,
           "description": ""
         }
       ],
@@ -99,11 +105,11 @@
     },
     {
       "name": "Footer",
-      "source": "src/components/Site/SiteFooter.react.js",
+      "source": "src/components/Site/SiteFooter.react.tsx",
       "props": [
         {
           "name": "links",
-          "type": "Array<React.Node>",
+          "type": "Array<React.ReactNode>",
           "optional": true,
           "description": "An array of the 8 links displayed in the first footer bar"
         },
@@ -115,13 +121,13 @@
         },
         {
           "name": "copyright",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": "The content of the very bottom copyright notice space"
         },
         {
           "name": "nav",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": "The content of the very bottom nav space"
         }
@@ -132,23 +138,23 @@
     },
     {
       "name": "Nav",
-      "source": "src/components/Site/SiteNav.react.js",
+      "source": "src/components/Site/SiteNav.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "items",
-          "type": "React.ChildrenArray < React.Element < typeof Nav.Item >>",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "itemsObjects",
-          "type": "navItems",
+          "type": "ReadonlyArray<NavItemObject>",
           "optional": true,
           "description": ""
         },
@@ -161,7 +167,7 @@
         },
         {
           "name": "rightColumnComponent",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": "Provide your own component to replace the search form"
         },
@@ -174,7 +180,7 @@
         },
         {
           "name": "routerContextComponentType",
-          "type": "React.ElementType",
+          "type": "NavProps[\"routerContextComponentType\"]",
           "optional": true,
           "description": ""
         },
@@ -187,19 +193,23 @@
         },
         {
           "name": "navOption",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "stickyTop",
-          "default": "false",
-          "optional": true
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
         },
         {
           "name": "condensed",
-          "default": "false",
-          "optional": true
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
         }
       ],
       "subcomponents": [],
@@ -208,7 +218,7 @@
     },
     {
       "name": "Logo",
-      "source": "src/components/Site/SiteLogo.react.js",
+      "source": "src/components/Site/SiteLogo.react.tsx",
       "props": [
         {
           "name": "href",
@@ -235,7 +245,7 @@
     },
     {
       "name": "Wrapper",
-      "source": "src/components/Site/SiteWrapper.react.js",
+      "source": "src/components/Site/SiteWrapper.react.tsx",
       "props": [
         {
           "name": "headerProps",
@@ -257,13 +267,13 @@
         },
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": false,
           "description": ""
         },
         {
           "name": "routerContextComponentType",
-          "type": "React.ElementType",
+          "type": "SiteNavProps[\"routerContextComponentType\"]",
           "optional": true,
           "description": ""
         },
@@ -276,8 +286,10 @@
         },
         {
           "name": "vertical",
-          "default": "false",
-          "optional": true
+          "type": "boolean",
+          "optional": true,
+          "description": "",
+          "default": "false"
         }
       ],
       "subcomponents": [],
@@ -291,9 +303,14 @@
     "summary": "Familia de estructura global del sitio.",
     "behavior": [
       "Compone Site.Header, Site.Nav, Site.Wrapper y Site.Footer.",
-      "La cabecera puede incluir el control de navegación; onMenuToggleClick comunica el cambio al consumidor.",
-      "No define rutas ni decide por sí mismo qué usuario tiene acceso."
+      "Site no añade HTML: devuelve sus hijos. No define rutas ni decide por sí mismo qué usuario tiene acceso.",
+      "Site.Header construye logo, notificaciones, cuenta y control de navegación. children con valor verdadero sustituye esa composición. condensed incrusta Site.Nav; onMenuToggleClick comunica la pulsación del control.",
+      "Site.Wrapper requiere headerProps, navProps, footerProps y children. Controla el colapso del menú y utiliza la barra lateral cuando vertical=true y el ancho es al menos 992 px; por debajo vuelve a la cabecera horizontal. Su listener de resize se registra al montar y se elimina al desmontar.",
+      "Site.Wrapper consulta window.innerWidth al crearse: necesita un navegador y no admite renderizado en servidor directamente. condensed y vertical conservan su comportamiento existente.",
+      "Site.Header usa imageURL para el logo. En modo vertical, Page.Sidebar utiliza darkImageUrl del objeto headerProps; darkImageURL se conserva por compatibilidad de configuración pero no se consume.",
+      "Site.Nav recibe items/itemsObjects, collapse, stickyTop, condensed, vertical y navOption. withSearchForm y rightColumnComponent son opciones heredadas sin efecto. Los hijos personalizados solo sustituyen el contenido de la rama horizontal.",
+      "Site.Footer no muestra contenido sin note, copyright, nav o links. List mantiene la propiedad heredada seperated para sus listas."
     ],
-    "example": "<Site><Site.Header href=\"/\" imageURL=\"/logo-local.svg\" alt=\"Mi aplicación\" onMenuToggleClick={handleToggle} /><Site.Wrapper>Contenido del sitio.</Site.Wrapper></Site>"
+    "example": "<Site.Wrapper\n  headerProps={{ href: \"/\", imageURL: \"/logo-local.svg\", alt: \"Mi aplicación\" }}\n  navProps={{ itemsObjects: [{ value: \"Inicio\", to: \"/\" }] }}\n  footerProps={{ note: \"Aplicación de ejemplo\" }}\n>\n  <main>Contenido del sitio.</main>\n</Site.Wrapper>"
   }
 }

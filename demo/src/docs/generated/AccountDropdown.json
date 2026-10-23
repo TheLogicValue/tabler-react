@@ -1,13 +1,19 @@
 {
   "name": "AccountDropdown",
   "kind": "Componente",
-  "source": "src/components/AccountDropdown/index.js",
-  "implementation": "src/components/AccountDropdown/AccountDropdown.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport { Dropdown, Avatar } from \"../\";\n\nimport type { itemObject } from \"../Dropdown/Dropdown.react\";\n\ntype defaultOptionType =\n  | \"profile\"\n  | \"settings\"\n  | \"mail\"\n  | \"message\"\n  | \"divider\"\n  | \"help\"\n  | \"logout\";\n\ntype optionsType = Array<defaultOptionType | itemObject>;\n\ntype defaultOptionsType = { [defaultOptionType]: itemObject };\n\nexport type Props = {|\n  +avatarURL ?: string,\n  +name ?: string,\n  +description ?: string,\n  /**\n   * An array of the option items within the Dropdown\n   */\n  +options ?: optionsType,\n  /**\n   * The default RootComponent for all options.\n   * optionsObjects[x].RootComponent takes priority\n   */\n  +optionsRootComponent ?: React.ElementType,\n|};\n\nconst defaultOptions: defaultOptionsType = {\n  profile: { icon: \"user\", value: \"Profile\", to: \"/profile\" },\n  settings: { icon: \"settings\", value: \"Settings\", to: \"/settings\" },\n  mail: { icon: \"mail\", value: \"Inbox\", to: \"/mail\" },\n  message: { icon: \"send\", value: \"Message\", to: \"/message\" },\n  help: { icon: \"help-circle\", value: \"Need help?\", to: \"/help\" },\n  logout: { icon: \"log-out\", value: \"Sign out\", to: \"/logout\" },\n  divider: { isDivider: true },\n};\n\nconst itemsFromDefaultOptions = (options: optionsType) =>\n  options.map(opt => (typeof opt === \"string\" ? defaultOptions[opt] : opt));\n\n/**\n * A component for fast creation of an account centric dropdown\n */\nfunction AccountDropdown({\n  avatarURL,\n  avatarImage,\n  name,\n  description,\n  options = [],\n  optionsRootComponent,\n}: Props): React.Node {\n  const itemsObjects = itemsFromDefaultOptions(options);\n\n  return (\n    <Dropdown\n      isNavLink\n      triggerClassName=\"pr-0 leading-none\"\n      triggerContent={\n        <React.Fragment>\n          {avatarImage}\n          {avatarURL && <Avatar imageURL={avatarURL} />}\n          <span className=\"ml-2 d-none d-lg-block\">\n            <span className=\"text-default\">{name}</span>\n            <small className=\"text-muted d-block mt-1\">{description}</small>\n          </span>\n        </React.Fragment>\n      }\n      position=\"bottom-end\"\n      arrow={true}\n      arrowPosition=\"right\"\n      toggle={false}\n      itemsObject={itemsObjects}\n      itemsRootComponent={optionsRootComponent}\n    />\n  );\n}\n\nexport default AccountDropdown;\n",
+  "source": "src/components/AccountDropdown/index.ts",
+  "implementation": "src/components/AccountDropdown/AccountDropdown.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Dropdown from \"../Dropdown\";\nimport Avatar from \"../Avatar\";\n\nimport type { itemObject } from \"../Dropdown/Dropdown.react\";\n\nexport type DefaultAccountOption =\n  | \"profile\"\n  | \"settings\"\n  | \"mail\"\n  | \"message\"\n  | \"divider\"\n  | \"help\"\n  | \"logout\";\n\ntype optionsType = ReadonlyArray<DefaultAccountOption | itemObject>;\n\ntype defaultOptionsType = Record<DefaultAccountOption, itemObject>;\n\nexport type AccountDropdownProps = {\n  readonly avatarURL?: string;\n  readonly avatarImage?: React.ReactNode;\n  readonly name?: string;\n  readonly description?: string;\n  /**\n   * An array of the option items within the Dropdown\n   */\n  readonly options?: optionsType;\n  /**\n   * The default RootComponent for all options.\n   * optionsObjects[x].RootComponent takes priority\n   */\n  readonly optionsRootComponent?: React.ElementType;\n};\n\nconst defaultOptions: defaultOptionsType = {\n  profile: { icon: \"user\", value: \"Profile\", to: \"/profile\" },\n  settings: { icon: \"settings\", value: \"Settings\", to: \"/settings\" },\n  mail: { icon: \"mail\", value: \"Inbox\", to: \"/mail\" },\n  message: { icon: \"send\", value: \"Message\", to: \"/message\" },\n  help: { icon: \"help-circle\", value: \"Need help?\", to: \"/help\" },\n  logout: { icon: \"log-out\", value: \"Sign out\", to: \"/logout\" },\n  divider: { isDivider: true },\n};\n\nconst itemsFromDefaultOptions = (options: optionsType) =>\n  options.map(opt => (typeof opt === \"string\" ? defaultOptions[opt] : opt));\n\n/**\n * A component for fast creation of an account centric dropdown\n */\nfunction AccountDropdown({\n  avatarURL,\n  avatarImage,\n  name,\n  description,\n  options = [],\n  optionsRootComponent,\n}: AccountDropdownProps): React.ReactNode {\n  const itemsObjects = itemsFromDefaultOptions(options);\n\n  return (\n    <Dropdown\n      isNavLink\n      triggerClassName=\"pr-0 leading-none\"\n      triggerContent={\n        <React.Fragment>\n          {avatarImage}\n          {avatarURL && <Avatar imageURL={avatarURL} />}\n          <span className=\"ml-2 d-none d-lg-block\">\n            <span className=\"text-default\">{name}</span>\n            <small className=\"text-muted d-block mt-1\">{description}</small>\n          </span>\n        </React.Fragment>\n      }\n      position=\"bottom-end\"\n      arrow={true}\n      arrowPosition=\"right\"\n      toggle={false}\n      itemsObject={itemsObjects}\n      itemsRootComponent={optionsRootComponent}\n    />\n  );\n}\n\nexport default AccountDropdown;\n\nexport type Props = AccountDropdownProps;\n",
   "props": [
     {
       "name": "avatarURL",
       "type": "string",
+      "optional": true,
+      "description": ""
+    },
+    {
+      "name": "avatarImage",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -35,9 +41,6 @@
       "type": "React.ElementType",
       "optional": true,
       "description": "The default RootComponent for all options.\n    optionsObjects[x].RootComponent takes priority"
-    },
-    {
-      "name": "avatarImage"
     }
   ],
   "subcomponents": [],
@@ -56,7 +59,8 @@
     "summary": "Menú de cuenta con nombre, avatar y acciones.",
     "behavior": [
       "Compone Avatar y Dropdown; no realiza autenticación ni cierra una sesión por sí mismo.",
-      "options admite nombres predefinidos como profile/settings/logout o elementos personalizados con value, to y onClick.",
+      "options admite los presets profile, settings, mail, message, divider, help y logout, o elementos personalizados con value, to y onClick. optionsRootComponent configura la raíz común; la raíz de cada opción tiene prioridad.",
+      "avatarImage inserta un nodo personalizado en el disparador. avatarURL añade un Avatar; si se proporcionan ambos, se muestran los dos.",
       "Las rutas y las acciones deben corresponder a la aplicación consumidora."
     ],
     "example": "<AccountDropdown name=\"Usuario de prueba\" description=\"Cuenta local\" options={[{ value: \"Mi perfil\", to: \"/perfil\" }]} />"

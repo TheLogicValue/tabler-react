@@ -1,9 +1,9 @@
 {
   "name": "Notification",
   "kind": "Componente",
-  "source": "src/components/Notification/index.js",
-  "implementation": "src/components/Notification/Notification.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport { Avatar, Text } from \"../\";\nimport NotificationTray from \"./NotificationTray.react\";\n\nexport type Props = {|\n  /**\n   * The  avatar image URL\n   */\n  +avatarURL?: string,\n  /**\n   * The message displayed within the Notification\n   */\n  +message: React.Node,\n  /**\n   * The time displayed within the Notification\n   */\n  +time?: string,\n  /**\n   * Indicate the notification as unread\n   */\n  +unread?: boolean,\n|};\n\n/**\n * An individual Notification made up of an Avatar alongside some text and the time\n */\nfunction Notification({ avatarURL, message, time, unread }: Props): React.Node {\n  return (\n    <React.Fragment>\n      {avatarURL && (\n        <Avatar className=\"mr-3 align-self-center\" imageURL={avatarURL} />\n      )}\n      <div>\n        {message}\n        {time && (\n          <Text color=\"muted\" size=\"small\">\n            {time}\n          </Text>\n        )}\n      </div>\n    </React.Fragment>\n  );\n}\n\nNotification.Tray = NotificationTray;\n\nexport default Notification;\n",
+  "source": "src/components/Notification/index.ts",
+  "implementation": "src/components/Notification/Notification.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Avatar from \"../Avatar\";\nimport Text from \"../Text\";\nimport NotificationTray from \"./NotificationTray.react\";\n\nexport type NotificationProps = {\n  /**\n   * The  avatar image URL\n   */\n  readonly avatarURL?: string;\n  /**\n   * The message displayed within the Notification\n   */\n  readonly message: React.ReactNode;\n  /**\n   * The time displayed within the Notification\n   */\n  readonly time?: string;\n  /**\n   * Indicate the notification as unread\n   */\n  readonly unread?: boolean;\n};\n\n/**\n * An individual Notification made up of an Avatar alongside some text and the time\n */\nfunction Notification({ avatarURL, message, time, unread }: NotificationProps): React.ReactNode {\n  return (\n    <React.Fragment>\n      {avatarURL && (\n        <Avatar className=\"mr-3 align-self-center\" imageURL={avatarURL} />\n      )}\n      <div>\n        {message}\n        {time && (\n          <Text color=\"muted\" size=\"small\">\n            {time}\n          </Text>\n        )}\n      </div>\n    </React.Fragment>\n  );\n}\n\nNotification.Tray = NotificationTray;\n\nexport default Notification;\n\nexport type Props = NotificationProps;\n",
   "props": [
     {
       "name": "avatarURL",
@@ -13,7 +13,7 @@
     },
     {
       "name": "message",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": false,
       "description": "The message displayed within the Notification"
     },
@@ -38,17 +38,17 @@
   "childApis": [
     {
       "name": "Tray",
-      "source": "src/components/Notification/NotificationTray.react.js",
+      "source": "src/components/Notification/NotificationTray.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.ChildrenArray<React.Element<typeof Notification>>",
+          "type": "React.ReactNode",
           "optional": true,
           "description": "Notification components"
         },
         {
           "name": "notificationsObjects",
-          "type": "Array<NotificationProps>",
+          "type": "ReadonlyArray<NotificationProps>",
           "optional": true,
           "description": "An array containing objects of notification data"
         },
@@ -87,7 +87,9 @@
     "summary": "Contenido de una notificación con avatar, mensaje y hora.",
     "behavior": [
       "message es el contenido principal y time un texto ya formateado.",
-      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación."
+      "Notification.Tray agrupa avisos. unread figura en la API heredada, pero la implementación de Notification no lo utiliza para cambiar su presentación.",
+      "En Tray, children tiene prioridad sobre notificationsObjects. Las entradas de notificationsObjects con unread añaden bg-light y unread en Tray muestra el indicador del disparador.",
+      "El control Mark all as read solo aparece si Tray recibe unread y markAllAsRead. Ejecuta el callback sin modificar los datos: el consumidor actualiza el estado de lectura."
     ],
     "example": "<Notification message=\"Informe preparado\" time=\"Hace un momento\" />"
   }

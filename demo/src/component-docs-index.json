@@ -92,7 +92,7 @@
     "kind": "Componente",
     "summary": "Acción con las variantes visuales de botones de Tabler.",
     "status": "documented",
-    "properties": 35,
+    "properties": 36,
     "examples": 3
   },
   "ButtonModal": {
@@ -522,7 +522,7 @@
   "RouterContextProvider": {
     "name": "RouterContextProvider",
     "kind": "Proveedor",
-    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "summary": "Adaptador que comunica la ubicación inicial y los cambios de pathname.",
     "status": "documented",
     "properties": 2,
     "examples": 0

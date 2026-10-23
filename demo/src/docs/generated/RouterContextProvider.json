@@ -1,19 +1,19 @@
 {
   "name": "RouterContextProvider",
   "kind": "Proveedor",
-  "source": "src/helpers/RouterContextProvider.react.js",
-  "implementation": "src/helpers/RouterContextProvider.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\ntype Props = {|\n  +location: Object,\n  +callback: (location: { pathname: string }) => void,\n|};\ntype State = {||};\n\nclass RouterContextProvider extends React.Component<Props, State> {\n  componentDidMount(): void {\n    const { callback, location } = this.props;\n    callback(location);\n  }\n\n  render(): React.Node {\n    return null;\n  }\n}\n\nexport default RouterContextProvider;\n",
+  "source": "src/helpers/RouterContextProvider.react.tsx",
+  "implementation": "src/helpers/RouterContextProvider.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport type { Location } from \"react-router-dom\";\n\nexport type RouterLocation = Pick<Location, \"pathname\"> & Partial<Omit<Location, \"pathname\">>;\nexport type RouterContextProviderProps = {\n  readonly location: RouterLocation;\n  readonly callback: (location: RouterLocation) => void;\n};\n\nclass RouterContextProvider extends React.Component<RouterContextProviderProps> {\n  componentDidMount(): void {\n    const { callback, location } = this.props;\n    callback(location);\n  }\n\n  componentDidUpdate(previous: RouterContextProviderProps): void {\n    if (previous.location.pathname !== this.props.location.pathname) {\n      this.props.callback(this.props.location);\n    }\n  }\n\n  render(): React.ReactNode { return null; }\n}\nexport default RouterContextProvider;\n",
   "props": [
     {
       "name": "location",
-      "type": "Object",
+      "type": "RouterLocation",
       "optional": false,
       "description": ""
     },
     {
       "name": "callback",
-      "type": "(location: { pathname: string }) => void",
+      "type": "(location: RouterLocation) => void",
       "optional": false,
       "description": ""
     }
@@ -25,11 +25,11 @@
   "legacy": [],
   "dependencies": [],
   "guide": {
-    "summary": "Adaptador que comunica una ubicación al montarse.",
+    "summary": "Adaptador que comunica la ubicación inicial y los cambios de pathname.",
     "behavior": [
       "Recibe location y llama callback(location) en componentDidMount.",
       "Devuelve null: no dibuja contenido ni crea por sí mismo el contexto de un router.",
-      "No notifica automáticamente todos los cambios de ruta; si necesitas ese comportamiento, gestiona actualizaciones o el montaje desde el consumidor."
+      "También llama callback(location) cuando cambia location.pathname; no vuelve a notificar por cambios exclusivos de search, hash, state o del callback. Pasa la ubicación actualizada desde el router consumidor."
     ],
     "example": "<RouterContextProvider location={location} callback={current => console.log(current.pathname)} />"
   }
