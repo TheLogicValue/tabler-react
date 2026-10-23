@@ -1,54 +1,51 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 import TextSmall from "./TextSmall.react";
 
-type AlignProps = {|
-  +align?: "left" | "center" | "right" | "justify",
-  +left?: boolean,
-  +center?: boolean,
-  +right?: boolean,
-  +justify?: boolean,
-|};
+type AlignProps = {
+  readonly align?: "left" | "center" | "right" | "justify";
+  readonly left?: boolean;
+  readonly center?: boolean;
+  readonly right?: boolean;
+  readonly justify?: boolean;
+};
 
-type TransformProps = {|
-  +transform?: "lowercase" | "uppercase" | "capitalize",
-  +lowercase?: boolean,
-  +uppercase?: boolean,
-  +capitalize?: boolean,
-|};
+type TransformProps = {
+  readonly transform?: "lowercase" | "uppercase" | "capitalize";
+  readonly lowercase?: boolean;
+  readonly uppercase?: boolean;
+  readonly capitalize?: boolean;
+};
 
-type TrackingProps = {|
-  +tracking?: "tight" | "normal" | "wide",
-  +trackingTight?: boolean,
-  +trackingNormal?: boolean,
-  +trackingWide?: boolean,
-|};
+type TrackingProps = {
+  readonly tracking?: "tight" | "normal" | "wide";
+  readonly trackingTight?: boolean;
+  readonly trackingNormal?: boolean;
+  readonly trackingWide?: boolean;
+};
 
-type LeadingProps = {|
-  +leading?: "none" | "tight" | "normal" | "loose",
-  +leadingNone?: boolean,
-  +leadingTight?: boolean,
-  +leadingNormal?: boolean,
-  +leadingLoose?: boolean,
-|};
+type LeadingProps = {
+  readonly leading?: "none" | "tight" | "normal" | "loose";
+  readonly leadingNone?: boolean;
+  readonly leadingTight?: boolean;
+  readonly leadingNormal?: boolean;
+  readonly leadingLoose?: boolean;
+};
 
-type TextProps = {|
-  ...AlignProps,
-  ...TransformProps,
-  ...TrackingProps,
-  ...LeadingProps,
-  +children?: React.Node,
-  +className?: string,
-  +RootComponent?: React.ElementType,
-  +color?: string,
-  +size?: string,
-  +wrap?: boolean,
-  +muted?: boolean,
-|};
+type TextOwnProps = AlignProps & TransformProps & TrackingProps & LeadingProps & {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly color?: string;
+  readonly size?: string;
+  readonly wrap?: boolean;
+  readonly muted?: boolean;
+};
 
-const Text = ({
+export type TextProps<C extends React.ElementType = "div"> = TextOwnProps & {
+  readonly RootComponent?: C;
+} & Omit<React.ComponentPropsWithoutRef<NoInfer<C>>, keyof TextOwnProps | "RootComponent">;
+
+const Text = <C extends React.ElementType = "div">({
   className,
   children,
   RootComponent,
@@ -57,7 +54,7 @@ const Text = ({
   wrap,
   muted,
   ...props
-}: TextProps): React.Node => {
+}: TextProps<C>): React.ReactElement => {
   const { align: alignFromProps, left, center, right, justify } = props;
   const align =
     alignFromProps ||
@@ -121,7 +118,7 @@ const Text = ({
     },
     className
   );
-  const Component = RootComponent || "div";
+  const Component: React.ElementType = RootComponent || "div";
   return (
     <Component className={classes} {...props}>
       {children}

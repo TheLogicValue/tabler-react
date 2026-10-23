@@ -27,7 +27,7 @@ writeFileSync(join(fixture, 'package.json'), JSON.stringify({
 console.log(`Consumidor aislado con React 18: ${fixture}`)
 // Install the packed library as a normal consumer, checking peer compatibility.
 run([npmCli, 'install', '--ignore-scripts', '--legacy-peer-deps=false', '--no-audit', '--no-fund'], fixture, { stdio: 'inherit' })
-run(['--test', '--test-timeout=30000', 'tests/floating.test.cjs', 'tests/ag-grid.test.cjs', 'tests/badge.test.cjs', 'tests/grid.test.cjs'], project, {
+run(['--test', '--test-timeout=30000', 'tests/floating.test.cjs', 'tests/ag-grid.test.cjs', 'tests/badge.test.cjs', 'tests/grid.test.cjs', 'tests/primitives.test.cjs'], project, {
   stdio: 'inherit',
   env: { ...process.env, TABLER_TEST_PACKAGE_DIR: join(fixture, 'node_modules', 'tabler-react') },
 })

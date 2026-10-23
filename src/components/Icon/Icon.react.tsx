@@ -1,45 +1,47 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-import type { MouseEvents, PointerEvents, FocusEvents } from "../../";
-
-type Props = {|
-  ...MouseEvents,
-  ...PointerEvents,
-  ...FocusEvents,
-  +className?: string,
+export type IconProps = {
+  readonly className?: string;
   /**
    * Should this icon be rendered within an <a> tag
    */
-  +link?: boolean,
+  readonly link?: boolean;
   /**
    * The icon prefix
    */
-  +prefix?: string,
+  readonly prefix?: string;
   /**
    * The icon name
    */
-  +name: string,
-  +isAriaHidden?: boolean,
+  readonly name: string;
+  readonly title?: string;
+  readonly isAriaHidden?: boolean;
   /**
    * Use the built-in payment icon set
    */
-  +payment?: boolean,
+  readonly payment?: boolean;
   /**
    * Use the built-in flag icon set
    */
-  +flag?: boolean,
+  readonly flag?: boolean;
   /**
    * Icon color (primary | secondary | tertiary)
    */
-  +color?: string,
+  readonly color?: string;
   /**
    * Icon size (large | medium | big)
    */
-   +size?: string,
-|};
+  readonly size?: string;
+  /** Events are attached to the outer i or a element, depending on link. */
+  readonly onClick?: React.MouseEventHandler<HTMLElement>;
+  readonly onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  readonly onMouseLeave?: React.MouseEventHandler<HTMLElement>;
+  readonly onPointerEnter?: React.PointerEventHandler<HTMLElement>;
+  readonly onPointerLeave?: React.PointerEventHandler<HTMLElement>;
+  readonly onFocus?: React.FocusEventHandler<HTMLElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLElement>;
+};
 
 /**
  * Display an icon.
@@ -63,7 +65,7 @@ function Icon({
   onBlur,
   color,
   size
-}: Props): React.Node {
+}: IconProps): React.ReactElement {
   const prefix = (payment && "payment") || (flag && "flag") || prefixFromProps;
   const isColor = color;
   const isSize = size;
@@ -79,7 +81,7 @@ function Icon({
 
   const extraProps = isAriaHidden
     ? {
-        "aria-hidden": "true",
+        "aria-hidden": "true" as const,
       }
     : null;
 

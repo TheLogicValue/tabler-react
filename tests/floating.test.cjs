@@ -54,6 +54,33 @@ async function key(element, value) {
   await React.act(async () => element.dispatchEvent(new window.KeyboardEvent('keydown', { key: value, bubbles: true })))
 }
 
+test('Icon mantiene los siete callbacks en su raíz y Text reenvía eventos nativos', async () => {
+  const { Icon, Text } = components
+  const events = []
+  const record = name => event => events.push([name, event.currentTarget.tagName])
+  for (const link of [false, true]) {
+    const props = Object.fromEntries(['onClick', 'onMouseEnter', 'onMouseLeave', 'onPointerEnter', 'onPointerLeave', 'onFocus', 'onBlur'].map(name => [name, record(name)]))
+    const example = React.createElement(Icon, { ...props, name: 'check', link })
+    if (!root) await render(example)
+    else await React.act(async () => root.render(example))
+    const element = container.firstElementChild
+    events.length = 0
+    await React.act(async () => {
+      element.dispatchEvent(new window.MouseEvent('click', { bubbles: true }))
+      element.dispatchEvent(new window.MouseEvent('mouseover', { bubbles: true, relatedTarget: document.body }))
+      element.dispatchEvent(new window.MouseEvent('mouseout', { bubbles: true, relatedTarget: document.body }))
+      element.dispatchEvent(new window.PointerEvent('pointerover', { bubbles: true, relatedTarget: document.body }))
+      element.dispatchEvent(new window.PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body }))
+      element.dispatchEvent(new window.FocusEvent('focusin', { bubbles: true }))
+      element.dispatchEvent(new window.FocusEvent('focusout', { bubbles: true }))
+    })
+    assert.deepEqual(events, Object.keys(props).map(name => [name, link ? 'A' : 'I']))
+  }
+  await React.act(async () => root.render(React.createElement(Text, { RootComponent: 'button', type: 'button', onClick: record('textClick') }, 'Acción')))
+  await click(container.querySelector('button'))
+  assert.deepEqual(events.at(-1), ['textClick', 'BUTTON'])
+})
+
 test('Dropdown abre, ejecuta callbacks, cierra por Escape y clic fuera sin enviar formularios', async () => {
   const { Dropdown } = components
   let actions = 0, submissions = 0

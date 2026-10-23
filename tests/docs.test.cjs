@@ -43,6 +43,17 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('Badge').props.find(prop => prop.name === 'children').type, 'React.ReactNode')
   assert.equal(document('Badge').props.find(prop => prop.name === 'color').default, '"primary"')
   assert.deepEqual(document('Badge').props.map(prop => prop.name).sort(), ['children', 'className', 'color'])
+  assert.equal(document('Icon').implementation, 'src/components/Icon/Icon.react.tsx')
+  assert.equal(document('Icon').props.find(prop => prop.name === 'title').type, 'string')
+  assert.equal(document('Icon').props.find(prop => prop.name === 'onPointerEnter').type, 'React.PointerEventHandler<HTMLElement>')
+  assert.equal(document('Container').implementation, 'src/components/Container.react.tsx')
+  assert.equal(document('Container').props.length, 2)
+  assert.equal(document('Text').implementation, 'src/components/Text/Text.react.tsx')
+  assert.equal(document('Text').props.length, 25)
+  assert.ok(document('Text').rest)
+  const small = document('Text').childApis.find(child => child.name === 'Small')
+  assert.equal(small.source, 'src/components/Text/TextSmall.react.tsx')
+  assert.equal(small.props.length, 5)
 })
 
 function walk(node, visit) {

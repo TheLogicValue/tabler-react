@@ -1,13 +1,13 @@
 {
   "name": "Container",
   "kind": "Componente",
-  "source": "src/components/Container.react.js",
-  "implementation": "src/components/Container.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport \"./Container.css\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Container({ className, children }: Props): React.Node {\n  const classes = cn(\"container\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nexport default Container;\n",
+  "source": "src/components/Container.react.tsx",
+  "implementation": "src/components/Container.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport \"./Container.css\";\n\nexport type ContainerProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction Container({ className, children }: ContainerProps): React.ReactElement {\n  const classes = cn(\"container\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nexport default Container;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -28,7 +28,8 @@
     "summary": "Contenedor de anchura y márgenes de la hoja de estilos.",
     "behavior": [
       "Añade la clase container y las clases adicionales recibidas.",
-      "No incluye lógica de distribución; combina su contenido con Grid cuando necesites columnas."
+      "No incluye lógica de distribución; combina su contenido con Grid cuando necesites columnas.",
+      "Solo recibe children y className; no reenvía otros atributos ni eventos al div. Sus propiedades están tipadas en las fuentes TypeScript."
     ],
     "example": "<Container><p>Contenido centrado en el área disponible.</p></Container>"
   }

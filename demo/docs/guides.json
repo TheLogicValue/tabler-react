@@ -467,7 +467,8 @@
     "summary": "Contenedor de anchura y márgenes de la hoja de estilos.",
     "behavior": [
       "Añade la clase container y las clases adicionales recibidas.",
-      "No incluye lógica de distribución; combina su contenido con Grid cuando necesites columnas."
+      "No incluye lógica de distribución; combina su contenido con Grid cuando necesites columnas.",
+      "Solo recibe children y className; no reenvía otros atributos ni eventos al div. Sus propiedades están tipadas en las fuentes TypeScript."
     ],
     "example": "<Container><p>Contenido centrado en el área disponible.</p></Container>"
   },
@@ -648,7 +649,9 @@
     "behavior": [
       "prefix=\"fe\" utiliza los iconos Feather incluidos en los estilos de la biblioteca.",
       "name se combina con el prefijo para formar la clase; payment y flag seleccionan otras familias.",
-      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene."
+      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene.",
+      "link envuelve el icono en un elemento a sin href. Los siete eventos soportados (onClick, onMouseEnter, onMouseLeave, onPointerEnter, onPointerLeave, onFocus y onBlur) se aplican a esa raíz; sin link se aplican al elemento i. Otros eventos y atributos no se reenvían.",
+      "title admite texto. isAriaHidden solo añade aria-hidden al contenedor cuando link está activo; se conserva el comportamiento anterior. Para acciones accesibles utiliza un botón o enlace con nombre propio alrededor del icono."
     ],
     "example": "<Button type=\"button\" color=\"secondary\"><Icon name=\"download\" /> Descargar</Button>"
   },
@@ -1087,9 +1090,19 @@
     "summary": "Texto con utilidades de color, tamaño y alineación.",
     "behavior": [
       "RootComponent permite adaptar el elemento raíz a su uso semántico.",
-      "Las opciones de transformación, espaciado y altura aplican clases; no modifican el contenido original."
+      "Las opciones de transformación, espaciado y altura aplican clases; no modifican el contenido original.",
+      "TextProps tipa los atributos y eventos de RootComponent, que por defecto es div. Una raíz a admite href; un componente propio exige sus propiedades requeridas. No se declara una referencia pública ref común a React 18 y 19.",
+      "Text.Small utiliza siempre small y la clase sm. Solo recibe children, className, color, wrap y muted; no reenvía atributos adicionales.",
+      "Los valores explícitos align, transform, tracking y leading tienen prioridad sobre sus flags equivalentes. Se conserva el reenvío de estas opciones al componente raíz: los flags booleanos pueden producir avisos de React en elementos HTML. Para raíces HTML se recomiendan las variantes de cadena; la migración de tipos no modifica ese comportamiento heredado."
     ],
-    "example": "<Text color=\"muted\" size=\"sm\">Información complementaria.</Text>"
+    "example": "<Text color=\"muted\" size=\"sm\">Información complementaria.</Text>",
+    "examples": [
+      {
+        "title": "Raíces semánticas y texto pequeño",
+        "description": "Los atributos y eventos adicionales se entregan a la raíz de Text. Text.Small conserva una API más acotada.",
+        "code": "<>\n  <Text RootComponent=\"a\" href=\"#/documentacion\" color=\"primary\">Consultar documentación</Text>\n  <Text RootComponent=\"button\" type=\"button\" onClick={() => console.log(\"Acción\")}>Acción</Text>\n  <Text.Small muted>Información complementaria.</Text.Small>\n</>"
+      }
+    ]
   },
   "Timeline": {
     "summary": "Lista cronológica de eventos.",

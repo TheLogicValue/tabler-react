@@ -94,7 +94,7 @@
     {
       "name": "Container",
       "kind": "Componente",
-      "source": "src/components/Container.react.js"
+      "source": "src/components/Container.react.tsx"
     },
     {
       "name": "DatePicker",
@@ -204,7 +204,7 @@
     {
       "name": "Icon",
       "kind": "Componente",
-      "source": "src/components/Icon/index.js"
+      "source": "src/components/Icon/index.ts"
     },
     {
       "name": "LineChart",
@@ -424,7 +424,7 @@
     {
       "name": "Text",
       "kind": "Componente",
-      "source": "src/components/Text/index.js"
+      "source": "src/components/Text/index.ts"
     },
     {
       "name": "Timeline",

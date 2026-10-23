@@ -1,9 +1,9 @@
 {
   "name": "Icon",
   "kind": "Componente",
-  "source": "src/components/Icon/index.js",
-  "implementation": "src/components/Icon/Icon.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport type { MouseEvents, PointerEvents, FocusEvents } from \"../../\";\n\ntype Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  ...FocusEvents,\n  +className?: string,\n  /**\n   * Should this icon be rendered within an <a> tag\n   */\n  +link?: boolean,\n  /**\n   * The icon prefix\n   */\n  +prefix?: string,\n  /**\n   * The icon name\n   */\n  +name: string,\n  +isAriaHidden?: boolean,\n  /**\n   * Use the built-in payment icon set\n   */\n  +payment?: boolean,\n  /**\n   * Use the built-in flag icon set\n   */\n  +flag?: boolean,\n  /**\n   * Icon color (primary | secondary | tertiary)\n   */\n  +color?: string,\n  /**\n   * Icon size (large | medium | big)\n   */\n   +size?: string,\n|};\n\n/**\n * Display an icon.\n * Uses the included feathers icon set by default but you can add your own\n */\nfunction Icon({\n  prefix: prefixFromProps = \"fe\",\n  name,\n  title,\n  className,\n  link,\n  isAriaHidden,\n  payment,\n  flag,\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n  onFocus,\n  onBlur,\n  color,\n  size\n}: Props): React.Node {\n  const prefix = (payment && \"payment\") || (flag && \"flag\") || prefixFromProps;\n  const isColor = color;\n  const isSize = size;\n  const classes = cn(\n    {\n      [prefix]: true,\n      [`${prefix}-${name}`]: true,\n      [\"color-\"+color]: isColor,\n      [\"icon-size-\" + size]: isSize,\n    },\n    className\n  );\n\n  const extraProps = isAriaHidden\n    ? {\n        \"aria-hidden\": \"true\",\n      }\n    : null;\n\n  const eventProps = {\n    onClick,\n    onMouseEnter,\n    onMouseLeave,\n    onPointerEnter,\n    onPointerLeave,\n    onFocus,\n    onBlur,\n  };\n\n  return !link ? (\n    <i className={classes} {...eventProps} title={title}/>\n  ) : (\n    <a className=\"icon\" {...extraProps} {...eventProps} title={title}>\n      <i className={classes} />\n    </a>\n  );\n}\n\nIcon.displayName = \"Icon\";\n\n/** @component */\nexport default Icon;\n",
+  "source": "src/components/Icon/index.ts",
+  "implementation": "src/components/Icon/Icon.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nexport type IconProps = {\n  readonly className?: string;\n  /**\n   * Should this icon be rendered within an <a> tag\n   */\n  readonly link?: boolean;\n  /**\n   * The icon prefix\n   */\n  readonly prefix?: string;\n  /**\n   * The icon name\n   */\n  readonly name: string;\n  readonly title?: string;\n  readonly isAriaHidden?: boolean;\n  /**\n   * Use the built-in payment icon set\n   */\n  readonly payment?: boolean;\n  /**\n   * Use the built-in flag icon set\n   */\n  readonly flag?: boolean;\n  /**\n   * Icon color (primary | secondary | tertiary)\n   */\n  readonly color?: string;\n  /**\n   * Icon size (large | medium | big)\n   */\n  readonly size?: string;\n  /** Events are attached to the outer i or a element, depending on link. */\n  readonly onClick?: React.MouseEventHandler<HTMLElement>;\n  readonly onMouseEnter?: React.MouseEventHandler<HTMLElement>;\n  readonly onMouseLeave?: React.MouseEventHandler<HTMLElement>;\n  readonly onPointerEnter?: React.PointerEventHandler<HTMLElement>;\n  readonly onPointerLeave?: React.PointerEventHandler<HTMLElement>;\n  readonly onFocus?: React.FocusEventHandler<HTMLElement>;\n  readonly onBlur?: React.FocusEventHandler<HTMLElement>;\n};\n\n/**\n * Display an icon.\n * Uses the included feathers icon set by default but you can add your own\n */\nfunction Icon({\n  prefix: prefixFromProps = \"fe\",\n  name,\n  title,\n  className,\n  link,\n  isAriaHidden,\n  payment,\n  flag,\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n  onFocus,\n  onBlur,\n  color,\n  size\n}: IconProps): React.ReactElement {\n  const prefix = (payment && \"payment\") || (flag && \"flag\") || prefixFromProps;\n  const isColor = color;\n  const isSize = size;\n  const classes = cn(\n    {\n      [prefix]: true,\n      [`${prefix}-${name}`]: true,\n      [\"color-\"+color]: isColor,\n      [\"icon-size-\" + size]: isSize,\n    },\n    className\n  );\n\n  const extraProps = isAriaHidden\n    ? {\n        \"aria-hidden\": \"true\" as const,\n      }\n    : null;\n\n  const eventProps = {\n    onClick,\n    onMouseEnter,\n    onMouseLeave,\n    onPointerEnter,\n    onPointerLeave,\n    onFocus,\n    onBlur,\n  };\n\n  return !link ? (\n    <i className={classes} {...eventProps} title={title}/>\n  ) : (\n    <a className=\"icon\" {...extraProps} {...eventProps} title={title}>\n      <i className={classes} />\n    </a>\n  );\n}\n\nIcon.displayName = \"Icon\";\n\n/** @component */\nexport default Icon;\n",
   "props": [
     {
       "name": "className",
@@ -29,6 +29,12 @@
       "type": "string",
       "optional": false,
       "description": "The icon name"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "isAriaHidden",
@@ -61,28 +67,46 @@
       "description": "Icon size (large | medium | big)"
     },
     {
-      "name": "title"
+      "name": "onClick",
+      "type": "React.MouseEventHandler<HTMLElement>",
+      "optional": true,
+      "description": "Events are attached to the outer i or a element, depending on link."
     },
     {
-      "name": "onClick"
+      "name": "onMouseEnter",
+      "type": "React.MouseEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseEnter"
+      "name": "onMouseLeave",
+      "type": "React.MouseEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseLeave"
+      "name": "onPointerEnter",
+      "type": "React.PointerEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerEnter"
+      "name": "onPointerLeave",
+      "type": "React.PointerEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerLeave"
+      "name": "onFocus",
+      "type": "React.FocusEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onFocus"
-    },
-    {
-      "name": "onBlur"
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<HTMLElement>",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -102,7 +126,9 @@
     "behavior": [
       "prefix=\"fe\" utiliza los iconos Feather incluidos en los estilos de la biblioteca.",
       "name se combina con el prefijo para formar la clase; payment y flag seleccionan otras familias.",
-      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene."
+      "El icono no sustituye una etiqueta accesible de la acción: añade texto o aria-label al control que lo contiene.",
+      "link envuelve el icono en un elemento a sin href. Los siete eventos soportados (onClick, onMouseEnter, onMouseLeave, onPointerEnter, onPointerLeave, onFocus y onBlur) se aplican a esa raíz; sin link se aplican al elemento i. Otros eventos y atributos no se reenvían.",
+      "title admite texto. isAriaHidden solo añade aria-hidden al contenedor cuando link está activo; se conserva el comportamiento anterior. Para acciones accesibles utiliza un botón o enlace con nombre propio alrededor del icono."
     ],
     "example": "<Button type=\"button\" color=\"secondary\"><Icon name=\"download\" /> Descargar</Button>"
   }
