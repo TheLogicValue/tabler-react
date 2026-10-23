@@ -1,41 +1,70 @@
 {
   "name": "LoginPage",
   "kind": "Plantilla",
-  "source": "src/page_templates/account/LoginPage/index.js",
-  "implementation": "src/page_templates/account/LoginPage/LoginPageForm.js",
-  "implementationCode": "import React from \"react\"\nimport FormTextInput from \"../../../forms/FormTextInput.react\"\nimport FormCard from \"../../../forms/FormCard.react\"\nimport StandaloneFormPage from \"../../StandaloneFormPage.react\"\n\nexport default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children } = {}) {\n\n    const defaultStrings = {\n        title: \"Login to your Account\",\n        buttonText: \"Login\",\n        emailLabel: \"Email Address\",\n        emailPlaceholder: \"Enter email\",\n        passwordLabel: \"Password\",\n        passwordPlaceholder: \"Password\",\n    }\n\n    return (\n        <StandaloneFormPage\n            imageURL={imageURL}\n            page=\"login\"\n        >\n            <FormCard\n                buttonText={strings.buttonText || defaultStrings.buttonText}\n                title={strings.title || defaultStrings.title}\n                onSubmit={onSubmit}\n                action={action}\n                method={method}\n            >\n                <FormTextInput\n                    name=\"email\"\n                    label={strings.emailLabel || defaultStrings.emailLabel}\n                    placeholder={strings.emailPlaceholder || defaultStrings.emailPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.email}\n                    error={errors && errors.email}\n                />\n                <FormTextInput\n                    name=\"password\"\n                    type=\"password\"\n                    label={strings.passwordLabel || defaultStrings.passwordLabel}\n                    placeholder={strings.passwordPlaceholder || defaultStrings.passwordPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.password}\n                    error={errors && errors.password}\n                />\n            </FormCard>\n            {children}\n        </StandaloneFormPage>\n    )\n}",
+  "source": "src/page_templates/account/LoginPage/index.ts",
+  "implementation": "src/page_templates/account/LoginPage/LoginPageForm.tsx",
+  "implementationCode": "import React from \"react\"\nimport FormTextInput from \"../../../forms/FormTextInput.react\"\nimport FormCard from \"../../../forms/FormCard.react\"\nimport StandaloneFormPage from \"../../StandaloneFormPage.react\"\nimport defaultStrings from \"./LoginPage.strings\"\nimport type { LoginPageStrings } from \"./LoginPage.strings\"\n\nexport type LoginPageValues = {\n  readonly email?: string;\n  readonly password?: string;\n};\n\nexport type LoginPageProps = {\n  readonly imageURL?: string;\n  readonly action?: string;\n  readonly method?: string;\n  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;\n  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;\n  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;\n  readonly values?: LoginPageValues;\n  readonly strings?: LoginPageStrings;\n  readonly errors?: LoginPageValues;\n  readonly children?: React.ReactNode;\n};\n\nexport default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children }: LoginPageProps = {}): React.ReactElement {\n\n    return (\n        <StandaloneFormPage\n            imageURL={imageURL}\n            page=\"login\"\n        >\n            <FormCard\n                buttonText={strings.buttonText || defaultStrings.buttonText}\n                title={strings.title || defaultStrings.title}\n                onSubmit={onSubmit}\n                action={action}\n                method={method}\n            >\n                <FormTextInput\n                    name=\"email\"\n                    label={strings.emailLabel || defaultStrings.emailLabel}\n                    placeholder={strings.emailPlaceholder || defaultStrings.emailPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.email}\n                    error={errors && errors.email}\n                />\n                <FormTextInput\n                    name=\"password\"\n                    type=\"password\"\n                    label={strings.passwordLabel || defaultStrings.passwordLabel}\n                    placeholder={strings.passwordPlaceholder || defaultStrings.passwordPlaceholder}\n                    onChange={onChange}\n                    onBlur={onBlur}\n                    value={values && values.password}\n                    error={errors && errors.password}\n                />\n            </FormCard>\n            {children}\n        </StandaloneFormPage>\n    )\n}",
   "props": [
     {
-      "name": "imageURL"
+      "name": "imageURL",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "action"
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "method"
+      "name": "method",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onSubmit"
+      "name": "onSubmit",
+      "type": "React.FormEventHandler<HTMLFormElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onChange"
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onBlur"
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "values"
+      "name": "values",
+      "type": "LoginPageValues",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "strings",
-      "default": "{}",
-      "optional": true
+      "type": "LoginPageStrings",
+      "optional": true,
+      "description": "",
+      "default": "{}"
     },
     {
-      "name": "errors"
+      "name": "errors",
+      "type": "LoginPageValues",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "children"
+      "name": "children",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -55,7 +84,10 @@
     "behavior": [
       "Recibe values/errors y callbacks onChange, onBlur y onSubmit; strings personaliza los textos.",
       "No autentica, almacena credenciales ni realiza llamadas a un servidor.",
-      "imageURL configura la imagen de la página contenedora."
+      "imageURL configura la imagen de la página contenedora.",
+      "El export público utiliza LoginPageForm, tipado en TypeScript. Muestra errors directamente, sin filtrarlos por touched. Se conserva la otra implementación interna, también tipada, sin cambiar el export.",
+      "children se muestra después del formulario. La página conserva la clase login. Solo se reenvían los callbacks onChange/onBlur de los inputs y onSubmit del formulario.",
+      "strings permite reemplazar textos individuales. Una cadena vacía utiliza el texto predeterminado, por el operador || heredado. No se añade validación automática de email ni de contraseña."
     ],
     "example": "<LoginPage values={{ email: \"\", password: \"\" }} errors={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   }

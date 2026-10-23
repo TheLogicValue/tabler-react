@@ -1,40 +1,36 @@
-// @flow
-
 import * as React from "react";
 
-import { FormCard, FormTextInput, StandaloneFormPage } from "../../../";
+import FormCard from "../../../forms/FormCard.react";
+import FormTextInput from "../../../forms/FormTextInput.react";
+import StandaloneFormPage from "../../StandaloneFormPage.react";
 import withTouchedErrors from "../../../helpers/withTouchedErrors.react";
 
 import defaultStrings from "./LoginPage.strings";
-import type { stringTypes } from "./LoginPage.strings";
-import type { FormEvents, FocusEvents } from "../../../";
+import type { LoginPageStrings } from "./LoginPage.strings";
 
-type fieldTypes = {|
-  email?: string,
-  password?: string,
-|};
+export type LoginPageValues = {
+  readonly email?: string;
+  readonly password?: string;
+};
 
-type touchedTypes = {|
-  email?: boolean,
-  password?: boolean,
-|};
-
-type Props = {|
-  ...FormEvents,
-  ...FocusEvents,
-  +strings?: stringTypes,
-  +action?: string,
-  +method?: string,
-  +values?: fieldTypes,
-  +errors?: fieldTypes,
-  +touched?: touchedTypes,
-|};
+export type LoginPageProps = {
+  readonly strings?: LoginPageStrings;
+  readonly imageURL?: string;
+  readonly action?: string;
+  readonly method?: string;
+  readonly values?: LoginPageValues;
+  readonly errors?: LoginPageValues;
+  readonly touched?: Readonly<Partial<Record<keyof LoginPageValues, boolean>>>;
+  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;
+};
 
 /**
  * A login page
  * Can be easily wrapped with form libraries like formik and redux-form
  */
-function LoginPage(props: Props): React.Node {
+function LoginPage(props: LoginPageProps): React.ReactElement {
   const {
     action,
     method,
@@ -84,7 +80,7 @@ function LoginPage(props: Props): React.Node {
   );
 }
 
-const LoginPageWithTouchedErrors: React.ComponentType<Props> = withTouchedErrors(
+const LoginPageWithTouchedErrors: React.ComponentType<LoginPageProps> = withTouchedErrors(
   ["email", "password"]
 )(LoginPage);
 

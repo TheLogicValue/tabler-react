@@ -1,4 +1,3 @@
-//@flow
 const strings = {
   title: "Forgot Password",
   buttonText: "Request Password Change",
@@ -10,4 +9,5 @@ const strings = {
 
 export default strings;
 
-export type stringTypes = { [$Keys<typeof strings>]: string };
+export type ForgotPasswordPageStrings = Partial<Record<keyof typeof strings, string>>;
+export type stringTypes = ForgotPasswordPageStrings;

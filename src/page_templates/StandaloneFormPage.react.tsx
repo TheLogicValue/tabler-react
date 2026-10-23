@@ -1,6 +1,11 @@
-// @flow
 import * as React from "react"
-export default function StandaloneFormPage({children, imageURL, page = ""}) {
+export type StandaloneFormPageProps = {
+  readonly children?: React.ReactNode;
+  readonly imageURL?: string;
+  readonly page?: string;
+};
+
+export default function StandaloneFormPage({children, imageURL, page = ""}: StandaloneFormPageProps): React.ReactElement {
   return (
     <div className={"page " + page}>
       <div className="page-single">

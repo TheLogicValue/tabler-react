@@ -1,50 +1,39 @@
-// @flow
-
 import * as React from "react";
 
-import {
-  FormCard,
-  FormTextInput,
-  FormCheckboxInput,
-  StandaloneFormPage,
-} from "../../../";
+import FormCard from "../../../forms/FormCard.react";
+import FormTextInput from "../../../forms/FormTextInput.react";
+import FormCheckboxInput from "../../../forms/FormCheckboxInput.react";
+import StandaloneFormPage from "../../StandaloneFormPage.react";
 import withTouchedErrors from "../../../helpers/withTouchedErrors.react";
 
 import defaultStrings from "./RegisterPage.strings";
-import type { stringTypes } from "./RegisterPage.strings";
+import type { RegisterPageStrings } from "./RegisterPage.strings";
 
-import type { FormEvents, FocusEvents } from "../../../";
+export type RegisterPageValues = {
+  readonly name?: string;
+  readonly email?: string;
+  readonly password?: string;
+  readonly terms?: string;
+};
 
-type fieldTypes = {|
-  name?: string,
-  email?: string,
-  password?: string,
-  terms?: string,
-|};
-
-type touchedTypes = {|
-  name?: boolean,
-  email?: boolean,
-  password?: boolean,
-  terms?: boolean,
-|};
-
-type Props = {|
-  ...FormEvents,
-  ...FocusEvents,
-  +strings?: stringTypes,
-  +action?: string,
-  +method?: string,
-  +values?: fieldTypes,
-  +errors?: fieldTypes,
-  +touched?: touchedTypes,
-|};
+export type RegisterPageProps = {
+  readonly strings?: RegisterPageStrings;
+  readonly imageURL?: string;
+  readonly action?: string;
+  readonly method?: string;
+  readonly values?: RegisterPageValues;
+  readonly errors?: RegisterPageValues;
+  readonly touched?: Readonly<Partial<Record<keyof RegisterPageValues, boolean>>>;
+  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;
+};
 
 /**
  * A register page
  * Can be easily wrapped with form libraries like formik and redux-form
  */
-function RegisterPage(props: Props): React.Node {
+function RegisterPage(props: RegisterPageProps): React.ReactElement {
   const {
     action,
     method,
@@ -112,7 +101,7 @@ function RegisterPage(props: Props): React.Node {
   );
 }
 
-const RegisterPageWithTouchedErrors: React.ComponentType<Props> = withTouchedErrors(
+const RegisterPageWithTouchedErrors: React.ComponentType<RegisterPageProps> = withTouchedErrors(
   ["name", "email", "password", "terms"]
 )(RegisterPage);
 

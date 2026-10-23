@@ -104,7 +104,7 @@
     {
       "name": "DefaultErrorPage",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/DefaultErrorPage.react.js"
+      "source": "src/page_templates/errors/DefaultErrorPage.react.tsx"
     },
     {
       "name": "Dimmer",
@@ -134,37 +134,37 @@
     {
       "name": "Error400Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error400Page.react.js"
+      "source": "src/page_templates/errors/Error400Page.react.tsx"
     },
     {
       "name": "Error401Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error401Page.react.js"
+      "source": "src/page_templates/errors/Error401Page.react.tsx"
     },
     {
       "name": "Error403Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error403Page.react.js"
+      "source": "src/page_templates/errors/Error403Page.react.tsx"
     },
     {
       "name": "Error404Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error404Page.react.js"
+      "source": "src/page_templates/errors/Error404Page.react.tsx"
     },
     {
       "name": "Error500Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error500Page.react.js"
+      "source": "src/page_templates/errors/Error500Page.react.tsx"
     },
     {
       "name": "Error503Page",
       "kind": "Plantilla",
-      "source": "src/page_templates/errors/Error503Page.react.js"
+      "source": "src/page_templates/errors/Error503Page.react.tsx"
     },
     {
       "name": "ForgotPasswordPage",
       "kind": "Plantilla",
-      "source": "src/page_templates/account/ForgotPasswordPage/index.js"
+      "source": "src/page_templates/account/ForgotPasswordPage/index.ts"
     },
     {
       "name": "Form",
@@ -234,7 +234,7 @@
     {
       "name": "LoginPage",
       "kind": "Plantilla",
-      "source": "src/page_templates/account/LoginPage/index.js"
+      "source": "src/page_templates/account/LoginPage/index.ts"
     },
     {
       "name": "Media",
@@ -324,7 +324,7 @@
     {
       "name": "RegisterPage",
       "kind": "Plantilla",
-      "source": "src/page_templates/account/RegisterPage/index.js"
+      "source": "src/page_templates/account/RegisterPage/index.ts"
     },
     {
       "name": "RouterContextProvider",
@@ -364,7 +364,7 @@
     {
       "name": "StandaloneFormPage",
       "kind": "Plantilla",
-      "source": "src/page_templates/StandaloneFormPage.react.js"
+      "source": "src/page_templates/StandaloneFormPage.react.tsx"
     },
     {
       "name": "StatsCard",

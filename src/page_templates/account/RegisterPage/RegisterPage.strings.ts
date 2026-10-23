@@ -1,4 +1,3 @@
-//@flow
 const strings = {
   title: "Create New Account",
   buttonText: "Create Account",
@@ -13,4 +12,5 @@ const strings = {
 
 export default strings;
 
-export type stringTypes = { [$Keys<typeof strings>]: string };
+export type RegisterPageStrings = Partial<Record<keyof typeof strings, string>>;
+export type stringTypes = RegisterPageStrings;

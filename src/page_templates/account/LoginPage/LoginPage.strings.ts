@@ -1,4 +1,3 @@
-//@flow
 const strings = {
   title: "Login to your Account",
   buttonText: "Login",
@@ -10,4 +9,5 @@ const strings = {
 
 export default strings;
 
-export type stringTypes = { [$Keys<typeof strings>]: string };
+export type LoginPageStrings = Partial<Record<keyof typeof strings, string>>;
+export type stringTypes = LoginPageStrings;

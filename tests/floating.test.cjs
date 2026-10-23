@@ -364,6 +364,63 @@ test('withTouchedErrors conserva blur, cambios y envío a través de RegisterPag
   assert.deepEqual(fieldErrors, { email: 'Revisar email', name: 'Revisar nombre' })
 })
 
+test('LoginPage conserva inputs controlados, blur y envío sin filtrar errores por touched', async () => {
+  const calls = []
+  function Example() {
+    const [values, setValues] = React.useState({ email: '', password: '' })
+    return React.createElement(components.LoginPage, {
+      values, errors: { email: 'Revisar correo' },
+      onChange: event => {
+        const { name, value } = event.currentTarget
+        calls.push(['change', name, value])
+        setValues(previous => ({ ...previous, [name]: value }))
+      },
+      onBlur: event => calls.push(['blur', event.currentTarget.name]),
+      onSubmit: event => { event.preventDefault(); calls.push(['submit', event.currentTarget.tagName]) },
+    }, React.createElement('p', null, 'Ayuda adicional'))
+  }
+  await render(React.createElement(Example))
+  assert.equal(container.querySelector('.invalid-feedback').textContent, 'Revisar correo')
+  const email = container.querySelector('input[name=email]')
+  await changeControl(email, 'ana@example.com')
+  await changeControl(container.querySelector('input[name=password]'), 'secret')
+  await React.act(async () => email.dispatchEvent(new window.FocusEvent('focusout', { bubbles: true })))
+  await click(container.querySelector('form button'))
+  assert.deepEqual(calls, [['change', 'email', 'ana@example.com'], ['change', 'password', 'secret'], ['blur', 'email'], ['submit', 'FORM']])
+  assert.equal(email.value, 'ana@example.com')
+  assert.equal(container.querySelector('form').nextElementSibling.textContent, 'Ayuda adicional')
+})
+
+test('RegisterPage mantiene la selección nativa de condiciones y su evento checked', async () => {
+  const states = []
+  await render(React.createElement(components.RegisterPage, {
+    values: { terms: 'accepted' },
+    onChange: event => { if (event.currentTarget.name === 'terms') states.push([event.currentTarget.checked, event.currentTarget.value]) },
+  }))
+  const checkbox = container.querySelector('input[name=terms]')
+  assert.equal(checkbox.checked, false)
+  await click(checkbox)
+  assert.equal(checkbox.checked, true)
+  await click(checkbox)
+  assert.deepEqual(states, [[true, 'accepted'], [false, 'accepted']])
+})
+
+test('Todas las plantillas de error vuelven al historial y previenen la acción nativa', async t => {
+  let backs = 0
+  t.mock.method(window.history, 'back', () => { backs++ })
+  for (const name of ['DefaultErrorPage', 'Error400Page', 'Error401Page', 'Error403Page', 'Error404Page', 'Error500Page', 'Error503Page']) {
+    const element = React.createElement(components[name], { action: 'Regresar' })
+    if (!root) await render(element)
+    else await React.act(async () => root.render(element))
+    const button = container.querySelector('button')
+    assert.equal(button.textContent, 'Regresar')
+    const event = new window.MouseEvent('click', { bubbles: true, cancelable: true })
+    await React.act(async () => button.dispatchEvent(event))
+    assert.equal(event.defaultPrevented, true)
+  }
+  assert.equal(backs, 7)
+})
+
 test('TabbedCard mantiene el cambio de panel y solo usa initialTab al montar', async () => {
   const { TabbedCard, Tab } = components
   const ref = React.createRef()

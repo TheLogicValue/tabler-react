@@ -570,10 +570,11 @@
   "DefaultErrorPage": {
     "summary": "Plantilla visual genérica de error.",
     "behavior": [
-      "Representa título, subtítulo, detalles y una acción.",
+      "Plantilla tipada en TypeScript. title, subtitle, details y action son textos; details solo se muestra cuando tiene contenido.",
+      "action cambia el texto del botón que llama a window.history.back() e impide la acción nativa. No admite un enlace ni un callback de navegación personalizado.",
       "No cambia el estado HTTP ni intercepta errores de JavaScript; la aplicación decide cuándo mostrarla."
     ],
-    "example": "<DefaultErrorPage title=\"No disponible\" subtitle=\"No se pudo cargar la información\" details=\"Vuelve a intentarlo.\" action={<a href=\"/\">Volver</a>} />"
+    "example": "<DefaultErrorPage title=\"No disponible\" subtitle=\"No se pudo cargar la información\" details=\"Vuelve a intentarlo.\" action=\"Volver\" />"
   },
   "Dimmer": {
     "summary": "Atenuación visual de un bloque con un indicador opcional.",
@@ -611,7 +612,9 @@
     "behavior": [
       "Muestra el campo email y textos personalizables mediante strings.",
       "Recibe values, errors y touched desde la lógica del consumidor; el helper heredado filtra errores según campos tocados.",
-      "No envía correos ni implementa recuperación de cuentas. onSubmit conecta con la aplicación."
+      "No envía correos ni implementa recuperación de cuentas. onSubmit conecta con la aplicación.",
+      "Plantilla tipada en TypeScript. El error de email solo se muestra cuando touched.email es true. strings permite reemplazar textos individuales, incluidas las instrucciones; las cadenas vacías utilizan los textos predeterminados.",
+      "imageURL configura el logo; los callbacks corresponden a HTMLInputElement (onChange/onBlur) y HTMLFormElement (onSubmit). No se reenvía children ni otros atributos HTML."
     ],
     "example": "<ForgotPasswordPage values={{ email: \"\" }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   },
@@ -848,7 +851,10 @@
     "behavior": [
       "Recibe values/errors y callbacks onChange, onBlur y onSubmit; strings personaliza los textos.",
       "No autentica, almacena credenciales ni realiza llamadas a un servidor.",
-      "imageURL configura la imagen de la página contenedora."
+      "imageURL configura la imagen de la página contenedora.",
+      "El export público utiliza LoginPageForm, tipado en TypeScript. Muestra errors directamente, sin filtrarlos por touched. Se conserva la otra implementación interna, también tipada, sin cambiar el export.",
+      "children se muestra después del formulario. La página conserva la clase login. Solo se reenvían los callbacks onChange/onBlur de los inputs y onSubmit del formulario.",
+      "strings permite reemplazar textos individuales. Una cadena vacía utiliza el texto predeterminado, por el operador || heredado. No se añade validación automática de email ni de contraseña."
     ],
     "example": "<LoginPage values={{ email: \"\", password: \"\" }} errors={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   },
@@ -1037,9 +1043,12 @@
     "behavior": [
       "Incluye nombre, email, contraseña y aceptación de condiciones.",
       "El consumidor proporciona values, errors, touched y callbacks de formulario; strings personaliza los textos.",
-      "El helper heredado gestiona qué errores mostrar, pero no crea una cuenta ni realiza llamadas de red."
+      "El helper heredado gestiona qué errores mostrar, pero no crea una cuenta ni realiza llamadas de red.",
+      "Plantilla tipada en TypeScript. Los errores de nombre, email y contraseña solo aparecen cuando su campo está marcado en touched. No se muestran errores del campo terms.",
+      "values.terms se pasa como value del checkbox (string); no controla checked. Lee event.currentTarget.checked en el callback para conocer la selección. La migración conserva este comportamiento heredado y no añade validación de aceptación de condiciones.",
+      "strings permite reemplazar textos individuales; las cadenas vacías utilizan el valor predeterminado. imageURL configura el logo. No se reenvía children ni otros atributos HTML."
     ],
-    "example": "<RegisterPage values={{ name: \"\", email: \"\", password: \"\", terms: false }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+    "example": "<RegisterPage imageURL=\"/logo-local.svg\" values={{ name: \"\", email: \"\", password: \"\", terms: \"accepted\" }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   },
   "RouterContextProvider": {
     "summary": "Adaptador que comunica la ubicación inicial y los cambios de pathname.",
@@ -1105,7 +1114,9 @@
     "summary": "Contenedor de página para formularios de cuenta.",
     "behavior": [
       "Envuelve children con el layout de formulario independiente.",
-      "imageURL y page personalizan la presentación; no realiza operaciones de cuenta."
+      "imageURL y page personalizan la presentación; no realiza operaciones de cuenta.",
+      "Plantilla tipada en TypeScript. page añade una clase a la raíz page; children se muestra debajo del logo. imageURL, page y children son opcionales.",
+      "Se conserva la estructura page-single/container/row/col-login y la zona de imagen aun cuando no se proporciona imageURL. No se reenvían otros atributos de div ni un alt personalizado."
     ],
     "example": "<StandaloneFormPage imageURL=\"/logo-local.svg\" page=\"login\"><FormCard title=\"Acceso\" buttonText=\"Entrar\"><FormTextInput name=\"email\" label=\"Email\" /></FormCard></StandaloneFormPage>"
   },
@@ -1333,50 +1344,56 @@
   "Error400Page": {
     "summary": "Plantilla visual para presentar un error 400.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error400Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error400Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "Error401Page": {
     "summary": "Plantilla visual para presentar un error 401.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error401Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error401Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "Error403Page": {
     "summary": "Plantilla visual para presentar un error 403.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error403Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error403Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "Error404Page": {
     "summary": "Plantilla visual para presentar un error 404.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error404Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error404Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "Error500Page": {
     "summary": "Plantilla visual para presentar un error 500.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error500Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error500Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "Error503Page": {
     "summary": "Plantilla visual para presentar un error 503.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error503Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error503Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   },
   "PieChart": {
     "summary": "Gráfico circular con valores y nombres preparados por el consumidor.",

@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from "react";
 
 import Container from "../../components/Container.react";
@@ -8,16 +6,17 @@ import Header from "../../components/Header/Header.react";
 import Icon from "../../components/Icon/Icon.react";
 import Button from "../../components/Button/Button.react";
 
-export type Props = {|
-  +title?: string,
-  +subtitle?: string,
-  +details?: string,
-  +action?: string,
-|};
+export type DefaultErrorPageProps = {
+  readonly title?: string,
+  readonly subtitle?: string,
+  readonly details?: string,
+  readonly action?: string,
+};
+export type Props = DefaultErrorPageProps;
 
-function DefaultErrorPage(props: Props): React.Node {
+function DefaultErrorPage(props: DefaultErrorPageProps): React.ReactElement {
   const _onBackClick = (
-    event: SyntheticMouseEvent<HTMLInputElement>
+    event: React.MouseEvent<HTMLElement>
   ): boolean => {
     window.history.back();
     event.preventDefault();

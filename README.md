@@ -70,7 +70,7 @@ El `.npmrc` de la raíz activa `legacy-peer-deps` porque los plugins de ESLint t
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles JavaScript/JSX with Flow and the migrated TypeScript/TSX files. The parser is selected by file extension; each file uses one type syntax.
 
-La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Badge y la familia Grid están en TypeScript; se conservan `@babel/preset-flow`, Hermes y `flow-typed` para las familias pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
+La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Las implementaciones públicas de componentes y plantillas de páginas están en TypeScript; se conservan `@babel/preset-flow`, Hermes y `flow-typed` hasta revisar las entradas públicas y los archivos auxiliares pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
 
 Los scripts y configuraciones conservados tienen estas funciones:
 
@@ -331,6 +331,8 @@ BlogCard, ContactCard, DoubleCard, ProgressCard, StampCard, StatsCard, StoreCard
 
 La familia Timeline está migrada con Item, ItemTime, ItemBadge, ItemTitle e ItemDescription. Se mantienen sus condiciones de título, descripción, insignia, hora y contenido. Las fichas documentan las limitaciones heredadas, incluida la repetición de children cuando se utiliza una cadena, className sin efecto en PricingCard/GalleryCard.Details y las propiedades antiguas sin uso de BlogCard. Se corrige únicamente la URL CSS incompleta del avatar de BlogCard en ambas disposiciones. Las pruebas verifican composición, callbacks, enlaces y pestañas con React 18 y 19; la demo y su cobertura visual siguen siendo independientes de la migración de tipos.
 
+Las once plantillas públicas también están migradas: StandaloneFormPage, DefaultErrorPage, las seis páginas de error y las tres páginas de cuenta LoginPage, RegisterPage y ForgotPasswordPage. Sus propiedades, valores, textos parciales y eventos se comprueban en las fuentes. Se conserva LoginPageForm como implementación del export LoginPage y se migra también el LoginPage interno anterior, sin sustituirlo ni cambiar su filtrado de errores. RegisterPage y ForgotPasswordPage mantienen el filtro por touched; LoginPage muestra los errores directamente y permite children después del formulario. values.terms sigue siendo el value textual del checkbox, sin controlar checked. action de las páginas de error cambia el texto del botón que vuelve al historial, no su destino. Las fichas reflejan estos límites y las pruebas comprueban entradas, selección, envío y navegación con React 18 y 19.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck
@@ -342,7 +344,7 @@ Se utiliza TypeScript 6.0.3 porque el parser `@typescript-eslint` 8.72.0 declara
 
 El catálogo y las fichas reconocen ambos formatos, incluidos los tipos de propiedades y las APIs de los subcomponentes ya migrados. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18, incluidos los eventos de Icon y el reenvío de propiedades de Text. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
 
-Las familias restantes se migrarán por grupos de dependencias, manteniendo su API. La publicación de declaraciones `.d.ts` y la configuración de `types`/`exports` se abordarán al disponer de una superficie pública coherente; esta etapa no anuncia tipos completos para los otros componentes. Las herramientas de Flow se retirarán cuando ya no tengan usos.
+Queda cerrar las entradas públicas, generar las declaraciones `.d.ts` y configurar `types`/`exports` para los consumidores, además de revisar los archivos auxiliares heredados. Esta etapa todavía no publica declaraciones de tipos. Las herramientas de Flow se retirarán cuando ya no tengan usos.
 
 ## Lint
 

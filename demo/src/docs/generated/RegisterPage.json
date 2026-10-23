@@ -1,16 +1,22 @@
 {
   "name": "RegisterPage",
   "kind": "Plantilla",
-  "source": "src/page_templates/account/RegisterPage/index.js",
-  "implementation": "src/page_templates/account/RegisterPage/RegisterPage.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport {\n  FormCard,\n  FormTextInput,\n  FormCheckboxInput,\n  StandaloneFormPage,\n} from \"../../../\";\nimport withTouchedErrors from \"../../../helpers/withTouchedErrors.react\";\n\nimport defaultStrings from \"./RegisterPage.strings\";\nimport type { stringTypes } from \"./RegisterPage.strings\";\n\nimport type { FormEvents, FocusEvents } from \"../../../\";\n\ntype fieldTypes = {|\n  name?: string,\n  email?: string,\n  password?: string,\n  terms?: string,\n|};\n\ntype touchedTypes = {|\n  name?: boolean,\n  email?: boolean,\n  password?: boolean,\n  terms?: boolean,\n|};\n\ntype Props = {|\n  ...FormEvents,\n  ...FocusEvents,\n  +strings?: stringTypes,\n  +action?: string,\n  +method?: string,\n  +values?: fieldTypes,\n  +errors?: fieldTypes,\n  +touched?: touchedTypes,\n|};\n\n/**\n * A register page\n * Can be easily wrapped with form libraries like formik and redux-form\n */\nfunction RegisterPage(props: Props): React.Node {\n  const {\n    action,\n    method,\n    onSubmit,\n    onChange,\n    onBlur,\n    values,\n    strings = {},\n    errors,\n    imageURL,\n  } = props;\n\n  return (\n    <StandaloneFormPage imageURL={imageURL}>\n      <FormCard\n        buttonText={strings.buttonText || defaultStrings.buttonText}\n        title={strings.title || defaultStrings.title}\n        onSubmit={onSubmit}\n        action={action}\n        method={method}\n      >\n        <FormTextInput\n          name=\"name\"\n          label={strings.nameLabel || defaultStrings.nameLabel}\n          placeholder={\n            strings.namePlaceholder || defaultStrings.namePlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.name}\n          error={errors && errors.name}\n        />\n        <FormTextInput\n          name=\"email\"\n          label={strings.emailLabel || defaultStrings.emailLabel}\n          placeholder={\n            strings.emailPlaceholder || defaultStrings.emailPlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.email}\n          error={errors && errors.email}\n        />\n        <FormTextInput\n          name=\"password\"\n          type=\"password\"\n          label={strings.passwordLabel || defaultStrings.passwordLabel}\n          placeholder={\n            strings.passwordPlaceholder || defaultStrings.passwordPlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.password}\n          error={errors && errors.password}\n        />\n        <FormCheckboxInput\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.terms}\n          name=\"terms\"\n          label={strings.termsLabel || defaultStrings.termsLabel}\n        />\n      </FormCard>\n    </StandaloneFormPage>\n  );\n}\n\nconst RegisterPageWithTouchedErrors: React.ComponentType<Props> = withTouchedErrors(\n  [\"name\", \"email\", \"password\", \"terms\"]\n)(RegisterPage);\n\nexport default RegisterPageWithTouchedErrors;\n",
+  "source": "src/page_templates/account/RegisterPage/index.ts",
+  "implementation": "src/page_templates/account/RegisterPage/RegisterPage.react.tsx",
+  "implementationCode": "import * as React from \"react\";\n\nimport FormCard from \"../../../forms/FormCard.react\";\nimport FormTextInput from \"../../../forms/FormTextInput.react\";\nimport FormCheckboxInput from \"../../../forms/FormCheckboxInput.react\";\nimport StandaloneFormPage from \"../../StandaloneFormPage.react\";\nimport withTouchedErrors from \"../../../helpers/withTouchedErrors.react\";\n\nimport defaultStrings from \"./RegisterPage.strings\";\nimport type { RegisterPageStrings } from \"./RegisterPage.strings\";\n\nexport type RegisterPageValues = {\n  readonly name?: string;\n  readonly email?: string;\n  readonly password?: string;\n  readonly terms?: string;\n};\n\nexport type RegisterPageProps = {\n  readonly strings?: RegisterPageStrings;\n  readonly imageURL?: string;\n  readonly action?: string;\n  readonly method?: string;\n  readonly values?: RegisterPageValues;\n  readonly errors?: RegisterPageValues;\n  readonly touched?: Readonly<Partial<Record<keyof RegisterPageValues, boolean>>>;\n  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;\n  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;\n  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;\n};\n\n/**\n * A register page\n * Can be easily wrapped with form libraries like formik and redux-form\n */\nfunction RegisterPage(props: RegisterPageProps): React.ReactElement {\n  const {\n    action,\n    method,\n    onSubmit,\n    onChange,\n    onBlur,\n    values,\n    strings = {},\n    errors,\n    imageURL,\n  } = props;\n\n  return (\n    <StandaloneFormPage imageURL={imageURL}>\n      <FormCard\n        buttonText={strings.buttonText || defaultStrings.buttonText}\n        title={strings.title || defaultStrings.title}\n        onSubmit={onSubmit}\n        action={action}\n        method={method}\n      >\n        <FormTextInput\n          name=\"name\"\n          label={strings.nameLabel || defaultStrings.nameLabel}\n          placeholder={\n            strings.namePlaceholder || defaultStrings.namePlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.name}\n          error={errors && errors.name}\n        />\n        <FormTextInput\n          name=\"email\"\n          label={strings.emailLabel || defaultStrings.emailLabel}\n          placeholder={\n            strings.emailPlaceholder || defaultStrings.emailPlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.email}\n          error={errors && errors.email}\n        />\n        <FormTextInput\n          name=\"password\"\n          type=\"password\"\n          label={strings.passwordLabel || defaultStrings.passwordLabel}\n          placeholder={\n            strings.passwordPlaceholder || defaultStrings.passwordPlaceholder\n          }\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.password}\n          error={errors && errors.password}\n        />\n        <FormCheckboxInput\n          onChange={onChange}\n          onBlur={onBlur}\n          value={values && values.terms}\n          name=\"terms\"\n          label={strings.termsLabel || defaultStrings.termsLabel}\n        />\n      </FormCard>\n    </StandaloneFormPage>\n  );\n}\n\nconst RegisterPageWithTouchedErrors: React.ComponentType<RegisterPageProps> = withTouchedErrors(\n  [\"name\", \"email\", \"password\", \"terms\"]\n)(RegisterPage);\n\nexport default RegisterPageWithTouchedErrors;\n",
   "props": [
     {
       "name": "strings",
-      "type": "stringTypes",
+      "type": "RegisterPageStrings",
       "optional": true,
       "description": "",
       "default": "{}"
+    },
+    {
+      "name": "imageURL",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "action",
@@ -26,33 +32,39 @@
     },
     {
       "name": "values",
-      "type": "fieldTypes",
+      "type": "RegisterPageValues",
       "optional": true,
       "description": ""
     },
     {
       "name": "errors",
-      "type": "fieldTypes",
+      "type": "RegisterPageValues",
       "optional": true,
       "description": ""
     },
     {
       "name": "touched",
-      "type": "touchedTypes",
+      "type": "Readonly<Partial<Record<keyof RegisterPageValues, boolean>>>",
       "optional": true,
       "description": ""
     },
     {
-      "name": "onSubmit"
+      "name": "onSubmit",
+      "type": "React.FormEventHandler<HTMLFormElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onChange"
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onBlur"
-    },
-    {
-      "name": "imageURL"
+      "name": "onBlur",
+      "type": "React.FocusEventHandler<HTMLInputElement>",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -72,8 +84,11 @@
     "behavior": [
       "Incluye nombre, email, contraseña y aceptación de condiciones.",
       "El consumidor proporciona values, errors, touched y callbacks de formulario; strings personaliza los textos.",
-      "El helper heredado gestiona qué errores mostrar, pero no crea una cuenta ni realiza llamadas de red."
+      "El helper heredado gestiona qué errores mostrar, pero no crea una cuenta ni realiza llamadas de red.",
+      "Plantilla tipada en TypeScript. Los errores de nombre, email y contraseña solo aparecen cuando su campo está marcado en touched. No se muestran errores del campo terms.",
+      "values.terms se pasa como value del checkbox (string); no controla checked. Lee event.currentTarget.checked en el callback para conocer la selección. La migración conserva este comportamiento heredado y no añade validación de aceptación de condiciones.",
+      "strings permite reemplazar textos individuales; las cadenas vacías utilizan el valor predeterminado. imageURL configura el logo. No se reenvía children ni otros atributos HTML."
     ],
-    "example": "<RegisterPage values={{ name: \"\", email: \"\", password: \"\", terms: false }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
+    "example": "<RegisterPage imageURL=\"/logo-local.svg\" values={{ name: \"\", email: \"\", password: \"\", terms: \"accepted\" }} errors={{}} touched={{}} onChange={handleChange} onBlur={handleBlur} onSubmit={handleSubmit} />"
   }
 }

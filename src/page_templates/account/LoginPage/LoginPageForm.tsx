@@ -2,17 +2,28 @@ import React from "react"
 import FormTextInput from "../../../forms/FormTextInput.react"
 import FormCard from "../../../forms/FormCard.react"
 import StandaloneFormPage from "../../StandaloneFormPage.react"
+import defaultStrings from "./LoginPage.strings"
+import type { LoginPageStrings } from "./LoginPage.strings"
 
-export default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children } = {}) {
+export type LoginPageValues = {
+  readonly email?: string;
+  readonly password?: string;
+};
 
-    const defaultStrings = {
-        title: "Login to your Account",
-        buttonText: "Login",
-        emailLabel: "Email Address",
-        emailPlaceholder: "Enter email",
-        passwordLabel: "Password",
-        passwordPlaceholder: "Password",
-    }
+export type LoginPageProps = {
+  readonly imageURL?: string;
+  readonly action?: string;
+  readonly method?: string;
+  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  readonly values?: LoginPageValues;
+  readonly strings?: LoginPageStrings;
+  readonly errors?: LoginPageValues;
+  readonly children?: React.ReactNode;
+};
+
+export default function LoginPageForm({ imageURL, action, method, onSubmit, onChange, onBlur, values, strings = {}, errors, children }: LoginPageProps = {}): React.ReactElement {
 
     return (
         <StandaloneFormPage

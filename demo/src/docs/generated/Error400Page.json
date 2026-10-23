@@ -1,9 +1,9 @@
 {
   "name": "Error400Page",
   "kind": "Plantilla",
-  "source": "src/page_templates/errors/Error400Page.react.js",
-  "implementation": "src/page_templates/errors/Error400Page.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\n\nimport DefaultErrorPage from \"./DefaultErrorPage.react\";\nimport type { Props as DefaultErrorProps } from \"./DefaultErrorPage.react\";\n\nfunction Error400Page({\n  title = \"400\",\n  subtitle = \"Oops... You just found an error page...\",\n  details = \"We are sorry but your request contains bad syntax and cannot be fulfilled...\",\n  action,\n}: DefaultErrorProps): React.Node {\n  return (\n    <DefaultErrorPage\n      title={title}\n      subtitle={subtitle}\n      details={details}\n      action={action}\n    />\n  );\n}\n\nexport default Error400Page;\n",
+  "source": "src/page_templates/errors/Error400Page.react.tsx",
+  "implementation": "src/page_templates/errors/Error400Page.react.tsx",
+  "implementationCode": "import * as React from \"react\";\n\nimport DefaultErrorPage from \"./DefaultErrorPage.react\";\nimport type { DefaultErrorPageProps } from \"./DefaultErrorPage.react\";\n\nexport type Error400PageProps = DefaultErrorPageProps;\n\nfunction Error400Page({\n  title = \"400\",\n  subtitle = \"Oops... You just found an error page...\",\n  details = \"We are sorry but your request contains bad syntax and cannot be fulfilled...\",\n  action,\n}: Error400PageProps): React.ReactElement {\n  return (\n    <DefaultErrorPage\n      title={title}\n      subtitle={subtitle}\n      details={details}\n      action={action}\n    />\n  );\n}\n\nexport default Error400Page;\n",
   "props": [
     {
       "name": "title",
@@ -42,9 +42,10 @@
   "guide": {
     "summary": "Plantilla visual para presentar un error 400.",
     "behavior": [
-      "Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action.",
-      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor."
+      "Plantilla tipada en TypeScript. Proporciona textos predeterminados que puedes reemplazar con title, subtitle, details y action; todos son strings.",
+      "Solo representa contenido: no configura el estado HTTP ni intercepta respuestas del servidor.",
+      "action solo cambia el texto del botón de volver al historial, heredado de DefaultErrorPage. No configura una ruta ni permite sustituirlo por un enlace."
     ],
-    "example": "<Error400Page details=\"Mensaje adaptado a la aplicación.\" action={<a href=\"/\">Volver al inicio</a>} />"
+    "example": "<Error400Page details=\"Mensaje adaptado a la aplicación.\" action=\"Volver\" />"
   }
 }

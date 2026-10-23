@@ -24,6 +24,24 @@ test('Las fichas corresponden al paquete público y sus subcomponentes existen',
 })
 
 test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () => {
+  for (const name of ['DefaultErrorPage', 'Error400Page', 'Error401Page', 'Error403Page', 'Error404Page', 'Error500Page', 'Error503Page']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/page_templates/errors/${name}.react.tsx`)
+    assert.deepEqual(doc.props.map(prop => prop.name).sort(), ['action', 'details', 'subtitle', 'title'])
+    assert.ok(doc.props.every(prop => prop.type === 'string' && prop.optional))
+  }
+  assert.equal(document('StandaloneFormPage').implementation, 'src/page_templates/StandaloneFormPage.react.tsx')
+  assert.equal(document('StandaloneFormPage').props.find(prop => prop.name === 'children').type, 'React.ReactNode')
+  for (const name of ['LoginPage', 'RegisterPage', 'ForgotPasswordPage']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/page_templates/account/${name}/${name === 'LoginPage' ? 'LoginPageForm' : name + '.react'}.tsx`)
+    assert.ok(doc.props.every(prop => prop.type), name + ': todos los props tienen tipo')
+    assert.equal(doc.props.find(prop => prop.name === 'imageURL').type, 'string')
+    assert.equal(doc.props.find(prop => prop.name === 'onSubmit').type, 'React.FormEventHandler<HTMLFormElement>')
+    assert.equal(doc.props.find(prop => prop.name === 'onChange').type, 'React.ChangeEventHandler<HTMLInputElement>')
+    assert.equal(doc.props.some(prop => prop.name === 'touched'), name !== 'LoginPage')
+    assert.equal(doc.props.some(prop => prop.name === 'children'), name === 'LoginPage')
+  }
   assert.equal(document('Modal').implementation, 'src/components/Modal/Modal.tsx')
   assert.ok(document('RegisterPage').props.some(prop => prop.name === 'values'))
   assert.ok(document('FormTextInput').props.some(prop => prop.name === 'name'))

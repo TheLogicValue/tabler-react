@@ -1,38 +1,35 @@
-// @flow
-
 import * as React from "react";
 
-import { FormCard, FormTextInput, StandaloneFormPage } from "../../../";
+import FormCard from "../../../forms/FormCard.react";
+import FormTextInput from "../../../forms/FormTextInput.react";
+import StandaloneFormPage from "../../StandaloneFormPage.react";
 import withTouchedErrors from "../../../helpers/withTouchedErrors.react";
 
 import defaultStrings from "./ForgotPasswordPage.strings";
-import type { stringTypes } from "./ForgotPasswordPage.strings";
-import type { FormEvents, FocusEvents } from "../../../";
+import type { ForgotPasswordPageStrings } from "./ForgotPasswordPage.strings";
 
-type fieldTypes = {|
-  email?: string,
-|};
+export type ForgotPasswordPageValues = {
+  readonly email?: string;
+};
 
-type touchedTypes = {|
-  email?: boolean,
-|};
-
-type Props = {|
-  ...FormEvents,
-  ...FocusEvents,
-  +strings?: stringTypes,
-  +action?: string,
-  +method?: string,
-  +values?: fieldTypes,
-  +errors?: fieldTypes,
-  +touched?: touchedTypes,
-|};
+export type ForgotPasswordPageProps = {
+  readonly strings?: ForgotPasswordPageStrings;
+  readonly imageURL?: string;
+  readonly action?: string;
+  readonly method?: string;
+  readonly values?: ForgotPasswordPageValues;
+  readonly errors?: ForgotPasswordPageValues;
+  readonly touched?: Readonly<Partial<Record<keyof ForgotPasswordPageValues, boolean>>>;
+  readonly onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  readonly onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly onBlur?: React.FocusEventHandler<HTMLInputElement>;
+};
 
 /**
  * A forgot password page
  * Can be easily wrapped with form libraries like formik and redux-form
  */
-function ForgotPasswordPage(props: Props): React.Node {
+function ForgotPasswordPage(props: ForgotPasswordPageProps): React.ReactElement {
   const {
     action,
     method,
@@ -73,7 +70,7 @@ function ForgotPasswordPage(props: Props): React.Node {
   );
 }
 
-const ForgotPasswordPageWithTouchedErrors: React.ComponentType<Props> = withTouchedErrors(
+const ForgotPasswordPageWithTouchedErrors: React.ComponentType<ForgotPasswordPageProps> = withTouchedErrors(
   ["email"]
 )(ForgotPasswordPage);
 
