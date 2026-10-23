@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 import List from "../List";
@@ -8,15 +6,16 @@ import Text from "../Text/Text.react";
 import CommentList from "./CommentList.react";
 import CommentReply from "./CommentReply.react";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +avatarURL?: string,
-  +name?: string,
-  +date?: string,
-  +text?: string,
-  +replies?: React.Node,
-|};
+export type CommentProps = {
+  /** Propiedad heredada sin representación; utiliza text y replies. */
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly avatarURL?: string;
+  readonly name?: string;
+  readonly date?: string;
+  readonly text?: string;
+  readonly replies?: React.ReactNode;
+};
 
 function Comment({
   className,
@@ -26,7 +25,7 @@ function Comment({
   date,
   text,
   replies,
-}: Props): React.Node {
+}: CommentProps): React.ReactElement {
   const classes = cn("py-5", className);
 
   return (

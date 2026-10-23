@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type MediaBodyProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function MediaBody({ className, children }: Props): React.Node {
+function MediaBody({ className, children }: MediaBodyProps): React.ReactElement {
   const classes = cn("media-body", className);
 
   return <div className={classes}>{children}</div>;

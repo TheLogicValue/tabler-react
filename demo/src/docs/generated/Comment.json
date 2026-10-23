@@ -1,15 +1,15 @@
 {
   "name": "Comment",
   "kind": "Componente",
-  "source": "src/components/Comment/index.js",
-  "implementation": "src/components/Comment/Comment.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport List from \"../List\";\nimport Media from \"../Media/Media.react\";\nimport Text from \"../Text/Text.react\";\nimport CommentList from \"./CommentList.react\";\nimport CommentReply from \"./CommentReply.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +avatarURL?: string,\n  +name?: string,\n  +date?: string,\n  +text?: string,\n  +replies?: React.Node,\n|};\n\nfunction Comment({\n  className,\n  children,\n  avatarURL,\n  name,\n  date,\n  text,\n  replies,\n}: Props): React.Node {\n  const classes = cn(\"py-5\", className);\n\n  return (\n    <List.GroupItem className={classes}>\n      <Media>\n        <Media.Object avatar objectURL={avatarURL} size=\"md\" className=\"mr-4\" />\n        <Media.Body>\n          <Media.Heading>\n            <small className=\"float-right text-muted\">{date}</small>\n            <h5>{name}</h5>\n          </Media.Heading>\n          <Text>{text}</Text>\n          {replies && <Media.List>{replies}</Media.List>}\n        </Media.Body>\n      </Media>\n    </List.GroupItem>\n  );\n}\n\nComment.List = CommentList;\nComment.Reply = CommentReply;\n\nexport default Comment;\n",
+  "source": "src/components/Comment/index.ts",
+  "implementation": "src/components/Comment/Comment.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport List from \"../List\";\nimport Media from \"../Media/Media.react\";\nimport Text from \"../Text/Text.react\";\nimport CommentList from \"./CommentList.react\";\nimport CommentReply from \"./CommentReply.react\";\n\nexport type CommentProps = {\n  /** Propiedad heredada sin representación; utiliza text y replies. */\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly avatarURL?: string;\n  readonly name?: string;\n  readonly date?: string;\n  readonly text?: string;\n  readonly replies?: React.ReactNode;\n};\n\nfunction Comment({\n  className,\n  children,\n  avatarURL,\n  name,\n  date,\n  text,\n  replies,\n}: CommentProps): React.ReactElement {\n  const classes = cn(\"py-5\", className);\n\n  return (\n    <List.GroupItem className={classes}>\n      <Media>\n        <Media.Object avatar objectURL={avatarURL} size=\"md\" className=\"mr-4\" />\n        <Media.Body>\n          <Media.Heading>\n            <small className=\"float-right text-muted\">{date}</small>\n            <h5>{name}</h5>\n          </Media.Heading>\n          <Text>{text}</Text>\n          {replies && <Media.List>{replies}</Media.List>}\n        </Media.Body>\n      </Media>\n    </List.GroupItem>\n  );\n}\n\nComment.List = CommentList;\nComment.Reply = CommentReply;\n\nexport default Comment;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada sin representación; utiliza text y replies."
     },
     {
       "name": "className",
@@ -43,7 +43,7 @@
     },
     {
       "name": "replies",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     }
@@ -57,11 +57,11 @@
   "childApis": [
     {
       "name": "List",
-      "source": "src/components/Comment/CommentList.react.js",
+      "source": "src/components/Comment/CommentList.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -78,13 +78,13 @@
     },
     {
       "name": "Reply",
-      "source": "src/components/Comment/CommentReply.react.js",
+      "source": "src/components/Comment/CommentReply.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
-          "description": ""
+          "description": "Propiedad heredada sin representación; utiliza text."
         },
         {
           "name": "className",
@@ -108,7 +108,7 @@
           "name": "date",
           "type": "string",
           "optional": true,
-          "description": ""
+          "description": "Propiedad heredada que no se representa en la respuesta."
         },
         {
           "name": "text",
@@ -127,9 +127,10 @@
   "guide": {
     "summary": "Comentario con autor, fecha, avatar, texto y respuestas.",
     "behavior": [
-      "text contiene el comentario principal y replies permite incorporar respuestas.",
-      "No persiste mensajes ni resuelve usuarios; esos datos proceden del consumidor."
+      "name, date, avatarURL y text definen el comentario principal. replies acepta nodos React y permite incorporar Comment.Reply dentro de Media.List. Comment.List agrupa las entradas.",
+      "Comment.Reply representa name, text y avatarURL, y conserva className. Sus propiedades date y children se mantienen por compatibilidad, pero no se representan. Comment tampoco utiliza children: usa text y replies.",
+      "No persiste mensajes ni resuelve usuarios; esos datos y su actualización proceden del consumidor."
     ],
-    "example": "<Comment name=\"Equipo\" date=\"Ahora\" text=\"Revisión completada.\" />"
+    "example": "<Comment.List><Comment name=\"Equipo\" date=\"Ahora\" text=\"Revisión completada.\" replies={<Comment.Reply name=\"Ana\" text=\"Correcto.\" />} /></Comment.List>"
   }
 }

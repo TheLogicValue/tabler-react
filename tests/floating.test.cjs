@@ -312,6 +312,58 @@ test('ProtectedRoute conserva destinos, children, Outlet y la opción replace de
   assert.equal(container.textContent, 'Redirección predeterminada')
 })
 
+test('Media.BodySocial conserva el foco de sus enlaces y los textos de ayuda heredados', async () => {
+  await render(React.createElement(components.Media.BodySocial, { name: 'Ana', workTitle: 'Revisión', phone: '123', skype: 'equipo' }))
+  const links = container.querySelectorAll('a')
+  assert.equal(links.length, 2)
+  assert.equal(links[0].getAttribute('href'), '/Profile')
+  await React.act(async () => { links[0].focus(); await new Promise(resolve => setTimeout(resolve, 30)) })
+  assert.equal(container.querySelector('[role=tooltip]').textContent, '+1 234-567-8901')
+  await key(links[0], 'Escape')
+  assert.equal(container.querySelector('[role=tooltip]'), null)
+  await React.act(async () => { links[1].focus(); await new Promise(resolve => setTimeout(resolve, 30)) })
+  assert.equal(container.querySelector('[role=tooltip]').textContent, '@skypename')
+})
+
+test('CommentsCard mantiene el input y el botón del formulario auxiliar', async () => {
+  await render(React.createElement(components.CommentsCard, null, 'Contenido heredado ignorado'))
+  const form = container.querySelector('form'), input = form.querySelector('input'), button = form.querySelector('button')
+  const submitted = []
+  form.addEventListener('submit', event => { event.preventDefault(); submitted.push(input.value) })
+  assert.equal(input.placeholder, 'Message')
+  assert.equal(button.type, 'submit', 'El auxiliar conserva el envío nativo de su formulario')
+  await changeControl(input, 'Comentario local')
+  await click(button)
+  assert.deepEqual(submitted, ['Comentario local'])
+  assert.equal(container.textContent.includes('Contenido heredado ignorado'), false)
+})
+
+test('withTouchedErrors conserva blur, cambios y envío a través de RegisterPage', async () => {
+  const fieldErrors = Object.freeze({ email: 'Revisar email', name: 'Revisar nombre' })
+  const changes = []
+  let submissions = 0
+  function Example() {
+    const [touched, setTouched] = React.useState({})
+    return React.createElement(components.RegisterPage, {
+      imageURL: '/logo.svg', errors: fieldErrors, touched,
+      onChange: event => changes.push([event.currentTarget.name, event.currentTarget.value]),
+      onBlur: event => { const name = event.currentTarget.name; setTouched(previous => ({ ...previous, [name]: true })) },
+      onSubmit: event => { event.preventDefault(); submissions++ },
+    })
+  }
+  await render(React.createElement(Example))
+  const email = container.querySelector('input[name=email]')
+  assert.equal(container.querySelector('.invalid-feedback'), null)
+  await changeControl(email, 'ana@example.com')
+  assert.deepEqual(changes, [['email', 'ana@example.com']])
+  await React.act(async () => email.dispatchEvent(new window.FocusEvent('focusout', { bubbles: true })))
+  assert.equal(container.querySelector('.invalid-feedback').textContent, 'Revisar email')
+  assert.equal(container.querySelector('input[name=name]').classList.contains('is-invalid'), false)
+  await click(container.querySelector('form button'))
+  assert.equal(submissions, 1)
+  assert.deepEqual(fieldErrors, { email: 'Revisar email', name: 'Revisar nombre' })
+})
+
 async function changeControl(element, value, type = 'input') {
   await React.act(async () => {
     const prototype = element.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : element.tagName === 'SELECT' ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype

@@ -1,31 +1,31 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { List, Icon, Button } from "../";
+import List from "../List";
+import Icon from "../Icon";
+import { Button } from "../Button";
 
-type itemObject = {|
-  name: string,
-  label?: string,
-  to?: string,
-  tooltip?: string,
-  color?: string,
-|};
+export type SocialNetworkItem = {
+  readonly name: string;
+  readonly label?: string;
+  readonly to?: string;
+  readonly tooltip?: string;
+  readonly color?: string;
+};
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +asButtons?: boolean,
-  +prefix?: string,
-  +itemsObjects?: Array<itemObject>,
-  +items?: Array<React.Node>,
-|};
+export type SocialNetworksListProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly asButtons?: boolean;
+  readonly prefix?: string;
+  readonly itemsObjects?: ReadonlyArray<SocialNetworkItem>;
+  readonly items?: ReadonlyArray<React.ReactNode>;
+};
 
 function listItemFromObjectFactory(
   asButtons: boolean = false,
   iconPrefix: string
 ) {
-  return function SocialNetworkListItem(item: itemObject, index: number) {
+  return function SocialNetworkListItem(item: SocialNetworkItem, index: number) {
     const itemContent = asButtons ? (
       <Button to={item.to} social={item.name} color={item.color} size="sm">
         {item.label}
@@ -39,7 +39,7 @@ function listItemFromObjectFactory(
   };
 }
 
-function SocialNetworksList(props: Props): React.Node {
+function SocialNetworksList(props: SocialNetworksListProps): React.ReactElement {
   const {
     children,
     className,

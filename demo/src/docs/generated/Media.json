@@ -1,13 +1,13 @@
 {
   "name": "Media",
   "kind": "Componente",
-  "source": "src/components/Media/index.js",
-  "implementation": "src/components/Media/Media.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport MediaBody from \"./MediaBody.react\";\nimport MediaHeading from \"./MediaHeading.react\";\nimport MediaList from \"./MediaList.react\";\nimport MediaObject from \"./MediaObject.react\";\nimport MediaBodySocial from \"./MediaBodySocial.react\";\nimport MediaListItem from \"./MediaListItem.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Media({ className, children }: Props): React.Node {\n  const classes = cn(\"media\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nMedia.Body = MediaBody;\nMedia.BodySocial = MediaBodySocial;\nMedia.Heading = MediaHeading;\nMedia.List = MediaList;\nMedia.ListItem = MediaListItem;\nMedia.Object = MediaObject;\n\nexport default Media;\n",
+  "source": "src/components/Media/index.ts",
+  "implementation": "src/components/Media/Media.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport MediaBody from \"./MediaBody.react\";\nimport MediaHeading from \"./MediaHeading.react\";\nimport MediaList from \"./MediaList.react\";\nimport MediaObject from \"./MediaObject.react\";\nimport MediaBodySocial from \"./MediaBodySocial.react\";\nimport MediaListItem from \"./MediaListItem.react\";\n\nexport type MediaProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction Media({ className, children }: MediaProps): React.ReactElement {\n  const classes = cn(\"media\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nMedia.Body = MediaBody;\nMedia.BodySocial = MediaBodySocial;\nMedia.Heading = MediaHeading;\nMedia.List = MediaList;\nMedia.ListItem = MediaListItem;\nMedia.Object = MediaObject;\n\nexport default Media;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -31,11 +31,11 @@
   "childApis": [
     {
       "name": "Body",
-      "source": "src/components/Media/MediaBody.react.js",
+      "source": "src/components/Media/MediaBody.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -52,11 +52,11 @@
     },
     {
       "name": "BodySocial",
-      "source": "src/components/Media/MediaBodySocial.react.js",
+      "source": "src/components/Media/MediaBodySocial.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -64,7 +64,7 @@
           "name": "className",
           "type": "string",
           "optional": true,
-          "description": ""
+          "description": "Propiedad heredada que no se aplica al contenedor."
         },
         {
           "name": "name",
@@ -113,11 +113,11 @@
     },
     {
       "name": "Heading",
-      "source": "src/components/Media/MediaHeading.react.js",
+      "source": "src/components/Media/MediaHeading.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -134,11 +134,11 @@
     },
     {
       "name": "List",
-      "source": "src/components/Media/MediaList.react.js",
+      "source": "src/components/Media/MediaList.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -155,11 +155,11 @@
     },
     {
       "name": "ListItem",
-      "source": "src/components/Media/MediaListItem.react.js",
+      "source": "src/components/Media/MediaListItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -176,11 +176,11 @@
     },
     {
       "name": "Object",
-      "source": "src/components/Media/MediaObject.react.js",
+      "source": "src/components/Media/MediaObject.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -231,8 +231,10 @@
   "guide": {
     "summary": "Composición de una imagen u objeto junto a un cuerpo de contenido.",
     "behavior": [
-      "Media.Object representa el elemento visual y Media.Body el contenido.",
-      "Media.Heading, List y ListItem proporcionan partes adicionales."
+      "Media compone Object, Body, BodySocial, Heading, List y ListItem. Cada subcomponente conserva sus propiedades limitadas y sus clases; no se añade reenvío de atributos HTML.",
+      "Media.Object utiliza Avatar cuando avatar=true y una imagen cuando recibe objectURL sin avatar. size solo configura Avatar; rounded y alt se aplican a la imagen normal.",
+      "Media.BodySocial requiere name y workTitle. facebook/twitter/phone/skype activan sus iconos, pero los enlaces mantienen el destino fijo /Profile. Las ayudas de teléfono y Skype también son fijas; estos valores no configuran los destinos ni el texto mostrado.",
+      "BodySocial representa children y conserva className en su API heredada aunque no lo utiliza. La familia no carga datos ni realiza acciones de redes sociales."
     ],
     "example": "<Media><Media.Object objectURL=\"/avatar-local.svg\" alt=\"Perfil\" /><Media.Body><Media.Heading>Equipo</Media.Heading>Descripción.</Media.Body></Media>"
   }

@@ -1,19 +1,17 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-import { Avatar } from "../../components";
+import Avatar from "../Avatar";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +avatar?: boolean,
-  +objectURL?: string,
-  +size?: "sm" | "md" | "lg" | "xl" | "xxl",
-  +rounded?: boolean,
-  +alt?: string,
-|};
+export type MediaObjectProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly avatar?: boolean;
+  readonly objectURL?: string;
+  readonly size?: "sm" | "md" | "lg" | "xl" | "xxl";
+  readonly rounded?: boolean;
+  readonly alt?: string;
+};
 
 function MediaObject({
   className,
@@ -23,7 +21,7 @@ function MediaObject({
   size,
   rounded,
   alt,
-}: Props): React.Node {
+}: MediaObjectProps): React.ReactElement {
   const classes = cn("media-object", className);
   const imageClasses = cn({ "d-flex": true, rounded });
 

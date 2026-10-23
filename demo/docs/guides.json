@@ -469,18 +469,20 @@
   "Comment": {
     "summary": "Comentario con autor, fecha, avatar, texto y respuestas.",
     "behavior": [
-      "text contiene el comentario principal y replies permite incorporar respuestas.",
-      "No persiste mensajes ni resuelve usuarios; esos datos proceden del consumidor."
+      "name, date, avatarURL y text definen el comentario principal. replies acepta nodos React y permite incorporar Comment.Reply dentro de Media.List. Comment.List agrupa las entradas.",
+      "Comment.Reply representa name, text y avatarURL, y conserva className. Sus propiedades date y children se mantienen por compatibilidad, pero no se representan. Comment tampoco utiliza children: usa text y replies.",
+      "No persiste mensajes ni resuelve usuarios; esos datos y su actualización proceden del consumidor."
     ],
-    "example": "<Comment name=\"Equipo\" date=\"Ahora\" text=\"Revisión completada.\" />"
+    "example": "<Comment.List><Comment name=\"Equipo\" date=\"Ahora\" text=\"Revisión completada.\" replies={<Comment.Reply name=\"Ana\" text=\"Correcto.\" />} /></Comment.List>"
   },
   "CommentsCard": {
-    "summary": "Tarjeta que agrupa comentarios.",
+    "summary": "Estructura heredada de tarjeta con un campo de mensaje y un comentario vacío.",
     "behavior": [
-      "Compone el contenido recibido mediante children.",
-      "Utiliza Comment para cada entrada; la gestión y la carga de mensajes quedan fuera de la tarjeta."
+      "Compone Card.Header, el auxiliar interno FormWithSingleInputAndButton y un Comment. El input conserva el placeholder Message y el botón el icono camera; el formulario mantiene su envío nativo.",
+      "La API actual solo expone className y children. children se pasa a Comment, que no lo representa: esta tarjeta no muestra una lista de comentarios recibida mediante children.",
+      "No expone onSubmit, inputProps ni buttonProps para configurar el formulario interno. Para una composición funcional personalizable utiliza Card, Form y Comment.List desde el consumidor. Esta migración conserva ese alcance heredado."
     ],
-    "example": "<CommentsCard><Comment name=\"Equipo\" text=\"Comentario de prueba.\" /></CommentsCard>"
+    "example": "<CommentsCard className=\"comentarios-heredados\" />"
   },
   "ContactCard": {
     "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
@@ -850,8 +852,10 @@
   "Media": {
     "summary": "Composición de una imagen u objeto junto a un cuerpo de contenido.",
     "behavior": [
-      "Media.Object representa el elemento visual y Media.Body el contenido.",
-      "Media.Heading, List y ListItem proporcionan partes adicionales."
+      "Media compone Object, Body, BodySocial, Heading, List y ListItem. Cada subcomponente conserva sus propiedades limitadas y sus clases; no se añade reenvío de atributos HTML.",
+      "Media.Object utiliza Avatar cuando avatar=true y una imagen cuando recibe objectURL sin avatar. size solo configura Avatar; rounded y alt se aplican a la imagen normal.",
+      "Media.BodySocial requiere name y workTitle. facebook/twitter/phone/skype activan sus iconos, pero los enlaces mantienen el destino fijo /Profile. Las ayudas de teléfono y Skype también son fijas; estos valores no configuran los destinos ni el texto mostrado.",
+      "BodySocial representa children y conserva className en su API heredada aunque no lo utiliza. La familia no carga datos ni realiza acciones de redes sociales."
     ],
     "example": "<Media><Media.Object objectURL=\"/avatar-local.svg\" alt=\"Perfil\" /><Media.Body><Media.Heading>Equipo</Media.Heading>Descripción.</Media.Body></Media>"
   },
@@ -989,9 +993,9 @@
   "Profile": {
     "summary": "Tarjeta de perfil con imagen, biografía y enlaces sociales.",
     "behavior": [
-      "name, avatarURL, backgroundURL y bio configuran el contenido principal; children sirve como alternativa a bio.",
-      "La implementación incluye una acción social fija; twitterURL figura en la API pero no se utiliza para personalizar ese destino.",
-      "No carga ni modifica la cuenta."
+      "name es obligatorio. avatarURL, backgroundURL y bio configuran la tarjeta; children se muestra como alternativa cuando bio no tiene contenido. Profile.Image expone el auxiliar de imagen con avatarURL obligatorio.",
+      "La implementación conserva la acción fija Follow con icono de Twitter. twitterURL figura en la API, pero no se utiliza para personalizar su destino; no se añade navegación automática.",
+      "La imagen principal conserva avatarURL vacío como valor predeterminado. Proporciona una URL válida para utilizar la imagen de perfil. La tarjeta no carga ni modifica una cuenta."
     ],
     "example": "<Profile name=\"Equipo de prueba\" avatarURL=\"/avatar-local.svg\" bio=\"Perfil de demostración.\" />"
   },
@@ -1068,9 +1072,10 @@
   "SocialNetworksList": {
     "summary": "Lista de enlaces o acciones sociales.",
     "behavior": [
-      "itemsObjects configura name, to, label, color y tooltip; items/children permiten composición manual.",
-      "prefix selecciona la familia de iconos disponible.",
-      "En la variante asButtons revisa cómo se enlazan los botones en tu aplicación; el componente no gestiona cuentas sociales."
+      "itemsObjects admite una lista de SocialNetworkItem con name, to, label, color y tooltip. Se aceptan arrays readonly sin modificarlos. La prioridad es itemsObjects, después items y finalmente children; una lista vacía también tiene prioridad.",
+      "En la variante de enlaces, to se aplica a href, tooltip a data-original-title y prefix selecciona la familia de iconos (fe por defecto). El atributo data-original-title no activa una ayuda por sí mismo.",
+      "asButtons conserva Button con social/name, label y color. Son botones nativos: no utilizan to para navegar, no aplican prefix y conservan el envío nativo si están dentro de un formulario. Para enlaces sociales utiliza la variante de enlaces o composición manual.",
+      "items se envuelve en List.Item y children se representa directamente. La lista no gestiona cuentas ni conexiones sociales."
     ],
     "example": "<SocialNetworksList prefix=\"fe\" itemsObjects={[{ name: \"mail\", to: \"mailto:equipo@example.com\", tooltip: \"Contacto\" }]} />"
   },

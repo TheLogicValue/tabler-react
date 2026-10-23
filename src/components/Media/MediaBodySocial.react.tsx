@@ -1,18 +1,21 @@
-// @flow
-
 import * as React from "react";
-import { List, Icon, Media, SocialNetworksList, Tooltip } from "../";
+import List from "../List";
+import Icon from "../Icon";
+import MediaBody from "./MediaBody.react";
+import SocialNetworksList from "../SocialNetworksList";
+import Tooltip from "../Tooltip";
 
-export type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +name: string,
-  +workTitle: string,
-  +facebook?: string,
-  +twitter?: string,
-  +phone?: string,
-  +skype?: string,
-|};
+export type MediaBodySocialProps = {
+  readonly children?: React.ReactNode;
+  /** Propiedad heredada que no se aplica al contenedor. */
+  readonly className?: string;
+  readonly name: string;
+  readonly workTitle: string;
+  readonly facebook?: string;
+  readonly twitter?: string;
+  readonly phone?: string;
+  readonly skype?: string;
+};
 
 function MediaBodySocial({
   className,
@@ -23,7 +26,7 @@ function MediaBodySocial({
   twitter = "",
   phone = "",
   skype = "",
-}: Props): React.Node {
+}: MediaBodySocialProps): React.ReactElement {
   let fbIcon;
   let twitterIcon;
   let phoneIcon;
@@ -77,7 +80,7 @@ function MediaBodySocial({
     );
   }
   return (
-    <Media.Body>
+    <MediaBody>
       <h4 className="m-0">{name}</h4>
       <p className="text-muted mb-0">{workTitle}</p>
       <SocialNetworksList className="mb-0 mt-2">
@@ -87,8 +90,10 @@ function MediaBodySocial({
         {skypeIcon}
       </SocialNetworksList>
       {children}
-    </Media.Body>
+    </MediaBody>
   );
 }
 
 export default MediaBodySocial;
+
+export type Props = MediaBodySocialProps;

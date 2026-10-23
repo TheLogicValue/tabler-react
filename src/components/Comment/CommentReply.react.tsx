@@ -1,16 +1,16 @@
-// @flow
-
 import * as React from "react";
 import Media from "../Media";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +avatarURL?: string,
-  +name?: string,
-  +date?: string,
-  +text?: string,
-|};
+export type CommentReplyProps = {
+  /** Propiedad heredada sin representación; utiliza text. */
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly avatarURL?: string;
+  readonly name?: string;
+  /** Propiedad heredada que no se representa en la respuesta. */
+  readonly date?: string;
+  readonly text?: string;
+};
 
 function CommentReply({
   className,
@@ -19,7 +19,7 @@ function CommentReply({
   name,
   date,
   text,
-}: Props): React.Node {
+}: CommentReplyProps): React.ReactElement {
   return (
     <Media.ListItem className={className}>
       <Media.Object avatar objectURL={avatarURL} className="mr-4" />

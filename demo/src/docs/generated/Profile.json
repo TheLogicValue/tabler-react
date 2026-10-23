@@ -1,13 +1,13 @@
 {
   "name": "Profile",
   "kind": "Componente",
-  "source": "src/components/Profile/index.js",
-  "implementation": "src/components/Profile/Profile.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport { Card, Header, SocialNetworksList } from \"../../components\";\n\nimport ProfileImage from \"./ProfileImage.react\";\n\nexport type Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +name: string,\n  +avatarURL?: string,\n  +twitterURL?: string,\n  +backgroundURL?: string,\n  +bio?: string,\n|};\n\nfunction Profile({\n  className,\n  children,\n  name,\n  avatarURL = \"\",\n  twitterURL = \"\",\n  backgroundURL = \"\",\n  bio,\n}: Props): React.Node {\n  const classes = cn(\"card-profile\", className);\n  return (\n    <Card className={classes}>\n      <Card.Header backgroundURL={backgroundURL} />\n      <Card.Body className=\"text-center\">\n        <ProfileImage avatarURL={avatarURL} />\n        <Header.H3 className=\"mb-3\">{name}</Header.H3>\n        <p className=\"mb-4\">{bio || children}</p>\n        <SocialNetworksList\n          itemsObjects={[{ name: \"twitter\", label: \"Follow\" }]}\n          prefix=\"fa\"\n          asButtons\n        />\n      </Card.Body>\n    </Card>\n  );\n}\n\nProfile.Image = ProfileImage;\n\nexport default Profile;\n",
+  "source": "src/components/Profile/index.ts",
+  "implementation": "src/components/Profile/Profile.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport Card from \"../Card\";\nimport Header from \"../Header\";\nimport SocialNetworksList from \"../SocialNetworksList\";\n\nimport ProfileImage from \"./ProfileImage.react\";\n\nexport type ProfileProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly name: string;\n  readonly avatarURL?: string;\n  /** Propiedad heredada sin efecto en la acción social fija. */\n  readonly twitterURL?: string;\n  readonly backgroundURL?: string;\n  readonly bio?: string;\n};\n\nfunction Profile({\n  className,\n  children,\n  name,\n  avatarURL = \"\",\n  twitterURL = \"\",\n  backgroundURL = \"\",\n  bio,\n}: ProfileProps): React.ReactElement {\n  const classes = cn(\"card-profile\", className);\n  return (\n    <Card className={classes}>\n      <Card.Header backgroundURL={backgroundURL} />\n      <Card.Body className=\"text-center\">\n        <ProfileImage avatarURL={avatarURL} />\n        <Header.H3 className=\"mb-3\">{name}</Header.H3>\n        <p className=\"mb-4\">{bio || children}</p>\n        <SocialNetworksList\n          itemsObjects={[{ name: \"twitter\", label: \"Follow\" }]}\n          prefix=\"fa\"\n          asButtons\n        />\n      </Card.Body>\n    </Card>\n  );\n}\n\nProfile.Image = ProfileImage;\n\nexport default Profile;\n\nexport type Props = ProfileProps;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -34,7 +34,7 @@
       "name": "twitterURL",
       "type": "string",
       "optional": true,
-      "description": "",
+      "description": "Propiedad heredada sin efecto en la acción social fija.",
       "default": "\"\""
     },
     {
@@ -59,7 +59,7 @@
   "childApis": [
     {
       "name": "Image",
-      "source": "src/components/Profile/ProfileImage.react.js",
+      "source": "src/components/Profile/ProfileImage.react.tsx",
       "props": [
         {
           "name": "avatarURL",
@@ -78,9 +78,9 @@
   "guide": {
     "summary": "Tarjeta de perfil con imagen, biografía y enlaces sociales.",
     "behavior": [
-      "name, avatarURL, backgroundURL y bio configuran el contenido principal; children sirve como alternativa a bio.",
-      "La implementación incluye una acción social fija; twitterURL figura en la API pero no se utiliza para personalizar ese destino.",
-      "No carga ni modifica la cuenta."
+      "name es obligatorio. avatarURL, backgroundURL y bio configuran la tarjeta; children se muestra como alternativa cuando bio no tiene contenido. Profile.Image expone el auxiliar de imagen con avatarURL obligatorio.",
+      "La implementación conserva la acción fija Follow con icono de Twitter. twitterURL figura en la API, pero no se utiliza para personalizar su destino; no se añade navegación automática.",
+      "La imagen principal conserva avatarURL vacío como valor predeterminado. Proporciona una URL válida para utilizar la imagen de perfil. La tarjeta no carga ni modifica una cuenta."
     ],
     "example": "<Profile name=\"Equipo de prueba\" avatarURL=\"/avatar-local.svg\" bio=\"Perfil de demostración.\" />"
   }

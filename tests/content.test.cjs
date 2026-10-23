@@ -1,0 +1,92 @@
+const assert = require('node:assert/strict')
+const { test } = require('node:test')
+const { createRequire } = require('node:module')
+const path = require('node:path')
+
+const consumerRequire = createRequire(path.join(process.env.TABLER_TEST_PACKAGE_DIR || path.join(__dirname, '..'), 'package.json'))
+const React = consumerRequire('react')
+const { renderToStaticMarkup } = consumerRequire('react-dom/server')
+const { Media, SocialNetworksList, Profile, Comment, CommentsCard, RegisterPage, ForgotPasswordPage } = consumerRequire(process.env.TABLER_TEST_PACKAGE_DIR || './dist/index.js')
+const render = (Component, props, children) => renderToStaticMarkup(React.createElement(Component, props, children))
+
+test('Media mantiene sus seis subcomponentes, raíces y propiedades limitadas', () => {
+  assert.equal(render(Media, { className: 'consumer', id: 'ignored' }, 'Contenido'), '<div class="media consumer">Contenido</div>')
+  for (const [name, tag, classes] of [['Body', 'div', 'media-body'], ['Heading', 'div', 'media-heading'], ['List', 'ul', 'media-list'], ['ListItem', 'li', 'media mt-4']]) {
+    assert.equal(render(Media[name], { className: 'consumer', id: 'ignored' }, 'Contenido'), `<${tag} class="${classes} consumer">Contenido</${tag}>`)
+  }
+  assert.equal(render(Media.Object, { className: 'consumer' }, 'Objeto'), '<div class="media-object consumer">Objeto</div>')
+  const image = render(Media.Object, { objectURL: '/cover.svg', alt: 'Portada', rounded: true, size: 'lg' })
+  assert.match(image, /<img class="d-flex rounded" src="\/cover.svg" alt="Portada"/)
+  assert.doesNotMatch(image, /avatar-lg/)
+  assert.equal(render(Media.Object, { avatar: true, objectURL: '/avatar.svg', size: 'lg', rounded: true, alt: 'Ignorado' }), '<div class="media-object"><span class="avatar avatar-lg" style="background-image:url(/avatar.svg)"></span></div>')
+})
+
+test('Media.BodySocial mantiene las condiciones sociales y los destinos heredados', () => {
+  const html = render(Media.BodySocial, { name: 'Ana', workTitle: 'Revisión', className: 'ignored-class', facebook: '/facebook-custom', twitter: '/twitter-custom', phone: '123', skype: 'custom' }, 'Biografía')
+  assert.match(html, /^<div class="media-body"><h4 class="m-0">Ana<\/h4><p class="text-muted mb-0">Revisión<\/p>/)
+  assert.equal([...html.matchAll(/href="\/Profile"/g)].length, 4)
+  for (const icon of ['facebook', 'twitter', 'phone', 'skype']) assert.ok(html.includes(`class="fa fa-${icon}"`))
+  assert.doesNotMatch(html, /facebook-custom|twitter-custom|ignored-class/)
+  assert.ok(html.endsWith('Biografía</div>'))
+  const noSocials = render(Media.BodySocial, { name: 'Ana', workTitle: 'Revisión' })
+  assert.doesNotMatch(noSocials, /<a\b/)
+})
+
+test('SocialNetworksList conserva prioridades, listas inmutables, iconos y botones', () => {
+  const item = Object.freeze({ name: 'mail', to: 'mailto:equipo@example.com', tooltip: 'Contacto' })
+  const itemsObjects = Object.freeze([item])
+  assert.equal(render(SocialNetworksList, { itemsObjects }, 'Ignorado'), '<ul class="list list-inline social-links"><li class="list-inline-item"><a href="mailto:equipo@example.com" data-original-title="Contacto"><i class="fe fe-mail"></i></a></li></ul>')
+  assert.equal(render(SocialNetworksList, { itemsObjects: [], items: ['Ignorado'] }, 'Ignorado'), '<ul class="list list-inline social-links"></ul>')
+  assert.equal(render(SocialNetworksList, { items: Object.freeze(['Manual']), className: 'consumer' }, 'Ignorado'), '<ul class="list list-inline social-links consumer"><li class="list-inline-item">Manual</li></ul>')
+  assert.equal(render(SocialNetworksList, {}, 'Directo'), '<ul class="list list-inline social-links">Directo</ul>')
+  assert.equal(render(SocialNetworksList, { asButtons: true, itemsObjects: [{ name: 'twitter', to: '/ignored', label: 'Seguir', color: 'blue' }] }), '<ul class="list list-inline social-links"><li class="list-inline-item"><button class="btn btn-sm btn-blue btn-twitter"><i class="fa fa-twitter mr-2"></i>Seguir</button></li></ul>')
+  assert.match(render(SocialNetworksList, { prefix: 'fa', itemsObjects }), /class="fa fa-mail"/)
+})
+
+test('Profile conserva imagen, biografía alternativa y acción social fija', () => {
+  const html = render(Profile, { name: 'Equipo', avatarURL: '/avatar.svg', backgroundURL: '/background.svg', twitterURL: '/ignored', bio: 'Biografía', className: 'consumer' }, 'Hijo ignorado')
+  assert.match(html, /class="card card-profile consumer"/)
+  assert.match(html, /class="card-header" style="background-image:url\(\/background.svg\)"/)
+  assert.match(html, /<img class="card-profile-img" alt="Profile" src="\/avatar.svg"/)
+  assert.match(html, /<h3 class="h3 mt-0 mb-4 mb-3">Equipo<\/h3><p class="mb-4">Biografía<\/p>/)
+  assert.match(html, /btn-twitter/)
+  assert.match(html, />Follow<\/button>/)
+  assert.doesNotMatch(html, /Hijo ignorado|\/ignored/)
+  assert.match(render(Profile, { name: 'Equipo', avatarURL: '/avatar.svg', bio: '' }, 'Alternativa'), /<p class="mb-4">Alternativa<\/p>/)
+  assert.match(render(Profile.Image, { avatarURL: '/avatar.svg' }), /<img class="card-profile-img" alt="Profile" src="\/avatar.svg"/)
+})
+
+test('Comment mantiene texto, respuestas, agrupación y el alcance heredado de children', () => {
+  const html = render(Comment, { name: 'Ana', date: 'Ahora', text: 'Revisión', avatarURL: '/avatar.svg', className: 'consumer', replies: React.createElement(Comment.Reply, { name: 'Luis', text: 'Correcto', date: 'Fecha ignorada', children: 'Respuesta hija ignorada' }) }, 'Hijo ignorado')
+  assert.match(html, /^<a class="list-group-item py-5 consumer">/)
+  assert.match(html, /<small class="float-right text-muted">Ahora<\/small><h5>Ana<\/h5>/)
+  assert.match(html, /<div class="">Revisión<\/div><ul class="media-list"><li class="media mt-4">/)
+  assert.match(html, /<strong>Luis: <\/strong>Correcto/)
+  assert.doesNotMatch(html, /Hijo ignorado|Fecha ignorada|Respuesta hija ignorada/)
+  assert.equal(render(Comment.List, { className: 'consumer' }, 'Comentarios'), '<div class="list-group mb-0 card-list-group consumer">Comentarios</div>')
+})
+
+test('CommentsCard conserva la composición del formulario interno sin ampliar su API', () => {
+  const html = render(CommentsCard, { className: 'consumer' }, 'Comentario hijo ignorado')
+  assert.match(html, /^<div class="card consumer"><div class="card-header"><form autoComplete="off">/)
+  assert.match(html, /<div class="input-group"><input class="form-control" type="text" placeholder="Message"/)
+  assert.match(html, /<span class="input-group-append"><button class="btn btn-secondary btn-icon"><i class="fe fe-camera"><\/i><\/button>/)
+  assert.match(html, /<a class="list-group-item py-5">/)
+  assert.doesNotMatch(html, /Comentario hijo ignorado/)
+})
+
+test('withTouchedErrors conserva errores visitados, valores ausentes y las plantillas consumidoras', () => {
+  const errors = Object.freeze({ name: 'Error nombre', email: 'Error email', password: 'Error contraseña', extra: 'Error ajeno' })
+  const touched = Object.freeze({ name: false, email: true, password: true })
+  const html = render(RegisterPage, { errors, touched, imageURL: '/logo.svg' })
+  assert.doesNotMatch(html, /Error nombre|Error ajeno/)
+  assert.match(html, /<span class="invalid-feedback">Error email<\/span>/)
+  assert.match(html, /<span class="invalid-feedback">Error contraseña<\/span>/)
+  assert.equal(errors.name, 'Error nombre')
+  assert.equal(touched.name, false)
+  assert.doesNotMatch(render(RegisterPage, { errors, imageURL: '/logo.svg' }), /invalid-feedback/)
+  assert.doesNotMatch(render(RegisterPage, { errors: null, touched: null, imageURL: '/logo.svg' }), /invalid-feedback/)
+  assert.doesNotMatch(render(RegisterPage, { touched: { email: true }, errors: {}, imageURL: '/logo.svg' }), /invalid-feedback/)
+  assert.match(render(ForgotPasswordPage, { errors: { email: 'Email incorrecto' }, touched: { email: true }, imageURL: '/logo.svg' }), /<span class="invalid-feedback">Email incorrecto<\/span>/)
+  assert.doesNotMatch(render(ForgotPasswordPage, { errors: { email: 'Email incorrecto' }, touched: { email: false }, imageURL: '/logo.svg' }), /invalid-feedback/)
+})

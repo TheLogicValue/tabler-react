@@ -1,15 +1,15 @@
 {
   "name": "CommentsCard",
   "kind": "Componente",
-  "source": "src/components/CommentsCard/index.js",
-  "implementation": "src/components/CommentsCard/CommentsCard.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport FormWithSingleInputAndButton from \"../../forms/FormWithSingleInputAndButton.react\";\nimport Card from \"../Card\";\nimport Comment from \"../Comment\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction CommentsCard({ className, children }: Props): React.Node {\n  const classes = cn(className);\n  return (\n    <Card className={classes}>\n      <Card.Header>\n        <FormWithSingleInputAndButton\n          inputProps={{ placeholder: \"Message\" }}\n          buttonProps={{ icon: \"camera\", color: \"secondary\" }}\n        />\n        <Comment>{children}</Comment>\n      </Card.Header>\n    </Card>\n  );\n}\n\nexport default CommentsCard;\n",
+  "source": "src/components/CommentsCard/index.ts",
+  "implementation": "src/components/CommentsCard/CommentsCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport FormWithSingleInputAndButton from \"../../forms/FormWithSingleInputAndButton.react\";\nimport Card from \"../Card\";\nimport Comment from \"../Comment\";\n\nexport type CommentsCardProps = {\n  /** Se pasa a Comment, cuya implementación heredada no representa children. */\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction CommentsCard({ className, children }: CommentsCardProps): React.ReactElement {\n  const classes = cn(className);\n  return (\n    <Card className={classes}>\n      <Card.Header>\n        <FormWithSingleInputAndButton\n          inputProps={{ placeholder: \"Message\" }}\n          buttonProps={{ icon: \"camera\", color: \"secondary\" }}\n        />\n        <Comment>{children}</Comment>\n      </Card.Header>\n    </Card>\n  );\n}\n\nexport default CommentsCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": ""
+      "description": "Se pasa a Comment, cuya implementación heredada no representa children."
     },
     {
       "name": "className",
@@ -25,11 +25,12 @@
   "legacy": [],
   "dependencies": [],
   "guide": {
-    "summary": "Tarjeta que agrupa comentarios.",
+    "summary": "Estructura heredada de tarjeta con un campo de mensaje y un comentario vacío.",
     "behavior": [
-      "Compone el contenido recibido mediante children.",
-      "Utiliza Comment para cada entrada; la gestión y la carga de mensajes quedan fuera de la tarjeta."
+      "Compone Card.Header, el auxiliar interno FormWithSingleInputAndButton y un Comment. El input conserva el placeholder Message y el botón el icono camera; el formulario mantiene su envío nativo.",
+      "La API actual solo expone className y children. children se pasa a Comment, que no lo representa: esta tarjeta no muestra una lista de comentarios recibida mediante children.",
+      "No expone onSubmit, inputProps ni buttonProps para configurar el formulario interno. Para una composición funcional personalizable utiliza Card, Form y Comment.List desde el consumidor. Esta migración conserva ese alcance heredado."
     ],
-    "example": "<CommentsCard><Comment name=\"Equipo\" text=\"Comentario de prueba.\" /></CommentsCard>"
+    "example": "<CommentsCard className=\"comentarios-heredados\" />"
   }
 }

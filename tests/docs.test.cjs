@@ -164,6 +164,20 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.deepEqual(document('useSearchBar').members.sort(), ['filter', 'handleChangeFilter', 'setFilter'])
   assert.equal(document('ProtectedRoute').props.find(prop => prop.name === 'redirectTo').type, 'To')
   assert.equal(document('ProtectedRoute').props.find(prop => prop.name === 'replace').default, 'true')
+  for (const name of ['Media', 'SocialNetworksList', 'Profile', 'Comment', 'CommentsCard']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/components/${name}/${name}.react.tsx`)
+    assert.ok(doc.props.every(prop => prop.type), name + ': todas las propiedades deben tener tipo')
+    assert.ok(doc.childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  }
+  assert.equal(document('Media').childApis.length, 6)
+  assert.equal(document('Media').childApis.find(child => child.name === 'BodySocial').props.find(prop => prop.name === 'name').optional, false)
+  assert.equal(document('Media').childApis.find(child => child.name === 'Object').props.find(prop => prop.name === 'avatar').type, 'boolean')
+  assert.equal(document('SocialNetworksList').props.find(prop => prop.name === 'itemsObjects').type, 'ReadonlyArray<SocialNetworkItem>')
+  assert.equal(document('Profile').childApis.find(child => child.name === 'Image').props.find(prop => prop.name === 'avatarURL').optional, false)
+  assert.equal(document('Comment').childApis.length, 2)
+  assert.equal(document('Comment').childApis.find(child => child.name === 'Reply').props.find(prop => prop.name === 'text').type, 'string')
+  assert.deepEqual(document('CommentsCard').props.map(prop => prop.name).sort(), ['children', 'className'])
 })
 
 function walk(node, visit) {

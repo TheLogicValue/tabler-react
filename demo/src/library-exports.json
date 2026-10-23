@@ -79,12 +79,12 @@
     {
       "name": "Comment",
       "kind": "Componente",
-      "source": "src/components/Comment/index.js"
+      "source": "src/components/Comment/index.ts"
     },
     {
       "name": "CommentsCard",
       "kind": "Componente",
-      "source": "src/components/CommentsCard/index.js"
+      "source": "src/components/CommentsCard/index.ts"
     },
     {
       "name": "ContactCard",
@@ -239,7 +239,7 @@
     {
       "name": "Media",
       "kind": "Componente",
-      "source": "src/components/Media/index.js"
+      "source": "src/components/Media/index.ts"
     },
     {
       "name": "Modal",
@@ -299,7 +299,7 @@
     {
       "name": "Profile",
       "kind": "Componente",
-      "source": "src/components/Profile/index.js"
+      "source": "src/components/Profile/index.ts"
     },
     {
       "name": "Progress",
@@ -344,7 +344,7 @@
     {
       "name": "SocialNetworksList",
       "kind": "Componente",
-      "source": "src/components/SocialNetworksList/index.js"
+      "source": "src/components/SocialNetworksList/index.ts"
     },
     {
       "name": "Spinner",

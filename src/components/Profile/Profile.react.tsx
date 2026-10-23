@@ -1,21 +1,22 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-import { Card, Header, SocialNetworksList } from "../../components";
+import Card from "../Card";
+import Header from "../Header";
+import SocialNetworksList from "../SocialNetworksList";
 
 import ProfileImage from "./ProfileImage.react";
 
-export type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +name: string,
-  +avatarURL?: string,
-  +twitterURL?: string,
-  +backgroundURL?: string,
-  +bio?: string,
-|};
+export type ProfileProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly name: string;
+  readonly avatarURL?: string;
+  /** Propiedad heredada sin efecto en la acción social fija. */
+  readonly twitterURL?: string;
+  readonly backgroundURL?: string;
+  readonly bio?: string;
+};
 
 function Profile({
   className,
@@ -25,7 +26,7 @@ function Profile({
   twitterURL = "",
   backgroundURL = "",
   bio,
-}: Props): React.Node {
+}: ProfileProps): React.ReactElement {
   const classes = cn("card-profile", className);
   return (
     <Card className={classes}>
@@ -47,3 +48,5 @@ function Profile({
 Profile.Image = ProfileImage;
 
 export default Profile;
+
+export type Props = ProfileProps;

@@ -130,7 +130,7 @@
   "CommentsCard": {
     "name": "CommentsCard",
     "kind": "Componente",
-    "summary": "Tarjeta que agrupa comentarios.",
+    "summary": "Estructura heredada de tarjeta con un campo de mensaje y un comentario vacío.",
     "status": "documented",
     "properties": 2,
     "examples": 0

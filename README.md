@@ -323,6 +323,10 @@ En este bloque se corrige Tag para renderizar el RootComponent recibido en vez d
 
 Accordion, Breadcrumb, SearchBar, useSearchBar y ProtectedRoute están migrados a TypeScript. Breadcrumb conserva el tipo del path y entrega su valor al callback sin gestionar la navegación. SearchBar tipa el evento de teclado del input; el hook conserva string | undefined, el setter funcional y los eventos heredados con target.value. ProtectedRoute utiliza el tipo To de React Router, conserva children/Outlet y la opción replace del historial. Los botones de Breadcrumb y SearchBar son de tipo button para evitar envíos accidentales de formularios. Las pruebas incluyen apertura del acordeón, navegación, historial, eventos y normalización del filtro con React 18 y 19; la documentación sigue separada de la cobertura visual.
 
+Media y sus seis subcomponentes, SocialNetworksList, Profile/Profile.Image, Comment/List/Reply y CommentsCard utilizan TypeScript. Se mantienen las clases, la composición y las prioridades de las listas sociales, que admiten arrays readonly. Las importaciones internas apuntan a las familias migradas, sin arrastrar el barrel Flow. Las fichas distinguen las propiedades utilizadas de las limitaciones heredadas: destinos y ayudas fijas de Media.BodySocial, twitterURL sin efecto en Profile y children no representado por Comment/CommentsCard.
+
+Los auxiliares internos FormWithSingleInputAndButton y withTouchedErrors también están migrados. El formulario reutiliza los contratos de Form, Form.Input y Button y conserva su envío nativo. El HOC mantiene las demás propiedades del componente envuelto y filtra los errores por campos visitados sin mutar los mapas recibidos. Los errores de campos visitados que no aparecen en el mapa pueden ser undefined; los demás se sustituyen por una cadena vacía. Las pruebas verifican estos contratos a través de las plantillas públicas RegisterPage y ForgotPasswordPage con React 18 y 19. Los auxiliares siguen siendo internos.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck
