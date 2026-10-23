@@ -1,13 +1,13 @@
 {
   "name": "GalleryCard",
   "kind": "Componente",
-  "source": "src/components/GalleryCard/index.js",
-  "implementation": "src/components/GalleryCard/GalleryCard.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card\";\n\nimport GalleryCardDetails from \"./GalleryCardDetails.react\";\nimport GalleryCardFooter from \"./GalleryCardFooter.react\";\nimport GalleryCardIconGroup from \"./GalleryCardIconGroup.react\";\nimport GalleryCardIconItem from \"./GalleryCardIconItem.react\";\nimport GalleryCardImage from \"./GalleryCardImage.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction GalleryCard({ children, className }: Props) {\n  const cardClassName = cn(\"p-3\", className);\n  return <Card className={cardClassName}>{children}</Card>;\n}\n\nGalleryCard.Details = GalleryCardDetails;\nGalleryCard.Footer = GalleryCardFooter;\nGalleryCard.IconGroup = GalleryCardIconGroup;\nGalleryCard.IconItem = GalleryCardIconItem;\nGalleryCard.Image = GalleryCardImage;\n\nexport default GalleryCard;\n",
+  "source": "src/components/GalleryCard/index.ts",
+  "implementation": "src/components/GalleryCard/GalleryCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card\";\n\nimport GalleryCardDetails from \"./GalleryCardDetails.react\";\nimport GalleryCardFooter from \"./GalleryCardFooter.react\";\nimport GalleryCardIconGroup from \"./GalleryCardIconGroup.react\";\nimport GalleryCardIconItem from \"./GalleryCardIconItem.react\";\nimport GalleryCardImage from \"./GalleryCardImage.react\";\n\nexport type GalleryCardProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction GalleryCard({ children, className }: GalleryCardProps): React.ReactElement {\n  const cardClassName = cn(\"p-3\", className);\n  return <Card className={cardClassName}>{children}</Card>;\n}\n\nGalleryCard.Details = GalleryCardDetails;\nGalleryCard.Footer = GalleryCardFooter;\nGalleryCard.IconGroup = GalleryCardIconGroup;\nGalleryCard.IconItem = GalleryCardIconItem;\nGalleryCard.Image = GalleryCardImage;\n\nexport default GalleryCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -30,17 +30,17 @@
   "childApis": [
     {
       "name": "Details",
-      "source": "src/components/GalleryCard/GalleryCardDetails.react.js",
+      "source": "src/components/GalleryCard/GalleryCardDetails.react.tsx",
       "props": [
         {
           "name": "className",
           "type": "string",
           "optional": true,
-          "description": ""
+          "description": "Propiedad heredada sin efecto: Details devuelve un fragmento."
         },
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -52,13 +52,13 @@
         },
         {
           "name": "fullName",
-          "type": "string",
+          "type": "string | null",
           "optional": true,
           "description": ""
         },
         {
           "name": "dateString",
-          "type": "string",
+          "type": "string | null",
           "optional": true,
           "description": ""
         }
@@ -69,11 +69,11 @@
     },
     {
       "name": "Footer",
-      "source": "src/components/GalleryCard/GalleryCardFooter.react.js",
+      "source": "src/components/GalleryCard/GalleryCardFooter.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -84,11 +84,11 @@
     },
     {
       "name": "IconGroup",
-      "source": "src/components/GalleryCard/GalleryCardIconGroup.react.js",
+      "source": "src/components/GalleryCard/GalleryCardIconGroup.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -105,7 +105,7 @@
     },
     {
       "name": "IconItem",
-      "source": "src/components/GalleryCard/GalleryCardIconItem.react.js",
+      "source": "src/components/GalleryCard/GalleryCardIconItem.react.tsx",
       "props": [
         {
           "name": "className",
@@ -156,7 +156,7 @@
     },
     {
       "name": "Image",
-      "source": "src/components/GalleryCard/GalleryCardImage.react.js",
+      "source": "src/components/GalleryCard/GalleryCardImage.react.tsx",
       "props": [
         {
           "name": "src",
@@ -218,8 +218,10 @@
   "guide": {
     "summary": "Tarjeta para componer imágenes y detalles de una galería.",
     "behavior": [
-      "GalleryCard.Image, Details y Footer permiten componer las partes.",
-      "No carga una colección ni implementa por sí misma un visor de imágenes."
+      "Compone Image, Details, Footer, IconGroup e IconItem. Cada subcomponente mantiene sus clases y el alcance de sus propiedades.",
+      "Image requiere src; className y rounded se aplican al img, mientras el enlace conserva mb-3. Image e IconItem usan href como enlace nativo o RootComponent con to, className y children; no reenvían href a la raíz personalizada.",
+      "Details representa un fragmento y no aplica className. La condición heredada oculta el bloque de nombre/fecha solo cuando fullName y dateString son ambos null; si se omiten, conserva el bloque vacío. children permite añadir detalles manuales.",
+      "Footer solo expone children; IconGroup agrupa iconos e IconItem requiere name. No se añade carga de colecciones ni un visor de imágenes."
     ],
     "example": "<GalleryCard><GalleryCard.Image src=\"/imagen-local.svg\" alt=\"Ilustración\" /><GalleryCard.Footer>Imagen de prueba</GalleryCard.Footer></GalleryCard>"
   }

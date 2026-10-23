@@ -327,6 +327,10 @@ Media y sus seis subcomponentes, SocialNetworksList, Profile/Profile.Image, Comm
 
 Los auxiliares internos FormWithSingleInputAndButton y withTouchedErrors también están migrados. El formulario reutiliza los contratos de Form, Form.Input y Button y conserva su envío nativo. El HOC mantiene las demás propiedades del componente envuelto y filtra los errores por campos visitados sin mutar los mapas recibidos. Los errores de campos visitados que no aparecen en el mapa pueden ser undefined; los demás se sustituyen por una cadena vacía. Las pruebas verifican estos contratos a través de las plantillas públicas RegisterPage y ForgotPasswordPage con React 18 y 19. Los auxiliares siguen siendo internos.
 
+BlogCard, ContactCard, DoubleCard, ProgressCard, StampCard, StatsCard, StoreCard, TabbedCard y las familias GalleryCard/PricingCard también utilizan TypeScript, junto a sus cinco subcomponentes respectivos. ContactCard exporta los contratos de dirección, detalles y descripción desde las fuentes y admite detalles readonly. DoubleCard conserva nodos React en sus valores y etiquetas. TabbedCard reutiliza TabChildren y mantiene el estado inicial y el cambio de panel. PricingCard.Button recibe un evento de ratón sobre el HTMLElement real, en lugar de la antigua anotación de input.
+
+La familia Timeline está migrada con Item, ItemTime, ItemBadge, ItemTitle e ItemDescription. Se mantienen sus condiciones de título, descripción, insignia, hora y contenido. Las fichas documentan las limitaciones heredadas, incluida la repetición de children cuando se utiliza una cadena, className sin efecto en PricingCard/GalleryCard.Details y las propiedades antiguas sin uso de BlogCard. Se corrige únicamente la URL CSS incompleta del avatar de BlogCard en ambas disposiciones. Las pruebas verifican composición, callbacks, enlaces y pestañas con React 18 y 19; la demo y su cobertura visual siguen siendo independientes de la migración de tipos.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck

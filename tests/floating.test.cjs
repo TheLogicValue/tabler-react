@@ -364,6 +364,54 @@ test('withTouchedErrors conserva blur, cambios y envío a través de RegisterPag
   assert.deepEqual(fieldErrors, { email: 'Revisar email', name: 'Revisar nombre' })
 })
 
+test('TabbedCard mantiene el cambio de panel y solo usa initialTab al montar', async () => {
+  const { TabbedCard, Tab } = components
+  const ref = React.createRef()
+  let submissions = 0
+  const example = initialTab => React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+    React.createElement(TabbedCard, { ref, initialTab }, ['Uno', 'Dos'].map(title => React.createElement(Tab, { key: title, title }, 'Contenido ' + title))))
+  await render(example('Uno'))
+  assert.ok(container.textContent.includes('Contenido Uno'))
+  assert.equal(container.textContent.includes('Contenido Dos'), false)
+  await click([...container.querySelectorAll('.nav-link-item')].find(link => link.textContent === 'Dos'))
+  assert.equal(ref.current.state.selectedTitle, 'Dos')
+  assert.ok(container.textContent.includes('Contenido Dos'))
+  assert.equal(container.textContent.includes('Contenido Uno'), false)
+  await React.act(async () => root.render(example('Uno')))
+  assert.equal(ref.current.state.selectedTitle, 'Dos')
+  assert.equal(submissions, 0)
+})
+
+test('GalleryCard mantiene los enlaces del consumidor y la navegación con Link', async () => {
+  const { Link, useLocation } = consumerRequire('react-router-dom')
+  const { GalleryCard } = components
+  function Location() { return React.createElement('output', null, useLocation().pathname) }
+  await render(React.createElement(MemoryRouter, null,
+    React.createElement(Location), React.createElement(GalleryCard, null,
+      React.createElement(GalleryCard.Image, { src: '/image.svg', alt: 'Imagen', RootComponent: Link, to: '/imagen' }),
+      React.createElement(GalleryCard.IconItem, { name: 'heart', label: 'Favoritos', RootComponent: Link, to: '/favoritos' }))))
+  const imageLink = container.querySelector('a[href="/imagen"]')
+  assert.ok(imageLink.classList.contains('mb-3'))
+  assert.ok(imageLink.querySelector('img').classList.contains('rounded'))
+  await click(container.querySelector('a[href="/favoritos"]'))
+  assert.equal(container.querySelector('output').textContent, '/favoritos')
+  await click(imageLink)
+  assert.equal(container.querySelector('output').textContent, '/imagen')
+})
+
+test('PricingCard.Button conserva el callback sobre el elemento real y la raíz personalizada', async () => {
+  const calls = []
+  for (const RootComponent of [undefined, 'button']) {
+    const example = React.createElement(components.PricingCard.Button, { RootComponent, active: true, href: RootComponent ? undefined : '/planes', onClick: event => { event.preventDefault(); calls.push(event.currentTarget.tagName) } }, 'Ver plan')
+    if (!root) await render(example)
+    else await React.act(async () => root.render(example))
+    const control = container.querySelector('[role=button]')
+    assert.ok(control.classList.contains('btn-green'))
+    await click(control)
+  }
+  assert.deepEqual(calls, ['A', 'BUTTON'])
+})
+
 async function changeControl(element, value, type = 'input') {
   await React.act(async () => {
     const prototype = element.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : element.tagName === 'SELECT' ? window.HTMLSelectElement.prototype : window.HTMLInputElement.prototype

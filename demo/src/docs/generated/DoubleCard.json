@@ -1,35 +1,58 @@
 {
   "name": "DoubleCard",
   "kind": "Componente",
-  "source": "src/components/DoubleCard/index.js",
-  "implementation": "src/components/DoubleCard/DoubleCard.react.js",
-  "implementationCode": "import * as React from 'react';\nimport cn from \"classnames\";\nimport { Card, Text } from \"../\";\n\nfunction DoubleCard({ className, title, firstValue, firstlabel, secondValue, secondlabel, classColorValue = null, children }) {\n    const classes = cn(className);\n\n    return (\n        <Card className={classes}>\n            <Text className=\"double-card-header\">{title}</Text>\n            <div className=\"double-card-body\">\n                <div className=\"double-card-colum\">\n                    <Text className={`double-card-text ${classColorValue && \"text-\" + classColorValue}`}><b>{firstValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{firstlabel}</Text>\n                </div>\n                <div className=\"double-card-colum\">\n                    <Text className=\"double-card-text\"><b>{secondValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{secondlabel}</Text>\n                </div>\n            </div>\n            {children}\n        </Card>\n    );\n}\n\nexport default DoubleCard;",
+  "source": "src/components/DoubleCard/index.ts",
+  "implementation": "src/components/DoubleCard/DoubleCard.react.tsx",
+  "implementationCode": "import * as React from 'react';\nimport cn from \"classnames\";\nimport Card from \"../Card\";\nimport Text from \"../Text\";\n\nexport type DoubleCardProps = {\n    readonly className?: string;\n    readonly title?: React.ReactNode;\n    readonly firstValue?: React.ReactNode;\n    readonly firstlabel?: React.ReactNode;\n    readonly secondValue?: React.ReactNode;\n    readonly secondlabel?: React.ReactNode;\n    readonly classColorValue?: string | null;\n    readonly children?: React.ReactNode;\n};\n\nfunction DoubleCard({ className, title, firstValue, firstlabel, secondValue, secondlabel, classColorValue = null, children }: DoubleCardProps): React.ReactElement {\n    const classes = cn(className);\n\n    return (\n        <Card className={classes}>\n            <Text className=\"double-card-header\">{title}</Text>\n            <div className=\"double-card-body\">\n                <div className=\"double-card-colum\">\n                    <Text className={`double-card-text ${classColorValue && \"text-\" + classColorValue}`}><b>{firstValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{firstlabel}</Text>\n                </div>\n                <div className=\"double-card-colum\">\n                    <Text className=\"double-card-text\"><b>{secondValue}</b></Text>\n                    <Text className=\"double-card-subtext\">{secondlabel}</Text>\n                </div>\n            </div>\n            {children}\n        </Card>\n    );\n}\n\nexport default DoubleCard;\n",
   "props": [
     {
-      "name": "className"
+      "name": "className",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "title"
+      "name": "title",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "firstValue"
+      "name": "firstValue",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "firstlabel"
+      "name": "firstlabel",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "secondValue"
+      "name": "secondValue",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "secondlabel"
+      "name": "secondlabel",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "classColorValue",
-      "default": "null",
-      "optional": true
+      "type": "string | null",
+      "optional": true,
+      "description": "",
+      "default": "null"
     },
     {
-      "name": "children"
+      "name": "children",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -47,8 +70,9 @@
   "guide": {
     "summary": "Tarjeta que compara dos valores y sus etiquetas.",
     "behavior": [
-      "Los valores ya llegan formateados desde el consumidor.",
-      "firstlabel y secondlabel respetan esa capitalización de la API; children añade información complementaria."
+      "Los valores llegan preparados desde el consumidor. title, firstValue, firstlabel, secondValue y secondlabel admiten nodos React, incluidos números; se conserva la capitalización firstlabel/secondlabel.",
+      "classColorValue colorea únicamente el primer valor y admite string o null. Se mantiene la clase literal null heredada cuando no se configura un color; no añade estilos por sí misma.",
+      "children se representa después de los dos valores. No se calculan ni formatean porcentajes dentro de la tarjeta."
     ],
     "example": "<DoubleCard title=\"Cobertura\" firstValue=\"94%\" firstlabel=\"Cartera\" secondValue=\"80%\" secondlabel=\"Referencia\" classColorValue=\"success\" />"
   }

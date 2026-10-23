@@ -1,0 +1,40 @@
+import * as React from "react";
+import cn from "classnames";
+
+import Icon from "../Icon";
+// TODO: Add RootComponent prop
+export type PricingCardAttributeItemProps = {
+  readonly children?: React.ReactNode;
+  readonly available?: boolean;
+  readonly hasIcon?: boolean;
+};
+
+function PricingCardAttributeItem({
+  children,
+  available,
+  hasIcon,
+}: PricingCardAttributeItemProps): React.ReactElement {
+  const iconClasses = available
+    ? cn("text-success", "mr-2")
+    : cn("text-danger", "mr-2");
+
+  return hasIcon ? (
+    <li>
+      {" "}
+      <Icon
+        prefix="fe"
+        name={available ? "check" : "x"}
+        className={iconClasses}
+        isAriaHidden
+      />
+      {children}
+    </li>
+  ) : (
+    <li> {children} </li>
+  );
+}
+
+PricingCardAttributeItem.displayName = "PricingCard.AttributeItem";
+
+/** @component */
+export default PricingCardAttributeItem;

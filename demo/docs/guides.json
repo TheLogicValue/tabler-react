@@ -369,9 +369,9 @@
   "BlogCard": {
     "summary": "Tarjeta de publicación con imagen, autor y descripción.",
     "behavior": [
-      "Combina encabezado, cuerpo, avatar y enlaces de publicación y perfil.",
-      "Usa imgSrc/avatarImgSrc para las imágenes de la implementación; algunas anotaciones conservan nombres antiguos.",
-      "La carga del contenido y la navegación corresponden al consumidor."
+      "aside selecciona la disposición lateral; sin aside se utiliza una imagen superior. postHref enlaza la imagen y el título, profileHref el autor e iconHref la acción del icono.",
+      "Las imágenes utilizadas son imgSrc y avatarImgSrc. La URL CSS del avatar se ha corregido cerrando url(...) en ambas variantes. titleUrl, avatarUrl, imgUrl y children se mantienen como propiedades heredadas sin representación.",
+      "La tarjeta no carga publicaciones ni mantiene favoritos; los datos y los destinos proceden del consumidor."
     ],
     "example": "<BlogCard title=\"Novedades\" description=\"Resumen de la publicación.\" authorName=\"Equipo\" imgSrc=\"/imagen-local.svg\" imgAlt=\"Ilustración\" postHref=\"/noticias\" />"
   },
@@ -487,9 +487,9 @@
   "ContactCard": {
     "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
     "behavior": [
-      "details es una lista de objetos title/content; address utiliza line1 y line2.",
-      "map admite contenido y mapPlaceholder permite una cabecera de mapa visual.",
-      "Las imágenes y los datos deben proporcionarse desde el consumidor."
+      "address utiliza ContactAddress con line1/line2; details admite una lista readonly de ContactDetail con title y content React. Se conserva el orden y no se modifican los datos recibidos.",
+      "description admite texto (con el encabezado fijo Description) o un objeto ContactDescription con title y content de texto. children se representa al final del cuerpo.",
+      "map admite un nodo del consumidor y mapPlaceholder una imagen de fondo. avatar selecciona Avatar para objectURL; sin avatar se utiliza una imagen y rounded/alt se aplican a ella."
     ],
     "example": "<ContactCard cardTitle=\"Contacto\" name=\"Equipo de soporte\" address={{ line1: \"Oficina de prueba\" }} details={[{ title: \"Horario\", content: \"9:00–18:00\" }]} />"
   },
@@ -586,8 +586,9 @@
   "DoubleCard": {
     "summary": "Tarjeta que compara dos valores y sus etiquetas.",
     "behavior": [
-      "Los valores ya llegan formateados desde el consumidor.",
-      "firstlabel y secondlabel respetan esa capitalización de la API; children añade información complementaria."
+      "Los valores llegan preparados desde el consumidor. title, firstValue, firstlabel, secondValue y secondlabel admiten nodos React, incluidos números; se conserva la capitalización firstlabel/secondlabel.",
+      "classColorValue colorea únicamente el primer valor y admite string o null. Se mantiene la clase literal null heredada cuando no se configura un color; no añade estilos por sí misma.",
+      "children se representa después de los dos valores. No se calculan ni formatean porcentajes dentro de la tarjeta."
     ],
     "example": "<DoubleCard title=\"Cobertura\" firstValue=\"94%\" firstlabel=\"Cartera\" secondValue=\"80%\" secondlabel=\"Referencia\" classColorValue=\"success\" />"
   },
@@ -668,8 +669,10 @@
   "GalleryCard": {
     "summary": "Tarjeta para componer imágenes y detalles de una galería.",
     "behavior": [
-      "GalleryCard.Image, Details y Footer permiten componer las partes.",
-      "No carga una colección ni implementa por sí misma un visor de imágenes."
+      "Compone Image, Details, Footer, IconGroup e IconItem. Cada subcomponente mantiene sus clases y el alcance de sus propiedades.",
+      "Image requiere src; className y rounded se aplican al img, mientras el enlace conserva mb-3. Image e IconItem usan href como enlace nativo o RootComponent con to, className y children; no reenvían href a la raíz personalizada.",
+      "Details representa un fragmento y no aplica className. La condición heredada oculta el bloque de nombre/fecha solo cuando fullName y dateString son ambos null; si se omiten, conserva el bloque vacío. children permite añadir detalles manuales.",
+      "Footer solo expone children; IconGroup agrupa iconos e IconItem requiere name. No se añade carga de colecciones ni un visor de imágenes."
     ],
     "example": "<GalleryCard><GalleryCard.Image src=\"/imagen-local.svg\" alt=\"Ilustración\" /><GalleryCard.Footer>Imagen de prueba</GalleryCard.Footer></GalleryCard>"
   },
@@ -984,9 +987,10 @@
   "PricingCard": {
     "summary": "Tarjeta de presentación de un plan o tarifa.",
     "behavior": [
-      "category muestra el nombre y active añade un indicador visual.",
-      "Compone Price, AttributeList, AttributeItem y Button mediante children.",
-      "No calcula precios, procesa pagos ni realiza una contratación."
+      "category admite un nodo React y active añade el indicador verde. La propiedad className de PricingCard se conserva por compatibilidad aunque no se aplica a Card.",
+      "Category, Price, AttributeList, AttributeItem y Button permiten composición manual. AttributeItem añade check/x cuando hasIcon=true y utiliza available para elegir el icono y color.",
+      "Button utiliza a por defecto o RootComponent. Reenvía className y, si tienen contenido, href/to. Con onClick añade role=button y entrega un evento de ratón de React sobre el HTMLElement real; se corrige así la antigua anotación de input.",
+      "Button no expone propiedades adicionales como type ni implementa navegación por sí mismo: para rutas utiliza una raíz del consumidor, por ejemplo Link. La tarjeta no calcula precios ni procesa contrataciones."
     ],
     "example": "<PricingCard category=\"Plan básico\" active><PricingCard.Price>10 €</PricingCard.Price><PricingCard.AttributeList><PricingCard.AttributeItem>Una característica</PricingCard.AttributeItem></PricingCard.AttributeList></PricingCard>"
   },
@@ -1013,7 +1017,8 @@
     "behavior": [
       "header y content muestran la información textual.",
       "progressWidth es un porcentaje y progressColor el color de la barra.",
-      "El consumidor calcula y actualiza los valores."
+      "El consumidor calcula y actualiza los valores.",
+      "progressWidth reutiliza Progress.Bar: no se limita automáticamente al intervalo 0–100. La tarjeta conserva sus propiedades limitadas y no reenvía atributos HTML adicionales."
     ],
     "example": "<ProgressCard header=\"Cobertura\" content=\"65%\" progressWidth={65} progressColor=\"green\" />"
   },
@@ -1091,7 +1096,8 @@
     "summary": "Tarjeta breve con insignia, cabecera y pie.",
     "behavior": [
       "icon/color configuran la insignia; header/footer muestran los textos.",
-      "children permite contenido adicional."
+      "children permite contenido adicional.",
+      "header y footer admiten nodos React y mantienen sus condiciones de representación. El contenido y los valores ya proceden del consumidor."
     ],
     "example": "<StampCard icon=\"file\" color=\"blue\" header=\"12 informes\" footer=\"Disponibles\" />"
   },
@@ -1106,18 +1112,18 @@
   "StatsCard": {
     "summary": "Tarjeta de una cifra con variación porcentual.",
     "behavior": [
-      "movement es una variación numérica; la implementación determina signo, icono y color.",
-      "total y label son textos ya preparados.",
-      "layout=2 permite incorporar chart en el fondo de la tarjeta."
+      "movement es numérico: positivo muestra signo + y verde, cero amarillo, y negativo rojo. El layout 1 incorpora los iconos de subida, estabilidad o bajada.",
+      "movement, total y label son obligatorios; total y label mantienen su contrato de texto. layout acepta 1 o 2 y conserva 1 como valor predeterminado.",
+      "chart solo se representa en layout=2. El consumidor prepara la cifra, el gráfico y la variación; no se añade cálculo de datos."
     ],
     "example": "<StatsCard movement={4.2} total=\"1.200\" label=\"Registros\" layout={1} />"
   },
   "StoreCard": {
     "summary": "Tarjeta visual de un producto con precio e imagen.",
     "behavior": [
-      "title, subtitle, price e imgUrl configuran la presentación.",
-      "La implementación incluye un botón Add to cart sin callback de compra y no utiliza children para personalizarlo.",
-      "No añade artículos a una cesta ni procesa pedidos; esa integración requeriría adaptar el consumidor o el componente."
+      "Las propiedades title, subtitle, price, imgUrl e imgAlt configuran la presentación y mantienen su contrato de texto.",
+      "La implementación incluye el botón fijo Add to cart, sin callback de compra; children no lo personaliza. El botón conserva el comportamiento nativo si se coloca dentro de un formulario.",
+      "No añade artículos a una cesta ni procesa pedidos. No se introduce un nuevo contrato de compra en esta migración."
     ],
     "example": "<StoreCard title=\"Producto de prueba\" subtitle=\"Descripción\" price=\"12 €\" imgUrl=\"/producto-local.svg\" imgAlt=\"Producto\" />"
   },
@@ -1133,9 +1139,9 @@
   "TabbedCard": {
     "summary": "Tarjeta con cabeceras de pestaña y estado interno.",
     "behavior": [
-      "initialTab debe coincidir con el title de uno de sus hijos Tab.",
-      "Mantiene la selección dentro de una clase React y representa el panel correspondiente.",
-      "Es una alternativa de composición a Tabs."
+      "initialTab es obligatorio y debe coincidir con title de un hijo Tab para mostrar su panel. children reutiliza TabChildren, incluidos arrays readonly y elementos condicionales.",
+      "La clase conserva el estado selectedTitle. initialTab solo lo inicializa: cambiar esa propiedad después no restablece la selección. La cabecera cambia el estado al pulsar otra pestaña.",
+      "Se mantienen la composición de Card/TabbedHeader/TabbedContainer y la referencia a la instancia. No se añaden callbacks de selección ni control externo de la pestaña."
     ],
     "example": "<TabbedCard initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel.</Tab><Tab title=\"Dos\">Segundo panel.</Tab></TabbedCard>"
   },
@@ -1209,8 +1215,10 @@
   "Timeline": {
     "summary": "Lista cronológica de eventos.",
     "behavior": [
-      "Timeline.Item admite título, descripción, hora e insignia.",
-      "El consumidor ordena y proporciona los eventos; no existe carga automática ni cálculo de fechas."
+      "Timeline compone Item, ItemTime, ItemBadge, ItemTitle e ItemDescription. Los eventos y su orden proceden del consumidor; no se calculan fechas ni se ordenan automáticamente.",
+      "Item utiliza title o una cadena children como título y siempre vuelve a representar children. Por compatibilidad, una cadena puede aparecer dos veces; para evitarlo utiliza title y nodos adicionales en children.",
+      "description solo se muestra cuando existe un título. active envuelve el título/descripción en un div y resalta la hora; badge o badgeColor activan la insignia.",
+      "ItemTitle devuelve el contenido directamente o strong cuando active=true y no representa contenido falsy. ItemDescription solo expone children; no se añade reenvío de atributos HTML."
     ],
     "example": "<Timeline><Timeline.Item title=\"Informe creado\" description=\"Datos disponibles\" time=\"10:30\" badgeColor=\"green\" /></Timeline>"
   },

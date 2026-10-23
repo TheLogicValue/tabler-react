@@ -1,13 +1,13 @@
 {
   "name": "Timeline",
   "kind": "Componente",
-  "source": "src/components/Timeline/index.js",
-  "implementation": "src/components/Timeline/Timeline.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport TimelineItem from \"./TimelineItem.react\";\nimport TimelineItemTime from \"./TimelineItemTime.react\";\nimport TimelineItemBadge from \"./TimelineItemBadge.react\";\nimport TimelineItemTitle from \"./TimelineItemTitle.react\";\nimport TimelineItemDescription from \"./TimelineItemDescription.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Timeline({ className, children }: Props): React.Node {\n  const classes = cn(\n    {\n      timeline: true,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nTimeline.Item = TimelineItem;\nTimeline.ItemTime = TimelineItemTime;\nTimeline.ItemBadge = TimelineItemBadge;\nTimeline.ItemTitle = TimelineItemTitle;\nTimeline.ItemDescription = TimelineItemDescription;\n\nexport default Timeline;\n",
+  "source": "src/components/Timeline/index.ts",
+  "implementation": "src/components/Timeline/Timeline.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport TimelineItem from \"./TimelineItem.react\";\nimport TimelineItemTime from \"./TimelineItemTime.react\";\nimport TimelineItemBadge from \"./TimelineItemBadge.react\";\nimport TimelineItemTitle from \"./TimelineItemTitle.react\";\nimport TimelineItemDescription from \"./TimelineItemDescription.react\";\n\nexport type TimelineProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction Timeline({ className, children }: TimelineProps): React.ReactElement {\n  const classes = cn(\n    {\n      timeline: true,\n    },\n    className\n  );\n  return <ul className={classes}>{children}</ul>;\n}\n\nTimeline.Item = TimelineItem;\nTimeline.ItemTime = TimelineItemTime;\nTimeline.ItemBadge = TimelineItemBadge;\nTimeline.ItemTitle = TimelineItemTitle;\nTimeline.ItemDescription = TimelineItemDescription;\n\nexport default Timeline;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -30,11 +30,11 @@
   "childApis": [
     {
       "name": "Item",
-      "source": "src/components/Timeline/TimelineItem.react.js",
+      "source": "src/components/Timeline/TimelineItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -87,11 +87,11 @@
     },
     {
       "name": "ItemTime",
-      "source": "src/components/Timeline/TimelineItemTime.react.js",
+      "source": "src/components/Timeline/TimelineItemTime.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -114,11 +114,11 @@
     },
     {
       "name": "ItemBadge",
-      "source": "src/components/Timeline/TimelineItemBadge.react.js",
+      "source": "src/components/Timeline/TimelineItemBadge.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -142,11 +142,11 @@
     },
     {
       "name": "ItemTitle",
-      "source": "src/components/Timeline/TimelineItemTitle.react.js",
+      "source": "src/components/Timeline/TimelineItemTitle.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -163,11 +163,11 @@
     },
     {
       "name": "ItemDescription",
-      "source": "src/components/Timeline/TimelineItemDescription.react.js",
+      "source": "src/components/Timeline/TimelineItemDescription.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -182,8 +182,10 @@
   "guide": {
     "summary": "Lista cronológica de eventos.",
     "behavior": [
-      "Timeline.Item admite título, descripción, hora e insignia.",
-      "El consumidor ordena y proporciona los eventos; no existe carga automática ni cálculo de fechas."
+      "Timeline compone Item, ItemTime, ItemBadge, ItemTitle e ItemDescription. Los eventos y su orden proceden del consumidor; no se calculan fechas ni se ordenan automáticamente.",
+      "Item utiliza title o una cadena children como título y siempre vuelve a representar children. Por compatibilidad, una cadena puede aparecer dos veces; para evitarlo utiliza title y nodos adicionales en children.",
+      "description solo se muestra cuando existe un título. active envuelve el título/descripción en un div y resalta la hora; badge o badgeColor activan la insignia.",
+      "ItemTitle devuelve el contenido directamente o strong cuando active=true y no representa contenido falsy. ItemDescription solo expone children; no se añade reenvío de atributos HTML."
     ],
     "example": "<Timeline><Timeline.Item title=\"Informe creado\" description=\"Datos disponibles\" time=\"10:30\" badgeColor=\"green\" /></Timeline>"
   }

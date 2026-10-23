@@ -1,15 +1,15 @@
 {
   "name": "StoreCard",
   "kind": "Componente",
-  "source": "src/components/StoreCard/index.js",
-  "implementation": "src/components/StoreCard/StoreCard.react.js",
-  "implementationCode": "//@flow\n\nimport * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport Text from \"../Text/Text.react\";\nimport Button from \"../Button/Button.react\";\nimport Icon from \"../Icon/Icon.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +title?: string,\n  +price?: string,\n  +subtitle?: string,\n  +imgUrl?: string,\n  +imgAlt?: string,\n|};\n\nfunction StoreCard({\n  children,\n  title,\n  subtitle,\n  price,\n  imgUrl,\n  imgAlt,\n}: Props): React.Node {\n  return (\n    <Card>\n      <Card.Body>\n        <div className=\"mb-4 text-center\">\n          <img src={imgUrl} alt={imgAlt} />\n        </div>\n        <Card.Title>{title}</Card.Title>\n        <Text className=\"card-subtitle\">{subtitle}</Text>\n\n        <div className=\"mt-5 d-flex align-items-center\">\n          <div className=\"product-price\">\n            <strong>{price}</strong>\n          </div>\n          <div className=\"ml-auto\">\n            <Button color=\"primary\">\n              <Icon prefix=\"fe\" name=\"plus\" />\n              Add to cart\n            </Button>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default StoreCard;\n",
+  "source": "src/components/StoreCard/index.ts",
+  "implementation": "src/components/StoreCard/StoreCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport Text from \"../Text/Text.react\";\nimport Button from \"../Button/Button.react\";\nimport Icon from \"../Icon/Icon.react\";\n\nexport type StoreCardProps = {\n  /** Propiedad heredada que no personaliza el contenido ni el botón. */\n  readonly children?: React.ReactNode;\n  readonly title?: string;\n  readonly price?: string;\n  readonly subtitle?: string;\n  readonly imgUrl?: string;\n  readonly imgAlt?: string;\n};\n\nfunction StoreCard({\n  children,\n  title,\n  subtitle,\n  price,\n  imgUrl,\n  imgAlt,\n}: StoreCardProps): React.ReactElement {\n  return (\n    <Card>\n      <Card.Body>\n        <div className=\"mb-4 text-center\">\n          <img src={imgUrl} alt={imgAlt} />\n        </div>\n        <Card.Title>{title}</Card.Title>\n        <Text className=\"card-subtitle\">{subtitle}</Text>\n\n        <div className=\"mt-5 d-flex align-items-center\">\n          <div className=\"product-price\">\n            <strong>{price}</strong>\n          </div>\n          <div className=\"ml-auto\">\n            <Button color=\"primary\">\n              <Icon prefix=\"fe\" name=\"plus\" />\n              Add to cart\n            </Button>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default StoreCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada que no personaliza el contenido ni el botón."
     },
     {
       "name": "title",
@@ -57,9 +57,9 @@
   "guide": {
     "summary": "Tarjeta visual de un producto con precio e imagen.",
     "behavior": [
-      "title, subtitle, price e imgUrl configuran la presentación.",
-      "La implementación incluye un botón Add to cart sin callback de compra y no utiliza children para personalizarlo.",
-      "No añade artículos a una cesta ni procesa pedidos; esa integración requeriría adaptar el consumidor o el componente."
+      "Las propiedades title, subtitle, price, imgUrl e imgAlt configuran la presentación y mantienen su contrato de texto.",
+      "La implementación incluye el botón fijo Add to cart, sin callback de compra; children no lo personaliza. El botón conserva el comportamiento nativo si se coloca dentro de un formulario.",
+      "No añade artículos a una cesta ni procesa pedidos. No se introduce un nuevo contrato de compra en esta migración."
     ],
     "example": "<StoreCard title=\"Producto de prueba\" subtitle=\"Descripción\" price=\"12 €\" imgUrl=\"/producto-local.svg\" imgAlt=\"Producto\" />"
   }

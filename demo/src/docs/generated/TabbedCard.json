@@ -1,9 +1,9 @@
 {
   "name": "TabbedCard",
   "kind": "Componente",
-  "source": "src/components/TabbedCard/index.js",
-  "implementation": "src/components/TabbedCard/TabbedCard.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport { TabbedContainer, TabbedHeader, Tab } from \"../Tabs\";\n\ntype Props = {|\n  +initialTab: string,\n  +children: React.ChildrenArray<React.Element<typeof Tab>>,\n|};\n\ntype State = {|\n  selectedTitle: string,\n|};\n\nclass TabbedCard extends React.PureComponent<Props, State> {\n  state = {\n    selectedTitle: this.props.initialTab,\n  };\n\n  render(): React.Node {\n    const { children } = this.props;\n    const { selectedTitle } = this.state;\n    return (\n      <Card>\n        <Card.Header>\n          <TabbedHeader\n            selectedTitle={selectedTitle}\n            stateCallback={newTitle =>\n              this.setState({ selectedTitle: newTitle })\n            }\n          >\n            {children}\n          </TabbedHeader>\n        </Card.Header>\n        <Card.Body>\n          <TabbedContainer selectedTitle={selectedTitle}>\n            {children}\n          </TabbedContainer>\n        </Card.Body>\n      </Card>\n    );\n  }\n}\n\nexport default TabbedCard;\n",
+  "source": "src/components/TabbedCard/index.ts",
+  "implementation": "src/components/TabbedCard/TabbedCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport { TabbedContainer, TabbedHeader } from \"../Tabs\";\nimport type { TabChildren } from \"../Tabs/Tab.react\";\n\nexport type TabbedCardProps = {\n  readonly initialTab: string;\n  readonly children: TabChildren;\n};\n\ntype State = {\n  selectedTitle: string;\n};\n\nclass TabbedCard extends React.PureComponent<TabbedCardProps, State> {\n  state = {\n    selectedTitle: this.props.initialTab,\n  };\n\n  render(): React.ReactElement {\n    const { children } = this.props;\n    const { selectedTitle } = this.state;\n    return (\n      <Card>\n        <Card.Header>\n          <TabbedHeader\n            selectedTitle={selectedTitle}\n            stateCallback={newTitle =>\n              this.setState({ selectedTitle: newTitle })\n            }\n          >\n            {children}\n          </TabbedHeader>\n        </Card.Header>\n        <Card.Body>\n          <TabbedContainer selectedTitle={selectedTitle}>\n            {children}\n          </TabbedContainer>\n        </Card.Body>\n      </Card>\n    );\n  }\n}\n\nexport default TabbedCard;\n",
   "props": [
     {
       "name": "initialTab",
@@ -13,7 +13,7 @@
     },
     {
       "name": "children",
-      "type": "React.ChildrenArray<React.Element<typeof Tab>>",
+      "type": "TabChildren",
       "optional": false,
       "description": ""
     }
@@ -33,9 +33,9 @@
   "guide": {
     "summary": "Tarjeta con cabeceras de pestaña y estado interno.",
     "behavior": [
-      "initialTab debe coincidir con el title de uno de sus hijos Tab.",
-      "Mantiene la selección dentro de una clase React y representa el panel correspondiente.",
-      "Es una alternativa de composición a Tabs."
+      "initialTab es obligatorio y debe coincidir con title de un hijo Tab para mostrar su panel. children reutiliza TabChildren, incluidos arrays readonly y elementos condicionales.",
+      "La clase conserva el estado selectedTitle. initialTab solo lo inicializa: cambiar esa propiedad después no restablece la selección. La cabecera cambia el estado al pulsar otra pestaña.",
+      "Se mantienen la composición de Card/TabbedHeader/TabbedContainer y la referencia a la instancia. No se añaden callbacks de selección ni control externo de la pestaña."
     ],
     "example": "<TabbedCard initialTab=\"Uno\"><Tab title=\"Uno\">Primer panel.</Tab><Tab title=\"Dos\">Segundo panel.</Tab></TabbedCard>"
   }

@@ -1,15 +1,15 @@
 {
   "name": "BlogCard",
   "kind": "Componente",
-  "source": "src/components/BlogCard/index.js",
-  "implementation": "src/components/BlogCard/BlogCard.react.js",
-  "implementationCode": "//@flow\n\nimport * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport Icon from \"../Icon/Icon.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +title?: string,\n  +titleUrl?: string,\n  +avatarUrl?: string,\n  +description?: string,\n  +date?: string,\n  +imgUrl?: string,\n  +iconName?: string,\n  +iconHref?: string,\n  +authorName?: string,\n  +avatarImgSrc?: string,\n  +imgSrc?: string,\n  +imgAlt?: string,\n  +aside?: boolean,\n  +postHref?: string,\n  +profileHref?: string,\n|};\n\nfunction BlogCard({\n  children,\n  title,\n  description,\n  avatarUrl,\n  imgUrl,\n  imgAlt,\n  aside,\n  authorName,\n  date,\n  imgSrc = \"\",\n  avatarImgSrc = \"\",\n  iconName,\n  iconHref,\n  postHref,\n  profileHref,\n}: Props): React.Node {\n  return !aside ? (\n    <Card>\n      <a href={postHref}>\n        <img className=\"card-img-top\" src={imgSrc} alt={imgAlt} />\n      </a>\n      <Card.Body className=\"d-flex flex-column\">\n        <h4>\n          <a href={postHref}>{title}</a>\n        </h4>\n        <div className=\"text-muted\">{description}</div>\n        <div className=\"d-flex align-items-center pt-5 mt-auto\">\n          <div\n            className=\"avatar avatar-md mr-3\"\n            style={{ backgroundImage: `url(${avatarImgSrc}` }}\n          />\n          <div>\n            <a href={profileHref} className=\"text-default\">\n              {authorName}\n            </a>\n            <small className=\"d-block text-muted\">{date}</small>\n          </div>\n          <div className=\"ml-auto text-muted\">\n            <a href={iconHref} className=\"icon d-none d-md-inline-block ml-3\">\n              <Icon prefix=\"fe\" name={iconName || \"heart\"} />\n            </a>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  ) : (\n    <Card className=\"card-aside\">\n      <a\n        href={postHref}\n        className=\"card-aside-column\"\n        style={{ backgroundImage: `url(${imgSrc})` }}\n      >\n        {\"\"}\n      </a>\n      <Card.Body className=\"d-flex flex-column\">\n        <h4>\n          <a href={postHref}>{title}</a>\n        </h4>\n        <div className=\"text-muted\">{description}</div>\n        <div className=\"d-flex align-items-center pt-5 mt-auto\">\n          <div\n            className=\"avatar avatar-md mr-3\"\n            style={{ backgroundImage: `url(${avatarImgSrc}` }}\n          />\n          <div>\n            <a href={profileHref} className=\"text-default\">\n              {authorName}\n            </a>\n            <small className=\"d-block text-muted\">{date}</small>\n          </div>\n          <div className=\"ml-auto text-red\">\n            <a href={iconHref} className=\"icon d-none d-md-inline-block ml-3\">\n              <Icon prefix=\"fe\" name={iconName || \"heart\"} />\n            </a>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  );\n}\n\n/** @component */\nexport default BlogCard;\n",
+  "source": "src/components/BlogCard/index.ts",
+  "implementation": "src/components/BlogCard/BlogCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Card from \"../Card/Card.react\";\nimport Icon from \"../Icon/Icon.react\";\n\nexport type BlogCardProps = {\n  /** Propiedad heredada que no se representa. */\n  readonly children?: React.ReactNode;\n  readonly title?: string;\n  /** Propiedad heredada sin efecto; utiliza postHref. */\n  readonly titleUrl?: string;\n  /** Propiedad heredada sin efecto; utiliza avatarImgSrc. */\n  readonly avatarUrl?: string;\n  readonly description?: string;\n  readonly date?: string;\n  /** Propiedad heredada sin efecto; utiliza imgSrc. */\n  readonly imgUrl?: string;\n  readonly iconName?: string;\n  readonly iconHref?: string;\n  readonly authorName?: string;\n  readonly avatarImgSrc?: string;\n  readonly imgSrc?: string;\n  readonly imgAlt?: string;\n  readonly aside?: boolean;\n  readonly postHref?: string;\n  readonly profileHref?: string;\n};\n\nfunction BlogCard({\n  children,\n  title,\n  description,\n  avatarUrl,\n  imgUrl,\n  imgAlt,\n  aside,\n  authorName,\n  date,\n  imgSrc = \"\",\n  avatarImgSrc = \"\",\n  iconName,\n  iconHref,\n  postHref,\n  profileHref,\n}: BlogCardProps): React.ReactElement {\n  return !aside ? (\n    <Card>\n      <a href={postHref}>\n        <img className=\"card-img-top\" src={imgSrc} alt={imgAlt} />\n      </a>\n      <Card.Body className=\"d-flex flex-column\">\n        <h4>\n          <a href={postHref}>{title}</a>\n        </h4>\n        <div className=\"text-muted\">{description}</div>\n        <div className=\"d-flex align-items-center pt-5 mt-auto\">\n          <div\n            className=\"avatar avatar-md mr-3\"\n            style={{ backgroundImage: `url(${avatarImgSrc})` }}\n          />\n          <div>\n            <a href={profileHref} className=\"text-default\">\n              {authorName}\n            </a>\n            <small className=\"d-block text-muted\">{date}</small>\n          </div>\n          <div className=\"ml-auto text-muted\">\n            <a href={iconHref} className=\"icon d-none d-md-inline-block ml-3\">\n              <Icon prefix=\"fe\" name={iconName || \"heart\"} />\n            </a>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  ) : (\n    <Card className=\"card-aside\">\n      <a\n        href={postHref}\n        className=\"card-aside-column\"\n        style={{ backgroundImage: `url(${imgSrc})` }}\n      >\n        {\"\"}\n      </a>\n      <Card.Body className=\"d-flex flex-column\">\n        <h4>\n          <a href={postHref}>{title}</a>\n        </h4>\n        <div className=\"text-muted\">{description}</div>\n        <div className=\"d-flex align-items-center pt-5 mt-auto\">\n          <div\n            className=\"avatar avatar-md mr-3\"\n            style={{ backgroundImage: `url(${avatarImgSrc})` }}\n          />\n          <div>\n            <a href={profileHref} className=\"text-default\">\n              {authorName}\n            </a>\n            <small className=\"d-block text-muted\">{date}</small>\n          </div>\n          <div className=\"ml-auto text-red\">\n            <a href={iconHref} className=\"icon d-none d-md-inline-block ml-3\">\n              <Icon prefix=\"fe\" name={iconName || \"heart\"} />\n            </a>\n          </div>\n        </div>\n      </Card.Body>\n    </Card>\n  );\n}\n\n/** @component */\nexport default BlogCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada que no se representa."
     },
     {
       "name": "title",
@@ -21,13 +21,13 @@
       "name": "titleUrl",
       "type": "string",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada sin efecto; utiliza postHref."
     },
     {
       "name": "avatarUrl",
       "type": "string",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada sin efecto; utiliza avatarImgSrc."
     },
     {
       "name": "description",
@@ -45,7 +45,7 @@
       "name": "imgUrl",
       "type": "string",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada sin efecto; utiliza imgSrc."
     },
     {
       "name": "iconName",
@@ -119,9 +119,9 @@
   "guide": {
     "summary": "Tarjeta de publicación con imagen, autor y descripción.",
     "behavior": [
-      "Combina encabezado, cuerpo, avatar y enlaces de publicación y perfil.",
-      "Usa imgSrc/avatarImgSrc para las imágenes de la implementación; algunas anotaciones conservan nombres antiguos.",
-      "La carga del contenido y la navegación corresponden al consumidor."
+      "aside selecciona la disposición lateral; sin aside se utiliza una imagen superior. postHref enlaza la imagen y el título, profileHref el autor e iconHref la acción del icono.",
+      "Las imágenes utilizadas son imgSrc y avatarImgSrc. La URL CSS del avatar se ha corregido cerrando url(...) en ambas variantes. titleUrl, avatarUrl, imgUrl y children se mantienen como propiedades heredadas sin representación.",
+      "La tarjeta no carga publicaciones ni mantiene favoritos; los datos y los destinos proceden del consumidor."
     ],
     "example": "<BlogCard title=\"Novedades\" description=\"Resumen de la publicación.\" authorName=\"Equipo\" imgSrc=\"/imagen-local.svg\" imgAlt=\"Ilustración\" postHref=\"/noticias\" />"
   }

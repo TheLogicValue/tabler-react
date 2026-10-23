@@ -178,6 +178,18 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   assert.equal(document('Comment').childApis.length, 2)
   assert.equal(document('Comment').childApis.find(child => child.name === 'Reply').props.find(prop => prop.name === 'text').type, 'string')
   assert.deepEqual(document('CommentsCard').props.map(prop => prop.name).sort(), ['children', 'className'])
+  for (const name of ['BlogCard', 'ContactCard', 'DoubleCard', 'ProgressCard', 'StampCard', 'StatsCard', 'StoreCard', 'TabbedCard', 'GalleryCard', 'PricingCard', 'Timeline']) {
+    const doc = document(name)
+    assert.equal(doc.implementation, `src/components/${name}/${name}.react.tsx`)
+    assert.ok(doc.props.every(prop => prop.type), name + ': todas las propiedades deben tener tipo')
+    assert.ok(doc.childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  }
+  assert.equal(document('ContactCard').props.find(prop => prop.name === 'details').type, 'ReadonlyArray<ContactDetail>')
+  assert.equal(document('DoubleCard').props.find(prop => prop.name === 'firstValue').type, 'React.ReactNode')
+  assert.equal(document('TabbedCard').props.find(prop => prop.name === 'children').type, 'TabChildren')
+  for (const name of ['GalleryCard', 'PricingCard', 'Timeline']) assert.equal(document(name).childApis.length, 5)
+  assert.equal(document('PricingCard').childApis.find(child => child.name === 'Button').props.find(prop => prop.name === 'onClick').type, 'React.MouseEventHandler<HTMLElement>')
+  assert.equal(document('GalleryCard').childApis.find(child => child.name === 'Details').props.find(prop => prop.name === 'fullName').type, 'string | null')
 })
 
 function walk(node, visit) {

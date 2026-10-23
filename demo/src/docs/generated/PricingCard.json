@@ -1,13 +1,13 @@
 {
   "name": "PricingCard",
   "kind": "Componente",
-  "source": "src/components/PricingCard/index.js",
-  "implementation": "src/components/PricingCard/PricingCard.react.js",
-  "implementationCode": "//@flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card/Card.react\";\n\nimport PricingCardCategory from \"./PricingCardCategory.react\";\nimport PricingCardPrice from \"./PricingCardPrice.react\";\nimport PricingCardAttributeList from \"./PricingCardAttributeList.react\";\nimport PricingCardAttributeItem from \"./PricingCardAttributeItem.react\";\nimport PricingCardButton from \"./PricingCardButton.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +active?: boolean,\n  +category?: React.Node,\n|};\n\nfunction PricingCard({\n  className,\n  children,\n  active = false,\n  category,\n}: Props): React.Node {\n  const cardBodyClassName = cn(\"text-center\");\n  const cardStatusClassName = cn(\"card-status\", \"bg-green\");\n  const cardStatus = <div className={cardStatusClassName} />;\n  const cardCategory = <PricingCardCategory>{category}</PricingCardCategory>;\n  // TODO: Add component logic.\n  return (\n    <Card>\n      {active && cardStatus}\n      <Card.Body className={cardBodyClassName}>\n        {category && cardCategory}\n        {children}\n      </Card.Body>\n    </Card>\n  );\n}\n\nPricingCard.Category = PricingCardCategory;\nPricingCard.Price = PricingCardPrice;\nPricingCard.AttributeList = PricingCardAttributeList;\nPricingCard.AttributeItem = PricingCardAttributeItem;\nPricingCard.Button = PricingCardButton;\n\nexport default PricingCard;\n",
+  "source": "src/components/PricingCard/index.ts",
+  "implementation": "src/components/PricingCard/PricingCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card/Card.react\";\n\nimport PricingCardCategory from \"./PricingCardCategory.react\";\nimport PricingCardPrice from \"./PricingCardPrice.react\";\nimport PricingCardAttributeList from \"./PricingCardAttributeList.react\";\nimport PricingCardAttributeItem from \"./PricingCardAttributeItem.react\";\nimport PricingCardButton from \"./PricingCardButton.react\";\n\nexport type PricingCardProps = {\n  readonly children?: React.ReactNode;\n  /** Propiedad heredada que no se aplica a Card. */\n  readonly className?: string;\n  readonly active?: boolean;\n  readonly category?: React.ReactNode;\n};\n\nfunction PricingCard({\n  className,\n  children,\n  active = false,\n  category,\n}: PricingCardProps): React.ReactElement {\n  const cardBodyClassName = cn(\"text-center\");\n  const cardStatusClassName = cn(\"card-status\", \"bg-green\");\n  const cardStatus = <div className={cardStatusClassName} />;\n  const cardCategory = <PricingCardCategory>{category}</PricingCardCategory>;\n  // TODO: Add component logic.\n  return (\n    <Card>\n      {active && cardStatus}\n      <Card.Body className={cardBodyClassName}>\n        {category && cardCategory}\n        {children}\n      </Card.Body>\n    </Card>\n  );\n}\n\nPricingCard.Category = PricingCardCategory;\nPricingCard.Price = PricingCardPrice;\nPricingCard.AttributeList = PricingCardAttributeList;\nPricingCard.AttributeItem = PricingCardAttributeItem;\nPricingCard.Button = PricingCardButton;\n\nexport default PricingCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -15,7 +15,7 @@
       "name": "className",
       "type": "string",
       "optional": true,
-      "description": ""
+      "description": "Propiedad heredada que no se aplica a Card."
     },
     {
       "name": "active",
@@ -26,7 +26,7 @@
     },
     {
       "name": "category",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     }
@@ -43,11 +43,11 @@
   "childApis": [
     {
       "name": "Category",
-      "source": "src/components/PricingCard/PricingCardCategory.react.js",
+      "source": "src/components/PricingCard/PricingCardCategory.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -64,11 +64,11 @@
     },
     {
       "name": "Price",
-      "source": "src/components/PricingCard/PricingCardPrice.react.js",
+      "source": "src/components/PricingCard/PricingCardPrice.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -85,11 +85,11 @@
     },
     {
       "name": "AttributeList",
-      "source": "src/components/PricingCard/PricingCardAttributeList.react.js",
+      "source": "src/components/PricingCard/PricingCardAttributeList.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -106,11 +106,11 @@
     },
     {
       "name": "AttributeItem",
-      "source": "src/components/PricingCard/PricingCardAttributeItem.react.js",
+      "source": "src/components/PricingCard/PricingCardAttributeItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -133,11 +133,11 @@
     },
     {
       "name": "Button",
-      "source": "src/components/PricingCard/PricingCardButton.react.js",
+      "source": "src/components/PricingCard/PricingCardButton.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -173,7 +173,7 @@
         },
         {
           "name": "onClick",
-          "type": "(event: SyntheticMouseEvent<HTMLInputElement>) => mixed",
+          "type": "React.MouseEventHandler<HTMLElement>",
           "optional": true,
           "description": ""
         }
@@ -194,9 +194,10 @@
   "guide": {
     "summary": "Tarjeta de presentación de un plan o tarifa.",
     "behavior": [
-      "category muestra el nombre y active añade un indicador visual.",
-      "Compone Price, AttributeList, AttributeItem y Button mediante children.",
-      "No calcula precios, procesa pagos ni realiza una contratación."
+      "category admite un nodo React y active añade el indicador verde. La propiedad className de PricingCard se conserva por compatibilidad aunque no se aplica a Card.",
+      "Category, Price, AttributeList, AttributeItem y Button permiten composición manual. AttributeItem añade check/x cuando hasIcon=true y utiliza available para elegir el icono y color.",
+      "Button utiliza a por defecto o RootComponent. Reenvía className y, si tienen contenido, href/to. Con onClick añade role=button y entrega un evento de ratón de React sobre el HTMLElement real; se corrige así la antigua anotación de input.",
+      "Button no expone propiedades adicionales como type ni implementa navegación por sí mismo: para rutas utiliza una raíz del consumidor, por ejemplo Link. La tarjeta no calcula precios ni procesa contrataciones."
     ],
     "example": "<PricingCard category=\"Plan básico\" active><PricingCard.Price>10 €</PricingCard.Price><PricingCard.AttributeList><PricingCard.AttributeItem>Una característica</PricingCard.AttributeItem></PricingCard.AttributeList></PricingCard>"
   }

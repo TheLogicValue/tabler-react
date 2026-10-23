@@ -1,9 +1,9 @@
 {
   "name": "ProgressCard",
   "kind": "Componente",
-  "source": "src/components/ProgressCard/index.js",
-  "implementation": "src/components/ProgressCard/ProgressCard.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Card, Header, Progress } from \"../\";\n\ntype Props = {|\n  +className?: string,\n  +header?: React.Node,\n  +content?: React.Node,\n  +progressColor?: string,\n  +progressWidth?: number,\n|};\n\nfunction ProgressCard({\n  className,\n  header,\n  content,\n  progressColor,\n  progressWidth,\n}: Props): React.Node {\n  const classes = cn(className);\n  return (\n    <Card className={classes}>\n      <Card.Body className=\"text-center\">\n        <Header size={5}>{header}</Header>\n        <div className=\"display-4 font-weight-bold mb-4\">{content}</div>\n        <Progress size=\"sm\">\n          <Progress.Bar color={progressColor} width={progressWidth} />\n        </Progress>\n      </Card.Body>\n    </Card>\n  );\n}\n\nProgressCard.displayName = \"ProgressCard\";\n\nexport default ProgressCard;\n",
+  "source": "src/components/ProgressCard/index.ts",
+  "implementation": "src/components/ProgressCard/ProgressCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card\";\nimport Header from \"../Header\";\nimport Progress from \"../Progress\";\n\nexport type ProgressCardProps = {\n  readonly className?: string;\n  readonly header?: React.ReactNode;\n  readonly content?: React.ReactNode;\n  readonly progressColor?: string;\n  readonly progressWidth?: number;\n};\n\nfunction ProgressCard({\n  className,\n  header,\n  content,\n  progressColor,\n  progressWidth,\n}: ProgressCardProps): React.ReactElement {\n  const classes = cn(className);\n  return (\n    <Card className={classes}>\n      <Card.Body className=\"text-center\">\n        <Header size={5}>{header}</Header>\n        <div className=\"display-4 font-weight-bold mb-4\">{content}</div>\n        <Progress size=\"sm\">\n          <Progress.Bar color={progressColor} width={progressWidth} />\n        </Progress>\n      </Card.Body>\n    </Card>\n  );\n}\n\nProgressCard.displayName = \"ProgressCard\";\n\nexport default ProgressCard;\n",
   "props": [
     {
       "name": "className",
@@ -13,13 +13,13 @@
     },
     {
       "name": "header",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
     {
       "name": "content",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -47,7 +47,8 @@
     "behavior": [
       "header y content muestran la información textual.",
       "progressWidth es un porcentaje y progressColor el color de la barra.",
-      "El consumidor calcula y actualiza los valores."
+      "El consumidor calcula y actualiza los valores.",
+      "progressWidth reutiliza Progress.Bar: no se limita automáticamente al intervalo 0–100. La tarjeta conserva sus propiedades limitadas y no reenvía atributos HTML adicionales."
     ],
     "example": "<ProgressCard header=\"Cobertura\" content=\"65%\" progressWidth={65} progressColor=\"green\" />"
   }

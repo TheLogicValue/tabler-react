@@ -49,7 +49,7 @@
     {
       "name": "BlogCard",
       "kind": "Componente",
-      "source": "src/components/BlogCard/index.js"
+      "source": "src/components/BlogCard/index.ts"
     },
     {
       "name": "Breadcrumb",
@@ -89,7 +89,7 @@
     {
       "name": "ContactCard",
       "kind": "Componente",
-      "source": "src/components/ContactCard/index.js"
+      "source": "src/components/ContactCard/index.ts"
     },
     {
       "name": "Container",
@@ -114,7 +114,7 @@
     {
       "name": "DoubleCard",
       "kind": "Componente",
-      "source": "src/components/DoubleCard/index.js"
+      "source": "src/components/DoubleCard/index.ts"
     },
     {
       "name": "DoughnutChart",
@@ -189,7 +189,7 @@
     {
       "name": "GalleryCard",
       "kind": "Componente",
-      "source": "src/components/GalleryCard/index.js"
+      "source": "src/components/GalleryCard/index.ts"
     },
     {
       "name": "Grid",
@@ -294,7 +294,7 @@
     {
       "name": "PricingCard",
       "kind": "Componente",
-      "source": "src/components/PricingCard/index.js"
+      "source": "src/components/PricingCard/index.ts"
     },
     {
       "name": "Profile",
@@ -309,7 +309,7 @@
     {
       "name": "ProgressCard",
       "kind": "Componente",
-      "source": "src/components/ProgressCard/index.js"
+      "source": "src/components/ProgressCard/index.ts"
     },
     {
       "name": "ProtectedRoute",
@@ -359,7 +359,7 @@
     {
       "name": "StampCard",
       "kind": "Componente",
-      "source": "src/components/StampCard/index.js"
+      "source": "src/components/StampCard/index.ts"
     },
     {
       "name": "StandaloneFormPage",
@@ -369,12 +369,12 @@
     {
       "name": "StatsCard",
       "kind": "Componente",
-      "source": "src/components/StatsCard/index.js"
+      "source": "src/components/StatsCard/index.ts"
     },
     {
       "name": "StoreCard",
       "kind": "Componente",
-      "source": "src/components/StoreCard/index.js"
+      "source": "src/components/StoreCard/index.ts"
     },
     {
       "name": "Success",
@@ -389,7 +389,7 @@
     {
       "name": "TabbedCard",
       "kind": "Componente",
-      "source": "src/components/TabbedCard/index.js"
+      "source": "src/components/TabbedCard/index.ts"
     },
     {
       "name": "TabbedContainer",
@@ -429,7 +429,7 @@
     {
       "name": "Timeline",
       "kind": "Componente",
-      "source": "src/components/Timeline/index.js"
+      "source": "src/components/Timeline/index.ts"
     },
     {
       "name": "Tooltip",

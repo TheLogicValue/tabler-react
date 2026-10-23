@@ -1,13 +1,13 @@
 {
   "name": "ContactCard",
   "kind": "Componente",
-  "source": "src/components/ContactCard/index.js",
-  "implementation": "src/components/ContactCard/ContactCard.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport { Card, Media, Grid, Header } from \"../\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The Card title\n   */\n  +cardTitle?: string,\n  /**\n   * Render a map at the top of the Card\n   */\n  +map?: React.Node,\n  /**\n   * Render a map placeholder at the top of the Card\n   */\n  +mapPlaceholder?: string,\n  /**\n   * Add rounded corners to the Media.Object rendered by objectURL\n   */\n  +rounded?: boolean,\n  /**\n   * Display an Avatar in place of the Media.Object rendered by objectURL\n   */\n  +avatar?: boolean,\n  /**\n   * The URL of a contact image to displayed alongside thier name\n   */\n  +objectURL?: string,\n  /**\n   * The alt value for the objectURL image\n   */\n  +alt?: string,\n  /**\n   * The contacts name\n   */\n  +name?: string,\n  /**\n   * The contacts address\n   */\n  +address?: {| +line1?: string, +line2?: string |},\n  /**\n   * An array of contacts details displayed in a 2 column Grid\n   */\n  +details?: Array<{| +title: string, +content?: React.Node |}>,\n  /**\n   * An additional block of text below the details\n   */\n  +description?: string | {| +title: string, +content?: string |},\n|};\n\n/**\n * Renders a Card designed for displaying details of a person or business\n */\nfunction ContactCard({\n  children,\n  className,\n  cardTitle,\n  map,\n  mapPlaceholder,\n  rounded,\n  avatar,\n  objectURL,\n  alt,\n  name,\n  address,\n  details,\n  description,\n}: Props) {\n  const cardClassName = cn(className);\n  return (\n    <Card className={cardClassName} title={cardTitle}>\n      {(mapPlaceholder || map) && (\n        <Card.Map placeholder={mapPlaceholder}>{map}</Card.Map>\n      )}\n      <Card.Body>\n        <Media className=\"mb-5\">\n          <Media.Object\n            size=\"md\"\n            className=\"mr-4\"\n            avatar={avatar}\n            rounded={rounded}\n            objectURL={objectURL}\n            alt={alt}\n          />\n\n          <Media.Body>\n            {name && <Header.H5>{name}</Header.H5>}\n            {address && (\n              <address className=\"text-muted small\">\n                {address.line1}\n                {address.line2 && <br />}\n                {address.line2}\n              </address>\n            )}\n          </Media.Body>\n        </Media>\n        {details && (\n          <Grid.Row>\n            {details.map((d, i) => (\n              <Grid.Col width={6} key={i}>\n                <Header.H6>{d.title}</Header.H6>\n                <p>{d.content}</p>\n              </Grid.Col>\n            ))}\n          </Grid.Row>\n        )}\n        {description && (\n          <React.Fragment>\n            <Header.H6>\n              {typeof description === \"string\"\n                ? \"Description\"\n                : description.title}\n            </Header.H6>\n            <p>\n              {typeof description === \"string\"\n                ? description\n                : description.content}\n            </p>\n          </React.Fragment>\n        )}\n        {children}\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default ContactCard;\n",
+  "source": "src/components/ContactCard/index.ts",
+  "implementation": "src/components/ContactCard/ContactCard.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport Card from \"../Card\";\nimport Media from \"../Media\";\nimport Grid from \"../Grid\";\nimport Header from \"../Header\";\n\nexport type ContactAddress = {\n  readonly line1?: string;\n  readonly line2?: string;\n};\nexport type ContactDetail = {\n  readonly title: string;\n  readonly content?: React.ReactNode;\n};\nexport type ContactDescription = {\n  readonly title: string;\n  readonly content?: string;\n};\n\nexport type ContactCardProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  /**\n   * The Card title\n   */\n  readonly cardTitle?: string;\n  /**\n   * Render a map at the top of the Card\n   */\n  readonly map?: React.ReactNode;\n  /**\n   * Render a map placeholder at the top of the Card\n   */\n  readonly mapPlaceholder?: string;\n  /**\n   * Add rounded corners to the Media.Object rendered by objectURL\n   */\n  readonly rounded?: boolean;\n  /**\n   * Display an Avatar in place of the Media.Object rendered by objectURL\n   */\n  readonly avatar?: boolean;\n  /**\n   * The URL of a contact image to displayed alongside thier name\n   */\n  readonly objectURL?: string;\n  /**\n   * The alt value for the objectURL image\n   */\n  readonly alt?: string;\n  /**\n   * The contacts name\n   */\n  readonly name?: string;\n  /**\n   * The contacts address\n   */\n  readonly address?: ContactAddress;\n  /**\n   * An array of contacts details displayed in a 2 column Grid\n   */\n  readonly details?: ReadonlyArray<ContactDetail>;\n  /**\n   * An additional block of text below the details\n   */\n  readonly description?: string | ContactDescription;\n};\n\n/**\n * Renders a Card designed for displaying details of a person or business\n */\nfunction ContactCard({\n  children,\n  className,\n  cardTitle,\n  map,\n  mapPlaceholder,\n  rounded,\n  avatar,\n  objectURL,\n  alt,\n  name,\n  address,\n  details,\n  description,\n}: ContactCardProps): React.ReactElement {\n  const cardClassName = cn(className);\n  return (\n    <Card className={cardClassName} title={cardTitle}>\n      {(mapPlaceholder || map) && (\n        <Card.Map placeholder={mapPlaceholder}>{map}</Card.Map>\n      )}\n      <Card.Body>\n        <Media className=\"mb-5\">\n          <Media.Object\n            size=\"md\"\n            className=\"mr-4\"\n            avatar={avatar}\n            rounded={rounded}\n            objectURL={objectURL}\n            alt={alt}\n          />\n\n          <Media.Body>\n            {name && <Header.H5>{name}</Header.H5>}\n            {address && (\n              <address className=\"text-muted small\">\n                {address.line1}\n                {address.line2 && <br />}\n                {address.line2}\n              </address>\n            )}\n          </Media.Body>\n        </Media>\n        {details && (\n          <Grid.Row>\n            {details.map((d, i) => (\n              <Grid.Col width={6} key={i}>\n                <Header.H6>{d.title}</Header.H6>\n                <p>{d.content}</p>\n              </Grid.Col>\n            ))}\n          </Grid.Row>\n        )}\n        {description && (\n          <React.Fragment>\n            <Header.H6>\n              {typeof description === \"string\"\n                ? \"Description\"\n                : description.title}\n            </Header.H6>\n            <p>\n              {typeof description === \"string\"\n                ? description\n                : description.content}\n            </p>\n          </React.Fragment>\n        )}\n        {children}\n      </Card.Body>\n    </Card>\n  );\n}\n\nexport default ContactCard;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -25,7 +25,7 @@
     },
     {
       "name": "map",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": "Render a map at the top of the Card"
     },
@@ -67,19 +67,19 @@
     },
     {
       "name": "address",
-      "type": "{| +line1?: string, +line2?: string |}",
+      "type": "ContactAddress",
       "optional": true,
       "description": "The contacts address"
     },
     {
       "name": "details",
-      "type": "Array<{| +title: string, +content?: React.Node |}>",
+      "type": "ReadonlyArray<ContactDetail>",
       "optional": true,
       "description": "An array of contacts details displayed in a 2 column Grid"
     },
     {
       "name": "description",
-      "type": "string | {| +title: string, +content?: string |}",
+      "type": "string | ContactDescription",
       "optional": true,
       "description": "An additional block of text below the details"
     }
@@ -99,9 +99,9 @@
   "guide": {
     "summary": "Tarjeta para mostrar los datos de una persona o entidad.",
     "behavior": [
-      "details es una lista de objetos title/content; address utiliza line1 y line2.",
-      "map admite contenido y mapPlaceholder permite una cabecera de mapa visual.",
-      "Las imágenes y los datos deben proporcionarse desde el consumidor."
+      "address utiliza ContactAddress con line1/line2; details admite una lista readonly de ContactDetail con title y content React. Se conserva el orden y no se modifican los datos recibidos.",
+      "description admite texto (con el encabezado fijo Description) o un objeto ContactDescription con title y content de texto. children se representa al final del cuerpo.",
+      "map admite un nodo del consumidor y mapPlaceholder una imagen de fondo. avatar selecciona Avatar para objectURL; sin avatar se utiliza una imagen y rounded/alt se aplican a ella."
     ],
     "example": "<ContactCard cardTitle=\"Contacto\" name=\"Equipo de soporte\" address={{ line1: \"Oficina de prueba\" }} details={[{ title: \"Horario\", content: \"9:00–18:00\" }]} />"
   }
