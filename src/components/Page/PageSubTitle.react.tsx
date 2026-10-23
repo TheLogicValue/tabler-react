@@ -1,12 +1,10 @@
-// @flow
-
 import * as React from "react";
 
-type Props = {|
-  +children?: React.Node,
-|};
+export type PageSubTitleProps = {
+  readonly children?: React.ReactNode;
+};
 
-function PageSubTitle({ children }: Props): React.Node {
+function PageSubTitle({ children }: PageSubTitleProps): React.ReactElement {
   return <div className="page-subtitle">{children}</div>;
 }
 

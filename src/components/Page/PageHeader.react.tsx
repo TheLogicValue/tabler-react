@@ -1,20 +1,18 @@
-// @flow
-
 import * as React from "react";
 import PageTitle from "./PageTitle.react";
 import PageSubTitle from "./PageSubTitle.react";
 import PageOptions from "./PageOptions.react";
 import PageBack from "./PageBack.react";
 
-type Props = {|
-  +children?: React.Node,
-  +title?: string,
-  +subTitle?: string,
-  +options?: React.Node,
-  +back?: React.Node,
-|};
+export type PageHeaderProps = {
+  readonly children?: React.ReactNode;
+  readonly title?: string;
+  readonly subTitle?: string;
+  readonly options?: React.ReactNode;
+  readonly back?: React.ReactNode;
+};
 
-function PageHeader({ children, title, subTitle, options, back }: Props): React.Node {
+function PageHeader({ children, title, subTitle, options, back }: PageHeaderProps): React.ReactElement {
   return (
     <div className="page-header">
       {back && <PageBack>{back}</PageBack>}

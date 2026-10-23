@@ -1,19 +1,18 @@
-// @flow
-
 import * as React from "react";
-import { Page, Grid } from "../";
+import Page from "./Page.react";
+import Grid from "../Grid";
 
-type Props = {|
-  +children?: React.Node,
-  +header?: React.Node,
-  +sidebar?: React.Node,
-|};
+export type PageContentWithSidebarProps = {
+  readonly children?: React.ReactNode;
+  readonly header?: React.ReactNode;
+  readonly sidebar?: React.ReactNode;
+};
 
 function PageContentWithSidebar({
   children,
   header,
   sidebar,
-}: Props): React.Node {
+}: PageContentWithSidebarProps): React.ReactElement {
   return (
     <Page.Content>
       {header}

@@ -289,6 +289,10 @@ La familia Card también utiliza TypeScript: `Card`, `Card.Header`, `Card.Title`
 
 Los estilos opcionales de Card.Header y Card.Map se omiten cuando no hay URL. Esto corrige además el fallo de Card.Map con `placeholder=""`, que antes enviaba una cadena al atributo `style`. Las fichas recogen las APIs TypeScript de los nueve subcomponentes y las pruebas verifican la composición y los controles con React 18 y 19.
 
+Page, sus ocho subcomponentes públicos y los tres auxiliares internos de cabecera están migrados a TypeScript. Se conservan `Page.Main`, `Page.Content`, `Page.Header`, `Page.ContentWithSidebar`, `Page.Card`, `Page.Title`, `Page.MapHeader` y `Page.Sidebar`, además de su HTML, clases y distribución. `Page.Card` reutiliza el contrato de `RootComponent` de Card. Las dependencias con Container, Grid y Card apuntan a sus fuentes migradas, sin incorporar el barrel Flow a la comprobación de tipos. Los tipos de los auxiliares también se exportan desde las fuentes; no se añaden subcomponentes de valor a Page.
+
+`PageSidebarHeaderProps` describe la configuración que realmente consume la barra lateral y sustituye una importación Flow que apuntaba a un archivo inexistente. Conserva `darkImageUrl` como URL opcional del logo y acepta otros campos de configuración heredados sin utilizarlos. No se cambia por `darkImageURL`. Los atributos Bootstrap del botón de la barra lateral se mantienen; la gestión del colapso corresponde al consumidor. La ficha de Page muestra los ocho subcomponentes, sus contratos y ejemplos de composición. Las pruebas verifican el paquete con React 18 y 19.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck

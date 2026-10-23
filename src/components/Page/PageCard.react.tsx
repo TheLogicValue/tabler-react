@@ -1,16 +1,16 @@
-// @flow
-
 import * as React from "react";
 
-import { Grid, Card, Container } from "../";
+import Grid from "../Grid";
+import Card, { type CardProps } from "../Card";
+import Container from "../Container.react";
 
-type Props = {|
-  +children?: React.Node,
-  +title?: string,
-  +header?: React.Node,
-  +footer?: React.Node,
-  +RootComponent?: React.ElementType,
-|};
+export type PageCardProps = {
+  readonly children?: React.ReactNode;
+  readonly title?: string;
+  readonly header?: React.ReactNode;
+  readonly footer?: React.ReactNode;
+  readonly RootComponent?: CardProps["RootComponent"];
+};
 
 function PageCard({
   children,
@@ -18,7 +18,7 @@ function PageCard({
   header,
   footer,
   RootComponent,
-}: Props): React.Node {
+}: PageCardProps): React.ReactElement {
   return (
     <div className="my-3 my-md-5">
       <Container>

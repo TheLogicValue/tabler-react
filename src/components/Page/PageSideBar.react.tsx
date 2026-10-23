@@ -1,18 +1,20 @@
-// @flow
-
 import * as React from "react";
 
-import type { Props as SiteHeaderProps } from "./SiteHeader.react";
+/** Configuration actually read by Page.Sidebar; other legacy header fields are ignored. */
+export type PageSidebarHeaderProps = {
+  readonly darkImageUrl?: string;
+  readonly [property: string]: unknown;
+};
 
-type Props = {|
-  +nav: React.Node,
-  +headerProps: SiteHeaderProps,
-|};
+export type PageSidebarProps = {
+  readonly nav: React.ReactNode;
+  readonly headerProps: PageSidebarHeaderProps;
+};
 
 function PageSidebar({
   nav,
   headerProps
-}: Props): React.Node {
+}: PageSidebarProps): React.ReactElement {
 
   return (
     <div className="navbar navbar-vertical navbar-expand-lg navbar-dark">

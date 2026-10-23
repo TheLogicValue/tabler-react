@@ -279,7 +279,7 @@
     {
       "name": "Page",
       "kind": "Componente",
-      "source": "src/components/Page/index.js"
+      "source": "src/components/Page/index.ts"
     },
     {
       "name": "PieChart",

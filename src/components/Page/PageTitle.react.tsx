@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type PageTitleProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function PageTitle({ className, children }: Props): React.Node {
+function PageTitle({ className, children }: PageTitleProps): React.ReactElement {
   const classes = cn("page-title", className);
   return <h1 className={classes}>{children}</h1>;
 }

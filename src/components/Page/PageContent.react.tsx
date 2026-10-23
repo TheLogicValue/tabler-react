@@ -1,18 +1,16 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { Container } from "../";
+import Container from "../Container.react";
 import PageHeader from "./PageHeader.react";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +title?: string,
-  +subTitle?: string,
-  +options?: React.Node,
-  +back?: React.Node,
-|};
+export type PageContentProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly title?: string;
+  readonly subTitle?: string;
+  readonly options?: React.ReactNode;
+  readonly back?: React.ReactNode;
+};
 
 function PageContent({
   className,
@@ -21,7 +19,7 @@ function PageContent({
   subTitle,
   options,
   back,
-}: Props): React.Node {
+}: PageContentProps): React.ReactElement {
   const classes = cn("page-content", className);
   return (
     <div className={classes}>

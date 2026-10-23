@@ -1,12 +1,10 @@
-// @flow
-
 import * as React from "react";
 
-type Props = {|
-  +children?: React.Node,
-|};
+export type PageMainProps = {
+  readonly children?: React.ReactNode;
+};
 
-function PageMain({ children }: Props): React.Node {
+function PageMain({ children }: PageMainProps): React.ReactElement {
   return <div className={"page-main"}>{children}</div>;
 }
 

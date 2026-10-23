@@ -1,13 +1,13 @@
 {
   "name": "Page",
   "kind": "Componente",
-  "source": "src/components/Page/index.js",
-  "implementation": "src/components/Page/Page.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport PageMain from \"./PageMain.react\";\nimport PageContent from \"./PageContent.react\";\nimport PageHeader from \"./PageHeader.react\";\nimport PageContentWithSidebar from \"./PageContentWithSidebar.react\";\nimport PageCard from \"./PageCard.react\";\nimport PageTitle from \"./PageTitle.react\";\nimport PageMapHeader from \"./PageMapHeader.react\";\nimport PageSideBar from \"./PageSideBar.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n|};\n\nfunction Page({ className, children }: Props): React.Node {\n  const classes = cn(\"page\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nPage.Main = PageMain;\nPage.Content = PageContent;\nPage.Header = PageHeader;\nPage.ContentWithSidebar = PageContentWithSidebar;\nPage.Card = PageCard;\nPage.Title = PageTitle;\nPage.MapHeader = PageMapHeader;\nPage.Sidebar = PageSideBar;\n\nexport default Page;\n",
+  "source": "src/components/Page/index.ts",
+  "implementation": "src/components/Page/Page.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport PageMain from \"./PageMain.react\";\nimport PageContent from \"./PageContent.react\";\nimport PageHeader from \"./PageHeader.react\";\nimport PageContentWithSidebar from \"./PageContentWithSidebar.react\";\nimport PageCard from \"./PageCard.react\";\nimport PageTitle from \"./PageTitle.react\";\nimport PageMapHeader from \"./PageMapHeader.react\";\nimport PageSideBar from \"./PageSideBar.react\";\n\nexport type PageProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n};\n\nfunction Page({ className, children }: PageProps): React.ReactElement {\n  const classes = cn(\"page\", className);\n  return <div className={classes}>{children}</div>;\n}\n\nPage.Main = PageMain;\nPage.Content = PageContent;\nPage.Header = PageHeader;\nPage.ContentWithSidebar = PageContentWithSidebar;\nPage.Card = PageCard;\nPage.Title = PageTitle;\nPage.MapHeader = PageMapHeader;\nPage.Sidebar = PageSideBar;\n\nexport default Page;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -33,11 +33,11 @@
   "childApis": [
     {
       "name": "Main",
-      "source": "src/components/Page/PageMain.react.js",
+      "source": "src/components/Page/PageMain.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -48,11 +48,11 @@
     },
     {
       "name": "Content",
-      "source": "src/components/Page/PageContent.react.js",
+      "source": "src/components/Page/PageContent.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -76,13 +76,13 @@
         },
         {
           "name": "options",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "back",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -93,11 +93,11 @@
     },
     {
       "name": "Header",
-      "source": "src/components/Page/PageHeader.react.js",
+      "source": "src/components/Page/PageHeader.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -115,13 +115,13 @@
         },
         {
           "name": "options",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "back",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -132,23 +132,23 @@
     },
     {
       "name": "ContentWithSidebar",
-      "source": "src/components/Page/PageContentWithSidebar.react.js",
+      "source": "src/components/Page/PageContentWithSidebar.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "header",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "sidebar",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -159,11 +159,11 @@
     },
     {
       "name": "Card",
-      "source": "src/components/Page/PageCard.react.js",
+      "source": "src/components/Page/PageCard.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -175,19 +175,19 @@
         },
         {
           "name": "header",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "footer",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
         {
           "name": "RootComponent",
-          "type": "React.ElementType",
+          "type": "CardProps[\"RootComponent\"]",
           "optional": true,
           "description": ""
         }
@@ -198,11 +198,11 @@
     },
     {
       "name": "Title",
-      "source": "src/components/Page/PageTitle.react.js",
+      "source": "src/components/Page/PageTitle.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -219,11 +219,11 @@
     },
     {
       "name": "MapHeader",
-      "source": "src/components/Page/PageMapHeader.react.js",
+      "source": "src/components/Page/PageMapHeader.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -234,17 +234,17 @@
     },
     {
       "name": "Sidebar",
-      "source": "src/components/Page/PageSideBar.react.js",
+      "source": "src/components/Page/PageSideBar.react.tsx",
       "props": [
         {
           "name": "nav",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": false,
           "description": ""
         },
         {
           "name": "headerProps",
-          "type": "SiteHeaderProps",
+          "type": "PageSidebarHeaderProps",
           "optional": false,
           "description": ""
         }
@@ -261,8 +261,36 @@
     "behavior": [
       "Page añade el contenedor .page; Page.Content ofrece título, subtítulo y zona de contenido.",
       "La alineación, la altura y la barra lateral dependen de las clases de la hoja de estilos.",
-      "La demo utiliza sus propias reglas de layout para mantener la cabecera arriba."
+      "La demo utiliza sus propias reglas de layout para mantener la cabecera arriba.",
+      "Page y su familia están tipados en TypeScript. Sus ocho subcomponentes públicos son Main, Content, Header, ContentWithSidebar, Card, Title, MapHeader y Sidebar. Los bloques de vuelta, subtítulo y opciones de la cabecera son auxiliares internos utilizados mediante back, subTitle y options.",
+      "Page.Content añade un Container y crea la cabecera cuando recibe título, subtítulo, opciones o vuelta. Page.Header representa back, title, subTitle, options y finalmente children. title y subTitle conservan su contrato de cadena; back y options admiten contenido React y acciones del consumidor.",
+      "Page.ContentWithSidebar utiliza Page.Content y Grid: la cabecera aparece antes de la fila y las columnas conservan lg=3 para sidebar y lg=9 para children. Las clases de orden y margen se mantienen.",
+      "Page.Card coloca una Card dentro de Container y Grid. title crea su cabecera; header se inserta después de ella, children dentro de Card.Body y footer después del cuerpo. RootComponent se aplica a la Card interior y recibe className y children; las propiedades adicionales no se reenvían.",
+      "Page.Sidebar requiere nav y headerProps. El logo utiliza exactamente headerProps.darkImageUrl (con Url); es opcional y los demás campos del objeto se conservan como configuración heredada sin utilizarse. El tipo PageSidebarHeaderProps sustituye una importación Flow que apuntaba a un archivo inexistente.",
+      "El botón de Page.Sidebar conserva data-bs-toggle=\"collapse\" y data-bs-target=\"#navbar-menu\". Page.Sidebar no gestiona el colapso mediante estado: el consumidor aporta ese comportamiento y el contenido correspondiente al destino."
     ],
-    "example": "<Page><Page.Content title=\"Panel\" subTitle=\"Información de prueba\"><Card body=\"Contenido\" /></Page.Content></Page>"
+    "example": "<Page><Page.Content title=\"Panel\" subTitle=\"Información de prueba\"><Card body=\"Contenido\" /></Page.Content></Page>",
+    "examples": [
+      {
+        "title": "Cabecera con acciones del consumidor",
+        "description": "back y options reciben elementos React. Los eventos pertenecen a esos controles; Page conserva la composición de la cabecera.",
+        "code": "<Page.Content title=\"Panel\" subTitle=\"Información de prueba\"\n  back={<button type=\"button\" onClick={() => console.log(\"Volver\")}>Volver</button>}\n  options={<button type=\"button\" onClick={() => console.log(\"Guardar\")}>Guardar</button>}>\n  <Card body=\"Contenido\" />\n</Page.Content>"
+      },
+      {
+        "title": "Contenido con columna lateral",
+        "description": "header aparece antes de la fila. La distribución utiliza los breakpoints de Grid.",
+        "code": "<Page.ContentWithSidebar header={<Page.Header title=\"Panel\" />} sidebar={<nav>Navegación lateral</nav>}>\n  <Card body=\"Contenido principal\" />\n</Page.ContentWithSidebar>"
+      },
+      {
+        "title": "Página con tarjeta y raíz semántica",
+        "description": "La raíz article corresponde a la Card interior. header y footer admiten composición con subcomponentes de Card.",
+        "code": "<Page.Card title=\"Detalle\" RootComponent=\"article\"\n  header={<Card.Alert color=\"info\">Datos de prueba.</Card.Alert>}\n  footer={<Card.Footer>Última revisión local.</Card.Footer>}>\n  Contenido de la tarjeta.\n</Page.Card>"
+      },
+      {
+        "title": "Marco de barra lateral",
+        "description": "Se mantiene darkImageUrl y los atributos Bootstrap. El comportamiento de colapso lo aporta el consumidor; este fragmento solo muestra la estructura.",
+        "code": "<Page.Sidebar headerProps={{ darkImageUrl: \"/logo-local.svg\" }}\n  nav={<nav id=\"navbar-menu\" className=\"collapse navbar-collapse\">Navegación lateral</nav>} />"
+      }
+    ]
   }
 }
