@@ -81,6 +81,37 @@ test('Icon mantiene los siete callbacks en su raíz y Text reenvía eventos nati
   assert.deepEqual(events.at(-1), ['textClick', 'BUTTON'])
 })
 
+test('Card conserva plegado, pantalla completa, cierre y su referencia sin enviar formularios', async () => {
+  const { Card } = components
+  const ref = React.createRef()
+  let submissions = 0
+  const example = (key, props) => React.createElement('form', { onSubmit: event => { event.preventDefault(); submissions++ } },
+    React.createElement(Card, { key, ref, title: 'Prueba', body: 'Contenido', isCollapsible: true, isClosable: true, isFullscreenable: true, ...props }))
+  await render(example('initial', { isCollapsed: true }))
+  const card = () => container.querySelector('.card')
+  assert.equal(card().classList.contains('card-collapsed'), true)
+  await click(container.querySelector('[aria-label="Collapse card"]'))
+  assert.equal(card().classList.contains('card-collapsed'), false)
+  await React.act(async () => root.render(example('initial', { isCollapsed: true, isClosed: true })))
+  assert.ok(card(), 'isClosed solo inicializa el estado; no lo controla tras el montaje')
+  assert.equal(card().classList.contains('card-collapsed'), false)
+  await click(container.querySelector('[aria-label="Toggle fullscreen"]'))
+  assert.equal(card().classList.contains('card-fullscreen'), true)
+  await click(container.querySelector('[aria-label="Toggle fullscreen"]'))
+  assert.equal(card().classList.contains('card-fullscreen'), false)
+  await React.act(async () => ref.current.handleCollapseOnClick())
+  assert.equal(card().classList.contains('card-collapsed'), true)
+  await click(container.querySelector('[aria-label="Close card"]'))
+  assert.equal(card(), null)
+  await React.act(async () => ref.current.handleCloseOnClick())
+  assert.ok(card(), 'Se conserva el método público de la instancia')
+  await React.act(async () => ref.current.handleFullscreenOnClick())
+  assert.equal(card().classList.contains('card-fullscreen'), true)
+  await React.act(async () => root.render(example('closed', { isClosed: true })))
+  assert.equal(card(), null, 'Una instancia nueva respeta isClosed inicial')
+  assert.equal(submissions, 0)
+})
+
 test('Dropdown abre, ejecuta callbacks, cierra por Escape y clic fuera sin enviar formularios', async () => {
   const { Dropdown } = components
   let actions = 0, submissions = 0

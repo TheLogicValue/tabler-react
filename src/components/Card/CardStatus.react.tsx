@@ -1,16 +1,14 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +color: string,
-  +side?: boolean,
-|};
+export type CardStatusProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly color: string;
+  readonly side?: boolean;
+};
 
-function CardStatus({ className, children, color, side }: Props): React.Node {
+function CardStatus({ className, children, color, side }: CardStatusProps): React.ReactElement {
   const classes = cn(
     {
       "card-status": true,

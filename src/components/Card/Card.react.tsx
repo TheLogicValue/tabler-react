@@ -1,4 +1,3 @@
-// @flow
 import * as React from "react";
 
 import cn from "classnames";
@@ -12,34 +11,34 @@ import CardAlert from "./CardAlert.react";
 import CardFooter from "./CardFooter.react";
 import CardMap from "./CardMap.react";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +title?: string,
-  +body?: React.Node,
-  +RootComponent?: React.ElementType,
-  +options?: React.Node,
-  +isCollapsible?: boolean,
-  +isCollapsed?: boolean,
-  +isClosable?: boolean,
-  +isClosed?: boolean,
-  +isFullscreenable?: boolean,
-  +statusColor?: string,
-  +statusSide?: boolean,
-  +alert?: React.Node,
-  +alertColor?: string,
-  +footer?: string,
-  +aside?: boolean,
-|};
+export type CardProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly title?: string;
+  readonly body?: React.ReactNode;
+  readonly RootComponent?: React.ElementType<{ className: string; children?: React.ReactNode }>;
+  readonly options?: React.ReactNode;
+  readonly isCollapsible?: boolean;
+  readonly isCollapsed?: boolean;
+  readonly isClosable?: boolean;
+  readonly isClosed?: boolean;
+  readonly isFullscreenable?: boolean;
+  readonly statusColor?: string;
+  readonly statusSide?: boolean;
+  readonly alert?: React.ReactNode;
+  readonly alertColor?: string;
+  readonly footer?: string;
+  readonly aside?: boolean;
+};
 
-type State = {|
-  isClosed: boolean,
-  isCollapsed: boolean,
-  isFullscreen: boolean,
-|};
+type CardState = {
+  isClosed: boolean;
+  isCollapsed: boolean;
+  isFullscreen: boolean;
+};
 
-class Card extends React.PureComponent<Props, State> {
-  state = {
+class Card extends React.PureComponent<CardProps, CardState> {
+  state: CardState = {
     isClosed: this.props.isClosed || false,
     isCollapsed: this.props.isCollapsed || false,
     isFullscreen: false,
@@ -73,7 +72,7 @@ class Card extends React.PureComponent<Props, State> {
     }));
   };
 
-  render(): React.Node {
+  render(): React.ReactNode {
     const {
       className,
       children,

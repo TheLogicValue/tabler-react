@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type CardBodyProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function CardBody({ className, children }: Props): React.Node {
+function CardBody({ className, children }: CardBodyProps): React.ReactElement {
   const classes = cn("card-body", className);
   return <div className={classes}>{children}</div>;
 }

@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type CardOptionsProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function CardOptions({ className, children }: Props): React.Node {
+function CardOptions({ className, children }: CardOptionsProps): React.ReactElement {
   const classes = cn("card-options", className);
   return <div className={classes}>{children}</div>;
 }

@@ -1,17 +1,15 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { Icon } from "../";
+import Icon from "../Icon";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +icon?: string,
-  +type?: "collapse" | "close" | "fullscreen",
-  +onClick?: () => mixed,
-  +"aria-label"?: string,
-|};
+export type CardOptionsItemProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly icon?: string;
+  readonly type?: "collapse" | "close" | "fullscreen";
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  readonly "aria-label"?: string;
+};
 
 function CardOptionsItem({
   className,
@@ -20,7 +18,7 @@ function CardOptionsItem({
   type,
   onClick,
   "aria-label": ariaLabel,
-}: Props): React.Node {
+}: CardOptionsItemProps): React.ReactElement {
   const classes = cn(
     "tabler-action",
     {
@@ -66,7 +64,7 @@ function CardOptionsItem({
       className={classes}
       data-toggle={dataToggle}
       onClick={onClick}
-      aria-label={ariaLabel || ({ collapse: "Collapse card", close: "Close card", fullscreen: "Toggle fullscreen" }[type]) || "Card action"}
+      aria-label={ariaLabel || (type && { collapse: "Collapse card", close: "Close card", fullscreen: "Toggle fullscreen" }[type]) || "Card action"}
     >
       <Icon name={iconName} />
     </button>

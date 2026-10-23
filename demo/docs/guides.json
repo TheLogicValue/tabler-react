@@ -425,9 +425,20 @@
       "Puedes componer Card.Header, Card.Body y Card.Footer, o utilizar title, body y footer.",
       "El cuerpo recibido en body tiene prioridad sobre children cuando es truthy.",
       "Plegar, cerrar y maximizar se gestionan en el estado interno de la tarjeta. isCollapsed/isClosed se leen al inicializar; no son controles externos continuos.",
-      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key."
+      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key.",
+      "Card y sus nueve subcomponentes están tipados en TypeScript. Card y Card.Title suministran className y children a RootComponent; los atributos adicionales no se reenvían. title y footer conservan su contrato de cadena; Card.Title y Card.Footer admiten contenido React mediante children.",
+      "Los controles automáticos se colocan en la cabecera creada por title. El área de opciones requiere options, isCollapsible o isClosable; isFullscreenable por sí sola conserva el comportamiento anterior y no crea esa área. En composición manual utiliza Card.Options y Card.OptionsItem con tus callbacks.",
+      "Card.OptionsItem siempre es un botón de tipo button. Admite collapse, close y fullscreen, icon y aria-label; onClick recibe el evento de botón de React. children no se muestra. Se conserva el data-toggle heredado, incluido card-remove para fullscreen.",
+      "Card.Header.backgroundURL y Card.Map.placeholder reciben una URL para el fondo. Una URL ausente o vacía omite el estilo; Card.Map ya no falla si placeholder es una cadena vacía. Card.Map es un contenedor visual: el consumidor aporta el mapa."
     ],
-    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>",
+    "examples": [
+      {
+        "title": "Composición de subcomponentes",
+        "description": "La composición manual permite decidir la distribución y gestionar las acciones desde el consumidor. Status y Alert requieren color.",
+        "code": "<Card>\n  <Card.Status color=\"blue\" side />\n  <Card.Header>\n    <Card.Title RootComponent=\"h2\">Resumen</Card.Title>\n    <Card.Options>\n      <Card.OptionsItem icon=\"refresh-cw\" aria-label=\"Actualizar\" onClick={() => console.log(\"Actualizar\")} />\n    </Card.Options>\n  </Card.Header>\n  <Card.Alert color=\"info\">Datos de ejemplo.</Card.Alert>\n  <Card.Body>Contenido de la tarjeta.</Card.Body>\n  <Card.Map placeholder=\"/mapa-local.svg\">Zona del mapa</Card.Map>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+      }
+    ]
   },
   "colors": {
     "summary": "Paleta de colores de Tabler exportada como un objeto JavaScript.",

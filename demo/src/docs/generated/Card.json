@@ -1,13 +1,13 @@
 {
   "name": "Card",
   "kind": "Componente",
-  "source": "src/components/Card/index.js",
-  "implementation": "src/components/Card/Card.react.js",
-  "implementationCode": "// @flow\nimport * as React from \"react\";\n\nimport cn from \"classnames\";\nimport CardHeader from \"./CardHeader.react\";\nimport CardTitle from \"./CardTitle.react\";\nimport CardBody from \"./CardBody.react\";\nimport CardOptions from \"./CardOptions.react\";\nimport CardOptionsItem from \"./CardOptionsItem.react\";\nimport CardStatus from \"./CardStatus.react\";\nimport CardAlert from \"./CardAlert.react\";\nimport CardFooter from \"./CardFooter.react\";\nimport CardMap from \"./CardMap.react\";\n\ntype Props = {|\n  +children?: React.Node,\n  +className?: string,\n  +title?: string,\n  +body?: React.Node,\n  +RootComponent?: React.ElementType,\n  +options?: React.Node,\n  +isCollapsible?: boolean,\n  +isCollapsed?: boolean,\n  +isClosable?: boolean,\n  +isClosed?: boolean,\n  +isFullscreenable?: boolean,\n  +statusColor?: string,\n  +statusSide?: boolean,\n  +alert?: React.Node,\n  +alertColor?: string,\n  +footer?: string,\n  +aside?: boolean,\n|};\n\ntype State = {|\n  isClosed: boolean,\n  isCollapsed: boolean,\n  isFullscreen: boolean,\n|};\n\nclass Card extends React.PureComponent<Props, State> {\n  state = {\n    isClosed: this.props.isClosed || false,\n    isCollapsed: this.props.isCollapsed || false,\n    isFullscreen: false,\n  };\n\n  static Header = CardHeader;\n  static Body = CardBody;\n  static Title = CardTitle;\n  static Options = CardOptions;\n  static OptionsItem = CardOptionsItem;\n  static Status = CardStatus;\n  static Alert = CardAlert;\n  static Footer = CardFooter;\n  static Map = CardMap;\n\n  handleCloseOnClick = (): void => {\n    this.setState(s => ({\n      isClosed: !s.isClosed,\n    }));\n  };\n\n  handleCollapseOnClick = (): void => {\n    this.setState(s => ({\n      isCollapsed: !s.isCollapsed,\n    }));\n  };\n\n  handleFullscreenOnClick = (): void => {\n    this.setState(s => ({\n      isFullscreen: !s.isFullscreen,\n    }));\n  };\n\n  render(): React.Node {\n    const {\n      className,\n      children,\n      RootComponent,\n      title,\n      body,\n      options,\n      isCollapsible,\n      isClosable,\n      isFullscreenable,\n      aside,\n      statusColor,\n      statusSide,\n      alert,\n      alertColor,\n      footer,\n    } = this.props;\n    const { isClosed, isCollapsed, isFullscreen } = this.state;\n    if (isClosed) {\n      return null;\n    }\n    const classes = cn(\n      {\n        card: true,\n        aside: aside,\n        \"card-collapsed\": isCollapsed,\n        \"card-fullscreen\": isFullscreen,\n      },\n      className\n    );\n    const Component = RootComponent || \"div\";\n\n    const card_options = (options || isCollapsible || isClosable) && (\n      <Card.Options>\n        {options}\n        {isCollapsible && (\n          <Card.OptionsItem\n            onClick={this.handleCollapseOnClick}\n            type=\"collapse\"\n          />\n        )}\n        {isFullscreenable && (\n          <Card.OptionsItem\n            type=\"fullscreen\"\n            onClick={this.handleFullscreenOnClick}\n          />\n        )}\n        {isClosable && (\n          <Card.OptionsItem type=\"close\" onClick={this.handleCloseOnClick} />\n        )}\n      </Card.Options>\n    );\n\n    const card_status = statusColor && (\n      <Card.Status color={statusColor} side={statusSide} />\n    );\n\n    const card_alert = alert &&\n      alertColor && <Card.Alert color={alertColor}>{alert}</Card.Alert>;\n\n    const card_header = title && (\n      <Card.Header>\n        <Card.Title>{title}</Card.Title>\n        {card_options}\n      </Card.Header>\n    );\n\n    const card_body = body && <Card.Body>{body}</Card.Body>;\n\n    const card_footer = footer && <Card.Footer>{footer}</Card.Footer>;\n\n    if (card_header !== null || card_body !== null) {\n      return (\n        <Component className={classes}>\n          {card_status}\n          {card_header}\n          {card_alert}\n          {card_body || children}\n          {card_footer}\n        </Component>\n      );\n    } else {\n      return <Component className={classes}>{children}</Component>;\n    }\n  }\n}\n\n/** @component */\nexport default Card;\n",
+  "source": "src/components/Card/index.ts",
+  "implementation": "src/components/Card/Card.react.tsx",
+  "implementationCode": "import * as React from \"react\";\n\nimport cn from \"classnames\";\nimport CardHeader from \"./CardHeader.react\";\nimport CardTitle from \"./CardTitle.react\";\nimport CardBody from \"./CardBody.react\";\nimport CardOptions from \"./CardOptions.react\";\nimport CardOptionsItem from \"./CardOptionsItem.react\";\nimport CardStatus from \"./CardStatus.react\";\nimport CardAlert from \"./CardAlert.react\";\nimport CardFooter from \"./CardFooter.react\";\nimport CardMap from \"./CardMap.react\";\n\nexport type CardProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly title?: string;\n  readonly body?: React.ReactNode;\n  readonly RootComponent?: React.ElementType<{ className: string; children?: React.ReactNode }>;\n  readonly options?: React.ReactNode;\n  readonly isCollapsible?: boolean;\n  readonly isCollapsed?: boolean;\n  readonly isClosable?: boolean;\n  readonly isClosed?: boolean;\n  readonly isFullscreenable?: boolean;\n  readonly statusColor?: string;\n  readonly statusSide?: boolean;\n  readonly alert?: React.ReactNode;\n  readonly alertColor?: string;\n  readonly footer?: string;\n  readonly aside?: boolean;\n};\n\ntype CardState = {\n  isClosed: boolean;\n  isCollapsed: boolean;\n  isFullscreen: boolean;\n};\n\nclass Card extends React.PureComponent<CardProps, CardState> {\n  state: CardState = {\n    isClosed: this.props.isClosed || false,\n    isCollapsed: this.props.isCollapsed || false,\n    isFullscreen: false,\n  };\n\n  static Header = CardHeader;\n  static Body = CardBody;\n  static Title = CardTitle;\n  static Options = CardOptions;\n  static OptionsItem = CardOptionsItem;\n  static Status = CardStatus;\n  static Alert = CardAlert;\n  static Footer = CardFooter;\n  static Map = CardMap;\n\n  handleCloseOnClick = (): void => {\n    this.setState(s => ({\n      isClosed: !s.isClosed,\n    }));\n  };\n\n  handleCollapseOnClick = (): void => {\n    this.setState(s => ({\n      isCollapsed: !s.isCollapsed,\n    }));\n  };\n\n  handleFullscreenOnClick = (): void => {\n    this.setState(s => ({\n      isFullscreen: !s.isFullscreen,\n    }));\n  };\n\n  render(): React.ReactNode {\n    const {\n      className,\n      children,\n      RootComponent,\n      title,\n      body,\n      options,\n      isCollapsible,\n      isClosable,\n      isFullscreenable,\n      aside,\n      statusColor,\n      statusSide,\n      alert,\n      alertColor,\n      footer,\n    } = this.props;\n    const { isClosed, isCollapsed, isFullscreen } = this.state;\n    if (isClosed) {\n      return null;\n    }\n    const classes = cn(\n      {\n        card: true,\n        aside: aside,\n        \"card-collapsed\": isCollapsed,\n        \"card-fullscreen\": isFullscreen,\n      },\n      className\n    );\n    const Component = RootComponent || \"div\";\n\n    const card_options = (options || isCollapsible || isClosable) && (\n      <Card.Options>\n        {options}\n        {isCollapsible && (\n          <Card.OptionsItem\n            onClick={this.handleCollapseOnClick}\n            type=\"collapse\"\n          />\n        )}\n        {isFullscreenable && (\n          <Card.OptionsItem\n            type=\"fullscreen\"\n            onClick={this.handleFullscreenOnClick}\n          />\n        )}\n        {isClosable && (\n          <Card.OptionsItem type=\"close\" onClick={this.handleCloseOnClick} />\n        )}\n      </Card.Options>\n    );\n\n    const card_status = statusColor && (\n      <Card.Status color={statusColor} side={statusSide} />\n    );\n\n    const card_alert = alert &&\n      alertColor && <Card.Alert color={alertColor}>{alert}</Card.Alert>;\n\n    const card_header = title && (\n      <Card.Header>\n        <Card.Title>{title}</Card.Title>\n        {card_options}\n      </Card.Header>\n    );\n\n    const card_body = body && <Card.Body>{body}</Card.Body>;\n\n    const card_footer = footer && <Card.Footer>{footer}</Card.Footer>;\n\n    if (card_header !== null || card_body !== null) {\n      return (\n        <Component className={classes}>\n          {card_status}\n          {card_header}\n          {card_alert}\n          {card_body || children}\n          {card_footer}\n        </Component>\n      );\n    } else {\n      return <Component className={classes}>{children}</Component>;\n    }\n  }\n}\n\n/** @component */\nexport default Card;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -25,19 +25,19 @@
     },
     {
       "name": "body",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
     {
       "name": "RootComponent",
-      "type": "React.ElementType",
+      "type": "React.ElementType<{ className: string; children?: React.ReactNode }>",
       "optional": true,
       "description": ""
     },
     {
       "name": "options",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -85,7 +85,7 @@
     },
     {
       "name": "alert",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -124,11 +124,11 @@
   "childApis": [
     {
       "name": "Header",
-      "source": "src/components/Card/CardHeader.react.js",
+      "source": "src/components/Card/CardHeader.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -152,11 +152,11 @@
     },
     {
       "name": "Body",
-      "source": "src/components/Card/CardBody.react.js",
+      "source": "src/components/Card/CardBody.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -173,11 +173,11 @@
     },
     {
       "name": "Title",
-      "source": "src/components/Card/CardTitle.react.js",
+      "source": "src/components/Card/CardTitle.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -189,7 +189,7 @@
         },
         {
           "name": "RootComponent",
-          "type": "React.ElementType",
+          "type": "React.ElementType<{ className: string; children?: React.ReactNode }>",
           "optional": true,
           "description": ""
         }
@@ -200,11 +200,11 @@
     },
     {
       "name": "Options",
-      "source": "src/components/Card/CardOptions.react.js",
+      "source": "src/components/Card/CardOptions.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -221,11 +221,11 @@
     },
     {
       "name": "OptionsItem",
-      "source": "src/components/Card/CardOptionsItem.react.js",
+      "source": "src/components/Card/CardOptionsItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -249,7 +249,7 @@
         },
         {
           "name": "onClick",
-          "type": "() => mixed",
+          "type": "React.MouseEventHandler<HTMLButtonElement>",
           "optional": true,
           "description": ""
         },
@@ -266,11 +266,11 @@
     },
     {
       "name": "Status",
-      "source": "src/components/Card/CardStatus.react.js",
+      "source": "src/components/Card/CardStatus.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -299,11 +299,11 @@
     },
     {
       "name": "Alert",
-      "source": "src/components/Card/CardAlert.react.js",
+      "source": "src/components/Card/CardAlert.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -326,11 +326,11 @@
     },
     {
       "name": "Footer",
-      "source": "src/components/Card/CardFooter.react.js",
+      "source": "src/components/Card/CardFooter.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -347,11 +347,11 @@
     },
     {
       "name": "Map",
-      "source": "src/components/Card/CardMap.react.js",
+      "source": "src/components/Card/CardMap.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -392,8 +392,19 @@
       "Puedes componer Card.Header, Card.Body y Card.Footer, o utilizar title, body y footer.",
       "El cuerpo recibido en body tiene prioridad sobre children cuando es truthy.",
       "Plegar, cerrar y maximizar se gestionan en el estado interno de la tarjeta. isCollapsed/isClosed se leen al inicializar; no son controles externos continuos.",
-      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key."
+      "Una tarjeta cerrada devuelve null; para restaurarla desde fuera puedes volver a montarla con otra key.",
+      "Card y sus nueve subcomponentes están tipados en TypeScript. Card y Card.Title suministran className y children a RootComponent; los atributos adicionales no se reenvían. title y footer conservan su contrato de cadena; Card.Title y Card.Footer admiten contenido React mediante children.",
+      "Los controles automáticos se colocan en la cabecera creada por title. El área de opciones requiere options, isCollapsible o isClosable; isFullscreenable por sí sola conserva el comportamiento anterior y no crea esa área. En composición manual utiliza Card.Options y Card.OptionsItem con tus callbacks.",
+      "Card.OptionsItem siempre es un botón de tipo button. Admite collapse, close y fullscreen, icon y aria-label; onClick recibe el evento de botón de React. children no se muestra. Se conserva el data-toggle heredado, incluido card-remove para fullscreen.",
+      "Card.Header.backgroundURL y Card.Map.placeholder reciben una URL para el fondo. Una URL ausente o vacía omite el estilo; Card.Map ya no falla si placeholder es una cadena vacía. Card.Map es un contenedor visual: el consumidor aporta el mapa."
     ],
-    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+    "example": "<Card title=\"Resumen\" isCollapsible isClosable isFullscreenable>\n  <Card.Body>Información de la cartera.</Card.Body>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>",
+    "examples": [
+      {
+        "title": "Composición de subcomponentes",
+        "description": "La composición manual permite decidir la distribución y gestionar las acciones desde el consumidor. Status y Alert requieren color.",
+        "code": "<Card>\n  <Card.Status color=\"blue\" side />\n  <Card.Header>\n    <Card.Title RootComponent=\"h2\">Resumen</Card.Title>\n    <Card.Options>\n      <Card.OptionsItem icon=\"refresh-cw\" aria-label=\"Actualizar\" onClick={() => console.log(\"Actualizar\")} />\n    </Card.Options>\n  </Card.Header>\n  <Card.Alert color=\"info\">Datos de ejemplo.</Card.Alert>\n  <Card.Body>Contenido de la tarjeta.</Card.Body>\n  <Card.Map placeholder=\"/mapa-local.svg\">Zona del mapa</Card.Map>\n  <Card.Footer>Última revisión local.</Card.Footer>\n</Card>"
+      }
+    ]
   }
 }

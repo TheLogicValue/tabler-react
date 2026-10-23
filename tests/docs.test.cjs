@@ -54,6 +54,16 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
   const small = document('Text').childApis.find(child => child.name === 'Small')
   assert.equal(small.source, 'src/components/Text/TextSmall.react.tsx')
   assert.equal(small.props.length, 5)
+  const card = document('Card')
+  assert.equal(card.implementation, 'src/components/Card/Card.react.tsx')
+  assert.equal(card.props.length, 17)
+  assert.equal(card.childApis.length, 9)
+  for (const child of card.childApis) {
+    assert.equal(child.source, `src/components/Card/Card${child.name}.react.tsx`)
+    assert.ok(child.props.every(prop => prop.type), 'Todas las propiedades de Card.' + child.name + ' deben tener un tipo extraído')
+  }
+  const action = card.childApis.find(child => child.name === 'OptionsItem')
+  assert.equal(action.props.find(prop => prop.name === 'onClick').type, 'React.MouseEventHandler<HTMLButtonElement>')
 })
 
 function walk(node, visit) {

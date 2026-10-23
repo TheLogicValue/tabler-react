@@ -69,7 +69,7 @@
     {
       "name": "Card",
       "kind": "Componente",
-      "source": "src/components/Card/index.js"
+      "source": "src/components/Card/index.ts"
     },
     {
       "name": "colors",

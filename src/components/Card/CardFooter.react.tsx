@@ -1,14 +1,12 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-|};
+export type CardFooterProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+};
 
-function CardFooter({ className, children }: Props): React.Node {
+function CardFooter({ className, children }: CardFooterProps): React.ReactElement {
   const classes = cn("card-footer", className);
   return <div className={classes}>{children}</div>;
 }

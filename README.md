@@ -285,6 +285,10 @@ La familia Grid también está migrada: `Grid`, `Grid.Row`, `Grid.Col` y su barr
 
 Las fichas de Icon, Container y Text muestran sus fuentes y tipos actualizados, incluida la API de `Text.Small`. Documentan también dos comportamientos heredados: `isAriaHidden` solo se aplica al contenedor de Icon con `link`, y Text sigue reenviando las opciones de formato a su raíz. Los flags booleanos de Text pueden generar avisos de React en elementos HTML; se recomiendan las variantes de cadena como `align="center"`. Esta etapa mantiene esos comportamientos para no mezclar la migración de tipos con cambios de ejecución.
 
+La familia Card también utiliza TypeScript: `Card`, `Card.Header`, `Card.Title`, `Card.Body`, `Card.Options`, `Card.OptionsItem`, `Card.Status`, `Card.Alert`, `Card.Footer` y `Card.Map`. El barrel exporta sus diez tipos de propiedades únicamente para las fuentes. Se mantienen la composición, las clases, los controles, la referencia a la instancia y su estado interno; `isClosed` e `isCollapsed` solo establecen el estado inicial. Card y Card.Title suministran `className` y `children` a su `RootComponent`. Los eventos de Card.OptionsItem reciben un evento de botón de React y se conservan sus etiquetas y atributos `data-toggle` heredados.
+
+Los estilos opcionales de Card.Header y Card.Map se omiten cuando no hay URL. Esto corrige además el fallo de Card.Map con `placeholder=""`, que antes enviaba una cadena al atributo `style`. Las fichas recogen las APIs TypeScript de los nueve subcomponentes y las pruebas verifican la composición y los controles con React 18 y 19.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck

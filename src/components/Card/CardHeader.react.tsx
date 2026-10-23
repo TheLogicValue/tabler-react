@@ -1,19 +1,17 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +backgroundURL?: string,
-|};
+export type CardHeaderProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly backgroundURL?: string;
+};
 
 function CardHeader({
   className,
   children,
   backgroundURL = "",
-}: Props): React.Node {
+}: CardHeaderProps): React.ReactElement {
   const classes = cn("card-header", className);
 
   return (
@@ -24,7 +22,7 @@ function CardHeader({
           ? Object.assign({
               backgroundImage: `url(${backgroundURL})`,
             })
-          : null
+          : undefined
       }
     >
       {children}
