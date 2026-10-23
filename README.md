@@ -40,19 +40,49 @@ For more examples and documentation see the [demo website](https://thelogicvalue
 
 ## Setup
 
-Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 11.
+Para desarrollar, compilar y ejecutar las comprobaciones de la biblioteca y la demo:
 
-1. Clone this repository.
-2. Run `npm ci` in the root folder to install the versions in `package-lock.json`.
-3. Run `npm run build` to compile the component library, or `npm start` to rebuild it when source files change.
+- **Node.js:** `^20.19.0 || ^22.13.0 || >=24.0.0`, según los requisitos combinados de Vite y ESLint. Se recomienda Node 24.x; la revisión actual se ha ejecutado con 24.22.1.
+- **npm recomendado:** 11.x. El campo `packageManager` indica 11.19.0 como versión de referencia; se admiten otras versiones 11.x, incluida 11.17.0, utilizada en esta revisión.
 
-Use `npm install` when intentionally adding or updating dependencies, and commit the updated `package-lock.json`.
-The repository's `.npmrc` enables `legacy-peer-deps` because the ESLint plugins still declare ESLint up to 9. This setting applies to development in this repository; consuming projects keep their own npm configuration. The demo installs without this setting.
+Ambos `package.json` declaran estos requisitos en `devEngines`. npm los comprueba al instalar o ejecutar scripts desde cada proyecto: una versión incompatible de Node detiene la operación y otra versión de npm genera un aviso, sin bloquearla únicamente por ese motivo. Los requisitos se aplican al trabajo sobre las fuentes, incluidas las instalaciones desde Git que ejecutan `prepare`. El paquete ya compilado no añade una restricción `engines` a los consumidores; cada aplicación mantiene los requisitos de sus propias herramientas y dependencias.
+
+```sh
+# Comprueba las herramientas antes de instalar.
+node --version
+npm --version
+
+# Instala exactamente las dependencias del lock y compila la biblioteca.
+# npm ci ejecuta prepare, que también genera dist/.
+npm ci
+
+# Recompila después de modificar las fuentes.
+npm run build
+
+# O mantén la compilación en modo watch.
+npm start
+```
+
+Usa `npm install` para añadir o actualizar dependencias y guarda el `package-lock.json` correspondiente. La biblioteca y la demo mantienen instalaciones y locks independientes.
+
+El `.npmrc` de la raíz activa `legacy-peer-deps` porque los plugins de ESLint todavía declaran compatibilidad hasta ESLint 9. Esta excepción se conserva para el desarrollo de la biblioteca; los consumidores mantienen su configuración de npm y la demo se instala sin esa excepción.
 
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles the existing JavaScript, JSX and Flow annotations; this stage does not migrate the source to TypeScript.
 
 La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Se conservan las anotaciones de las fuentes, `@babel/preset-flow`, Hermes y las definiciones de `flow-typed`. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`. La compilación no publica declaraciones `.js.flow` ni `.d.ts`.
+
+Los scripts y configuraciones conservados tienen estas funciones:
+
+- `vite.config.mjs`: compila la biblioteca, elimina las anotaciones Flow y genera los formatos ESM y CommonJS, el CSS y las fuentes.
+- `demo/vite.config.mjs`: compila y sirve únicamente la demo; incluye el presupuesto de bundles de `demo/scripts/bundle-budget.mjs`.
+- `eslint.config.mjs`: configura el lint de la biblioteca, la demo, las pruebas y los scripts JavaScript.
+- `scripts/test-react18.mjs`: empaqueta la biblioteca y ejecuta las pruebas en un consumidor temporal con React 18; se invoca con `npm run test:react18`.
+- `demo/scripts/scan-usage.mjs`: regenera manualmente el inventario de componentes a partir de un consumidor; su comando se muestra en la sección de la demo.
+- `scripts/runflow` y `.flowconfig`: soporte opcional de Flow, separado de las comprobaciones habituales. No se considera una validación automática de tipos.
+- `.editorconfig` y `.gitignore`: formato de archivos y exclusiones del repositorio. El `.npmrc` de desarrollo se mantiene versionado deliberadamente.
+
+Se han retirado los scripts Python `generateindex.py`, `propscheck.py` y su helper `repoutils.py`, que no tenían llamadas desde los comandos ni la documentación actuales y conservaban lógica del antiguo árbol `example/`. También se ha retirado `src/styles.css`, una hoja de prueba que no se importaba. La biblioteca no necesita Python ni Yarn para instalarse, compilarse o probarse.
 
 The published package keeps these entry points:
 
@@ -60,6 +90,8 @@ The published package keeps these entry points:
 - `dist/index.es.js`: ES modules (`import { Card } from 'tabler-react'`).
 - `dist/style.css`: styles (`import 'tabler-react/style.css'`).
 - `dist/fonts/feather/`: font assets referenced by the stylesheet.
+
+Se conserva `jsnext:main` como alias heredado de la misma entrada ESM indicada por `module` y `exports`; retirarlo no es necesario para utilizar Vite. `src/Tabler.RTL.css` se conserva como fuente heredada, pero la compilación actual no la publica ni ofrece una entrada RTL; consulta [el estado de RTL](./docs/RTL.md).
 
 JavaScript source maps are generated. Vite's CSS extraction does not emit the previous `style.css.map` file.
 React, React DOM and all other peer dependencies (including their subpaths) stay external and must be provided by the consuming project.

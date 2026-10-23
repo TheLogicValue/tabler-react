@@ -2,6 +2,19 @@
   "name": "tabler-react-demo",
   "version": "0.0.0",
   "packageManager": "npm@11.19.0",
+  "description": "Independent integration playground for the Tabler React component library.",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^20.19.0 || ^22.13.0 || >=24.0.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "^11.0.0",
+      "onFail": "warn"
+    }
+  },
   "private": true,
   "type": "module",
   "scripts": {

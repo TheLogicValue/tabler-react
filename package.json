@@ -2,7 +2,19 @@
   "name": "tabler-react",
   "version": "2.0.0",
   "packageManager": "npm@11.19.0",
-  "description": "",
+  "description": "React component library based on Tabler, built with Vite, with forms, tables and charts.",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^20.19.0 || ^22.13.0 || >=24.0.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "^11.0.0",
+      "onFail": "warn"
+    }
+  },
   "author": "thelogicvalue",
   "license": "MIT",
   "repository": "thelogicvalue/tabler-react",
