@@ -23,7 +23,7 @@ const pages = [
 const navigationItems = [
   { ...pages[0], LinkComponent: true },
   { value: 'Componentes', icon: 'layers', subItems: pages.slice(1, 4).map(page => ({ ...page, LinkComponent: true })) },
-  { value: 'Gráficos y cobertura', icon: 'bar-chart-2', subItems: pages.slice(4).map(page => ({ ...page, LinkComponent: true })) },
+  ...pages.slice(4).map(page => ({ ...page, LinkComponent: true })),
 ]
 
 function Overview() {
@@ -40,25 +40,25 @@ function Overview() {
         <div><Icon name="monitor" /><strong>Demo Tabler</strong><small>Consumidor Vite 7</small></div>
       </div>
     </div>
-    <Grid.Row>
+    <Grid.Row className="demo-card-row">
       {[
         [usage.files, 'archivos del consumidor de referencia', 'layers'],
         [testedComponents.length, 'componentes y hooks cubiertos', 'check-circle'],
         ['Community', 'AG Grid sin licencia Enterprise', 'database'],
         ['Sin API', 'datos ficticios y cambios locales', 'shield'],
-      ].map(([number, label, icon]) => <Grid.Col key={label} sm={6} lg={3}>
+      ].map(([number, label, icon]) => <Grid.Col key={label} width={12} sm={6} lg={3}>
         <Card className="metric-card"><Card.Body><Icon name={icon} /><strong>{number}</strong><span>{label}</span></Card.Body></Card>
       </Grid.Col>)}
     </Grid.Row>
-    <Grid.Row>
-      <Grid.Col lg={8}>
-        <Card title="Recorrido recomendado"><Card.Body>
+    <Grid.Row className="demo-card-row">
+      <Grid.Col width={12} lg={8}>
+        <Card className="journey-card" title="Recorrido recomendado"><Card.Body>
           <div className="journey-list">{pages.slice(1, 5).map((page, i) => <Link key={page.to} to={page.to}>
             <span className="journey-number">0{i + 1}</span><div><strong>{page.value}</strong><p>{page.description}</p></div><Icon name="arrow-up-right" />
           </Link>)}</div>
         </Card.Body></Card>
       </Grid.Col>
-      <Grid.Col lg={4}>
+      <Grid.Col width={12} lg={4}>
         <Card title="Los más utilizados"><Card.Body>
           <p className="muted">Archivos que los importan en el consumidor de referencia.</p>
           {usage.components.slice(0, 7).map(({ name, files }) => <div className="usage-row" key={name}>

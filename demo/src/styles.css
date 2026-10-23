@@ -15,7 +15,7 @@ button, input, select { font: inherit; }
 a { color: #2f6fbd; }
 /* Page centers short content vertically by default. This app needs a header
    anchored to the top, with spare height below the main content. */
-.demo-shell { min-height: 100vh; justify-content: flex-start; }
+.demo-shell { --demo-space: 24px; --tblr-gutter-x: var(--demo-space); --tblr-gutter-y: 0px; min-height: 100vh; justify-content: flex-start; }
 .demo-shell > main { flex: 1; min-width: 0; }
 .demo-container, .demo-shell .container { width: 100%; max-width: 1280px; padding-right: 32px; padding-left: 32px; margin: 0 auto; }
 .demo-header { background: #182d47; color: #e3ecf7; }
@@ -43,13 +43,19 @@ a { color: #2f6fbd; }
 .demo-shell .page-header { margin-bottom: 25px; }
 .demo-shell .page-title { color: #192f49; font-size: 26px; font-weight: 650; letter-spacing: -.6px; }
 .demo-shell .page-subtitle { color: #7b8796; font-size: 13px; }
-.demo-shell .card { border: 1px solid #e0e6ef; border-radius: 9px; box-shadow: 0 2px 4px #182d4703; margin-bottom: 24px; }
+.demo-shell .card { border: 1px solid #e0e6ef; border-radius: 9px; box-shadow: 0 2px 4px #182d4703; margin-bottom: var(--demo-space); }
+/* Stretch only the sibling cards of a demo row, keeping nested examples intact. */
+.demo-shell .demo-card-row > .col { display: flex; min-width: 0; }
+.demo-shell .demo-card-row > .col > .card { flex: 1; }
+.demo-shell .comparison-scenario > .card-body { display: flex; flex-direction: column; }
+.demo-shell .demo-comparison-card { flex: 1; justify-content: center; margin-bottom: 0; }
+.demo-shell .journey-card > .card-body { display: flex; }
 .demo-shell .card-header { min-height: 58px; padding: 17px 24px; border-color: #e8edf4; }
 .demo-shell .card-title { font-size: 15px; font-weight: 600; }
 .demo-shell .card-body { padding: 24px; }
-.demo-shell .btn { border-radius: 5px; font-weight: 500; font-size: 13px; padding: 9px 15px; }
-.demo-shell .btn-primary { background: #2f6fbd; border-color: #2f6fbd; }
-.demo-shell .btn-secondary { background: #fff; color: #425b78; border-color: #d4dfec; }
+.demo-shell .btn, .demo-overlay .btn { border-radius: 5px; font-weight: 500; font-size: 13px; padding: 9px 15px; }
+.demo-shell .btn-primary, .demo-overlay .btn-primary { background: #2f6fbd; border-color: #2f6fbd; color: #fff; }
+.demo-shell .btn-secondary, .demo-overlay .btn-secondary { background: #fff; color: #425b78; border-color: #d4dfec; }
 .demo-shell .badge { padding: 5px 8px; font-weight: 500; font-size: 11px; border-radius: 4px; }
 .demo-shell .badge-secondary { background: #edf2f8; color: #57708e; }
 .demo-shell .badge-success { background: #e5f5ee; color: #20846c; }
@@ -68,7 +74,8 @@ a { color: #2f6fbd; }
 .metric-card i { position: absolute; right: 24px; top: 26px; color: #7294bc; font-size: 19px; }
 .metric-card strong { display: block; font-size: 26px; color: #213b59; font-weight: 650; margin-bottom: 5px; }
 .metric-card span { display: block; font-size: 11px; color: #7c8ba0; }
-.journey-list a { display: flex; gap: 17px; align-items: center; padding: 16px 0; border-bottom: 1px solid #edf1f6; color: #263b53; text-decoration: none; }
+.journey-list { display: flex; flex-direction: column; width: 100%; }
+.journey-list a { display: flex; flex: 1; gap: 17px; align-items: center; padding: 16px 0; border-bottom: 1px solid #edf1f6; color: #263b53; text-decoration: none; }
 .journey-list a:first-child { padding-top: 0; }
 .journey-list a:last-child { border-bottom: 0; padding-bottom: 0; }
 .journey-list a > i { margin-left: auto; color: #7891ad; }
@@ -108,11 +115,26 @@ a { color: #2f6fbd; }
 .demo-shell .accordion-body { padding: 16px; }
 .route-example { margin-top: 18px; }
 .route-loading, .loading-line { display: flex; align-items: center; gap: 12px; padding: 20px 0; color: #6c819a; }
+.loading-line > svg { width: 24px; height: 24px; flex: 0 0 24px; }
 .table-loader svg { width: 100%; height: auto; max-height: 290px; }
+.pie-chart-loader { display: grid; place-items: center; min-width: 0; }
+.pie-chart-loader svg { display: block; width: 100%; max-width: 400px; height: auto; }
+.demo-double-card-note { padding: 0 20px 20px; margin: 0; text-align: center; }
+/* The modal hosts belong to the demo; the library examples render unchanged. */
+.demo-overlay { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #263b53; }
+.demo-overlay::backdrop { background: transparent; }
+.demo-document-modal.show { display: block; overflow-y: auto; background: #182d4770; }
+.demo-document-modal .modal-dialog { min-height: calc(100% - 3.5rem); }
+.demo-document-modal .modal-content { position: relative !important; }
+.demo-document-modal .modal-body { padding: 24px; }
+.demo-document-modal h3 { font-size: 20px; }
+.demo-document-modal p, .demo-document-modal li { font-size: 14px; line-height: 1.7; }
+.demo-overlay-close { position: fixed; top: 20px; right: 20px; z-index: 6000; }
 .test-plan { padding-left: 20px; }
 .test-plan li { padding: 5px 0 14px 6px; }
 .test-plan strong { font-size: 13px; }
 .test-plan p { margin-top: 6px; color: #7b8ca0; font-size: 12px; line-height: 1.7; }
+@media (min-width: 768px) { .test-plan { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 40px; } }
 .demo-footer { display: flex; justify-content: space-between; gap: 20px; padding-top: 10px; padding-bottom: 26px; font-size: 10px; color: #8b99ab; }
 /* The legacy modal stylesheet expects layout rules from the consumer. */
 .demo-shell ~ .modal, #root > .modal { background: #182d4770; }
@@ -125,10 +147,13 @@ a { color: #2f6fbd; }
 .dialog-sheet { z-index: 1100; background: white; box-shadow: 0 8px 30px #243b6125; border-radius: 8px; }
 @media (max-width: 1050px) { .intro-diagram { display: none; } .demo-nav .nav { gap: 16px; } .demo-nav .nav > .nav-item > .nav-link, .demo-nav .tabler-dropdown-trigger { font-size: 12px; } }
 @media (max-width: 700px) {
+  .demo-shell { --demo-space: 20px; }
   .demo-container, .demo-shell .container { padding-left: 18px; padding-right: 18px; }
   .demo-header-inner { flex-wrap: wrap; padding-top: 16px; padding-bottom: 16px; gap: 12px; }
   .demo-nav .nav { gap: 0 20px; } .demo-nav .nav > .nav-item > .nav-link, .demo-nav .tabler-dropdown-trigger { padding: 12px 0; }
   .intro-panel { padding: 24px; } .intro-panel h2 { font-size: 23px; }
   .demo-shell .card-body { padding: 18px; } .chart-controls { align-items: start; flex-direction: column; }
+  .filter-row { flex-wrap: wrap; }
+  .demo-radar-chart { margin-inline: -12px; }
   .demo-footer { flex-direction: column; gap: 5px; } .grid-demo #searcher { width: min(260px, 75%); }
 }

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360">
+  <rect x="1" y="1" width="598" height="358" rx="24" fill="#182d47" stroke="#547dad" stroke-width="2"/>
+  <rect x="264" y="40" width="72" height="72" rx="19" fill="#377bc9"/>
+  <g fill="#fff" font-family="Segoe UI, sans-serif" text-anchor="middle">
+    <text x="300" y="91" font-size="49" font-weight="700">t.</text>
+    <text x="300" y="151" font-size="26" font-weight="600">laboratorio tabler</text>
+    <text x="300" y="251" font-size="18">Preparando la vista de prueba…</text>
+    <text x="300" y="282" font-size="13" fill="#b3c6dd">Datos ficticios · Sin servicios externos</text>
+  </g>
+</svg>

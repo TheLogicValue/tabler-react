@@ -14,12 +14,16 @@ export const funds = [
   { id: 'DEMO-012', name: 'Norte Equilibrio', category: 'Artículo 6', score: 5.9, coverage: 80, assets: 105 },
 ]
 
-export const testedComponents = [
-  'Grid', 'Button', 'Card', 'Page', 'Form', 'Tab', 'Modal', 'TableLoader',
-  'Tabs', 'Text', 'DatePicker', 'Icon', 'useModal', 'Table', 'useTabs',
-  'LoaderZone', 'LoaderNoData', 'Spinner', 'BarChart', 'Alert', 'Dropdown',
-  'ProtectedRoute', 'LineChart', 'PieChart', 'AGGridTable', 'NavBarMenu', 'Site',
-  'Tooltip', 'Nav',
-]
+const exampleComponents = {
+  '/': ['Grid', 'Button', 'Card', 'Page', 'Text', 'Icon', 'NavBarMenu'],
+  '/datos': ['Table', 'AGGridTable'],
+  '/formulario': ['Form', 'DatePicker'],
+  '/interacciones': ['Tab', 'Modal', 'Tabs', 'useModal', 'useTabs', 'Dropdown', 'ProtectedRoute', 'Site', 'Tooltip', 'Nav', 'ModalDoc', 'ModalSplash'],
+  '/graficos': ['TableLoader', 'LoaderZone', 'LoaderNoData', 'Spinner', 'BarChart', 'Alert', 'LineChart', 'PieChart', 'DoubleCard', 'PieChartLoader', 'RadarChart'],
+}
+
+export const componentExamplePaths = Object.fromEntries(Object.entries(exampleComponents)
+  .flatMap(([path, components]) => components.map(name => [name, path])))
+export const testedComponents = Object.keys(componentExamplePaths)
 
 export const categoryOptions = ['Artículo 6', 'Artículo 8', 'Artículo 9'].map(value => ({ value, label: value }))

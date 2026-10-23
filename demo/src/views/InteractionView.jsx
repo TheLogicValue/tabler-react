@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Accordion, Alert, Button, Card, Dropdown, Form, Grid, Modal, Nav, ProtectedRoute, Site, Tab, Tabs, Tooltip, useModal, useTabs } from 'tabler-react'
 import { Result, Scenario } from '../shared.jsx'
+import AdditionalModalExamples from './AdditionalModalExamples.jsx'
 
 function HookTabs() {
   const { Tabs: HookTabsComponent, selectedTitle } = useTabs()
@@ -63,7 +64,7 @@ export default function InteractionView() {
   const [allowed, setAllowed] = useState(false)
   const [menuAction, setMenuAction] = useState('Ninguna acción seleccionada.')
   return <>
-    <Grid.Row><Grid.Col lg={6}>
+    <Grid.Row className="demo-card-row"><Grid.Col width={12} lg={6}>
       <Scenario title="Confirmación con Modal + useModal" description="Prueba apertura, confirmación, cancelación y el botón de cierre. La operación modifica únicamente el mensaje de esta demo." components={['Modal', 'useModal', 'Button']}>
         <Button color="primary" type="button" icon="external-link" onClick={modal.openModal}>Abrir confirmación</Button>
         <Result>{message}</Result>
@@ -74,7 +75,7 @@ export default function InteractionView() {
           <p>Se actualizaría la configuración de <strong>Atlas Global</strong>.</p><p>Este ejemplo modifica únicamente el estado local de la demo.</p>
         </Modal>}
       </Scenario>
-    </Grid.Col><Grid.Col lg={6}>
+    </Grid.Col><Grid.Col width={12} lg={6}>
       <Scenario title="Menú desplegable y acordeón" description="Comprueba el posicionamiento del menú con Floating UI y despliega el detalle." components={['Dropdown', 'Accordion', 'Icon']}>
         <Dropdown type="button" color="secondary" triggerContent="Acciones de prueba" toggle itemsObject={[
           { value: 'Marcar como revisado', icon: 'check', onClick: e => { e.preventDefault(); setMenuAction('Fondo marcado como revisado.') } },
@@ -84,6 +85,7 @@ export default function InteractionView() {
         <Accordion accordionButton="Ver detalle de la prueba"><p>El acordeón abre y cierra este contenido usando su estado interno.</p></Accordion>
       </Scenario>
     </Grid.Col></Grid.Row>
+    <AdditionalModalExamples />
     <ActionControls />
     <FloatingExamples />
     <Scenario title="Pestañas con componente y hook" description="Prueba los dos patrones de pestañas de la biblioteca. Cambia la pestaña interior de cada ejemplo." components={['Tabs', 'Tab', 'useTabs']}>

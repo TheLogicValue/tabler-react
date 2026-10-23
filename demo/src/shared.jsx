@@ -7,8 +7,8 @@ export function ComponentList({ names }) {
   </div>
 }
 
-export function Scenario({ title, description, components, children }) {
-  return <Card className="scenario">
+export function Scenario({ title, description, components, children, className = '' }) {
+  return <Card className={`scenario ${className}`.trim()}>
     <Card.Header><Card.Title>{title}</Card.Title></Card.Header>
     <Card.Body>
       <p className="scenario-description">{description}</p>

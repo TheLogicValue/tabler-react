@@ -28,7 +28,7 @@ export default function FormView() {
     setName('Cartera de prueba'); setCategory(categoryOptions[1]); setEnabled(true)
     dateRef.current?.reset(); setError(''); setResult(null)
   }
-  return <Grid.Row><Grid.Col lg={8}>
+  return <><Grid.Row className="demo-card-row"><Grid.Col width={12} lg={8}>
     <Scenario title="Configuración de una cartera" description="Edita los campos, busca una clasificación y selecciona una fecha. La fecha admite como máximo hoy, tanto al escribir como al seleccionar. Guardar valida el formulario y muestra sus valores; no se envía nada a un servidor." components={['Form', 'DatePicker', 'Button', 'Alert']}>
       <Form onSubmit={save}>
         <div className="form-group"><label className="field-label">Nombre de la cartera<Form.Input name="portfolioName" value={name} onChange={e => setName(e.target.value)} placeholder="Nombre de prueba" invalid={!!error && !name.trim()} /></label></div>
@@ -39,6 +39,13 @@ export default function FormView() {
         <div className="action-row"><Button type="submit" color="primary" icon="check">Guardar configuración</Button><Button type="button" color="secondary" onClick={reset}>Restablecer</Button></div>
       </Form>
     </Scenario>
+  </Grid.Col><Grid.Col width={12} lg={4}>
+    <Scenario title="Resultado del formulario" description="Estos valores se leen del estado de Form y de la referencia pública de DatePicker." components={['Card', 'Text']}>
+      <Result>{result ? <><strong>Configuración guardada localmente</strong><dl className="result-values"><dt>Nombre</dt><dd>{result.name}</dd><dt>Clasificación</dt><dd>{result.category}</dd><dt>Fecha</dt><dd>{result.date}</dd><dt>Informe</dt><dd>{result.enabled ? 'Incluida' : 'Excluida'}</dd></dl></> : 'Todavía no has guardado una configuración.'}</Result>
+      <p className="muted mt-4">Prueba también una fecha inválida, vaciar el nombre, borrar la selección y restablecer los valores.</p>
+    </Scenario>
+  </Grid.Col></Grid.Row>
+  <Grid.Row className="demo-card-row"><Grid.Col width={12} lg={6}>
     <Scenario title="Límites y días deshabilitados" description="Por defecto el límite es hoy, también al escribir. Histórico y Futuro usan el 15/10/2026 como límite explícito inclusivo. Los otros modos prueban días deshabilitados. Los ejemplos con límite explícito navegan entre septiembre y noviembre de 2026." components={['DatePicker', 'Form']}>
       <div className="form-group"><label className="field-label">Restricción del calendario<Form.Select value={restriction} onChange={event => setRestriction(event.target.value)}>
         <option value="current">Hasta hoy (predeterminado)</option>
@@ -51,11 +58,7 @@ export default function FormView() {
         fromMonth={restriction === 'current' ? undefined : new Date(2026, 8, 1)} toMonth={restriction === 'current' ? undefined : new Date(2026, 10, 1)} lastDate={restriction === 'current' ? undefined : initialDate}
         isHistoric={restriction !== 'future'} disabled={restriction === 'all' ? true : restriction === 'weekends' ? { dayOfWeek: [0, 6] } : false} /></label>
     </Scenario>
-  </Grid.Col><Grid.Col lg={4}>
-    <Scenario title="Resultado del formulario" description="Estos valores se leen del estado de Form y de la referencia pública de DatePicker." components={['Card', 'Text']}>
-      <Result>{result ? <><strong>Configuración guardada localmente</strong><dl className="result-values"><dt>Nombre</dt><dd>{result.name}</dd><dt>Clasificación</dt><dd>{result.category}</dd><dt>Fecha</dt><dd>{result.date}</dd><dt>Informe</dt><dd>{result.enabled ? 'Incluida' : 'Excluida'}</dd></dl></> : 'Todavía no has guardado una configuración.'}</Result>
-      <p className="muted mt-4">Prueba también una fecha inválida, vaciar el nombre, borrar la selección y restablecer los valores.</p>
-    </Scenario>
+  </Grid.Col><Grid.Col width={12} lg={6}>
     <Scenario title="Fecha inicial y días anteriores" description="Cambia el desplazamiento y pulsa Restablecer fecha para aplicar el nuevo valor. La fecha base es el 15/10/2026; el valor por defecto resta un día." components={['DatePicker', 'Form', 'Button']}>
       <div className="form-group"><label className="field-label">Días anteriores<Form.Select name="previousDay" value={previousDay} onChange={e => setPreviousDay(e.target.value)}>
         <option value="default">Por defecto (1 día)</option><option value="0">0 días</option><option value="1">1 día</option><option value="3">3 días</option>
@@ -63,5 +66,5 @@ export default function FormView() {
       <div className="form-group"><label className="field-label">Fecha calculada<DatePicker ref={offsetRef} dateIni={initialDate} previousDay={previousDay === 'default' ? undefined : Number(previousDay)} /></label></div>
       <Button type="button" color="secondary" onClick={() => offsetRef.current?.reset()}>Restablecer fecha</Button>
     </Scenario>
-  </Grid.Col></Grid.Row>
+  </Grid.Col></Grid.Row></>
 }
