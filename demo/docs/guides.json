@@ -625,9 +625,13 @@
   "Grid": {
     "summary": "Familia de filas y columnas para distribuir contenido.",
     "behavior": [
-      "Compone Grid.Row y Grid.Col con children.",
-      "Grid.Col utiliza width y tamaños sm/md/lg/xl para establecer columnas en una cuadrícula de 12 unidades.",
-      "Grid.Row admite cards, deck y gutters para agrupar tarjetas y configurar la distribución; la apariencia final depende del CSS."
+      "Grid devuelve children directamente sin añadir un contenedor al DOM. Grid.Row y Grid.Col también pueden utilizarse sin envolverlos en Grid.",
+      "Grid.Row representa un div con clases de fila. cards, deck y gutters añaden variantes CSS; alignItems y justifyContent conservan sufijos abiertos para clases de alineación.",
+      "Grid.Col añade col y las clases de ancho y desplazamiento solicitadas. width suele utilizar la escala de 12 unidades; 0 omite la clase. Los tamaños y offsets dependen del CSS cargado por el consumidor.",
+      "auto y los flags por tamaño añaden clases de ancho automático, sin retirar las clases numéricas que también se proporcionen. ignoreCol solo omite la clase base col.",
+      "Los flags Auto de los tamaños 2xl, 3xl, 4xl, 6xl y 8xl aceptan booleanos y valores numéricos heredados. Un número distinto de 0 activa la clase; 0 o false la omiten.",
+      "La migración conserva las clases heredadas col-xs-*, offset-xs-* y los tamaños extendidos. Generar una clase no garantiza que exista una regla CSS para ella.",
+      "Los componentes de fila y columna no reenvían atributos DOM adicionales ni callbacks de clic; personaliza su presentación con className y sus propiedades existentes."
     ],
     "example": "<Grid.Row><Grid.Col width={12} lg={6}>Primera columna</Grid.Col><Grid.Col width={12} lg={6}>Segunda columna</Grid.Col></Grid.Row>"
   },

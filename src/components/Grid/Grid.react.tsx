@@ -1,14 +1,13 @@
-// @flow
-
 import * as React from "react";
 import GridRow from "./GridRow.react";
 import GridCol from "./GridCol.react";
 
-type Props = {|
-  +children: React.Node,
-|};
+export type GridProps = {
+  /** Contenido devuelto directamente, sin añadir un contenedor al DOM. */
+  readonly children: React.ReactNode;
+};
 
-function Grid(props: Props): React.Node {
+function Grid(props: GridProps): React.ReactNode {
   return props.children;
 }
 

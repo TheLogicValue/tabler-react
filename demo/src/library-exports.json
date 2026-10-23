@@ -194,7 +194,7 @@
     {
       "name": "Grid",
       "kind": "Componente",
-      "source": "src/components/Grid/index.js"
+      "source": "src/components/Grid/index.ts"
     },
     {
       "name": "Header",

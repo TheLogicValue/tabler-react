@@ -1,15 +1,15 @@
 {
   "name": "Grid",
   "kind": "Componente",
-  "source": "src/components/Grid/index.js",
-  "implementation": "src/components/Grid/Grid.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport GridRow from \"./GridRow.react\";\nimport GridCol from \"./GridCol.react\";\n\ntype Props = {|\n  +children: React.Node,\n|};\n\nfunction Grid(props: Props): React.Node {\n  return props.children;\n}\n\nGrid.Row = GridRow;\nGrid.Col = GridCol;\n\nGrid.displayName = \"Grid\";\n\n/** @component */\nexport default Grid;\n",
+  "source": "src/components/Grid/index.ts",
+  "implementation": "src/components/Grid/Grid.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport GridRow from \"./GridRow.react\";\nimport GridCol from \"./GridCol.react\";\n\nexport type GridProps = {\n  /** Contenido devuelto directamente, sin añadir un contenedor al DOM. */\n  readonly children: React.ReactNode;\n};\n\nfunction Grid(props: GridProps): React.ReactNode {\n  return props.children;\n}\n\nGrid.Row = GridRow;\nGrid.Col = GridCol;\n\nGrid.displayName = \"Grid\";\n\n/** @component */\nexport default Grid;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": false,
-      "description": ""
+      "description": "Contenido devuelto directamente, sin añadir un contenedor al DOM."
     }
   ],
   "subcomponents": [
@@ -21,51 +21,51 @@
   "childApis": [
     {
       "name": "Row",
-      "source": "src/components/Grid/GridRow.react.js",
+      "source": "src/components/Grid/GridRow.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
-          "description": ""
+          "description": "Contenido de la fila, normalmente uno o varios Grid.Col."
         },
         {
           "name": "className",
           "type": "string",
           "optional": true,
-          "description": ""
+          "description": "Clases adicionales del div de la fila."
         },
         {
           "name": "cards",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade row-cards para agrupar tarjetas."
         },
         {
           "name": "deck",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade row-deck; el comportamiento visual depende de la hoja de estilos."
         },
         {
           "name": "gutters",
-          "type": "\"xs\" | \"sm\" | \"md\" | \"lg\"",
+          "type": "\"\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
           "optional": true,
-          "description": "",
+          "description": "Añade gutters-xs/sm/md/lg. La cadena vacía conserva los gutters del CSS.",
           "default": "\"\""
         },
         {
           "name": "alignItems",
           "type": "string",
           "optional": true,
-          "description": "",
+          "description": "Sufijo de align-items-, por ejemplo center. Se conserva el string abierto.",
           "default": "\"\""
         },
         {
           "name": "justifyContent",
           "type": "string",
           "optional": true,
-          "description": "",
+          "description": "Sufijo de justify-content-, por ejemplo between. Se conserva el string abierto.",
           "default": "\"\""
         }
       ],
@@ -75,245 +75,245 @@
     },
     {
       "name": "Col",
-      "source": "src/components/Grid/GridCol.react.js",
+      "source": "src/components/Grid/GridCol.react.tsx",
       "props": [
         {
           "name": "children",
           "type": "React.ReactNode",
           "optional": true,
-          "description": ""
+          "description": "Contenido del div de la columna."
         },
         {
           "name": "className",
           "type": "string",
           "optional": true,
-          "description": ""
+          "description": "Clases adicionales; no se reenvían otros atributos al div."
         },
         {
           "name": "width",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-N. 0 omite la clase; se utiliza normalmente una escala de 12.",
           "default": "0"
         },
         {
           "name": "xs",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade la clase heredada col-xs-N; su efecto requiere CSS que la defina.",
           "default": "0"
         },
         {
           "name": "xsAuto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade la clase heredada col-xs-auto."
         },
         {
           "name": "sm",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-sm-N. 0 omite esta variante.",
           "default": "0"
         },
         {
           "name": "smAuto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade col-sm-auto."
         },
         {
           "name": "md",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-md-N. 0 omite esta variante.",
           "default": "0"
         },
         {
           "name": "mdAuto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade col-md-auto."
         },
         {
           "name": "lg",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-lg-N. 0 omite esta variante.",
           "default": "0"
         },
         {
           "name": "lgAuto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade col-lg-auto."
         },
         {
           "name": "xl",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-xl-N. 0 omite esta variante.",
           "default": "0"
         },
         {
           "name": "xlAuto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade col-xl-auto."
         },
         {
           "name": "xl2",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-2xl-N; la disponibilidad del breakpoint depende del CSS.",
           "default": "0"
         },
         {
           "name": "xl2Auto",
-          "type": "number",
+          "type": "boolean | number",
           "optional": true,
-          "description": ""
+          "description": "Añade col-2xl-auto. Se admiten booleanos y los números de la API heredada."
         },
         {
           "name": "xl3",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-3xl-N; la disponibilidad del breakpoint depende del CSS.",
           "default": "0"
         },
         {
           "name": "xl3Auto",
-          "type": "number",
+          "type": "boolean | number",
           "optional": true,
-          "description": ""
+          "description": "Añade col-3xl-auto. Un número distinto de 0 activa la clase, igual que true."
         },
         {
           "name": "xl4",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-4xl-N; la disponibilidad del breakpoint depende del CSS.",
           "default": "0"
         },
         {
           "name": "xl4Auto",
-          "type": "number",
+          "type": "boolean | number",
           "optional": true,
-          "description": ""
+          "description": "Añade col-4xl-auto; conserva compatibilidad con valores numéricos."
         },
         {
           "name": "xl6",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-6xl-N; la disponibilidad del breakpoint depende del CSS.",
           "default": "0"
         },
         {
           "name": "xl6Auto",
-          "type": "number",
+          "type": "boolean | number",
           "optional": true,
-          "description": ""
+          "description": "Añade col-6xl-auto; conserva compatibilidad con valores numéricos."
         },
         {
           "name": "xl8",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade col-8xl-N; la disponibilidad del breakpoint depende del CSS.",
           "default": "0"
         },
         {
           "name": "xl8Auto",
-          "type": "number",
+          "type": "boolean | number",
           "optional": true,
-          "description": ""
+          "description": "Añade col-8xl-auto; conserva compatibilidad con valores numéricos."
         },
         {
           "name": "auto",
           "type": "boolean",
           "optional": true,
-          "description": ""
+          "description": "Añade col-auto sin retirar las otras clases de ancho."
         },
         {
           "name": "offset",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-N. 0 no añade desplazamiento.",
           "default": "0"
         },
         {
           "name": "offsetXs",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade la clase heredada offset-xs-N.",
           "default": "0"
         },
         {
           "name": "offsetSm",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-sm-N.",
           "default": "0"
         },
         {
           "name": "offsetMd",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-md-N.",
           "default": "0"
         },
         {
           "name": "offsetLg",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-lg-N.",
           "default": "0"
         },
         {
           "name": "offsetXl",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-xl-N.",
           "default": "0"
         },
         {
           "name": "offsetXl2",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-2xl-N, sujeto al CSS del breakpoint.",
           "default": "0"
         },
         {
           "name": "offsetXl3",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-3xl-N, sujeto al CSS del breakpoint.",
           "default": "0"
         },
         {
           "name": "offsetXl4",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-4xl-N, sujeto al CSS del breakpoint.",
           "default": "0"
         },
         {
           "name": "offsetXl6",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-6xl-N, sujeto al CSS del breakpoint.",
           "default": "0"
         },
         {
           "name": "offsetXl8",
           "type": "number",
           "optional": true,
-          "description": "",
+          "description": "Añade offset-8xl-N, sujeto al CSS del breakpoint.",
           "default": "0"
         },
         {
           "name": "ignoreCol",
           "type": "boolean",
           "optional": true,
-          "description": "",
+          "description": "Omite solo la clase base col; conserva anchos, auto, offsets y className.",
           "default": "false"
         }
       ],
@@ -343,9 +343,13 @@
   "guide": {
     "summary": "Familia de filas y columnas para distribuir contenido.",
     "behavior": [
-      "Compone Grid.Row y Grid.Col con children.",
-      "Grid.Col utiliza width y tamaños sm/md/lg/xl para establecer columnas en una cuadrícula de 12 unidades.",
-      "Grid.Row admite cards, deck y gutters para agrupar tarjetas y configurar la distribución; la apariencia final depende del CSS."
+      "Grid devuelve children directamente sin añadir un contenedor al DOM. Grid.Row y Grid.Col también pueden utilizarse sin envolverlos en Grid.",
+      "Grid.Row representa un div con clases de fila. cards, deck y gutters añaden variantes CSS; alignItems y justifyContent conservan sufijos abiertos para clases de alineación.",
+      "Grid.Col añade col y las clases de ancho y desplazamiento solicitadas. width suele utilizar la escala de 12 unidades; 0 omite la clase. Los tamaños y offsets dependen del CSS cargado por el consumidor.",
+      "auto y los flags por tamaño añaden clases de ancho automático, sin retirar las clases numéricas que también se proporcionen. ignoreCol solo omite la clase base col.",
+      "Los flags Auto de los tamaños 2xl, 3xl, 4xl, 6xl y 8xl aceptan booleanos y valores numéricos heredados. Un número distinto de 0 activa la clase; 0 o false la omiten.",
+      "La migración conserva las clases heredadas col-xs-*, offset-xs-* y los tamaños extendidos. Generar una clase no garantiza que exista una regla CSS para ella.",
+      "Los componentes de fila y columna no reenvían atributos DOM adicionales ni callbacks de clic; personaliza su presentación con className y sus propiedades existentes."
     ],
     "example": "<Grid.Row><Grid.Col width={12} lg={6}>Primera columna</Grid.Col><Grid.Col width={12} lg={6}>Segunda columna</Grid.Col></Grid.Row>"
   }

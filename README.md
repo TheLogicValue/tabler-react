@@ -70,7 +70,7 @@ El `.npmrc` de la raíz activa `legacy-peer-deps` porque los plugins de ESLint t
 The build uses Vite in library mode with `src/index.js` as its only entry point.
 Babel compiles JavaScript/JSX with Flow and the migrated TypeScript/TSX files. The parser is selected by file extension; each file uses one type syntax.
 
-La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. El piloto de TypeScript es Badge; se conservan `@babel/preset-flow`, Hermes y `flow-typed` para las familias pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
+La configuración de Babel utilizada por la compilación está en `vite.config.mjs`; se ha retirado el antiguo `.babelrc` y el script de copia de fuentes Flow. Badge y la familia Grid están en TypeScript; se conservan `@babel/preset-flow`, Hermes y `flow-typed` para las familias pendientes. El helper opcional `scripts/runflow` requiere una instalación de Flow y no forma parte del build ni de `npm test`; no se utiliza como verificación del árbol mixto. La compilación no publica todavía declaraciones `.js.flow` ni `.d.ts`. El alcance de esta transición se explica en «Migración gradual de Flow a TypeScript».
 
 Los scripts y configuraciones conservados tienen estas funciones:
 
@@ -279,18 +279,20 @@ Cada tabla mantiene su propio buscador y la limpieza funciona también sin busca
 
 La migración comienza con `src/components/Badge/Badge.react.tsx` y su barrel `index.ts`. Conserva las propiedades `children`, `className` y `color`, el color predeterminado y la salida HTML. `BadgeProps` describe esas propiedades en las fuentes. La entrada pública de JavaScript sigue siendo `import { Badge } from 'tabler-react'`.
 
+La familia Grid también está migrada: `Grid`, `Grid.Row`, `Grid.Col` y su barrel utilizan `.tsx`/`.ts`. Exporta en las fuentes `GridProps`, `GridRowProps` y `GridColProps`, sin añadir exports de valor al paquete. Se conservan todos los anchos, offsets, clases y valores predeterminados. Los flags `xl2Auto`, `xl3Auto`, `xl4Auto`, `xl6Auto` y `xl8Auto` admiten booleanos y los números heredados; `gutters` admite la cadena vacía que ya utiliza el valor predeterminado. No se cambian las reglas CSS ni se añaden atributos DOM que antes no se reenviaban.
+
 ```sh
 # Comprueba las familias ya migradas, sin generar JavaScript ni declaraciones.
 npm run typecheck
 ```
 
-`tsconfig.json` activa `strict`, `isolatedModules` y `noEmit`. Solo incluye fuentes TypeScript y los ejemplos de contrato en `tests/types/`; no habilita `allowJs` ni intenta interpretar Flow. Las pruebas de tipos aceptan los usos públicos válidos de Badge y exigen errores para propiedades incorrectas. El código TypeScript nuevo debe mantener sus dependencias dentro de la parte migrada o resolver expresamente la frontera con las fuentes antiguas; añadir `any` o ignorar errores no sustituye esa revisión.
+`tsconfig.json` activa `strict`, `isolatedModules` y `noEmit`. Solo incluye fuentes TypeScript y los ejemplos de contrato en `tests/types/`; no habilita `allowJs` ni intenta interpretar Flow. Las pruebas de tipos aceptan los usos públicos válidos de Badge y Grid y exigen errores para propiedades incorrectas. El código TypeScript nuevo debe mantener sus dependencias dentro de la parte migrada o resolver expresamente la frontera con las fuentes antiguas; añadir `any` o ignorar errores no sustituye esa revisión.
 
 Se utiliza TypeScript 6.0.3 porque el parser `@typescript-eslint` 8.72.0 declara soporte para TypeScript menor que 6.1 y para ESLint 10. El build de Vite transpila con Babel; la comprobación semántica la realiza `typecheck`, que también forma parte de `npm run check`. Los archivos Flow pendientes siguen teniendo lint, compilación y pruebas, pero no una comprobación semántica de tipos dentro de ese comando.
 
-El catálogo y las fichas reconocen ambos formatos, incluidos los tipos de propiedades de Badge. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
+El catálogo y las fichas reconocen ambos formatos, incluidos los tipos de propiedades de Badge y las APIs de Grid.Row y Grid.Col. Las pruebas de ejecución comprueban su salida a través del paquete compilado con React 19 y del consumidor aislado con React 18. La demo continúa siendo JavaScript y consume el bundle ESM de la biblioteca.
 
-El siguiente paso es migrar una familia como Grid con sus dependencias, manteniendo su API. La publicación de declaraciones `.d.ts` y la configuración de `types`/`exports` se abordarán al disponer de una superficie pública coherente; este piloto no anuncia tipos completos para los otros componentes. Las herramientas de Flow se retirarán cuando ya no tengan usos.
+Las familias restantes se migrarán por grupos de dependencias, manteniendo su API. La publicación de declaraciones `.d.ts` y la configuración de `types`/`exports` se abordarán al disponer de una superficie pública coherente; esta etapa no anuncia tipos completos para los otros componentes. Las herramientas de Flow se retirarán cuando ya no tengan usos.
 
 ## Lint
 
