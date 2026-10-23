@@ -46,17 +46,19 @@ test('Los ejemplos de las guías tienen sintaxis válida y no usan subcomponente
   for (const name of Object.keys(index)) {
     const guide = document(name).guide
     if (!guide) continue
-    const ast = parseSync(guide.example, { babelrc: false, configFile: false, parserOpts: { plugins: ['jsx', 'flow'] } })
-    walk(ast, node => {
-      if (node.type !== 'JSXOpeningElement') return
-      const parts = nameParts(node.name)
-      if (!Object.hasOwn(library, parts[0])) return
-      let value = library[parts[0]]
-      for (const member of parts.slice(1)) {
-        value = value?.[member]
-        assert.notEqual(value, undefined, name + ': ' + parts.join('.'))
-      }
-    })
+    for (const example of [guide.example, ...(guide.examples ?? []).map(item => item.code)]) {
+      const ast = parseSync(example, { babelrc: false, configFile: false, parserOpts: { plugins: ['jsx', 'flow'] } })
+      walk(ast, node => {
+        if (node.type !== 'JSXOpeningElement') return
+        const parts = nameParts(node.name)
+        if (!Object.hasOwn(library, parts[0])) return
+        let value = library[parts[0]]
+        for (const member of parts.slice(1)) {
+          value = value?.[member]
+          assert.notEqual(value, undefined, name + ': ' + parts.join('.'))
+        }
+      })
+    }
   }
 })
 

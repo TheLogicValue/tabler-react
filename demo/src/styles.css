@@ -103,6 +103,7 @@ a { color: #2f6fbd; }
 .docs-index { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
 .docs-index-count { margin-top: 18px; }
 .docs-integration { margin-top: 24px; }
+.docs-additional-example { margin-top: 28px; }
 .docs-index-entry { display: flex; flex-direction: column; gap: 9px; padding: 18px; border: 1px solid #dce5ef; border-radius: 7px; color: #263b53; }
 .docs-index-entry:hover { background: #f1f6fc; text-decoration: none; border-color: #82a6d1; }
 .docs-index-entry strong { color: #2f6fbd; overflow-wrap: anywhere; }

@@ -6,91 +6,112 @@
   "implementationCode": "import React from \"react\";\nimport ReactECharts from \"echarts-for-react\";\n\nexport default function LineChartTabler({\n    lines,\n    height,\n    selectedOptions,\n    getLegend,\n    tooltipFormatter,\n    xAxisData,\n    yAxisMinInterval,\n    yAxisFormatter,\n    yAxisMinMax,\n    complete = false,\n    name = \"Export\",\n    title = \"\",\n    top = null,\n    right = null,\n    left = null,\n    bottom = null,\n    download = false,\n    onExpand = null,\n    toolboxTop = 0,\n    toolboxRight = 10,\n    toolboxBottom = 10,\n}) {\n    const option = {\n        tooltip: {\n            trigger: \"axis\",\n            axisPointer: { animation: false },\n            confine: false,\n            appendToBody: true,\n            formatter: (item) => tooltipFormatter(item),\n        },\n        toolbox: {\n            top: toolboxTop,\n            right: toolboxRight,\n            bottom: toolboxBottom,\n            itemSize: onExpand != null ? 8 : 15,\n            feature: {\n                saveAsImage: { name: name, title: title, show: download },\n                myTool2: {\n                    show: onExpand != null,\n                    title: \"\",\n                    icon: \"path://M15,3 L21,3 L21,9 M9,21 L3,21 L3,15 M21,3 L14,10 M3,21 L10,14\",\n                    onclick: onExpand,\n                },\n            },\n        },\n        legend: {\n            data: selectedOptions,\n            selected: getLegend,\n            show: complete,\n            bottom: \"0rem\",\n            symbol: null,\n        },\n        xAxis: {\n            type: \"category\",\n            boundaryGap: false,\n            show: complete,\n            data: xAxisData,\n            axisLabel: { rotate: 10, verticalAlign: \"top\", fontSize: 9 },\n        },\n        grid: {\n            top: top || (download ? 30 : 10),\n            bottom: bottom || (complete ? 70 : 0),\n            left: left || (complete ? 60 : 0),\n            right: right || (complete ? 60 : 0),\n        },\n        yAxis: {\n            show: complete,\n            type: \"value\",\n            splitNumber: 4,\n            axisPointer: { snap: true },\n            minorSplitLine: { show: true },\n            minInterval: yAxisMinInterval,\n            axisLabel: { formatter: (item) => yAxisFormatter(item) },\n            max: (value) => yAxisMinMax(value, \"max\"),\n            min: (value) => yAxisMinMax(value, \"min\"),\n        },\n        series: lines?.map((item) => ({\n            data: item.data,\n            color: item.color,\n            name: item.name,\n            type: \"line\",\n            smooth: false,\n            showSymbol: true,\n            sampling: \"lttb\",\n            animation: false,\n            lineStyle: { width: 2, animation: false, type: \"solid\" },\n        })),\n    };\n\n    return (\n        <ReactECharts\n            className={\"charts-complete-\" + complete}\n            option={option}\n            style={{ height: height }}\n        />\n    );\n}\n",
   "props": [
     {
-      "name": "lines"
+      "name": "lines",
+      "description": "Array [{ name, data, color }]. data contiene valores alineados con xAxisData; name debe coincidir con las claves de getLegend y los nombres de selectedOptions."
     },
     {
-      "name": "height"
+      "name": "height",
+      "description": "Altura CSS del gráfico, por ejemplo \"300px\". Este componente no declara una altura predeterminada propia."
     },
     {
-      "name": "selectedOptions"
+      "name": "selectedOptions",
+      "description": "Array de nombres entregado a legend.data, por ejemplo [\"Cartera\", \"Referencia\"]. No es un callback ni la lista de datos de las líneas."
     },
     {
-      "name": "getLegend"
+      "name": "getLegend",
+      "description": "Objeto de visibilidad por nombre, por ejemplo { Cartera: true, Referencia: false }, entregado a legend.selected. No es una función, aunque el nombre empiece por get."
     },
     {
-      "name": "tooltipFormatter"
+      "name": "tooltipFormatter",
+      "description": "Función (items) => string. Con trigger=\"axis\" recibe un array de parámetros de las series del punto: cada entrada tiene seriesName, name y value. No recibe un evento DOM."
     },
     {
-      "name": "xAxisData"
+      "name": "xAxisData",
+      "description": "Array de categorías de X. Debe tener el mismo orden y longitud que data en cada línea."
     },
     {
-      "name": "yAxisMinInterval"
+      "name": "yAxisMinInterval",
+      "description": "Distancia mínima entre las marcas del eje Y; por ejemplo 1 para evitar marcas fraccionarias en un conteo."
     },
     {
-      "name": "yAxisFormatter"
+      "name": "yAxisFormatter",
+      "description": "Función (value) => string para etiquetas de Y. El wrapper la llama directamente: proporciónala aunque uses una presentación compacta."
     },
     {
-      "name": "yAxisMinMax"
+      "name": "yAxisMinMax",
+      "description": "Función (range, boundary) => number. range incluye min/max de los datos; boundary vale \"min\" o \"max\". El wrapper la usa para ambos límites del eje Y."
     },
     {
       "name": "complete",
       "default": "false",
-      "optional": true
+      "optional": true,
+      "description": "Muestra eje X, eje Y y leyenda, y modifica los márgenes predeterminados. false conserva las líneas y las ayudas, con una presentación compacta."
     },
     {
       "name": "name",
       "default": "\"Export\"",
-      "optional": true
+      "optional": true,
+      "description": "Nombre del archivo de imagen en saveAsImage. A diferencia de los otros gráficos, esta prop se llama name y no downloadName."
     },
     {
       "name": "title",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto de ayuda de saveAsImage. La implementación de LineChart no lo utiliza como título visible del gráfico."
     },
     {
       "name": "top",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Margen superior de grid en ECharts. Se usa top || valorCalculado; un 0 numérico recupera el valor calculado, mientras \"0%\" permite expresar un margen cero."
     },
     {
       "name": "right",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Margen derecho de grid; se aplica con ||, por lo que 0 numérico no sustituye el valor calculado. Admite una cadena como \"0%\"."
     },
     {
       "name": "left",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Margen izquierdo de grid; se aplica con ||. Puede ser un número de píxeles distinto de 0 o un porcentaje como \"8%\"."
     },
     {
       "name": "bottom",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Margen inferior de grid; se aplica con ||. El valor calculado es 70 con complete y 0 sin él."
     },
     {
       "name": "download",
       "default": "false",
-      "optional": true
+      "optional": true,
+      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
     },
     {
       "name": "onExpand",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Callback de la herramienta de ampliación: se asigna a feature.myTool2.onclick de ECharts. Recibe los argumentos que entregue ECharts; no es un evento React ni amplía el gráfico automáticamente. El consumidor abre su modal o vista."
     },
     {
       "name": "toolboxTop",
       "default": "0",
-      "optional": true
+      "optional": true,
+      "description": "Posición superior de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
     },
     {
       "name": "toolboxRight",
       "default": "10",
-      "optional": true
+      "optional": true,
+      "description": "Posición derecha de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
     },
     {
       "name": "toolboxBottom",
       "default": "10",
-      "optional": true
+      "optional": true,
+      "description": "Posición inferior de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
     }
   ],
   "subcomponents": [],
@@ -119,11 +140,99 @@
   "guide": {
     "summary": "Gráfico de líneas con categorías y formato configurados por el consumidor.",
     "behavior": [
-      "lines es una lista de objetos name/data/color.",
-      "La implementación llama tooltipFormatter, yAxisFormatter y yAxisMinMax: proporciona esas funciones.",
-      "complete muestra ejes y leyenda. selectedOptions/getLegend describen las series visibles.",
-      "La carga de datos y los cambios de periodo corresponden al consumidor."
+      "Cada elemento de lines es { name, data, color }. Los valores de data se alinean por índice con xAxisData. Prepara series de la misma longitud y nombres coherentes con la leyenda.",
+      "selectedOptions es un array de nombres y getLegend un objeto de booleanos por nombre. getLegend no es una función. complete determina si se ven la leyenda y los ejes.",
+      "tooltipFormatter recibe un array de parámetros del punto porque la ayuda se activa por eje. yAxisFormatter recibe un número y yAxisMinMax recibe ({ min, max }, \"min\" | \"max\"); devuelve límites numéricos finitos.",
+      "Los cambios de leyenda hechos por el usuario los gestiona ECharts. El wrapper no expone onLegendChange ni onEvents para sincronizarlos con el estado de React; getLegend es la configuración que envía el consumidor.",
+      "onExpand habilita una herramienta, pero la aplicación debe decidir qué abrir. download guarda una imagen usando name como nombre de archivo y title como texto de ayuda, no como título visible.",
+      "top/right/left/bottom se aplican mediante ||: un 0 numérico no reemplaza el margen calculado. Los estados de carga, error y vacío se presentan desde la aplicación."
     ],
-    "example": "<LineChart lines={[{ name: \"Cartera\", data: [10, 20], color: \"#3676c8\" }]}\n  height=\"280px\" complete xAxisData={[\"Ene\", \"Feb\"]}\n  selectedOptions={[\"Cartera\"]} getLegend={{ Cartera: true }}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={items => items.map(item => item.seriesName + \": \" + item.value).join(\"<br/>\")} />"
+    "example": "import React, { useState } from \"react\";\nimport { LineChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function EvolucionDeLaCartera() {\n  const [mensaje, setMensaje] = useState(\"\");\n  const lines = [\n    { name: \"Cartera\", data: [100, 104, 109], color: \"#3676c8\" },\n    { name: \"Referencia\", data: [100, 102, 106], color: \"#21a48a\" },\n  ];\n  return <>\n    <LineChart lines={lines} height=\"320px\" complete\n      xAxisData={[\"Ene\", \"Feb\", \"Mar\"]}\n      selectedOptions={[\"Cartera\", \"Referencia\"]}\n      getLegend={{ Cartera: true, Referencia: true }}\n      yAxisMinInterval={1}\n      yAxisFormatter={value => String(value)}\n      yAxisMinMax={(range, boundary) => boundary === \"min\"\n        ? Math.floor(range.min - 2) : Math.ceil(range.max + 2)}\n      tooltipFormatter={items => items.map(item =>\n        item.seriesName + \": \" + item.value).join(\"<br/>\")}\n      download name=\"evolucion-cartera\" title=\"Descargar imagen\"\n      onExpand={() => setMensaje(\"Aquí la aplicación abriría una vista ampliada.\")} />\n    <p role=\"status\">{mensaje}</p>\n  </>;\n}",
+    "props": [
+      {
+        "name": "lines",
+        "description": "Array [{ name, data, color }]. data contiene valores alineados con xAxisData; name debe coincidir con las claves de getLegend y los nombres de selectedOptions."
+      },
+      {
+        "name": "height",
+        "description": "Altura CSS del gráfico, por ejemplo \"300px\". Este componente no declara una altura predeterminada propia."
+      },
+      {
+        "name": "selectedOptions",
+        "description": "Array de nombres entregado a legend.data, por ejemplo [\"Cartera\", \"Referencia\"]. No es un callback ni la lista de datos de las líneas."
+      },
+      {
+        "name": "getLegend",
+        "description": "Objeto de visibilidad por nombre, por ejemplo { Cartera: true, Referencia: false }, entregado a legend.selected. No es una función, aunque el nombre empiece por get."
+      },
+      {
+        "name": "tooltipFormatter",
+        "description": "Función (items) => string. Con trigger=\"axis\" recibe un array de parámetros de las series del punto: cada entrada tiene seriesName, name y value. No recibe un evento DOM."
+      },
+      {
+        "name": "xAxisData",
+        "description": "Array de categorías de X. Debe tener el mismo orden y longitud que data en cada línea."
+      },
+      {
+        "name": "yAxisMinInterval",
+        "description": "Distancia mínima entre las marcas del eje Y; por ejemplo 1 para evitar marcas fraccionarias en un conteo."
+      },
+      {
+        "name": "yAxisFormatter",
+        "description": "Función (value) => string para etiquetas de Y. El wrapper la llama directamente: proporciónala aunque uses una presentación compacta."
+      },
+      {
+        "name": "yAxisMinMax",
+        "description": "Función (range, boundary) => number. range incluye min/max de los datos; boundary vale \"min\" o \"max\". El wrapper la usa para ambos límites del eje Y."
+      },
+      {
+        "name": "complete",
+        "description": "Muestra eje X, eje Y y leyenda, y modifica los márgenes predeterminados. false conserva las líneas y las ayudas, con una presentación compacta."
+      },
+      {
+        "name": "name",
+        "description": "Nombre del archivo de imagen en saveAsImage. A diferencia de los otros gráficos, esta prop se llama name y no downloadName."
+      },
+      {
+        "name": "title",
+        "description": "Texto de ayuda de saveAsImage. La implementación de LineChart no lo utiliza como título visible del gráfico."
+      },
+      {
+        "name": "top",
+        "description": "Margen superior de grid en ECharts. Se usa top || valorCalculado; un 0 numérico recupera el valor calculado, mientras \"0%\" permite expresar un margen cero."
+      },
+      {
+        "name": "right",
+        "description": "Margen derecho de grid; se aplica con ||, por lo que 0 numérico no sustituye el valor calculado. Admite una cadena como \"0%\"."
+      },
+      {
+        "name": "left",
+        "description": "Margen izquierdo de grid; se aplica con ||. Puede ser un número de píxeles distinto de 0 o un porcentaje como \"8%\"."
+      },
+      {
+        "name": "bottom",
+        "description": "Margen inferior de grid; se aplica con ||. El valor calculado es 70 con complete y 0 sin él."
+      },
+      {
+        "name": "download",
+        "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
+      },
+      {
+        "name": "onExpand",
+        "description": "Callback de la herramienta de ampliación: se asigna a feature.myTool2.onclick de ECharts. Recibe los argumentos que entregue ECharts; no es un evento React ni amplía el gráfico automáticamente. El consumidor abre su modal o vista."
+      },
+      {
+        "name": "toolboxTop",
+        "description": "Posición superior de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
+      },
+      {
+        "name": "toolboxRight",
+        "description": "Posición derecha de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
+      },
+      {
+        "name": "toolboxBottom",
+        "description": "Posición inferior de la caja de herramientas de ECharts; número o cadena compatible con ECharts."
+      }
+    ]
   }
 }

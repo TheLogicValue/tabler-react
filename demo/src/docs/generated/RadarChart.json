@@ -8,50 +8,62 @@
     {
       "name": "title",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto del título visible de ECharts."
     },
     {
       "name": "height",
       "default": "\"18.75rem\"",
-      "optional": true
+      "optional": true,
+      "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
     },
     {
       "name": "paddingBottom",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
     },
     {
-      "name": "colors"
+      "name": "colors",
+      "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
     },
     {
-      "name": "complete"
+      "name": "complete",
+      "description": "Solo añade la clase CSS charts-complete-*. No modifica las opciones del radar ni oculta su leyenda."
     },
     {
-      "name": "series"
+      "name": "series",
+      "description": "Array de perfiles numéricos, por ejemplo [[80, 70, 90], [60, 85, 75]]. Cada perfil sigue el orden de las dimensiones de indicator."
     },
     {
-      "name": "seriesDataName"
+      "name": "seriesDataName",
+      "description": "Nombre de cada perfil, en el mismo orden que series y colors. No es la lista de nombres de las dimensiones."
     },
     {
-      "name": "indicator"
+      "name": "indicator",
+      "description": "Array de dimensiones [{ name, max, min? }], por ejemplo [{ name: \"Ambiental\", max: 100 }]. Cada perfil debe aportar un valor por dimensión."
     },
     {
       "name": "downloadName",
       "default": "\"Export\"",
-      "optional": true
+      "optional": true,
+      "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
     },
     {
       "name": "downloadTitle",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
     },
     {
       "name": "download",
       "default": "false",
-      "optional": true
+      "optional": true,
+      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
     },
     {
-      "name": "tooltipFormatter"
+      "name": "tooltipFormatter",
+      "description": "Función (item) => string. La serie activa trigger=\"item\": recibe un objeto con name (perfil) y value (array de valores por dimensión), no el array de eventos por eje de LineChart."
     }
   ],
   "subcomponents": [],
@@ -80,10 +92,62 @@
   "guide": {
     "summary": "Gráfico radial para comparar varias dimensiones.",
     "behavior": [
-      "indicator contiene nombres y máximos de las dimensiones.",
-      "series es una lista de arrays de valores; cada array sigue el orden de indicator.",
-      "seriesDataName y colors identifican cada perfil; tooltipFormatter recibe los parámetros de ECharts."
+      "indicator define las dimensiones, por ejemplo Ambiental/Social/Gobierno y sus máximos. Cada array dentro de series contiene los valores de un perfil siguiendo exactamente ese orden.",
+      "seriesDataName y colors identifican los perfiles, no las dimensiones. En el ejemplo hay tres dimensiones y dos perfiles comparados.",
+      "tooltipFormatter recibe un único objeto: name es el perfil y value es su array de valores. Utiliza indicator para añadir los nombres de cada dimensión a la ayuda.",
+      "La implementación fija radio 90 y centro [\"50%\", \"50%\"], y muestra una leyenda inferior sin prop legend. complete solo añade una clase CSS; no cambia estas opciones.",
+      "download activa saveAsImage con downloadName y downloadTitle. El wrapper no reenvía opciones arbitrarias ni callbacks de ECharts; el consumidor prepara los datos y los estados externos."
     ],
-    "example": "<RadarChart indicator={[{ name: \"Ambiental\", max: 100 }, { name: \"Social\", max: 100 }, { name: \"Gobierno\", max: 100 }]} series={[[80, 70, 90]]} seriesDataName={[\"Cartera\"]} colors={[\"#3676c8\"]} height=\"300px\" tooltipFormatter={item => item.name} />"
+    "example": "import React from \"react\";\nimport { RadarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function CompararPerfiles() {\n  const indicator = [\n    { name: \"Ambiental\", max: 100 },\n    { name: \"Social\", max: 100 },\n    { name: \"Gobierno\", max: 100 },\n  ];\n  return <RadarChart title=\"Perfil de la cartera\" height=\"340px\"\n    indicator={indicator} series={[[80, 70, 90], [65, 85, 75]]}\n    seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]}\n    tooltipFormatter={item => item.name + \"<br/>\" + item.value.map((value, index) =>\n      indicator[index].name + \": \" + value).join(\"<br/>\")}\n    download downloadName=\"perfiles\" downloadTitle=\"Descargar imagen\" />;\n}",
+    "props": [
+      {
+        "name": "download",
+        "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
+      },
+      {
+        "name": "downloadName",
+        "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
+      },
+      {
+        "name": "downloadTitle",
+        "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
+      },
+      {
+        "name": "height",
+        "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
+      },
+      {
+        "name": "paddingBottom",
+        "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
+      },
+      {
+        "name": "colors",
+        "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
+      },
+      {
+        "name": "title",
+        "description": "Texto del título visible de ECharts."
+      },
+      {
+        "name": "series",
+        "description": "Array de perfiles numéricos, por ejemplo [[80, 70, 90], [60, 85, 75]]. Cada perfil sigue el orden de las dimensiones de indicator."
+      },
+      {
+        "name": "seriesDataName",
+        "description": "Nombre de cada perfil, en el mismo orden que series y colors. No es la lista de nombres de las dimensiones."
+      },
+      {
+        "name": "indicator",
+        "description": "Array de dimensiones [{ name, max, min? }], por ejemplo [{ name: \"Ambiental\", max: 100 }]. Cada perfil debe aportar un valor por dimensión."
+      },
+      {
+        "name": "complete",
+        "description": "Solo añade la clase CSS charts-complete-*. No modifica las opciones del radar ni oculta su leyenda."
+      },
+      {
+        "name": "tooltipFormatter",
+        "description": "Función (item) => string. La serie activa trigger=\"item\": recibe un objeto con name (perfil) y value (array de valores por dimensión), no el array de eventos por eje de LineChart."
+      }
+    ]
   }
 }

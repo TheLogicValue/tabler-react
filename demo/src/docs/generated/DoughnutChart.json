@@ -8,57 +8,70 @@
     {
       "name": "title",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto del título visible de ECharts."
     },
     {
       "name": "height",
       "default": "\"18.75rem\"",
-      "optional": true
+      "optional": true,
+      "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
     },
     {
       "name": "paddingBottom",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
     },
     {
       "name": "legend",
       "default": "true",
-      "optional": true
+      "optional": true,
+      "description": "Activa o desactiva la leyenda inferior. La leyenda no se controla con complete."
     },
     {
       "name": "legendformatter",
       "default": "'{c}'",
-      "optional": true
+      "optional": true,
+      "description": "Formato o función entregado a series[0].label.formatter para las etiquetas dentro del anillo. No formatea la leyenda: {b} representa el nombre, {c} el valor y {d} el porcentaje."
     },
     {
-      "name": "colors"
+      "name": "colors",
+      "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
     },
     {
-      "name": "complete"
+      "name": "complete",
+      "description": "Solo añade la clase CSS charts-complete-*. En este componente no modifica las opciones de leyenda, etiquetas o ejes."
     },
     {
-      "name": "series"
+      "name": "series",
+      "description": "Array numérico, por ejemplo [60, 40]. Cada posición corresponde a un sector y se combina con seriesDataName[i] y colors[i]. No pases objetos { name, value } de ECharts directamente."
     },
     {
-      "name": "seriesDataName"
+      "name": "seriesDataName",
+      "description": "Array con un nombre por sector, en el mismo orden y longitud que series y colors. Por ejemplo [\"Renta variable\", \"Renta fija\"]."
     },
     {
       "name": "downloadName",
       "default": "\"Export\"",
-      "optional": true
+      "optional": true,
+      "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
     },
     {
       "name": "downloadTitle",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
     },
     {
       "name": "download",
       "default": "false",
-      "optional": true
+      "optional": true,
+      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
     },
     {
-      "name": "tooltipFormatter"
+      "name": "tooltipFormatter",
+      "description": "Función (item) => string. Recibe un objeto ECharts con name, value y percent del sector. Proporciónala: el wrapper la invoca directamente cuando se muestra la ayuda."
     }
   ],
   "subcomponents": [],
@@ -87,10 +100,66 @@
   "guide": {
     "summary": "Gráfico de anillo con valores y nombres preparados por el consumidor.",
     "behavior": [
-      "series contiene valores numéricos; seriesDataName y colors utilizan el mismo orden.",
-      "tooltipFormatter recibe los parámetros de ECharts. La leyenda y la descarga se configuran mediante las propiedades del wrapper.",
-      "La preparación de datos y la configuración modular del motor corresponden al consumidor."
+      "Pasa tres arrays paralelos: series contiene números, seriesDataName los nombres y colors los colores. Cada índice describe el mismo sector; no se transforma ni valida automáticamente la longitud de los arrays.",
+      "tooltipFormatter recibe un objeto del sector con name, value y percent. Utiliza datos controlados si devuelves HTML para las ayudas.",
+      "DoughnutChart fija el radio interior en 30% y el exterior en 70%. legendformatter cambia las etiquetas interiores, no el texto de la leyenda.",
+      "legend controla la leyenda inferior; complete solo forma parte del nombre de una clase CSS. download guarda una imagen con downloadName y downloadTitle, no un CSV de los sectores.",
+      "Las propiedades adicionales no se reenvían al renderer de ECharts. La aplicación prepara los datos y decide qué mostrar durante carga, vacío o error."
     ],
-    "example": "<DoughnutChart series={[60, 40]} seriesDataName={[\"Cartera\", \"Referencia\"]} colors={[\"#3676c8\", \"#21a48a\"]} height=\"300px\" tooltipFormatter={item => item.name + \": \" + item.value} />"
+    "example": "import React from \"react\";\nimport { DoughnutChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function Distribucion() {\n  return <DoughnutChart title=\"Distribución de activos\" height=\"320px\" legend\n    series={[60, 40]}\n    seriesDataName={[\"Renta variable\", \"Renta fija\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    legendformatter=\"{b}: {d}%\"\n    tooltipFormatter={item => item.name + \": \" + item.value + \" (\" + item.percent + \" %)\"}\n    download downloadName=\"distribucion\" downloadTitle=\"Descargar imagen\" />;\n}",
+    "props": [
+      {
+        "name": "download",
+        "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
+      },
+      {
+        "name": "downloadName",
+        "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
+      },
+      {
+        "name": "downloadTitle",
+        "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
+      },
+      {
+        "name": "height",
+        "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
+      },
+      {
+        "name": "paddingBottom",
+        "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
+      },
+      {
+        "name": "colors",
+        "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
+      },
+      {
+        "name": "title",
+        "description": "Texto del título visible de ECharts."
+      },
+      {
+        "name": "series",
+        "description": "Array numérico, por ejemplo [60, 40]. Cada posición corresponde a un sector y se combina con seriesDataName[i] y colors[i]. No pases objetos { name, value } de ECharts directamente."
+      },
+      {
+        "name": "seriesDataName",
+        "description": "Array con un nombre por sector, en el mismo orden y longitud que series y colors. Por ejemplo [\"Renta variable\", \"Renta fija\"]."
+      },
+      {
+        "name": "legend",
+        "description": "Activa o desactiva la leyenda inferior. La leyenda no se controla con complete."
+      },
+      {
+        "name": "complete",
+        "description": "Solo añade la clase CSS charts-complete-*. En este componente no modifica las opciones de leyenda, etiquetas o ejes."
+      },
+      {
+        "name": "tooltipFormatter",
+        "description": "Función (item) => string. Recibe un objeto ECharts con name, value y percent del sector. Proporciónala: el wrapper la invoca directamente cuando se muestra la ayuda."
+      },
+      {
+        "name": "legendformatter",
+        "description": "Formato o función entregado a series[0].label.formatter para las etiquetas dentro del anillo. No formatea la leyenda: {b} representa el nombre, {c} el valor y {d} el porcentaje."
+      }
+    ]
   }
 }

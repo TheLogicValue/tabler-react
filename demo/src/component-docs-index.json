@@ -28,7 +28,7 @@
     "kind": "Componente",
     "summary": "Wrapper de AG Grid: la aplicación aporta el motor, los datos y las reglas de negocio.",
     "status": "documented",
-    "properties": 32,
+    "properties": 37,
     "examples": 1
   },
   "Alert": {

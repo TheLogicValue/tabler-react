@@ -6,12 +6,14 @@
   "implementationCode": "import React from \"react\"\nimport Icon from \"../Icon\"\nimport NavBarItem from \"./NavBarItem\"\nimport NavBarDropDown from \"./NavBarDropDown\"\nimport cn from \"classnames\"\n\nexport default function NavBarMenu({ items, rootIndex = 0 }) {\n    return (\n        <ul className=\"nav nav-tabs border-0 flex-column flex-lg-row\">\n            {items.map(item => {\n                const classes = cn(\"nav-item\", item.className)\n                return (\n                    <li className={classes} key={item.value}>\n                        {item.subItems ? <NavBarDropDown submenus={item.subItems} value={item.value} icon={item.icon}/>\n                            : <NavBarItem\n                                rootIndex={rootIndex}\n                                LinkComponent={item.LinkComponent}\n                                className={item.className}\n                                to={item.to}\n                                menuItem={true}\n                                onClick={item.onClick}\n                            >\n                                <Icon name={item.icon} />{item.value}\n                            </NavBarItem>\n                        }\n                    </li>\n                )\n            })}\n        </ul>\n    )\n}",
   "props": [
     {
-      "name": "items"
+      "name": "items",
+      "description": "Array de elementos { value, to?, icon?, LinkComponent?, className?, onClick?, subItems? }. value se usa como etiqueta y key: debe ser único entre hermanos. Un enlace directo necesita to; un grupo utiliza subItems."
     },
     {
       "name": "rootIndex",
       "default": "0",
-      "optional": true
+      "optional": true,
+      "description": "Índice base 0 del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; usa un índice existente en todas esas rutas."
     }
   ],
   "subcomponents": [],
@@ -23,11 +25,24 @@
   "guide": {
     "summary": "Menú principal con enlaces, estado activo y submenús.",
     "behavior": [
-      "Requiere el contexto de React Router para determinar la ruta activa.",
-      "items contiene value, to, icon y opcionalmente subItems. LinkComponent=true utiliza el enlace del router.",
-      "rootIndex elige el segmento de ruta usado por la lógica de activación.",
-      "Los submenús se abren con el disparador y cierran por selección, Escape o clic fuera."
+      "Requiere un Router de React Router porque los enlaces consultan useLocation. Si tu aplicación ya tiene BrowserRouter o HashRouter, monta únicamente NavBarMenu dentro de ese contexto; no añadas un segundo router.",
+      "Cada enlace directo declara { value, to, icon, LinkComponent }. value es la etiqueta y la clave React. LinkComponent=true utiliza NavLink con end; sin él se crea un <a href={to}> que sigue la navegación normal del navegador.",
+      "rootIndex controla la comparación heredada de rutas de los enlaces directos. Para /app/resumen, el índice 0 compara app y el 1 compara resumen. La comparación utiliza pathname.includes(segmento), no segmentos exactos; elige rutas sin coincidencias ambiguas.",
+      "En enlaces con LinkComponent=true, NavLink también calcula su estado activo con end. rootIndex no cambia el destino y no controla la lógica de los submenús, cuyos NavLink utilizan su propia coincidencia.",
+      "Un grupo declara { value, icon, subItems: [...] }. Cada hijo utiliza value, to, LinkComponent y onClick. La implementación admite un nivel de desplegable; no transforma subItems anidados ni muestra los iconos o className de los hijos.",
+      "onClick de un enlace directo solo se pasa al <a> cuando LinkComponent es falso. Con LinkComponent=true no se reenvía ese callback en los enlaces directos. En los hijos del desplegable sí se conserva onClick con ambos tipos de enlace.",
+      "El desplegable abre con ratón, Intro o Espacio y cierra por selección, Escape o clic fuera. NavBarMenu no contiene por sí mismo un botón de menú móvil; esa adaptación pertenece al contenedor consumidor."
     ],
-    "example": "<NavBarMenu items={[{ value: \"Inicio\", to: \"/\", icon: \"grid\", LinkComponent: true }, { value: \"Componentes\", icon: \"layers\", subItems: [{ value: \"Datos\", to: \"/datos\", LinkComponent: true }] }]} />"
+    "example": "import React, { useState } from \"react\";\nimport { BrowserRouter, Navigate, Route, Routes } from \"react-router-dom\";\nimport { NavBarMenu } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nfunction Navegacion() {\n  const [ultimo, setUltimo] = useState(\"Sin seleccionar\");\n  const items = [\n    { value: \"Resumen\", to: \"/app/resumen\", icon: \"grid\", LinkComponent: true },\n    { value: \"Componentes\", icon: \"layers\", subItems: [\n      { value: \"Datos\", to: \"/app/datos\", LinkComponent: true, onClick: () => setUltimo(\"Datos\") },\n      { value: \"Formulario\", to: \"/app/formulario\", LinkComponent: true, onClick: () => setUltimo(\"Formulario\") },\n    ] },\n    { value: \"Gráficos\", to: \"/app/graficos\", icon: \"bar-chart-2\", LinkComponent: true },\n  ];\n  return <>\n    {/* Índice 1: compara resumen/graficos en los enlaces directos. */}\n    <NavBarMenu items={items} rootIndex={1} />\n    <p role=\"status\">Último submenú: {ultimo}</p>\n    <Routes>\n      <Route path=\"/app/resumen\" element={<p>Resumen de la aplicación</p>} />\n      <Route path=\"/app/datos\" element={<p>Tablas y datos</p>} />\n      <Route path=\"/app/formulario\" element={<p>Formulario</p>} />\n      <Route path=\"/app/graficos\" element={<p>Gráficos</p>} />\n      <Route path=\"*\" element={<Navigate to=\"/app/resumen\" replace />} />\n    </Routes>\n  </>;\n}\n\n// Usa este Router solo en una aplicación que todavía no tenga uno.\nexport default function App() {\n  return <BrowserRouter><Navegacion /></BrowserRouter>;\n}",
+    "props": [
+      {
+        "name": "items",
+        "description": "Array de elementos { value, to?, icon?, LinkComponent?, className?, onClick?, subItems? }. value se usa como etiqueta y key: debe ser único entre hermanos. Un enlace directo necesita to; un grupo utiliza subItems."
+      },
+      {
+        "name": "rootIndex",
+        "description": "Índice base 0 del segmento de to después de quitar la primera / y dividir por /. Con to=\"/app/informes\", 0 compara \"app\" y 1 compara \"informes\". Solo se pasa a enlaces directos, no a los submenús; usa un índice existente en todas esas rutas."
+      }
+    ]
   }
 }

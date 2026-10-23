@@ -211,7 +211,9 @@ npm run demo:docs
 npm run demo:docs:check
 ```
 
-Las explicaciones revisadas se mantienen en `demo/docs/guides.json`: cada export tiene `summary`, `behavior` y `example`, y puede añadir descripciones de `props` o una firma en `parameters`. La API se extrae del código de la biblioteca; los comentarios y las descripciones de la guía completan la referencia. No edites a mano `demo/src/component-docs-index.json` ni `demo/src/docs/generated/`: regénéralos y guarda los cambios junto con las fuentes y las guías.
+Las explicaciones revisadas se mantienen en `demo/docs/guides.json`: cada export tiene `summary`, `behavior` y `example`, y puede añadir descripciones de `props`, una firma en `parameters` o variantes en `examples` con `title`, `description` y `code`. La API se extrae del código de la biblioteca; los comentarios y las descripciones de la guía completan la referencia. No edites a mano `demo/src/component-docs-index.json` ni `demo/src/docs/generated/`: regénéralos y guarda los cambios junto con las fuentes y las guías.
+
+AGGridTable incluye selección múltiple, fila de totales, consulta por referencia y búsqueda controlada. Las fichas de gráficos explican el formato de datos y las firmas de los callbacks; BarChart añade ejemplos horizontal y apilado. NavBarMenu muestra una navegación con rutas y submenús y detalla el alcance de `rootIndex`. Las limitaciones heredadas se identifican expresamente; estos fragmentos de documentación no añaden cobertura visual por sí mismos.
 
 Las fichas se cargan por separado al abrirlas. Toda esta documentación pertenece a `demo/`, utiliza sus dependencias existentes y queda fuera de la compilación y del paquete publicado de la biblioteca.
 

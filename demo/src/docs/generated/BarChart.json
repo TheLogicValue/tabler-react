@@ -8,98 +8,122 @@
     {
       "name": "title",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto del título visible de ECharts."
     },
     {
       "name": "type",
       "default": "\"vertical\"",
-      "optional": true
+      "optional": true,
+      "description": "\"vertical\" coloca categorías en X y valores en Y. Cualquier otro valor sigue la rama horizontal; utiliza \"horizontal\" y proporciona yAxisData, xAxisFormatter y xAxisMinMax."
     },
     {
       "name": "height",
       "default": "\"18.75rem\"",
-      "optional": true
+      "optional": true,
+      "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
     },
     {
       "name": "paddingBottom",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
     },
     {
       "name": "legend",
       "default": "true",
-      "optional": true
+      "optional": true,
+      "description": "Muestra u oculta la leyenda inferior mediante legend.show, independientemente de complete."
     },
     {
-      "name": "colors"
+      "name": "colors",
+      "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
     },
     {
-      "name": "complete"
+      "name": "complete",
+      "description": "En vertical muestra el eje Y y amplía los márgenes internos; la leyenda se controla aparte. En horizontal no cambia la rejilla ni la visibilidad de los ejes. También forma parte de la clase CSS charts-complete-*."
     },
     {
-      "name": "rotateX"
+      "name": "rotateX",
+      "description": "Rotación en grados de las etiquetas de X en la variante vertical; por ejemplo 0, 30 o 45."
     },
     {
-      "name": "series"
+      "name": "series",
+      "description": "Sin stack: array de arrays numéricos, por ejemplo [[12, 18], [8, 9]]. Con stack truthy cambia el contrato: aquí van los nombres [\"Cartera\", \"Referencia\"]."
     },
     {
-      "name": "seriesName"
+      "name": "seriesName",
+      "description": "Sin stack: nombres de las series [\"Cartera\", \"Referencia\"]. Con stack truthy: arrays de valores [[12, 18], [8, 9]]. Mantén el mismo orden que series y colors."
     },
     {
       "name": "downloadName",
       "default": "\"Export\"",
-      "optional": true
+      "optional": true,
+      "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
     },
     {
       "name": "downloadTitle",
       "default": "\"\"",
-      "optional": true
+      "optional": true,
+      "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
     },
     {
       "name": "download",
       "default": "false",
-      "optional": true
+      "optional": true,
+      "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
     },
     {
-      "name": "tooltipFormatter"
+      "name": "tooltipFormatter",
+      "description": "Función (item) => string. trigger=\"item\" entrega un objeto de ECharts con name (categoría), seriesName y value; no entrega un array como LineChart."
     },
     {
-      "name": "yAxisFormatter"
+      "name": "yAxisFormatter",
+      "description": "Función (value) => string para etiquetas del eje numérico Y en barras verticales. Se llama sin comprobar que exista: proporciónala en esta variante."
     },
     {
-      "name": "xAxisFormatter"
+      "name": "xAxisFormatter",
+      "description": "Función (value) => string para etiquetas del eje numérico X en barras horizontales. Proporciónala al usar esa variante."
     },
     {
-      "name": "yAxisMinMax"
+      "name": "yAxisMinMax",
+      "description": "Función (range, boundary) => number, utilizada en vertical. range contiene min/max de los datos y boundary es \"min\" o \"max\". Debe devolver un número finito adecuado a tu escala."
     },
     {
-      "name": "xAxisMinMax"
+      "name": "xAxisMinMax",
+      "description": "Función (range, boundary) => number, equivalente de yAxisMinMax para barras horizontales."
     },
     {
-      "name": "xAxisData"
+      "name": "xAxisData",
+      "description": "Categorías de X en vertical, por ejemplo [\"Ene\", \"Feb\"]. Cada array de valores debe seguir ese orden."
     },
     {
-      "name": "yAxisData"
+      "name": "yAxisData",
+      "description": "Categorías de Y en horizontal, por ejemplo [\"Cartera\", \"Referencia\"]. Cada array de valores debe seguir ese orden."
     },
     {
       "name": "stack",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Identificador común de apilado, por ejemplo \"total\". Al ser truthy invierte la interpretación de series/seriesName en este wrapper; revisa el ejemplo específico antes de activarlo."
     },
     {
       "name": "decal",
       "default": "null",
-      "optional": true
+      "optional": true,
+      "description": "Un valor truthy activa la trama fija implementada por el wrapper. No acepta una configuración arbitraria de decal: se compara seriesName[i] con \"Fondo\" para decidir si se elimina el símbolo."
     },
     {
       "name": "seriesShowBackground",
       "default": "true",
-      "optional": true
+      "optional": true,
+      "description": "Se reenvía como showBackground a cada serie de barras. La personalización de su color tiene la limitación indicada en backgroundStyleColor."
     },
     {
       "name": "backgroundStyleColor",
       "default": "'rgba(180, 180, 180, 0.2)'",
-      "optional": true
+      "optional": true,
+      "description": "El código recoge este color, pero lo envía bajo la clave heredada backgoundStyle (sin la r de background). No se garantiza que ECharts lo aplique; no uses esta prop para dar por cambiado el fondo."
     }
   ],
   "subcomponents": [],
@@ -128,11 +152,123 @@
   "guide": {
     "summary": "Gráfico de barras construido sobre ECharts.",
     "behavior": [
-      "series contiene un array de valores por serie y seriesName los nombres en el mismo orden; colors debe cubrir las series.",
-      "type determina si se utilizan las categorías en el eje horizontal o vertical.",
-      "Proporciona los formatters y funciones de límites que llama la implementación; el consumidor prepara las unidades y las escalas.",
-      "El ejemplo ilustra barras sin stack. Con stack cambia la interpretación de series y seriesName; consulta la implementación antes de activarlo."
+      "En vertical, cada array de series tiene un valor por categoría de xAxisData. seriesName y colors identifican cada serie en el mismo orden; el consumidor prepara los datos antes de pasarlos.",
+      "En horizontal las categorías se pasan en yAxisData y el eje numérico utiliza xAxisFormatter/xAxisMinMax. En vertical utiliza yAxisFormatter/yAxisMinMax. Debes proporcionar las funciones de la variante elegida.",
+      "tooltipFormatter recibe un único objeto con name, seriesName y value. ECharts usa el texto devuelto para la ayuda; utiliza contenido de confianza si generas HTML.",
+      "stack tiene un contrato heredado diferente: series pasa a contener nombres y seriesName los arrays numéricos. Los ejemplos adicionales muestran ambas orientaciones y el apilado.",
+      "complete y legend son independientes. download activa una imagen del gráfico; no exporta los datos de negocio. La gestión de carga, ausencia de datos y errores pertenece al consumidor.",
+      "decal utiliza una trama fija. backgroundStyleColor se envía con una clave incorrecta en la implementación actual; se documenta esta limitación sin cambiar el componente."
     ],
-    "example": "<BarChart series={[[12, 18, 24]]} seriesName={[\"Cartera\"]}\n  colors={[\"#3676c8\"]} xAxisData={[\"Ene\", \"Feb\", \"Mar\"]}\n  yAxisFormatter={value => String(value)}\n  yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : range.max}\n  tooltipFormatter={item => item.name + \": \" + item.value}\n  height=\"300px\" />"
+    "example": "import React from \"react\";\nimport { BarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function BarrasVerticales() {\n  return <BarChart title=\"Peso por mes\" height=\"300px\" complete legend\n    series={[[12, 18, 24], [10, 16, 20]]}\n    seriesName={[\"Cartera\", \"Referencia\"]}\n    colors={[\"#3676c8\", \"#21a48a\"]}\n    xAxisData={[\"Ene\", \"Feb\", \"Mar\"]} rotateX={0}\n    yAxisFormatter={value => value + \" %\"}\n    yAxisMinMax={(range, boundary) => boundary === \"min\" ? 0 : Math.ceil(range.max * 1.1)}\n    tooltipFormatter={item => item.seriesName + \": \" + item.value + \" %\"}\n    download downloadName=\"peso-mensual\" downloadTitle=\"Descargar imagen\" />;\n}",
+    "props": [
+      {
+        "name": "download",
+        "description": "Muestra la herramienta de ECharts saveAsImage; descarga una imagen del gráfico, no sus datos en CSV. El consumidor no recibe un callback de descarga."
+      },
+      {
+        "name": "downloadName",
+        "description": "Nombre de archivo de saveAsImage. No se utiliza para el título visual del gráfico."
+      },
+      {
+        "name": "downloadTitle",
+        "description": "Texto de ayuda de la acción saveAsImage. No es el título del gráfico."
+      },
+      {
+        "name": "height",
+        "description": "Altura del contenedor del gráfico, por ejemplo \"300px\" o \"18.75rem\". Debe existir espacio visible para que ECharts pueda dibujar."
+      },
+      {
+        "name": "paddingBottom",
+        "description": "Valor CSS paddingBottom aplicado al contenedor cuando es truthy. No equivale al margen inferior de la rejilla de ECharts."
+      },
+      {
+        "name": "colors",
+        "description": "Array de colores, uno por serie/perfil/sector y en el mismo orden que los datos. El wrapper accede a colors[i]."
+      },
+      {
+        "name": "title",
+        "description": "Texto del título visible de ECharts."
+      },
+      {
+        "name": "type",
+        "description": "\"vertical\" coloca categorías en X y valores en Y. Cualquier otro valor sigue la rama horizontal; utiliza \"horizontal\" y proporciona yAxisData, xAxisFormatter y xAxisMinMax."
+      },
+      {
+        "name": "legend",
+        "description": "Muestra u oculta la leyenda inferior mediante legend.show, independientemente de complete."
+      },
+      {
+        "name": "complete",
+        "description": "En vertical muestra el eje Y y amplía los márgenes internos; la leyenda se controla aparte. En horizontal no cambia la rejilla ni la visibilidad de los ejes. También forma parte de la clase CSS charts-complete-*."
+      },
+      {
+        "name": "rotateX",
+        "description": "Rotación en grados de las etiquetas de X en la variante vertical; por ejemplo 0, 30 o 45."
+      },
+      {
+        "name": "series",
+        "description": "Sin stack: array de arrays numéricos, por ejemplo [[12, 18], [8, 9]]. Con stack truthy cambia el contrato: aquí van los nombres [\"Cartera\", \"Referencia\"]."
+      },
+      {
+        "name": "seriesName",
+        "description": "Sin stack: nombres de las series [\"Cartera\", \"Referencia\"]. Con stack truthy: arrays de valores [[12, 18], [8, 9]]. Mantén el mismo orden que series y colors."
+      },
+      {
+        "name": "tooltipFormatter",
+        "description": "Función (item) => string. trigger=\"item\" entrega un objeto de ECharts con name (categoría), seriesName y value; no entrega un array como LineChart."
+      },
+      {
+        "name": "yAxisFormatter",
+        "description": "Función (value) => string para etiquetas del eje numérico Y en barras verticales. Se llama sin comprobar que exista: proporciónala en esta variante."
+      },
+      {
+        "name": "xAxisFormatter",
+        "description": "Función (value) => string para etiquetas del eje numérico X en barras horizontales. Proporciónala al usar esa variante."
+      },
+      {
+        "name": "yAxisMinMax",
+        "description": "Función (range, boundary) => number, utilizada en vertical. range contiene min/max de los datos y boundary es \"min\" o \"max\". Debe devolver un número finito adecuado a tu escala."
+      },
+      {
+        "name": "xAxisMinMax",
+        "description": "Función (range, boundary) => number, equivalente de yAxisMinMax para barras horizontales."
+      },
+      {
+        "name": "xAxisData",
+        "description": "Categorías de X en vertical, por ejemplo [\"Ene\", \"Feb\"]. Cada array de valores debe seguir ese orden."
+      },
+      {
+        "name": "yAxisData",
+        "description": "Categorías de Y en horizontal, por ejemplo [\"Cartera\", \"Referencia\"]. Cada array de valores debe seguir ese orden."
+      },
+      {
+        "name": "stack",
+        "description": "Identificador común de apilado, por ejemplo \"total\". Al ser truthy invierte la interpretación de series/seriesName en este wrapper; revisa el ejemplo específico antes de activarlo."
+      },
+      {
+        "name": "decal",
+        "description": "Un valor truthy activa la trama fija implementada por el wrapper. No acepta una configuración arbitraria de decal: se compara seriesName[i] con \"Fondo\" para decidir si se elimina el símbolo."
+      },
+      {
+        "name": "seriesShowBackground",
+        "description": "Se reenvía como showBackground a cada serie de barras. La personalización de su color tiene la limitación indicada en backgroundStyleColor."
+      },
+      {
+        "name": "backgroundStyleColor",
+        "description": "El código recoge este color, pero lo envía bajo la clave heredada backgoundStyle (sin la r de background). No se garantiza que ECharts lo aplique; no uses esta prop para dar por cambiado el fondo."
+      }
+    ],
+    "examples": [
+      {
+        "title": "Barras horizontales",
+        "description": "Las categorías pasan a Y y los formateadores y límites numéricos pasan a X.",
+        "code": "import React from \"react\";\nimport { BarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function BarrasHorizontales() {\n  return <BarChart type=\"horizontal\" height=\"300px\"\n    series={[[60, 40]]} seriesName={[\"Peso\"]} colors={[\"#3676c8\"]}\n    yAxisData={[\"Atlas\", \"Brisa\"]}\n    xAxisFormatter={value => value + \" %\"}\n    xAxisMinMax={(_range, boundary) => boundary === \"min\" ? 0 : 100}\n    tooltipFormatter={item => item.name + \": \" + item.value + \" %\"} />;\n}"
+      },
+      {
+        "title": "Barras apiladas: contrato heredado",
+        "description": "Con stack, los nombres se pasan en series y los arrays numéricos en seriesName. No basta con añadir stack al primer ejemplo.",
+        "code": "import React from \"react\";\nimport { BarChart } from \"tabler-react\";\nimport \"tabler-react/style.css\";\n\nexport default function BarrasApiladas() {\n  return <BarChart stack=\"total\" height=\"300px\" complete\n    series={[\"Renta variable\", \"Renta fija\"]}\n    seriesName={[[60, 55], [40, 45]]}\n    colors={[\"#3676c8\", \"#21a48a\"]} xAxisData={[\"Ene\", \"Feb\"]}\n    yAxisFormatter={value => value + \" %\"}\n    yAxisMinMax={(_range, boundary) => boundary === \"min\" ? 0 : 100}\n    tooltipFormatter={item => item.seriesName + \": \" + item.value + \" %\"} />;\n}"
+      }
+    ]
   }
 }
