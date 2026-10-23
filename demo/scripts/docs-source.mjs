@@ -66,7 +66,17 @@ export function extractApi(info) {
   const text = (node, owner = info) => node ? owner.code.slice(node.start, node.end) : ''
   const props = new Map(), defaults = new Map(), subcomponents = new Set(), members = new Set()
   let rest = false
-  function property(name, values = {}) { props.set(name, { name, ...props.get(name), ...values }) }
+  let unionDepth = 0
+  function property(name, values = {}) {
+    const previous = props.get(name)
+    if (unionDepth && previous?.type && values.type && previous.type !== values.type) {
+      // A discriminated TS union has alternative contracts, not an override.
+      // In particular an optional never in one branch must not hide native types.
+      values = { ...values, type: previous.type === 'never' ? values.type
+        : values.type === 'never' ? previous.type : [...new Set([previous.type, values.type])].join(' | ') }
+    }
+    props.set(name, { name, ...previous, ...values })
+  }
   function typeProperties(type, seen = new Set(), owner = info) {
     if (!type) return
     if (['TypeAnnotation', 'TSTypeAnnotation'].includes(type.type)) return typeProperties(type.typeAnnotation, seen, owner)
@@ -81,7 +91,12 @@ export function extractApi(info) {
       }
       return
     }
-    if (['UnionTypeAnnotation', 'IntersectionTypeAnnotation', 'TSUnionType', 'TSIntersectionType'].includes(type.type)) type.types.forEach(item => typeProperties(item, new Set(seen), owner))
+    if (type.type === 'TSUnionType') {
+      unionDepth++
+      type.types.forEach(item => typeProperties(item, new Set(seen), owner))
+      unionDepth--
+    }
+    if (['UnionTypeAnnotation', 'IntersectionTypeAnnotation', 'TSIntersectionType'].includes(type.type)) type.types.forEach(item => typeProperties(item, new Set(seen), owner))
     if (type.type === 'TSInterfaceDeclaration') {
       for (const parent of type.extends ?? []) typeProperties(parent, new Set(seen), owner)
       return typeProperties(type.body, seen, owner)

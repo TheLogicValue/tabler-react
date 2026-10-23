@@ -1,20 +1,18 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +align?: "" | "left" | "center" | "right",
-|};
+export type ButtonListProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly align?: "" | "left" | "center" | "right";
+} & Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "className" | "align">;
 
 function ButtonList({
   className,
   children,
   align = "",
   ...props
-}: Props): React.Node {
+}: ButtonListProps): React.ReactElement {
   const classes = cn(
     { "btn-list": true, [`text-${align}`]: !!align },
     className

@@ -1,29 +1,46 @@
 {
   "name": "ButtonModal",
   "kind": "Componente",
-  "source": "src/components/Button/index.js",
-  "implementation": "src/components/Button/ButtonModal.js",
-  "implementationCode": "import * as React from \"react\"\nimport { Button, Spinner } from \"../\"\n\nconst ButtonModal = ({ text, onClick, color, spin = false, width, height }) => {\n    return spin ? <Spinner height={height} width={width} /> : <Button type=\"button\" onClick={onClick} square size=\"lg\" color={color}>\n        {text}\n    </Button>\n}\n\nexport default ButtonModal",
+  "source": "src/components/Button/index.ts",
+  "implementation": "src/components/Button/ButtonModal.tsx",
+  "implementationCode": "import * as React from \"react\"\nimport Button, { type ButtonNativeProps } from \"./Button.react\"\nimport Spinner, { type SpinnerProps } from \"../IconAnimate/Spinner\"\n\nexport type ButtonModalProps = {\n    readonly text?: React.ReactNode;\n    readonly onClick?: ButtonNativeProps[\"onClick\"];\n    readonly color?: string;\n    readonly spin?: boolean;\n    readonly width?: SpinnerProps[\"width\"];\n    readonly height?: SpinnerProps[\"height\"];\n};\n\nconst ButtonModal = ({ text, onClick, color, spin = false, width, height }: ButtonModalProps): React.ReactElement => {\n    return spin ? <Spinner height={height} width={width} /> : <Button type=\"button\" onClick={onClick} square size=\"lg\" color={color}>\n        {text}\n    </Button>\n}\n\nexport default ButtonModal\n",
   "props": [
     {
-      "name": "text"
+      "name": "text",
+      "type": "React.ReactNode",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onClick"
+      "name": "onClick",
+      "type": "ButtonNativeProps[\"onClick\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "color"
+      "name": "color",
+      "type": "string",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "spin",
-      "default": "false",
-      "optional": true
+      "type": "boolean",
+      "optional": true,
+      "description": "",
+      "default": "false"
     },
     {
-      "name": "width"
+      "name": "width",
+      "type": "SpinnerProps[\"width\"]",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "height"
+      "name": "height",
+      "type": "SpinnerProps[\"height\"]",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [],
@@ -52,7 +69,8 @@
     "summary": "Acción de un modal que se sustituye por un spinner al cargar.",
     "behavior": [
       "text es el contenido del botón y onClick la acción.",
-      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner."
+      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner.",
+      "ButtonModalProps tipa el callback como evento de botón y las dimensiones con los tipos SVG de Spinner. text admite contenido React; spin=true sustituye el botón por el indicador sin cambiar su comportamiento."
     ],
     "example": "<ButtonModal text=\"Guardar\" color=\"primary\" spin={false} onClick={() => console.log(\"Guardar\")} />"
   }

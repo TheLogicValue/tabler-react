@@ -1,32 +1,32 @@
-// @flow
-
 import * as React from "react";
-import { Button, Dropdown } from "../";
+import Button from "./Button.react";
+import Dropdown from "../Dropdown";
 import { FloatingProvider, FloatingReference } from "../../helpers/Floating.react";
-import type { Props as ButtonProps } from "../Button/Button.react";
-import type { Props as DropdownMenuProps } from "../Dropdown/DropdownMenu.react";
+import type { ButtonProps } from "../Button/Button.react";
+import type { DropdownMenuProps } from "../Dropdown/DropdownMenu.react";
 
 
-type Props = ButtonProps & {
-  +value?: string,
-  +children?: React.Node,
-  +dropdownProps?: DropdownMenuProps,
+export type ButtonDropdownProps = ButtonProps & {
+  readonly value?: string;
+  readonly children?: React.ReactNode;
+  readonly dropdownProps?: DropdownMenuProps;
 };
 
-type State = {
+type ButtonDropdownState = {
   isOpen: boolean,
 };
 
-class ButtonDropdown extends React.Component<Props, State> {
-  state = { isOpen: false };
+class ButtonDropdown extends React.Component<ButtonDropdownProps, ButtonDropdownState> {
+  declare static displayName: string;
+  state: ButtonDropdownState = { isOpen: false };
 
-  _handleButtonOnClick = (e: SyntheticMouseEvent<HTMLElement>) => {
+  _handleButtonOnClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     this.setState(s => ({ isOpen: !s.isOpen }));
-    if (this.props.onClick) this.props.onClick(e);
+    if (this.props.onClick) (this.props.onClick as React.MouseEventHandler<HTMLElement>)(e);
   };
 
-  render(): React.Node {
+  render(): React.ReactNode {
     const { children, value, dropdownProps, ...buttonProps } = this.props;
 
     const propsForDropdownMenu: DropdownMenuProps = dropdownProps

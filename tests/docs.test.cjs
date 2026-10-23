@@ -74,6 +74,22 @@ test('La extracción sigue reexports, wrappers y tipos Flow y TypeScript', () =>
     assert.ok(child.props.every(prop => prop.type), 'Todas las propiedades de Page.' + child.name + ' deben tener un tipo extraído')
   }
   assert.equal(page.childApis.find(child => child.name === 'Sidebar').props.find(prop => prop.name === 'headerProps').type, 'PageSidebarHeaderProps')
+  const header = document('Header')
+  assert.equal(header.implementation, 'src/components/Header/Header.react.tsx')
+  assert.equal(header.childApis.length, 6)
+  assert.ok(header.childApis.every(child => child.source.endsWith('.tsx') && child.props.length === 2))
+  assert.equal(document('Avatar').implementation, 'src/components/Avatar/Avatar.react.tsx')
+  assert.equal(document('Avatar').props.find(prop => prop.name === 'style').type, 'React.CSSProperties')
+  const button = document('Button')
+  assert.equal(button.implementation, 'src/components/Button/Button.react.tsx')
+  assert.equal(button.props.find(prop => prop.name === 'type').type, '"button" | "submit" | "reset"')
+  assert.ok(button.props.find(prop => prop.name === 'RootComponent').type.includes('"input"'))
+  assert.ok(button.props.find(prop => prop.name === 'RootComponent').type.includes('"a"'))
+  assert.equal(button.childApis.find(child => child.name === 'Dropdown').source, 'src/components/Button/ButtonDropdown.react.tsx')
+  assert.equal(document('Dropdown').childApis.length, 4)
+  assert.ok(document('Dropdown').childApis.every(child => child.source.endsWith('.tsx') && child.props.every(prop => prop.type)))
+  assert.equal(document('ButtonModal').implementation, 'src/components/Button/ButtonModal.tsx')
+  assert.equal(document('Spinner').implementation, 'src/components/IconAnimate/Spinner.tsx')
 })
 
 function walk(node, visit) {

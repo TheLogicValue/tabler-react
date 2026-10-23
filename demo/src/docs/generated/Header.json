@@ -1,19 +1,19 @@
 {
   "name": "Header",
   "kind": "Componente",
-  "source": "src/components/Header/index.js",
-  "implementation": "src/components/Header/Header.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\n\nimport H1 from \"./H1.react\";\nimport H2 from \"./H2.react\";\nimport H3 from \"./H3.react\";\nimport H4 from \"./H4.react\";\nimport H5 from \"./H5.react\";\nimport H6 from \"./H6.react\";\n\ntype Props = {|\n  /**\n   * A component to use instead of a <div> as the root component\n   */\n  +RootComponent?: React.ElementType,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The size of the header\n   */\n  +size?: 1 | 2 | 3 | 4 | 5 | 6,\n|};\n\n/**\n * A header\n * By default renders a div not a <hX> tag and has no additional spacing classes applied\n */\nfunction Header({\n  RootComponent,\n  className,\n  children,\n  size = 1,\n}: Props): React.Node {\n  const classes = cn(`h${size}`, className);\n  const Component = RootComponent || \"div\";\n  return <Component className={classes}>{children}</Component>;\n}\n\nHeader.H1 = H1;\nHeader.H2 = H2;\nHeader.H3 = H3;\nHeader.H4 = H4;\nHeader.H5 = H5;\nHeader.H6 = H6;\n\nexport default Header;\n",
+  "source": "src/components/Header/index.ts",
+  "implementation": "src/components/Header/Header.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\n\nimport H1 from \"./H1.react\";\nimport H2 from \"./H2.react\";\nimport H3 from \"./H3.react\";\nimport H4 from \"./H4.react\";\nimport H5 from \"./H5.react\";\nimport H6 from \"./H6.react\";\n\nexport type HeaderProps = {\n  /**\n   * A component to use instead of a <div> as the root component\n   */\n  readonly RootComponent?: React.ElementType<{ className: string; children?: React.ReactNode }>;\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  /**\n   * The size of the header\n   */\n  readonly size?: 1 | 2 | 3 | 4 | 5 | 6;\n};\n\n/**\n * A header\n * By default renders a div not a <hX> tag and has no additional spacing classes applied\n */\nfunction Header({\n  RootComponent,\n  className,\n  children,\n  size = 1,\n}: HeaderProps): React.ReactElement {\n  const classes = cn(`h${size}`, className);\n  const Component = RootComponent || \"div\";\n  return <Component className={classes}>{children}</Component>;\n}\n\nHeader.H1 = H1;\nHeader.H2 = H2;\nHeader.H3 = H3;\nHeader.H4 = H4;\nHeader.H5 = H5;\nHeader.H6 = H6;\n\nexport default Header;\n",
   "props": [
     {
       "name": "RootComponent",
-      "type": "React.ElementType",
+      "type": "React.ElementType<{ className: string; children?: React.ReactNode }>",
       "optional": true,
       "description": "A component to use instead of a <div> as the root component"
     },
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -44,11 +44,11 @@
   "childApis": [
     {
       "name": "H1",
-      "source": "src/components/Header/H1.react.js",
+      "source": "src/components/Header/H1.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -65,11 +65,11 @@
     },
     {
       "name": "H2",
-      "source": "src/components/Header/H2.react.js",
+      "source": "src/components/Header/H2.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -86,11 +86,11 @@
     },
     {
       "name": "H3",
-      "source": "src/components/Header/H3.react.js",
+      "source": "src/components/Header/H3.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -107,11 +107,11 @@
     },
     {
       "name": "H4",
-      "source": "src/components/Header/H4.react.js",
+      "source": "src/components/Header/H4.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -128,11 +128,11 @@
     },
     {
       "name": "H5",
-      "source": "src/components/Header/H5.react.js",
+      "source": "src/components/Header/H5.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -149,11 +149,11 @@
     },
     {
       "name": "H6",
-      "source": "src/components/Header/H6.react.js",
+      "source": "src/components/Header/H6.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -211,7 +211,8 @@
     "summary": "Encabezado con nivel semántico configurable.",
     "behavior": [
       "size selecciona el nivel y RootComponent permite personalizar el elemento raíz.",
-      "Header.H1 a Header.H6 proporcionan las variantes habituales."
+      "Header.H1 a Header.H6 proporcionan las variantes habituales.",
+      "Header y H1–H6 están tipados en TypeScript. Header utiliza div y size=1 por defecto; size solo cambia la clase h1–h6. Las variantes H1–H6 fijan la etiqueta semántica y mantienen mt-0 mb-4. Solo se suministran className y children a RootComponent."
     ],
     "example": "<Header size={2}>Título de sección</Header>"
   }

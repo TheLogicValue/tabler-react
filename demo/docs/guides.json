@@ -221,7 +221,9 @@
     "behavior": [
       "imageURL establece una imagen de fondo; children puede mostrar iniciales.",
       "status añade un indicador de color. placeholder/icon permiten representar un avatar sin imagen.",
-      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo."
+      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo.",
+      "AvatarProps tipa style como React.CSSProperties y los eventos del span. Conserva onClick, onMouseEnter, onMouseLeave, onPointerEnter y onPointerLeave. Los atributos y eventos adicionales no se reenvían.",
+      "El objeto style del consumidor tiene prioridad sobre el backgroundImage generado por imageURL y no se modifica. Avatar.List conserva stacked y className."
     ],
     "example": "<Avatar color=\"blue\" size=\"lg\" status=\"green\">AB</Avatar>"
   },
@@ -393,7 +395,10 @@
       "Establece type=\"button\" para una acción dentro de un formulario; utiliza type=\"submit\" cuando quieras enviarlo.",
       "RootComponent permite usar button, a, input o un componente de enlace. Los atributos admitidos dependen de esa variante.",
       "loading modifica la apariencia; disabled es la propiedad que deshabilita el botón nativo.",
-      "Button.List agrupa acciones y Button.Dropdown combina un botón con un menú. rootRef permite acceder al elemento DOM."
+      "Button.List agrupa acciones y Button.Dropdown combina un botón con un menú. rootRef permite acceder al elemento DOM.",
+      "Los contratos TypeScript distinguen button, input, a y raíces personalizadas. En las tres raíces nativas se tipan los eventos y rootRef con su elemento concreto y se admiten referencias de objeto o callback.",
+      "Una raíz personalizada recibe las propiedades comunes de representación y eventos, to y children. Se conserva el comportamiento anterior: rootRef y atributos adicionales no se reenvían a esa raíz. Button.List reenvía los atributos nativos de su div.",
+      "Button.Dropdown mantiene el callback original, fuerza type=\"button\" cuando no se proporciona y controla show del menú desde su estado. dropdownProps recibe las opciones de Dropdown.Menu sin modificar el objeto del consumidor."
     ],
     "example": "<Button type=\"button\" color=\"primary\" icon=\"check\" onClick={() => console.log(\"Confirmado\")}>Confirmar</Button>",
     "props": [
@@ -415,7 +420,8 @@
     "summary": "Acción de un modal que se sustituye por un spinner al cargar.",
     "behavior": [
       "text es el contenido del botón y onClick la acción.",
-      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner."
+      "Con spin=true se muestra Spinner en lugar del botón; width y height afectan al spinner.",
+      "ButtonModalProps tipa el callback como evento de botón y las dimensiones con los tipos SVG de Spinner. text admite contenido React; spin=true sustituye el botón por el indicador sin cambiar su comportamiento."
     ],
     "example": "<ButtonModal text=\"Guardar\" color=\"primary\" spin={false} onClick={() => console.log(\"Guardar\")} />"
   },
@@ -577,7 +583,11 @@
       "Puedes proporcionar itemsObject, elementos en items, un trigger personalizado o componer Dropdown.Trigger y Dropdown.Menu.",
       "El menú mantiene su estado y cierra por selección, Escape o clic fuera según la composición.",
       "position admite las posiciones cardinales, sus variantes start/end y auto; Floating UI ajusta el menú al espacio disponible.",
-      "Los callbacks de los elementos pertenecen al consumidor. onClick de un elemento recibe el evento; to define el destino del enlace."
+      "Los callbacks de los elementos pertenecen al consumidor. onClick de un elemento recibe el evento; to define el destino del enlace.",
+      "Dropdown y sus cuatro subcomponentes están tipados en TypeScript, junto con los auxiliares Floating y ClickOutside. Se conservan las quince posiciones, los disparadores personalizados, las referencias de React 18/19 y el cierre por Escape y clic fuera.",
+      "Dropdown.Menu.style utiliza React.CSSProperties; bastan las propiedades que quieras personalizar, como zIndex. rootRef admite referencias de objeto o callback al div del menú. El modo vertical mantiene su estructura sin posicionamiento flotante.",
+      "Las raíces personalizadas de Dropdown.Item reciben to, onClick, exact y children. useExact conserva el atributo exact heredado; el consumidor debe comprobar que su componente de enlace lo utiliza.",
+      "Se conserva la clase literal heredada d-{flex}-flex para flex=\"xs\", \"sm\", \"lg\" o \"xl\". Para obtener clases responsive concretas puedes aportar className; flex=true y flex=\"md\" mantienen d-flex y d-md-flex. Su corrección se puede abordar como cambio de comportamiento independiente."
     ],
     "example": "<Dropdown type=\"button\" triggerContent=\"Acciones\" position=\"bottom-start\"\n  itemsObject={[{ value: \"Revisar\", onClick: event => {\n    event.preventDefault();\n    console.log(\"Revisado\");\n  } }]} />"
   },
@@ -651,7 +661,8 @@
     "summary": "Encabezado con nivel semántico configurable.",
     "behavior": [
       "size selecciona el nivel y RootComponent permite personalizar el elemento raíz.",
-      "Header.H1 a Header.H6 proporcionan las variantes habituales."
+      "Header.H1 a Header.H6 proporcionan las variantes habituales.",
+      "Header y H1–H6 están tipados en TypeScript. Header utiliza div y size=1 por defecto; size solo cambia la clase h1–h6. Las variantes H1–H6 fijan la etiqueta semántica y mantienen mt-0 mb-4. Solo se suministran className y children a RootComponent."
     ],
     "example": "<Header size={2}>Título de sección</Header>"
   },
@@ -1234,7 +1245,8 @@
     "summary": "Indicador SVG animado de carga.",
     "behavior": [
       "width y height configuran el tamaño del SVG; sus valores predeterminados son 26.",
-      "La representación es visual. Añade un texto accesible que comunique el estado de la operación."
+      "La representación es visual. Añade un texto accesible que comunique el estado de la operación.",
+      "SpinnerProps tipa width y height como longitudes SVG, numéricas o de texto. Ambos mantienen el valor predeterminado 26; los círculos y estilos de animación se conservan."
     ],
     "example": "<div role=\"status\"><Spinner width={32} height={32} /> Cargando…</div>"
   },

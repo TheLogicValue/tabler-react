@@ -1,15 +1,13 @@
-// @flow
-
 import * as React from "react";
 
-type Props = {|
-  +children?: React.Node,
-|};
+export type DropdownItemDividerProps = {
+  readonly children?: React.ReactNode;
+};
 
 /**
  * Used to seperate items within a Dropdown with a horizontal line
  */
-function DropdownItemDivider(props: Props): React.Node {
+function DropdownItemDivider(props: DropdownItemDividerProps): React.ReactNode {
   return <div className="dropdown-divider">{props.children}</div>;
 }
 

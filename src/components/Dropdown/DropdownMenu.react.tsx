@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 import { FloatingSurface } from "../../helpers/Floating.react";
@@ -7,30 +5,26 @@ import { FloatingSurface } from "../../helpers/Floating.react";
 import type { Placement } from "../../helpers/Floating.react";
 import "./Dropdown.css";
 
-type StyleOffsets = { top: number, left: number };
-type StylePosition = { position: "absolute" | "fixed" };
-type Style = { [property: string]: string | number | null | void };
-
-export type Props = {|
-  +children?: React.Node,
-  +className?: string,
-  +position?: Placement,
+export type DropdownMenuProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
+  readonly position?: Placement;
   /**
    * Display an arrow pointing towards the trigger
    */
-  +arrow?: boolean,
+  readonly arrow?: boolean;
   /**
    * The position of the arrow pointing towards the trigger
    */
-  +arrowPosition?: "left" | "right",
-  +style?: Style & StyleOffsets & StylePosition,
-  +rootRef?: (?HTMLElement) => void,
+  readonly arrowPosition?: "left" | "right";
+  readonly style?: React.CSSProperties;
+  readonly rootRef?: React.Ref<HTMLDivElement>;
   /**
    * Show the DropdownMenu
    */
-  show?: boolean,
-  +vertical?: boolean,
-|};
+  readonly show?: boolean;
+  readonly vertical?: boolean;
+};
 
 /**
  * The wrapper element for a Dropdowns Items
@@ -45,7 +39,7 @@ function DropdownMenu({
   rootRef,
   vertical,
   show = false,
-}: Props): React.Node {
+}: DropdownMenuProps): React.ReactNode {
   const classes = cn(
     {
       "dropdown-menu": !vertical,
@@ -76,3 +70,6 @@ function DropdownMenu({
 DropdownMenu.displayName = "Dropdown.Menu";
 
 export default DropdownMenu;
+
+// Retain the source type name used by pending Flow components.
+export type Props = DropdownMenuProps;

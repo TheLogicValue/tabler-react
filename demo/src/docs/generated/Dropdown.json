@@ -1,13 +1,13 @@
 {
   "name": "Dropdown",
   "kind": "Componente",
-  "source": "src/components/Dropdown/index.js",
-  "implementation": "src/components/Dropdown/Dropdown.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport cn from \"classnames\";\nimport DropdownTrigger from \"./DropdownTrigger.react\";\nimport DropdownMenu from \"./DropdownMenu.react\";\nimport DropdownItem from \"./DropdownItem.react\";\nimport DropdownItemDivider from \"./DropdownItemDivider.react\";\n\nimport ClickOutside from \"../../helpers/ClickOutside.react\";\n\nimport { FloatingProvider, FloatingReference, getElementRef } from \"../../helpers/Floating.react\";\n\nimport type { Placement } from \"../../helpers/Floating.react\";\n\ntype DefaultProps = {|\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * This dropdown should only be displayed on desktop\n   */\n  +desktopOnly?: boolean,\n  /**\n   * The trigger component for this Dropdown\n   */\n  +trigger?: React.Element<*>,\n  /**\n   * Is this Dropdown a Card option?\n   */\n  +isOption?: boolean,\n  /**\n   * Add flex classes to the Dropdown\n   */\n  +flex?: boolean | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\",\n|};\n\ntype WithAnyTriggerProps = {|\n  ...DefaultProps,\n  /**\n   * Any additional classNames for the trigger component\n   */\n  +triggerClassName?: string,\n  /**\n   * Is this Dropdown being used as a Nav Link?\n   */\n  +isNavLink?: boolean,\n  /**\n   * Should the trigger use link styling or standard button styling\n   */\n  +type?: \"link\" | \"button\",\n  /**\n   * An Icon to be displayed within the trigger\n   */\n  +icon?: string,\n  /**\n   * The trigger content\n   */\n  +triggerContent?: React.Node,\n  /**\n   * The triggers background color\n   */\n  +color?: string,\n  /**\n   * Should the trigger display an arrow toggler?\n   */\n  +toggle?: boolean,\n|};\n\ntype WithTriggerContentProps = {|\n  ...WithAnyTriggerProps,\n  /**\n   * The trigger content\n   */\n  +triggerContent: React.Node,\n|};\n\ntype WithIconProps = {|\n  ...WithAnyTriggerProps,\n  /**\n   * For a trigger to contain only an Icon\n   */\n  +icon: string,\n|};\n\ntype AllTriggerProps = WithTriggerContentProps | WithIconProps;\n\ntype WithItemsProps = {|\n  ...DefaultProps,\n  ...WithAnyTriggerProps,\n  +triggerContent?: React.Node,\n  +items: React.Node,\n  +dropdownMenuClassName?: string,\n  /**\n   * The DropdownMenu position\n   */\n  +position?: Placement,\n  /**\n   * Display an arrow between the trigger and menu?\n   */\n  +arrow?: boolean,\n  /**\n   * The position of the arrow between the trigger and menu\n   */\n  +arrowPosition?: \"left\" | \"right\",\n|};\n\nexport type itemObject = {|\n  +icon?: string,\n  +badge?: string,\n  +badgeType?: string,\n  +value?: string,\n  +isDivider?: boolean,\n  +to?: string,\n  +RootComponent?: React.ElementType,\n  +onClick?: (event: SyntheticMouseEvent<*>) => mixed,\n|};\n\ntype WithItemsObjectProp = {|\n  ...DefaultProps,\n  ...WithAnyTriggerProps,\n  /**\n   * The items for this Dropdowns menu\n   */\n  +items?: React.Node,\n  /**\n   * The items for this Dropdowns menu in object form\n   */\n  +itemsObject: Array<itemObject>,\n  /**\n   * Any additional classNames for the DropdownMenu\n   */\n  +dropdownMenuClassName?: string,\n  +position?: Placement,\n  +arrow?: boolean,\n  +arrowPosition?: \"left\" | \"right\",\n  /**\n   * The default RootComponent for all itemsObjects.\n   * itemsObjects[x].RootComponent takes priority\n   */\n  +itemsRootComponent?: React.ElementType,\n|};\n\ntype Props =\n  | DefaultProps\n  | AllTriggerProps\n  | WithItemsProps\n  | WithItemsObjectProp;\n\ntype State = {\n  isOpen: boolean,\n};\n\nclass Dropdown extends React.Component<Props, State> {\n  state = { isOpen: false };\n\n  static Trigger = DropdownTrigger;\n  static Menu = DropdownMenu;\n  static Item = DropdownItem;\n  static ItemDivider = DropdownItemDivider;\n\n  _handleTriggerOnClick = (e: SyntheticMouseEvent<HTMLElement>, o?: Object) => {\n    e.preventDefault();\n    this.setState(s => ({ isOpen: !s.isOpen }));\n    if (o && o.onClick) {\n      o.onClick(e);\n    }\n  };\n\n  _handleItemClick = (\n    e: SyntheticMouseEvent<HTMLElement>,\n    callback?: (SyntheticMouseEvent<*>) => mixed\n  ) => {\n    this.setState({ isOpen: false });\n    if (callback) {\n      callback(e);\n    }\n  };\n\n  render(): React.Node {\n    const {\n      className,\n      children,\n      desktopOnly,\n      isOption,\n      flex = false,\n      ...props\n    } = this.props;\n\n    const classes = cn(\n      {\n        dropdown: true,\n        \"d-none\": desktopOnly,\n        \"d-md-flex\": desktopOnly || flex === \"md\",\n        [`d-{flex}-flex`]: [\"xs\", \"sm\", \"lg\", \"xl\"].includes(flex),\n        \"d-flex\": flex === true,\n        \"card-options-dropdown\": isOption,\n        show: this.state.isOpen,\n      },\n      className\n    );\n\n    const trigger = (() => {\n      if (props.trigger) {\n        const customTrigger = props.trigger;\n        return <FloatingReference rootRef={customTrigger.props.rootRef || getElementRef(customTrigger)}>\n          {({ ref }) => React.cloneElement(customTrigger, {\n            ...(typeof customTrigger.type === \"string\" || customTrigger.type.$$typeof\n              ? { ref } : { rootRef: ref }),\n            onClick: e => this._handleTriggerOnClick(e, customTrigger.props),\n          })}\n        </FloatingReference>;\n      }\n      if (props.icon || props.triggerContent || props.toggle) {\n        const {\n          icon,\n          triggerContent,\n          isNavLink,\n          type,\n          triggerClassName,\n          color,\n          toggle,\n        } = props;\n\n        return (\n          <DropdownTrigger\n            isNavLink={isNavLink}\n            icon={icon}\n            type={type}\n            className={triggerClassName}\n            isOption={isOption}\n            color={color}\n            toggle={toggle}\n            onClick={this._handleTriggerOnClick}\n          >\n            {triggerContent}\n          </DropdownTrigger>\n        );\n      }\n      return null;\n    })();\n\n    const items = (() => {\n      if (props.items) return props.items;\n      if (props.itemsObject) {\n        const { itemsObject, itemsRootComponent } = props;\n        return itemsObject.map(\n          (item, i) =>\n            item.isDivider ? (\n              <Dropdown.ItemDivider key={i} />\n            ) : (\n              <Dropdown.Item\n                icon={item.icon}\n                badge={item.badge}\n                badgeType={item.badgeType}\n                value={item.value}\n                key={i}\n                to={item.to}\n                RootComponent={item.RootComponent || itemsRootComponent}\n                onClick={e => this._handleItemClick(e, item.onClick)}\n              />\n            )\n        );\n      }\n      return null;\n    })();\n\n    const menu = (() => {\n      if (props.items || props.itemsObject) {\n        const { position, arrow, arrowPosition, dropdownMenuClassName } = props;\n        return (\n          <DropdownMenu\n            position={position}\n            arrow={arrow}\n            arrowPosition={arrowPosition}\n            className={dropdownMenuClassName}\n            show={this.state.isOpen}\n          >\n            {items}\n          </DropdownMenu>\n        );\n      }\n      return null;\n    })();\n\n    return (\n      <FloatingProvider open={this.state.isOpen} onDismiss={() => this.setState({ isOpen: false })}>\n        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>\n          {({ setElementRef }) => (\n            <div className={classes} ref={setElementRef}>\n              {trigger}\n              {menu || children}\n            </div>\n          )}\n        </ClickOutside>\n      </FloatingProvider>\n    );\n  }\n}\n\nexport default Dropdown;\n",
+  "source": "src/components/Dropdown/index.ts",
+  "implementation": "src/components/Dropdown/Dropdown.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport cn from \"classnames\";\nimport DropdownTrigger from \"./DropdownTrigger.react\";\nimport DropdownMenu from \"./DropdownMenu.react\";\nimport DropdownItem from \"./DropdownItem.react\";\nimport DropdownItemDivider from \"./DropdownItemDivider.react\";\n\nimport ClickOutside from \"../../helpers/ClickOutside.react\";\n\nimport { FloatingProvider, FloatingReference, getElementRef } from \"../../helpers/Floating.react\";\n\nimport type { Placement } from \"../../helpers/Floating.react\";\n\nexport type DropdownCustomTriggerProps = {\n  readonly rootRef?: React.Ref<HTMLElement>;\n  readonly ref?: React.Ref<HTMLElement>;\n  readonly onClick?: React.MouseEventHandler<HTMLElement>;\n};\nexport type DropdownItemObject = {\n  readonly icon?: string;\n  readonly badge?: string;\n  readonly badgeType?: string;\n  readonly value?: string;\n  readonly isDivider?: boolean;\n  readonly to?: string;\n  readonly RootComponent?: React.ElementType;\n  readonly onClick?: React.MouseEventHandler<HTMLElement>;\n};\nexport type itemObject = DropdownItemObject;\n\nexport type DropdownProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  readonly desktopOnly?: boolean;\n  readonly trigger?: React.ReactElement<DropdownCustomTriggerProps>;\n  readonly isOption?: boolean;\n  readonly flex?: boolean | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\n  readonly triggerClassName?: string;\n  readonly isNavLink?: boolean;\n  readonly type?: \"link\" | \"button\";\n  readonly icon?: string;\n  readonly triggerContent?: React.ReactNode;\n  readonly color?: string;\n  readonly toggle?: boolean;\n  readonly items?: React.ReactNode;\n  readonly dropdownMenuClassName?: string;\n  readonly position?: Placement;\n  readonly arrow?: boolean;\n  readonly arrowPosition?: \"left\" | \"right\";\n  readonly itemsObject?: ReadonlyArray<DropdownItemObject>;\n  readonly itemsRootComponent?: React.ElementType;\n};\n\ntype DropdownState = { isOpen: boolean };\n\nclass Dropdown extends React.Component<DropdownProps, DropdownState> {\n  state: DropdownState = { isOpen: false };\n\n  static Trigger = DropdownTrigger;\n  static Menu = DropdownMenu;\n  static Item = DropdownItem;\n  static ItemDivider = DropdownItemDivider;\n\n  _handleTriggerOnClick = (e: React.MouseEvent<HTMLElement>, o?: DropdownCustomTriggerProps) => {\n    e.preventDefault();\n    this.setState(s => ({ isOpen: !s.isOpen }));\n    if (o && o.onClick) {\n      o.onClick(e);\n    }\n  };\n\n  _handleItemClick = (\n    e: React.MouseEvent<HTMLElement>,\n    callback?: React.MouseEventHandler<HTMLElement>\n  ) => {\n    this.setState({ isOpen: false });\n    if (callback) {\n      callback(e);\n    }\n  };\n\n  render(): React.ReactNode {\n    const {\n      className,\n      children,\n      desktopOnly,\n      isOption,\n      flex = false,\n      ...props\n    } = this.props;\n\n    const classes = cn(\n      {\n        dropdown: true,\n        \"d-none\": desktopOnly,\n        \"d-md-flex\": desktopOnly || flex === \"md\",\n        [`d-{flex}-flex`]: [\"xs\", \"sm\", \"lg\", \"xl\"].includes(flex as string),\n        \"d-flex\": flex === true,\n        \"card-options-dropdown\": isOption,\n        show: this.state.isOpen,\n      },\n      className\n    );\n\n    const trigger = (() => {\n      if (props.trigger) {\n        const customTrigger = props.trigger;\n        return <FloatingReference rootRef={customTrigger.props.rootRef || getElementRef(customTrigger)}>\n          {({ ref }) => React.cloneElement(customTrigger, {\n            ...(typeof customTrigger.type === \"string\" || (customTrigger.type as React.ExoticComponent).$$typeof\n              ? { ref } : { rootRef: ref }),\n            onClick: e => this._handleTriggerOnClick(e, customTrigger.props),\n          })}\n        </FloatingReference>;\n      }\n      if (props.icon || props.triggerContent || props.toggle) {\n        const {\n          icon,\n          triggerContent,\n          isNavLink,\n          type,\n          triggerClassName,\n          color,\n          toggle,\n        } = props;\n\n        return (\n          <DropdownTrigger\n            isNavLink={isNavLink}\n            icon={icon}\n            type={type}\n            className={triggerClassName}\n            isOption={isOption}\n            color={color}\n            toggle={toggle}\n            onClick={this._handleTriggerOnClick}\n          >\n            {triggerContent}\n          </DropdownTrigger>\n        );\n      }\n      return null;\n    })();\n\n    const items = (() => {\n      if (props.items) return props.items;\n      if (props.itemsObject) {\n        const { itemsObject, itemsRootComponent } = props;\n        return itemsObject.map(\n          (item, i) =>\n            item.isDivider ? (\n              <Dropdown.ItemDivider key={i} />\n            ) : (\n              <Dropdown.Item\n                icon={item.icon}\n                badge={item.badge}\n                badgeType={item.badgeType}\n                value={item.value}\n                key={i}\n                to={item.to}\n                RootComponent={item.RootComponent || itemsRootComponent}\n                onClick={e => this._handleItemClick(e, item.onClick)}\n              />\n            )\n        );\n      }\n      return null;\n    })();\n\n    const menu = (() => {\n      if (props.items || props.itemsObject) {\n        const { position, arrow, arrowPosition, dropdownMenuClassName } = props;\n        return (\n          <DropdownMenu\n            position={position}\n            arrow={arrow}\n            arrowPosition={arrowPosition}\n            className={dropdownMenuClassName}\n            show={this.state.isOpen}\n          >\n            {items}\n          </DropdownMenu>\n        );\n      }\n      return null;\n    })();\n\n    return (\n      <FloatingProvider open={this.state.isOpen} onDismiss={() => this.setState({ isOpen: false })}>\n        <ClickOutside onOutsideClick={() => this.setState({ isOpen: false })}>\n          {({ setElementRef }) => (\n            <div className={classes} ref={setElementRef}>\n              {trigger}\n              {menu || children}\n            </div>\n          )}\n        </ClickOutside>\n      </FloatingProvider>\n    );\n  }\n}\n\nexport default Dropdown;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -21,110 +21,110 @@
       "name": "desktopOnly",
       "type": "boolean",
       "optional": true,
-      "description": "This dropdown should only be displayed on desktop"
+      "description": ""
     },
     {
       "name": "trigger",
-      "type": "React.Element<*>",
+      "type": "React.ReactElement<DropdownCustomTriggerProps>",
       "optional": true,
-      "description": "The trigger component for this Dropdown"
+      "description": ""
     },
     {
       "name": "isOption",
       "type": "boolean",
       "optional": true,
-      "description": "Is this Dropdown a Card option?"
+      "description": ""
     },
     {
       "name": "flex",
       "type": "boolean | \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"",
       "optional": true,
-      "description": "Add flex classes to the Dropdown",
+      "description": "",
       "default": "false"
     },
     {
       "name": "triggerClassName",
       "type": "string",
       "optional": true,
-      "description": "Any additional classNames for the trigger component"
+      "description": ""
     },
     {
       "name": "isNavLink",
       "type": "boolean",
       "optional": true,
-      "description": "Is this Dropdown being used as a Nav Link?"
+      "description": ""
     },
     {
       "name": "type",
       "type": "\"link\" | \"button\"",
       "optional": true,
-      "description": "Should the trigger use link styling or standard button styling"
+      "description": ""
     },
     {
       "name": "icon",
       "type": "string",
       "optional": true,
-      "description": "An Icon to be displayed within the trigger"
+      "description": ""
     },
     {
       "name": "triggerContent",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": "The trigger content"
+      "description": ""
     },
     {
       "name": "color",
       "type": "string",
       "optional": true,
-      "description": "The triggers background color"
+      "description": ""
     },
     {
       "name": "toggle",
       "type": "boolean",
       "optional": true,
-      "description": "Should the trigger display an arrow toggler?"
+      "description": ""
     },
     {
       "name": "items",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
-      "description": "The items for this Dropdowns menu"
+      "description": ""
     },
     {
       "name": "dropdownMenuClassName",
       "type": "string",
       "optional": true,
-      "description": "Any additional classNames for the DropdownMenu"
+      "description": ""
     },
     {
       "name": "position",
       "type": "Placement",
       "optional": true,
-      "description": "The DropdownMenu position"
+      "description": ""
     },
     {
       "name": "arrow",
       "type": "boolean",
       "optional": true,
-      "description": "Display an arrow between the trigger and menu?"
+      "description": ""
     },
     {
       "name": "arrowPosition",
       "type": "\"left\" | \"right\"",
       "optional": true,
-      "description": "The position of the arrow between the trigger and menu"
+      "description": ""
     },
     {
       "name": "itemsObject",
-      "type": "Array<itemObject>",
-      "optional": false,
-      "description": "The items for this Dropdowns menu in object form"
+      "type": "ReadonlyArray<DropdownItemObject>",
+      "optional": true,
+      "description": ""
     },
     {
       "name": "itemsRootComponent",
       "type": "React.ElementType",
       "optional": true,
-      "description": "The default RootComponent for all itemsObjects.\n    itemsObjects[x].RootComponent takes priority"
+      "description": ""
     }
   ],
   "subcomponents": [
@@ -138,11 +138,11 @@
   "childApis": [
     {
       "name": "Trigger",
-      "source": "src/components/Dropdown/DropdownTrigger.react.js",
+      "source": "src/components/Dropdown/DropdownTrigger.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -198,13 +198,13 @@
         },
         {
           "name": "onClick",
-          "type": "(\n    e: SyntheticMouseEvent<HTMLInputElement> | SyntheticMouseEvent<HTMLElement>\n  ) => void",
+          "type": "React.MouseEventHandler<HTMLButtonElement>",
           "optional": true,
           "description": "Handle the onClick of this trigger"
         },
         {
           "name": "rootRef",
-          "type": "(?HTMLElement) => void",
+          "type": "React.Ref<HTMLButtonElement>",
           "optional": true,
           "description": ""
         }
@@ -215,11 +215,11 @@
     },
     {
       "name": "Menu",
-      "source": "src/components/Dropdown/DropdownMenu.react.js",
+      "source": "src/components/Dropdown/DropdownMenu.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -251,13 +251,13 @@
         },
         {
           "name": "style",
-          "type": "Style & StyleOffsets & StylePosition",
+          "type": "React.CSSProperties",
           "optional": true,
           "description": ""
         },
         {
           "name": "rootRef",
-          "type": "(?HTMLElement) => void",
+          "type": "React.Ref<HTMLDivElement>",
           "optional": true,
           "description": ""
         },
@@ -281,11 +281,11 @@
     },
     {
       "name": "Item",
-      "source": "src/components/Dropdown/DropdownItem.react.js",
+      "source": "src/components/Dropdown/DropdownItem.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -333,7 +333,7 @@
         },
         {
           "name": "onClick",
-          "type": "(event: SyntheticMouseEvent<*>) => mixed",
+          "type": "React.MouseEventHandler<HTMLElement>",
           "optional": true,
           "description": "onClick handler"
         },
@@ -350,11 +350,11 @@
     },
     {
       "name": "ItemDivider",
-      "source": "src/components/Dropdown/DropdownItemDivider.react.js",
+      "source": "src/components/Dropdown/DropdownItemDivider.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         }
@@ -393,7 +393,11 @@
       "Puedes proporcionar itemsObject, elementos en items, un trigger personalizado o componer Dropdown.Trigger y Dropdown.Menu.",
       "El menú mantiene su estado y cierra por selección, Escape o clic fuera según la composición.",
       "position admite las posiciones cardinales, sus variantes start/end y auto; Floating UI ajusta el menú al espacio disponible.",
-      "Los callbacks de los elementos pertenecen al consumidor. onClick de un elemento recibe el evento; to define el destino del enlace."
+      "Los callbacks de los elementos pertenecen al consumidor. onClick de un elemento recibe el evento; to define el destino del enlace.",
+      "Dropdown y sus cuatro subcomponentes están tipados en TypeScript, junto con los auxiliares Floating y ClickOutside. Se conservan las quince posiciones, los disparadores personalizados, las referencias de React 18/19 y el cierre por Escape y clic fuera.",
+      "Dropdown.Menu.style utiliza React.CSSProperties; bastan las propiedades que quieras personalizar, como zIndex. rootRef admite referencias de objeto o callback al div del menú. El modo vertical mantiene su estructura sin posicionamiento flotante.",
+      "Las raíces personalizadas de Dropdown.Item reciben to, onClick, exact y children. useExact conserva el atributo exact heredado; el consumidor debe comprobar que su componente de enlace lo utiliza.",
+      "Se conserva la clase literal heredada d-{flex}-flex para flex=\"xs\", \"sm\", \"lg\" o \"xl\". Para obtener clases responsive concretas puedes aportar className; flex=true y flex=\"md\" mantienen d-flex y d-md-flex. Su corrección se puede abordar como cambio de comportamiento independiente."
     ],
     "example": "<Dropdown type=\"button\" triggerContent=\"Acciones\" position=\"bottom-start\"\n  itemsObject={[{ value: \"Revisar\", onClick: event => {\n    event.preventDefault();\n    console.log(\"Revisado\");\n  } }]} />"
   }

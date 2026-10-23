@@ -29,7 +29,7 @@
     {
       "name": "Avatar",
       "kind": "Componente",
-      "source": "src/components/Avatar/index.js"
+      "source": "src/components/Avatar/index.ts"
     },
     {
       "name": "Badge",
@@ -59,12 +59,12 @@
     {
       "name": "Button",
       "kind": "Componente",
-      "source": "src/components/Button/index.js"
+      "source": "src/components/Button/index.ts"
     },
     {
       "name": "ButtonModal",
       "kind": "Componente",
-      "source": "src/components/Button/index.js"
+      "source": "src/components/Button/index.ts"
     },
     {
       "name": "Card",
@@ -124,7 +124,7 @@
     {
       "name": "Dropdown",
       "kind": "Componente",
-      "source": "src/components/Dropdown/index.js"
+      "source": "src/components/Dropdown/index.ts"
     },
     {
       "name": "Error",
@@ -199,7 +199,7 @@
     {
       "name": "Header",
       "kind": "Componente",
-      "source": "src/components/Header/index.js"
+      "source": "src/components/Header/index.ts"
     },
     {
       "name": "Icon",

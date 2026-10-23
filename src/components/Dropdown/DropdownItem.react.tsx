@@ -1,47 +1,46 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { Icon, Badge } from "../";
+import Icon from "../Icon";
+import Badge from "../Badge";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
+export type DropdownItemProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
   /**
    * Display an Icon to the left of DropdownItem content
    */
-  +icon?: string,
+  readonly icon?: string;
   /**
    * The content of the DropdownItem if children is not used
    */
-  +value?: string,
+  readonly value?: string;
   /**
    * Display a badge with this content to the right of DropdownItem content
    */
-  +badge?: string,
+  readonly badge?: string;
   /**
    * The type/color of Badge to be displayed
    */
-  +badgeType?: string,
+  readonly badgeType?: string;
   /**
    * Where the user should be taken on click.
    * By default this will be passed as the 'href' prop to the <a> tag,
    * but to the RootComponent it will be a 'to' prop instead
    */
-  +to?: string,
+  readonly to?: string;
   /**
    * A component to be used instead of an <a> tag
    */
-  +RootComponent?: React.ElementType,
+  readonly RootComponent?: React.ElementType;
   /**
    * onClick handler
    */
-  +onClick?: (event: SyntheticMouseEvent<*>) => mixed,
+  readonly onClick?: React.MouseEventHandler<HTMLElement>;
   /**
    * Whether or not to pass "exact" property to underlying NavLink component
    */
-  +useExact?: boolean,
-|};
+  readonly useExact?: boolean;
+};
 
 /**
  * An individual item that should be contained within a Dropdown.Menu
@@ -57,7 +56,7 @@ function DropdownItem({
   RootComponent,
   onClick,
   useExact,
-}: Props): React.Node {
+}: DropdownItemProps): React.ReactNode {
   const classes = cn({ "dropdown-item": true }, className);
   const childrenForAll = (
     <React.Fragment>

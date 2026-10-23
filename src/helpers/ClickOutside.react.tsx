@@ -1,17 +1,15 @@
-// @flow
-
 import * as React from "react";
 
-type Props = {|
-  +children: ({| +setElementRef: (el: ?HTMLElement) => mixed |}) => React.Node,
-  +onOutsideClick: () => void,
-|};
+export type ClickOutsideProps = {
+  readonly children: (props: { setElementRef: (element: HTMLElement | null) => void }) => React.ReactNode;
+  readonly onOutsideClick: () => void;
+};
 
 /**
  * A helper to help you do something when a user clicks outside of a component
  */
-class ClickOutside extends React.PureComponent<Props, void> {
-  elementRef: ?HTMLElement;
+class ClickOutside extends React.PureComponent<ClickOutsideProps> {
+  declare elementRef: HTMLElement | null | undefined;
 
   componentDidMount = (): void => {
     document.addEventListener("mousedown", this.handleOutsideOnClick, false);
@@ -21,20 +19,20 @@ class ClickOutside extends React.PureComponent<Props, void> {
     document.removeEventListener("mousedown", this.handleOutsideOnClick, false);
   };
 
-  setElementRef = (el: ?HTMLElement): mixed => {
+  setElementRef = (el: HTMLElement | null): void => {
     if (el) this.elementRef = el;
   };
 
-  isOutsideClick = (target: mixed) =>
+  isOutsideClick = (target: unknown) =>
     this.elementRef &&
     target instanceof Node &&
     !this.elementRef.contains(target);
 
-  handleOutsideOnClick: MouseEventListener = ({ target }) => {
+  handleOutsideOnClick = ({ target }: MouseEvent): void => {
     if (this.isOutsideClick(target)) this.props.onOutsideClick();
   };
 
-  render() {
+  render(): React.ReactNode {
     const { children } = this.props;
     return children({ setElementRef: this.setElementRef });
   }

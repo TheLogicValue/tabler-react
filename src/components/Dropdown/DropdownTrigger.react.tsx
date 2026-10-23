@@ -1,50 +1,47 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
-import { Button, Icon } from "../";
+import Button from "../Button/Button.react";
+import Icon from "../Icon";
 
 import { FloatingReference } from "../../helpers/Floating.react";
 
-type Props = {|
-  +children?: React.Node,
-  +className?: string,
+export type DropdownTriggerProps = {
+  readonly children?: React.ReactNode;
+  readonly className?: string;
   /**
    * Display an arrow alongside the trigger content
    */
-  +toggle?: boolean,
+  readonly toggle?: boolean;
   /**
    * The value to be displayed within the trigger if children is not included
    */
-  +value?: string,
+  readonly value?: string;
   /**
    * Render a button with link styling or standard Button styling
    */
-  +type?: "link" | "button",
+  readonly type?: "link" | "button";
   /**
    * The background color for a Button trigger
    */
-  +color?: string,
+  readonly color?: string;
   /**
    * An Icon displayed to the left of the trigger content
    */
-  +icon?: string,
+  readonly icon?: string;
   /**
    * Is this trigger being used as a NavLink
    */
-  +isNavLink?: boolean,
+  readonly isNavLink?: boolean;
   /**
    * Is this trigger beind used as a Card.Header option
    */
-  +isOption?: boolean,
+  readonly isOption?: boolean;
   /**
    * Handle the onClick of this trigger
    */
-  +onClick?: (
-    e: SyntheticMouseEvent<HTMLInputElement> | SyntheticMouseEvent<HTMLElement>
-  ) => void,
-  +rootRef?: (?HTMLElement) => void,
-|};
+  readonly onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  readonly rootRef?: React.Ref<HTMLButtonElement>;
+};
 
 /**
  * Provides the trigger element for a Dropdown
@@ -61,7 +58,7 @@ function DropdownTrigger({
   isOption,
   onClick,
   rootRef,
-}: Props): React.Node {
+}: DropdownTriggerProps): React.ReactNode {
   const classes = cn(
     { "dropdown-toggle": toggle, "nav-link-item": isNavLink },
     className
@@ -82,7 +79,7 @@ function DropdownTrigger({
   return type === "link" ? (
     <FloatingReference rootRef={rootRef}>
       {({ ref, open }) => (
-        <button type="button" className={cn("tabler-action tabler-dropdown-trigger", classes, { show: open })} onClick={onClick} ref={ref} aria-expanded={open} aria-haspopup="true" aria-label={!value && !children ? "Open menu" : undefined}>
+        <button type="button" className={cn("tabler-action tabler-dropdown-trigger", classes, { show: open })} onClick={onClick} ref={ref} aria-expanded={open ?? undefined} aria-haspopup="true" aria-label={!value && !children ? "Open menu" : undefined}>
           {childrenFragment}
         </button>
       )}
@@ -98,7 +95,7 @@ function DropdownTrigger({
           isOption={isOption}
           onClick={onClick}
           rootRef={ref}
-          aria-expanded={open}
+          aria-expanded={open ?? undefined}
           aria-haspopup="true"
         >
           {childrenFragment}

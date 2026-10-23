@@ -81,6 +81,56 @@ test('Icon mantiene los siete callbacks en su raíz y Text reenvía eventos nati
   assert.deepEqual(events.at(-1), ['textClick', 'BUTTON'])
 })
 
+test('Avatar y las raíces nativas de Button conservan callbacks y referencias', async () => {
+  const { Avatar, Button } = components
+  for (const variant of ['avatar', 'button', 'input', 'a']) {
+    const calls = []
+    const names = ['onClick', 'onMouseEnter', 'onMouseLeave', 'onPointerEnter', 'onPointerLeave', ...(variant === 'avatar' ? [] : ['onFocus', 'onBlur'])]
+    const handlers = Object.fromEntries(names.map(name => [name, event => calls.push([name, event.currentTarget.tagName])]))
+    const rootRef = React.createRef()
+    const element = variant === 'avatar' ? React.createElement(Avatar, handlers, 'AB')
+      : React.createElement(Button, { ...handlers, RootComponent: variant, type: variant === 'a' ? undefined : 'button', rootRef }, variant === 'input' ? undefined : 'Acción')
+    if (!root) await render(element)
+    else await React.act(async () => root.render(element))
+    const target = container.firstElementChild
+    if (variant !== 'avatar') assert.equal(rootRef.current, target)
+    await React.act(async () => {
+      target.dispatchEvent(new window.MouseEvent('click', { bubbles: true }))
+      target.dispatchEvent(new window.MouseEvent('mouseover', { bubbles: true, relatedTarget: document.body }))
+      target.dispatchEvent(new window.MouseEvent('mouseout', { bubbles: true, relatedTarget: document.body }))
+      target.dispatchEvent(new window.PointerEvent('pointerover', { bubbles: true, relatedTarget: document.body }))
+      target.dispatchEvent(new window.PointerEvent('pointerout', { bubbles: true, relatedTarget: document.body }))
+      target.dispatchEvent(new window.FocusEvent('focusin', { bubbles: true }))
+      target.dispatchEvent(new window.FocusEvent('focusout', { bubbles: true }))
+    })
+    assert.deepEqual(calls, names.map(name => [name, variant === 'avatar' ? 'SPAN' : variant.toUpperCase()]))
+    await React.act(async () => root.unmount())
+    root = null
+    container.remove()
+    assert.equal(rootRef.current, null)
+  }
+})
+
+test('Dropdown conserva refs de disparadores forwardRef y memo y el callback original', async () => {
+  const { Dropdown } = components
+  const Forwarded = React.forwardRef(function Forwarded(props, ref) { return React.createElement('button', { ...props, ref, type: 'button' }, 'Disparador') })
+  for (const Trigger of [Forwarded, React.memo(Forwarded)]) {
+    const ref = React.createRef()
+    let calls = 0
+    await render(React.createElement(Dropdown, { trigger: React.createElement(Trigger, { ref, onClick: () => calls++ }), itemsObject: [{ value: 'Opción' }] }))
+    assert.equal(ref.current, container.querySelector('button'))
+    await click(ref.current)
+    assert.equal(calls, 1)
+    assert.ok(container.querySelector('.dropdown-menu'))
+    await key(ref.current, 'Escape')
+    assert.equal(container.querySelector('.dropdown-menu'), null)
+    await React.act(async () => root.unmount())
+    root = null
+    container.remove()
+    assert.equal(ref.current, null)
+  }
+})
+
 test('Card conserva plegado, pantalla completa, cierre y su referencia sin enviar formularios', async () => {
   const { Card } = components
   const ref = React.createRef()

@@ -1,13 +1,13 @@
 {
   "name": "Avatar",
   "kind": "Componente",
-  "source": "src/components/Avatar/index.js",
-  "implementation": "src/components/Avatar/Avatar.react.js",
-  "implementationCode": "// @flow\n\nimport * as React from \"react\";\nimport { Icon } from \"../\";\nimport cn from \"classnames\";\nimport AvatarList from \"./AvatarList.react\";\n\nimport type { MouseEvents, PointerEvents } from \"../../\";\n\nexport type Props = {|\n  ...MouseEvents,\n  ...PointerEvents,\n  +children?: React.Node,\n  +className?: string,\n  /**\n   * The URL of the image to be displayed\n   */\n  +imageURL?: string,\n  +style?: Object,\n  +size?: \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\",\n  /**\n   * Display a colored status dot with the avatar\n   */\n  +status?: \"grey\" | \"red\" | \"yellow\" | \"green\",\n  /**\n   * Displays the user icon as a placeholder\n   */\n  +placeholder?: boolean,\n  /**\n   * Render an icon instead of an imageURL\n   */\n  +icon?: string,\n  /**\n   * The background and font color of the circle\n   */\n  +color?: string,\n|};\n\n/**\n * Renders a single circular avatar\n */\nfunction Avatar({\n  className,\n  children,\n  imageURL,\n  style,\n  size = \"\",\n  status,\n  placeholder,\n  icon,\n  color = \"\",\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n}: Props): React.Node {\n  const classes = cn(\n    {\n      avatar: true,\n      [`avatar-${size}`]: !!size,\n      \"avatar-placeholder\": placeholder,\n      [`avatar-${color}`]: !!color,\n    },\n    className\n  );\n  return (\n    <span\n      className={classes}\n      style={\n        imageURL\n          ? Object.assign(\n              {\n                backgroundImage: `url(${imageURL})`,\n              },\n              style\n            )\n          : style\n      }\n      onClick={onClick}\n      onMouseEnter={onMouseEnter}\n      onMouseLeave={onMouseLeave}\n      onPointerEnter={onPointerEnter}\n      onPointerLeave={onPointerLeave}\n    >\n      {icon && <Icon name={icon} />}\n      {status && <span className={`avatar-status bg-${status}`} />}\n      {children}\n    </span>\n  );\n}\n\nAvatar.List = AvatarList;\n\nexport default Avatar;\n",
+  "source": "src/components/Avatar/index.ts",
+  "implementation": "src/components/Avatar/Avatar.react.tsx",
+  "implementationCode": "import * as React from \"react\";\nimport Icon from \"../Icon\";\nimport cn from \"classnames\";\nimport AvatarList from \"./AvatarList.react\";\n\n\nexport type AvatarProps = {\n  readonly children?: React.ReactNode;\n  readonly className?: string;\n  /**\n   * The URL of the image to be displayed\n   */\n  readonly imageURL?: string;\n  readonly style?: React.CSSProperties;\n  readonly size?: \"\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\";\n  /**\n   * Display a colored status dot with the avatar\n   */\n  readonly status?: \"grey\" | \"red\" | \"yellow\" | \"green\";\n  /**\n   * Displays the user icon as a placeholder\n   */\n  readonly placeholder?: boolean;\n  /**\n   * Render an icon instead of an imageURL\n   */\n  readonly icon?: string;\n  /**\n   * The background and font color of the circle\n   */\n  readonly color?: string;\n  readonly onClick?: React.MouseEventHandler<HTMLSpanElement>;\n  readonly onMouseEnter?: React.MouseEventHandler<HTMLSpanElement>;\n  readonly onMouseLeave?: React.MouseEventHandler<HTMLSpanElement>;\n  readonly onPointerEnter?: React.PointerEventHandler<HTMLSpanElement>;\n  readonly onPointerLeave?: React.PointerEventHandler<HTMLSpanElement>;\n};\n\n/**\n * Renders a single circular avatar\n */\nfunction Avatar({\n  className,\n  children,\n  imageURL,\n  style,\n  size = \"\",\n  status,\n  placeholder,\n  icon,\n  color = \"\",\n  onClick,\n  onMouseEnter,\n  onMouseLeave,\n  onPointerEnter,\n  onPointerLeave,\n}: AvatarProps): React.ReactElement {\n  const classes = cn(\n    {\n      avatar: true,\n      [`avatar-${size}`]: !!size,\n      \"avatar-placeholder\": placeholder,\n      [`avatar-${color}`]: !!color,\n    },\n    className\n  );\n  return (\n    <span\n      className={classes}\n      style={\n        imageURL\n          ? Object.assign(\n              {\n                backgroundImage: `url(${imageURL})`,\n              },\n              style\n            )\n          : style\n      }\n      onClick={onClick}\n      onMouseEnter={onMouseEnter}\n      onMouseLeave={onMouseLeave}\n      onPointerEnter={onPointerEnter}\n      onPointerLeave={onPointerLeave}\n    >\n      {icon && <Icon name={icon} />}\n      {status && <span className={`avatar-status bg-${status}`} />}\n      {children}\n    </span>\n  );\n}\n\nAvatar.List = AvatarList;\n\nexport default Avatar;\n\n// Retain the source type name used by pending Flow components.\nexport type Props = AvatarProps;\n",
   "props": [
     {
       "name": "children",
-      "type": "React.Node",
+      "type": "React.ReactNode",
       "optional": true,
       "description": ""
     },
@@ -25,13 +25,13 @@
     },
     {
       "name": "style",
-      "type": "Object",
+      "type": "React.CSSProperties",
       "optional": true,
       "description": ""
     },
     {
       "name": "size",
-      "type": "\"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
+      "type": "\"\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"",
       "optional": true,
       "description": "",
       "default": "\"\""
@@ -62,19 +62,34 @@
       "default": "\"\""
     },
     {
-      "name": "onClick"
+      "name": "onClick",
+      "type": "React.MouseEventHandler<HTMLSpanElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseEnter"
+      "name": "onMouseEnter",
+      "type": "React.MouseEventHandler<HTMLSpanElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onMouseLeave"
+      "name": "onMouseLeave",
+      "type": "React.MouseEventHandler<HTMLSpanElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerEnter"
+      "name": "onPointerEnter",
+      "type": "React.PointerEventHandler<HTMLSpanElement>",
+      "optional": true,
+      "description": ""
     },
     {
-      "name": "onPointerLeave"
+      "name": "onPointerLeave",
+      "type": "React.PointerEventHandler<HTMLSpanElement>",
+      "optional": true,
+      "description": ""
     }
   ],
   "subcomponents": [
@@ -85,11 +100,11 @@
   "childApis": [
     {
       "name": "List",
-      "source": "src/components/Avatar/AvatarList.react.js",
+      "source": "src/components/Avatar/AvatarList.react.tsx",
       "props": [
         {
           "name": "children",
-          "type": "React.Node",
+          "type": "React.ReactNode",
           "optional": true,
           "description": ""
         },
@@ -129,7 +144,9 @@
     "behavior": [
       "imageURL establece una imagen de fondo; children puede mostrar iniciales.",
       "status añade un indicador de color. placeholder/icon permiten representar un avatar sin imagen.",
-      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo."
+      "Avatar.List agrupa varios avatares; una imagen de fondo no aporta por sí sola texto alternativo.",
+      "AvatarProps tipa style como React.CSSProperties y los eventos del span. Conserva onClick, onMouseEnter, onMouseLeave, onPointerEnter y onPointerLeave. Los atributos y eventos adicionales no se reenvían.",
+      "El objeto style del consumidor tiene prioridad sobre el backgroundImage generado por imageURL y no se modifica. Avatar.List conserva stacked y className."
     ],
     "example": "<Avatar color=\"blue\" size=\"lg\" status=\"green\">AB</Avatar>"
   }

@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from "react";
 import cn from "classnames";
 
@@ -10,18 +8,18 @@ import H4 from "./H4.react";
 import H5 from "./H5.react";
 import H6 from "./H6.react";
 
-type Props = {|
+export type HeaderProps = {
   /**
    * A component to use instead of a <div> as the root component
    */
-  +RootComponent?: React.ElementType,
-  +children?: React.Node,
-  +className?: string,
+  readonly RootComponent?: React.ElementType<{ className: string; children?: React.ReactNode }>;
+  readonly children?: React.ReactNode;
+  readonly className?: string;
   /**
    * The size of the header
    */
-  +size?: 1 | 2 | 3 | 4 | 5 | 6,
-|};
+  readonly size?: 1 | 2 | 3 | 4 | 5 | 6;
+};
 
 /**
  * A header
@@ -32,7 +30,7 @@ function Header({
   className,
   children,
   size = 1,
-}: Props): React.Node {
+}: HeaderProps): React.ReactElement {
   const classes = cn(`h${size}`, className);
   const Component = RootComponent || "div";
   return <Component className={classes}>{children}</Component>;
