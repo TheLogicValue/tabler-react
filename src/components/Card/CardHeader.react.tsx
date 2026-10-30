@@ -1,3 +1,4 @@
+import { backgroundImageUrl } from "../../helpers/backgroundImageUrl";
 import * as React from "react";
 import cn from "classnames";
 
@@ -20,7 +21,7 @@ function CardHeader({
       style={
         backgroundURL
           ? Object.assign({
-              backgroundImage: `url(${backgroundURL})`,
+              backgroundImage: backgroundImageUrl(backgroundURL),
             })
           : undefined
       }

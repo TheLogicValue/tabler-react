@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import List from "../List";
@@ -31,9 +32,9 @@ function listItemFromObjectFactory(
         {item.label}
       </Button>
     ) : (
-      <a href={item.to} data-original-title={item.tooltip}>
+      <SafeLink href={item.to} data-original-title={item.tooltip}>
         <Icon prefix={iconPrefix} name={item.name} />
-      </a>
+      </SafeLink>
     );
     return <List.Item key={index} inline>{itemContent}</List.Item>;
   };

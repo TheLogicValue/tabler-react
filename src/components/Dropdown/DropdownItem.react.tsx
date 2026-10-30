@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import Icon from "../Icon";
@@ -24,12 +25,12 @@ export type DropdownItemProps = {
   readonly badgeType?: string;
   /**
    * Where the user should be taken on click.
-   * By default this will be passed as the 'href' prop to the <a> tag,
+   * By default this will be passed as the 'href' prop to the <SafeLink> tag,
    * but to the RootComponent it will be a 'to' prop instead
    */
   readonly to?: string;
   /**
-   * A component to be used instead of an <a> tag
+   * A component to be used instead of an <SafeLink> tag
    */
   readonly RootComponent?: React.ElementType;
   /**
@@ -75,13 +76,13 @@ function DropdownItem({
     </React.Fragment>
   );
   return RootComponent ? (
-    <RootComponent className={classes} to={to} onClick={onClick} exact={useExact}>
+    <SafeLink RootComponent={RootComponent} className={classes} to={to} onClick={onClick} exact={useExact}>
       {childrenForAll}
-    </RootComponent>
+    </SafeLink>
   ) : (
-    <a className={classes} href={to} onClick={onClick}>
+    <SafeLink className={classes} href={to} onClick={onClick}>
       {childrenForAll}
-    </a>
+    </SafeLink>
   );
 }
 

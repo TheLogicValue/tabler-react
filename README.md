@@ -384,6 +384,37 @@ Los pasos se ejecutan en orden y se detienen en el primero que falle. En estos c
 
 Puedes utilizarlos antes de un commit o de actualizar la biblioteca en un consumidor. Se ejecutan a petición desde la terminal; no se añaden hooks de Git, acciones de GitHub ni pasos de publicación. Las pruebas visuales y los flujos propios de cada consumidor siguen requiriendo su revisión.
 
+## Regresión de seguridad
+
+Los destinos de navegación de la biblioteca aceptan rutas relativas y los esquemas
+`http:`, `https:`, `mailto:` y `tel:`. Un destino inválido o con otro esquema produce
+un enlace sin destino, marcado con `aria-disabled`, y no se entrega al componente
+de routing del consumidor. Los callbacks suministrados por la aplicación siguen
+siendo responsabilidad de esa aplicación. Las URL de imágenes utilizadas dentro
+de `backgroundImage` codifican los delimitadores de CSS para proteger SSR.
+
+`npm test` incluye la matriz de destinos válidos y rechazados y las regresiones de
+CSS y contención de rutas del generador de documentación. `check:all` añade clics
+reales en Chromium, con React 19 y con el consumidor temporal React 18, en SSR,
+renderizado en cliente e hidratación, incluidos los menús nativos y de routing.
+
+Instala el navegador una vez con `npx playwright install chromium`. También puedes
+usar Chrome instalado estableciendo `PLAYWRIGHT_CHANNEL=chrome`. Para ejecutar
+solo la compilación y las comprobaciones de navegador con la versión React local:
+
+```sh
+npm run test:security:browser
+```
+
+Con la demo arrancada mediante `npm --prefix demo run dev`, `npm run test:demo:browser`
+comprueba navegación, menús, confirmación del modal, edición y envío del formulario
+y las rutas de gráficos, documentación y cobertura. `DEMO_URL` permite cambiar la
+dirección y `PLAYWRIGHT_CHANNEL` selecciona el navegador también en esta prueba.
+
+La prueba de navegador incluye un control positivo inocuo para comprobar que el
+entorno permite ejecutar una URL JavaScript antes de verificar que la biblioteca
+la bloquea. No depende del bloqueo incorporado en React 19.
+
 ## Deploy
 
 The `prepare` script builds the library before packaging. Run `npm run build` to generate the artifacts locally. Both the library and demo use npm with independent `package-lock.json` files.

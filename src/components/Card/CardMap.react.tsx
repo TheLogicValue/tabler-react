@@ -1,3 +1,4 @@
+import { backgroundImageUrl } from "../../helpers/backgroundImageUrl";
 import * as React from "react";
 import cn from "classnames";
 
@@ -16,7 +17,7 @@ function CardMap({ className, children, placeholder }: CardMapProps): React.Reac
   return (
     <div
       className={classes}
-      style={placeholder ? { backgroundImage: `url(${placeholder})` } : undefined}
+      style={placeholder ? { backgroundImage: backgroundImageUrl(placeholder) } : undefined}
     >
       {children}
     </div>

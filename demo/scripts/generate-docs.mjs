@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, unlinkSync, writeFile
 import { dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { moduleInfo, resolveExport, resolveSubcomponent, extractApi } from './docs-source.mjs'
+import { documentOutputPath } from './document-output.mjs'
 
 const project = fileURLToPath(new URL('../../', import.meta.url))
 const readJson = path => JSON.parse(readFileSync(resolve(project, path), 'utf8'))
@@ -23,8 +24,10 @@ function integrationVersions(name) {
     demoRange: demoPackage.dependencies?.[name] ?? null,
   }))
 }
-const documents = {}, index = {}
+const documents = Object.create(null), index = Object.create(null)
 const generated = resolve(project, 'demo/src/docs/generated')
+// Validate the entire catalog before creating directories or writing any output.
+for (const entry of catalog.exports) documentOutputPath(generated, entry.name)
 if (!process.argv.includes('--check')) mkdirSync(generated, { recursive: true })
 for (const entry of catalog.exports) {
   const info = resolveExport(resolve(project, entry.source), entry.name)
@@ -51,7 +54,7 @@ for (const entry of catalog.exports) {
 }
 for (const name of Object.keys(guides)) if (!documents[name]) throw new Error('Guía sin export público: ' + name)
 
-const outputs = [[resolve(project, 'demo/src/component-docs-index.json'), index], ...Object.entries(documents).map(([name, value]) => [resolve(generated, name + '.json'), value])]
+const outputs = [[resolve(project, 'demo/src/component-docs-index.json'), index], ...Object.entries(documents).map(([name, value]) => [documentOutputPath(generated, name), value])]
 for (const [output, value] of outputs) {
   const content = JSON.stringify(value, null, 2) + '\n'
   if (process.argv.includes('--check')) {

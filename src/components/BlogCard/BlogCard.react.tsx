@@ -1,3 +1,5 @@
+import { backgroundImageUrl } from "../../helpers/backgroundImageUrl";
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import Card from "../Card/Card.react";
 import Icon from "../Icon/Icon.react";
@@ -44,62 +46,62 @@ function BlogCard({
 }: BlogCardProps): React.ReactElement {
   return !aside ? (
     <Card>
-      <a href={postHref}>
+      <SafeLink href={postHref}>
         <img className="card-img-top" src={imgSrc} alt={imgAlt} />
-      </a>
+      </SafeLink>
       <Card.Body className="d-flex flex-column">
         <h4>
-          <a href={postHref}>{title}</a>
+          <SafeLink href={postHref}>{title}</SafeLink>
         </h4>
         <div className="text-muted">{description}</div>
         <div className="d-flex align-items-center pt-5 mt-auto">
           <div
             className="avatar avatar-md mr-3"
-            style={{ backgroundImage: `url(${avatarImgSrc})` }}
+            style={{ backgroundImage: backgroundImageUrl(avatarImgSrc) }}
           />
           <div>
-            <a href={profileHref} className="text-default">
+            <SafeLink href={profileHref} className="text-default">
               {authorName}
-            </a>
+            </SafeLink>
             <small className="d-block text-muted">{date}</small>
           </div>
           <div className="ml-auto text-muted">
-            <a href={iconHref} className="icon d-none d-md-inline-block ml-3">
+            <SafeLink href={iconHref} className="icon d-none d-md-inline-block ml-3">
               <Icon prefix="fe" name={iconName || "heart"} />
-            </a>
+            </SafeLink>
           </div>
         </div>
       </Card.Body>
     </Card>
   ) : (
     <Card className="card-aside">
-      <a
+      <SafeLink
         href={postHref}
         className="card-aside-column"
-        style={{ backgroundImage: `url(${imgSrc})` }}
+        style={{ backgroundImage: backgroundImageUrl(imgSrc) }}
       >
         {""}
-      </a>
+      </SafeLink>
       <Card.Body className="d-flex flex-column">
         <h4>
-          <a href={postHref}>{title}</a>
+          <SafeLink href={postHref}>{title}</SafeLink>
         </h4>
         <div className="text-muted">{description}</div>
         <div className="d-flex align-items-center pt-5 mt-auto">
           <div
             className="avatar avatar-md mr-3"
-            style={{ backgroundImage: `url(${avatarImgSrc})` }}
+            style={{ backgroundImage: backgroundImageUrl(avatarImgSrc) }}
           />
           <div>
-            <a href={profileHref} className="text-default">
+            <SafeLink href={profileHref} className="text-default">
               {authorName}
-            </a>
+            </SafeLink>
             <small className="d-block text-muted">{date}</small>
           </div>
           <div className="ml-auto text-red">
-            <a href={iconHref} className="icon d-none d-md-inline-block ml-3">
+            <SafeLink href={iconHref} className="icon d-none d-md-inline-block ml-3">
               <Icon prefix="fe" name={iconName || "heart"} />
-            </a>
+            </SafeLink>
           </div>
         </div>
       </Card.Body>

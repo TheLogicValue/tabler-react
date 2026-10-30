@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import React from "react"
 import { NavLink } from "react-router-dom"
 import cn from "classnames"
@@ -8,10 +9,10 @@ import type { DropdownItemProps } from "../Dropdown"
 // Dropdown.Item's legacy `exact` property must not reach a DOM anchor in
 // React Router 7. Keep the active link styling used by NavBarItem.
 function MenuLink({ to, className, children, onClick }: DropdownItemProps): React.ReactElement {
-    return <NavLink to={to ?? ""} end onClick={onClick}
+    return <SafeLink RootComponent={NavLink} to={to ?? ""} end onClick={onClick}
         className={({ isActive }) => cn("nav-link", className, { active: isActive })}>
         {children}
-    </NavLink>
+    </SafeLink>
 }
 
 export default function NavBarDropDown({ value, submenus, icon }: NavBarDropdownProps): React.ReactElement {

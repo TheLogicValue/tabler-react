@@ -323,13 +323,13 @@
           "name": "to",
           "type": "string",
           "optional": true,
-          "description": "Where the user should be taken on click.\n    By default this will be passed as the 'href' prop to the <a> tag,\n    but to the RootComponent it will be a 'to' prop instead"
+          "description": "Where the user should be taken on click.\n    By default this will be passed as the 'href' prop to the <SafeLink> tag,\n    but to the RootComponent it will be a 'to' prop instead"
         },
         {
           "name": "RootComponent",
           "type": "React.ElementType",
           "optional": true,
-          "description": "A component to be used instead of an <a> tag"
+          "description": "A component to be used instead of an <SafeLink> tag"
         },
         {
           "name": "onClick",

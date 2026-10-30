@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import Icon from "../Icon";
@@ -22,14 +23,14 @@ function NavSubmenuItem({
   const classes = cn({ "nav-item": true, active: active }, className);
   const Component = RootComponent || "a";
   return (
-    <Component className={classes} to={to}>
+    <SafeLink RootComponent={Component} className={classes} to={to}>
       {icon && (
         <React.Fragment>
           <Icon name={icon} />{" "}
         </React.Fragment>
       )}
       {children}
-    </Component>
+    </SafeLink>
   );
 }
 

@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import React from "react"
 import { NavLink, useLocation } from "react-router-dom"
 import cn from "classnames"
@@ -20,7 +21,7 @@ const NavBarItem = ({
         "active": !!(segment && location.pathname.includes(segment)) || (location.pathname.at(-1) == "/" && route?.[0] === "")
     }, className)
 
-    if (LinkComponent) return <NavLink to={to ?? ""} className={classes} end>{value || children}</NavLink>
-    else return <a className={classes} href={to} onClick={onClick}>{value || children}</a>
+    if (LinkComponent) return <SafeLink RootComponent={NavLink} to={to ?? ""} className={classes} end>{value || children}</SafeLink>
+    else return <SafeLink className={classes} href={to} onClick={onClick}>{value || children}</SafeLink>
 }
 export default NavBarItem

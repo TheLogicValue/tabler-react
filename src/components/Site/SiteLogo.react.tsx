@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 
 export type SiteLogoProps = {
@@ -7,9 +8,9 @@ export type SiteLogoProps = {
 };
 
 const SiteLogo = (props: SiteLogoProps): React.ReactNode => (
-  <a className="header-brand" href={props.href}>
+  <SafeLink className="header-brand" href={props.href}>
     <img src={props.src} className="header-brand-img" alt={props.alt} />
-  </a>
+  </SafeLink>
 );
 
 SiteLogo.displayName = "Site.Logo";

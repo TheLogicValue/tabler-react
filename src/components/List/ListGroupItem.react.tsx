@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 
@@ -34,23 +35,23 @@ function ListGroupItem({
   );
   // const Component = RootComponent || "a";
   return RootComponent ? (
-    <RootComponent to={to} className={classes}>
+    <SafeLink RootComponent={RootComponent} to={to} className={classes}>
       {icon && (
         <span className="mr-3 icon">
           <Icon prefix="fe" name={icon} />{" "}
         </span>
       )}
       {children}
-    </RootComponent>
+    </SafeLink>
   ) : (
-    <a className={classes} href={to}>
+    <SafeLink className={classes} href={to}>
       {icon && (
         <span className="mr-3 icon">
           <Icon prefix="fe" name={icon} />{" "}
         </span>
       )}
       {children}
-    </a>
+    </SafeLink>
   );
 }
 

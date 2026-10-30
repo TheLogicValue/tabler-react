@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import Icon from "../Icon";
@@ -38,13 +39,13 @@ function NavLink({
     </React.Fragment>
   );
   return RootComponent ? (
-    <RootComponent exact={useExact || false} className={classes} to={to} ref={rootRef}>
+    <SafeLink RootComponent={RootComponent} exact={useExact || false} className={classes} to={to} ref={rootRef}>
       {childrenForAll}
-    </RootComponent>
+    </SafeLink>
   ) : (
-    <a className={classes} href={to} ref={rootRef}>
+    <SafeLink className={classes} href={to} ref={rootRef}>
       {childrenForAll}
-    </a>
+    </SafeLink>
   );
 }
 

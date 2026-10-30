@@ -1,3 +1,4 @@
+import { backgroundImageUrl } from "../../helpers/backgroundImageUrl";
 import * as React from "react";
 import Icon from "../Icon";
 import cn from "classnames";
@@ -71,7 +72,7 @@ function Avatar({
         imageURL
           ? Object.assign(
               {
-                backgroundImage: `url(${imageURL})`,
+                backgroundImage: backgroundImageUrl(imageURL),
               },
               style
             )

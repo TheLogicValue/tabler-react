@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 
@@ -52,9 +53,9 @@ function PricingCardButton({
 
   return (
     <div className={classes}>
-      <Component className={componentClasses} {...otherProps}>
+      <SafeLink RootComponent={Component} className={componentClasses} {...otherProps}>
         {children}
-      </Component>
+      </SafeLink>
     </div>
   );
 }

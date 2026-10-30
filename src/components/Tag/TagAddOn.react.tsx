@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import Icon from "../Icon";
@@ -58,18 +59,18 @@ function TagAddOn(props: TagAddOnProps): React.ReactElement {
   if (props.link) {
     const { href } = props;
     return (
-      <a className={classes} href={href} {...eventProps}>
+      <SafeLink className={classes} href={href} {...eventProps}>
         {childrenForAll}
-      </a>
+      </SafeLink>
     );
   }
 
   if (props.RootComponent) {
     const { RootComponent: Component, to } = props;
     return (
-      <Component to={to} {...eventProps}>
+      <SafeLink RootComponent={Component} to={to} {...eventProps}>
         {childrenForAll}
-      </Component>
+      </SafeLink>
     );
   }
 

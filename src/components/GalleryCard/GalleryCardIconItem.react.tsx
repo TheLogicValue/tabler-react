@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 
@@ -43,13 +44,13 @@ function GalleryCardIconItem({
   }
 
   return RootComponent ? (
-    <RootComponent className={componentClasses} to={to}>
+    <SafeLink RootComponent={RootComponent} className={componentClasses} to={to}>
       {childrenForAll}
-    </RootComponent>
+    </SafeLink>
   ) : (
-    <a className={componentClasses} {...extraProps}>
+    <SafeLink className={componentClasses} {...extraProps}>
       {childrenForAll}
-    </a>
+    </SafeLink>
   );
 }
 

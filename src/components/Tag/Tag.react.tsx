@@ -1,3 +1,5 @@
+import { backgroundImageUrl } from "../../helpers/backgroundImageUrl";
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import TagList from "./TagList.react";
@@ -110,7 +112,7 @@ class Tag extends React.Component<TagProps, TagState> {
         {avatar && (
           <span
             className="tag-avatar avatar"
-            style={{ backgroundImage: `url(${avatar})` }}
+            style={{ backgroundImage: backgroundImageUrl(avatar) }}
           />
         )}
         {children}
@@ -132,18 +134,18 @@ class Tag extends React.Component<TagProps, TagState> {
     if (this.props.RootComponent) {
       const { RootComponent: Component, to } = this.props;
       return (
-        <Component className={classes} to={to} {...eventProps(this.props)}>
+        <SafeLink RootComponent={Component} className={classes} to={to} {...eventProps(this.props)}>
           {childrenForAll}
-        </Component>
+        </SafeLink>
       );
     }
 
     if (this.props.link) {
       const { href } = this.props;
       return (
-        <a className={classes} href={href} {...eventProps(this.props)}>
+        <SafeLink className={classes} href={href} {...eventProps(this.props)}>
           {childrenForAll}
-        </a>
+        </SafeLink>
       );
     }
 

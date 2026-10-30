@@ -1,3 +1,4 @@
+import SafeLink from "../../helpers/SafeLink.react";
 import * as React from "react";
 import cn from "classnames";
 import Icon from "../Icon";
@@ -154,16 +155,16 @@ const Button = (props: ButtonProps): React.ReactElement => {
   } else if (props.RootComponent === "a") {
     const { href, target, rel, download } = props;
     return (
-      <a {...propsForAll} href={href} target={target} ref={rootRef as React.Ref<HTMLAnchorElement>} rel={rel} download={download}>
+      <SafeLink {...propsForAll} href={href} target={target} ref={rootRef as React.Ref<HTMLAnchorElement>} rel={rel} download={download}>
         {childrenForAll}
-      </a>
+      </SafeLink>
     );
   } else {
     const Component: React.ElementType = props.RootComponent;
     return (
-      <Component {...propsForAll} to={to}>
+      <SafeLink RootComponent={Component} {...propsForAll} to={to}>
         {childrenForAll}
-      </Component>
+      </SafeLink>
     );
   }
 };
