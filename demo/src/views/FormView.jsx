@@ -4,6 +4,10 @@ import { categoryOptions } from '../data.js'
 import { Result, Scenario } from '../shared.jsx'
 
 const initialDate = new Date(2026, 9, 15)
+const issuerOptions = [
+  { value: 'issuers', label: 'Emisores' },
+  { value: 'parent-issuers', label: 'Emisores Padre' },
+]
 
 export default function FormView() {
   const dateRef = useRef(null)
@@ -12,6 +16,7 @@ export default function FormView() {
   const [restriction, setRestriction] = useState('current')
   const [name, setName] = useState('Cartera de prueba')
   const [category, setCategory] = useState(categoryOptions[1])
+  const [issuers, setIssuers] = useState(issuerOptions)
   const [enabled, setEnabled] = useState(true)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
@@ -43,6 +48,12 @@ export default function FormView() {
     <Scenario title="Resultado del formulario" description="Estos valores se leen del estado de Form y de la referencia pública de DatePicker." components={['Card', 'Text']}>
       <Result>{result ? <><strong>Configuración guardada localmente</strong><dl className="result-values"><dt>Nombre</dt><dd>{result.name}</dd><dt>Clasificación</dt><dd>{result.category}</dd><dt>Fecha</dt><dd>{result.date}</dd><dt>Informe</dt><dd>{result.enabled ? 'Incluida' : 'Excluida'}</dd></dl></> : 'Todavía no has guardado una configuración.'}</Result>
       <p className="muted mt-4">Prueba también una fecha inválida, vaciar el nombre, borrar la selección y restablecer los valores.</p>
+    </Scenario>
+  </Grid.Col></Grid.Row>
+  <Grid.Row className="demo-card-row"><Grid.Col width={12} lg={6}>
+    <Scenario title="Selector múltiple" description="Abre el selector para buscar, seleccionar o deseleccionar emisores. También puedes usar Seleccionar todos." components={['Form.SelectMultiple']}>
+      <Form.SelectMultiple name="Selección" placeholder="Seleccionar emisores" aria-label="Buscar emisores" options={issuerOptions} value={issuers} onChange={setIssuers} />
+      <p className="muted mt-4">Seleccionados: {issuers.length ? issuers.map(option => option.label).join(', ') : 'ninguno'}</p>
     </Scenario>
   </Grid.Col></Grid.Row>
   <Grid.Row className="demo-card-row"><Grid.Col width={12} lg={6}>

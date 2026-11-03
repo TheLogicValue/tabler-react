@@ -11,7 +11,6 @@
   font-synthesis: none;
 }
 body { margin: 0; background: #f4f6fa; color: #263b53; font-family: 'Segoe UI', system-ui, sans-serif; }
-button, input, select { font: inherit; }
 a { color: #2f6fbd; }
 /* Page centers short content vertically by default. This app needs a header
    anchored to the top, with spare height below the main content. */
@@ -26,39 +25,25 @@ a { color: #2f6fbd; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; background: #377bc9; border-radius: 10px; font-size: 25px; font-weight: 700; }
 .brand-divider { padding: 0 13px; color: #74869d; }
 .build-tags { display: flex; align-items: center; gap: 9px; font-size: 12px; white-space: nowrap; }
-.build-tags .badge { background: #2d4561; color: #e6effb; }
 .local-dot { width: 7px; height: 7px; border-radius: 50%; background: #55d0aa; }
 .demo-nav { background: white; border-bottom: 1px solid #dfe6ef; }
 .demo-nav .nav { flex-wrap: wrap; gap: 19px; padding: 0; margin: 0; flex-direction: row !important; }
 .demo-nav .nav > .nav-item > .nav-link,
-.demo-nav .tabler-dropdown-trigger { display: flex; align-items: center; gap: 7px; padding: 17px 0; color: #6a7a90; border-radius: 0; border: 0; border-bottom: 2px solid transparent; font-size: 13px; }
-.demo-nav .nav > .nav-item > .nav-link.active,
-.demo-nav .dropdown.show > .tabler-dropdown-trigger { color: #2f6fbd; border-color: #2f6fbd; background: transparent; font-weight: 600; }
+.demo-nav .tabler-dropdown-trigger { display: flex; align-items: center; gap: 7px; padding: 17px 0; }
 .demo-nav .dropdown-menu { z-index: 1050; }
-.demo-nav .dropdown-item { display: flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: 13px; border: 0; }
-.demo-nav .dropdown-item.active { color: #2f6fbd; background: #edf4fc; font-weight: 600; }
 .demo-shell .page-content { margin: 0; padding-top: 28px; }
 .demo-shell .page-header { margin-bottom: 25px; }
 .demo-shell .page-title { color: #192f49; font-size: 26px; font-weight: 650; letter-spacing: -.6px; }
 .demo-shell .page-subtitle { color: #7b8796; font-size: 13px; }
 .demo-updated-on { color: #738399; font-size: 12px; white-space: nowrap; }
 @media (max-width: 768px) { .demo-shell .page-options:has(> .demo-updated-on) { width: 100%; justify-content: flex-end; } }
-.demo-shell .card { border: 1px solid #e0e6ef; border-radius: 9px; box-shadow: 0 2px 4px #182d4703; margin-bottom: var(--demo-space); }
+.demo-shell .demo-card-row > .col > .card { margin-bottom: var(--demo-space); }
 /* Stretch only the sibling cards of a demo row, keeping nested examples intact. */
 .demo-shell .demo-card-row > .col { display: flex; min-width: 0; }
 .demo-shell .demo-card-row > .col > .card { flex: 1; }
 .demo-shell .comparison-scenario > .card-body { display: flex; flex-direction: column; }
 .demo-shell .demo-comparison-card { flex: 1; justify-content: center; margin-bottom: 0; }
 .demo-shell .journey-card > .card-body { display: flex; }
-.demo-shell .card-header { min-height: 58px; padding: 17px 24px; border-color: #e8edf4; }
-.demo-shell .card-title { font-size: 15px; font-weight: 600; }
-.demo-shell .card-body { padding: 24px; }
-.demo-shell .btn, .demo-overlay .btn { border-radius: 5px; font-weight: 500; font-size: 13px; padding: 9px 15px; }
-.demo-shell .btn-primary, .demo-overlay .btn-primary { background: #2f6fbd; border-color: #2f6fbd; color: #fff; }
-.demo-shell .btn-secondary, .demo-overlay .btn-secondary { background: #fff; color: #425b78; border-color: #d4dfec; }
-.demo-shell .badge { padding: 5px 8px; font-weight: 500; font-size: 11px; border-radius: 4px; }
-.demo-shell .badge-secondary { background: #edf2f8; color: #57708e; }
-.demo-shell .badge-success { background: #e5f5ee; color: #20846c; }
 .intro-panel { display: flex; justify-content: space-between; align-items: center; gap: 48px; padding: 30px 32px; border: 1px solid #d7e4f2; border-radius: 10px; background: linear-gradient(110deg, #eaf2fc, #f8fbff); margin-bottom: 24px; }
 .eyebrow { color: #547dad; font-size: 10px; letter-spacing: 1.6px; font-weight: 700; }
 .intro-panel h2 { font-size: 27px; margin: 9px 0 12px; color: #1e3b5f; font-weight: 650; letter-spacing: -.7px; }
@@ -137,15 +122,14 @@ a { color: #2f6fbd; }
 .docs-feather-examples code { overflow-wrap: anywhere; }
 .field-label { width: 100%; color: #465d77; font-size: 13px; }
 .field-label > input, .field-label > div { margin-top: 8px; }
-.demo-shell .form-control { border: 1px solid #d6dfeb; border-radius: 5px; min-height: 39px; }
 .demo-result { background: #f1f6fc; color: #3f638d; border: 1px solid #e1eaf5; border-radius: 6px; padding: 15px 17px; margin-top: 22px; font-size: 13px; }
 .result-values { margin: 20px 0 0; }
 .result-values dt { font-size: 11px; color: #8494a9; font-weight: 400; }
 .result-values dd { margin-bottom: 14px; }
 .grid-demo { min-width: 0; }
-.grid-demo .ag-theme-balham { --ag-font-family: 'Segoe UI', sans-serif; --ag-font-size: 12px; --ag-row-height: 39px; --ag-header-height: 42px; --ag-border-color: #dfe6ef; --ag-header-background-color: #f5f8fc; }
+.grid-demo .ag-theme-balham { --ag-border-color: #dfe6ef; --ag-header-background-color: #f5f8fc; }
 .grid-demo .addons-aggrid { display: flex; gap: 12px; margin-bottom: 15px; }
-.grid-demo .ag-grid-search { border: 1px solid #d6dfeb; border-radius: 5px; padding: 8px 12px; width: 260px; }
+.grid-demo .ag-grid-search { width: 260px; }
 .grid-demo .downloadCSV { margin-left: auto; }
 .grid-demo .row { margin-left: 0; margin-right: 0; }
 .grid-demo .col-12 { padding-left: 0; padding-right: 0; }
@@ -155,11 +139,7 @@ a { color: #2f6fbd; }
 .demo-shell .grid-consumer-row { margin-inline: calc(-.5 * var(--demo-space)); margin-top: 0; }
 .demo-shell .grid-consumer-row > .col { padding-inline: calc(.5 * var(--demo-space)); }
 .demo-note { background: #eaf3ef; color: #4c7c69; padding: 16px 20px; border-radius: 6px; font-size: 12px; }
-.demo-shell .Tab_header_tabs .nav-link { cursor: pointer; }
-.demo-shell .tab-header { padding: 0 20px; }
-.demo-shell .accordion-item { margin-top: 20px; border: 1px solid #e0e6ef; border-radius: 5px; }
-.demo-shell .accordion-button { font-size: 13px; padding: 16px; border: 0; background: #f8fafc; color: #456483; width: 100%; text-align: left; }
-.demo-shell .accordion-body { padding: 16px; }
+.demo-shell .accordion-item { margin-top: 20px; }
 .route-example { margin-top: 18px; }
 .route-loading, .loading-line { display: flex; align-items: center; gap: 12px; padding: 20px 0; color: #6c819a; }
 .loading-line > svg { width: 24px; height: 24px; flex: 0 0 24px; }
@@ -173,7 +153,6 @@ a { color: #2f6fbd; }
 .demo-document-modal.show { display: block; overflow-y: auto; background: #182d4770; }
 .demo-document-modal .modal-dialog { min-height: calc(100% - 3.5rem); }
 .demo-document-modal .modal-content { position: relative !important; }
-.demo-document-modal .modal-body { padding: 24px; }
 .demo-document-modal h3 { font-size: 20px; }
 .demo-document-modal p, .demo-document-modal li { font-size: 14px; line-height: 1.7; }
 .demo-overlay-close { position: fixed; top: 20px; right: 20px; z-index: 6000; }
@@ -188,18 +167,15 @@ a { color: #2f6fbd; }
 #root > .modal.show { display: block; }
 #root > .modal .modal-content { position: relative !important; }
 #root > .modal .modal-dialog { min-height: calc(100% - 3.5rem); }
-#root > .modal .modal-header { padding: 12px 20px !important; }
-.DayPicker input { border: 1px solid #d6dfeb; border-radius: 5px; padding: 9px 12px; }
-.DayPicker button { background: #edf3fa; border: 1px solid #d6dfeb; border-radius: 5px; padding: 9px 12px; color: #4473a5; }
-.dialog-sheet { z-index: 1100; background: white; box-shadow: 0 8px 30px #243b6125; border-radius: 8px; }
-@media (max-width: 1050px) { .intro-diagram { display: none; } .demo-nav .nav { gap: 16px; } .demo-nav .nav > .nav-item > .nav-link, .demo-nav .tabler-dropdown-trigger { font-size: 12px; } }
+.dialog-sheet { z-index: 1100; }
+@media (max-width: 1050px) { .intro-diagram { display: none; } .demo-nav .nav { gap: 16px; } }
 @media (max-width: 700px) {
   .demo-shell { --demo-space: 20px; }
   .demo-container, .demo-shell .container { padding-left: 18px; padding-right: 18px; }
   .demo-header-inner { flex-wrap: wrap; padding-top: 16px; padding-bottom: 16px; gap: 12px; }
   .demo-nav .nav { gap: 0 20px; } .demo-nav .nav > .nav-item > .nav-link, .demo-nav .tabler-dropdown-trigger { padding: 12px 0; }
   .intro-panel { padding: 24px; } .intro-panel h2 { font-size: 23px; }
-  .demo-shell .card-body { padding: 18px; } .chart-controls { align-items: start; flex-direction: column; }
+  .chart-controls { align-items: start; flex-direction: column; }
   .filter-row { flex-wrap: wrap; }
   .demo-radar-chart { margin-inline: -12px; }
   .demo-footer { flex-direction: column; gap: 5px; } .grid-demo .ag-grid-search { width: min(260px, 75%); }
