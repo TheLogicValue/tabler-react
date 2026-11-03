@@ -236,6 +236,10 @@ a:not([href]):not([tabindex]):focus {
   display: inline;
 }
 
+.tabler-dropdown-trigger:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .tabler-action.header-toggler,
 .tabler-action.header-toggler:hover,
 .tabler-action.header-toggler:focus {
